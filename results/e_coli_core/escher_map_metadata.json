@@ -607,72 +607,72 @@
             -20
           ],
           "rxn:CS": [
-            4,
-            -21
+            5,
+            -20
           ],
           "met:cit_c": [
-            4,
-            -22
+            6,
+            -20
           ],
           "rxn:ACONTa": [
-            4,
-            -23
+            7,
+            -20
           ],
           "met:acon_C_c": [
-            4,
-            -24
+            8,
+            -20
           ],
           "rxn:ACONTb": [
-            4,
-            -25
+            9,
+            -20
           ],
           "met:icit_c": [
-            5,
-            -25
+            9,
+            -21
           ],
           "rxn:ICDHyr": [
-            6,
-            -25
+            9,
+            -22
           ],
           "met:akg_c": [
-            7,
-            -25
+            9,
+            -23
           ],
           "rxn:AKGDH": [
             9,
             -25
           ],
           "met:succoa_c": [
-            9,
-            -24
+            8,
+            -25
           ],
           "rxn:SUCOAS": [
-            9,
-            -23
+            7,
+            -25
           ],
           "met:succ_c": [
-            9,
-            -22
+            6,
+            -25
           ],
           "rxn:SUCDi": [
-            9,
-            -21
+            5,
+            -25
           ],
           "met:fum_c": [
-            9,
-            -20
+            4,
+            -25
           ],
           "rxn:FUM": [
-            8,
-            -20
+            4,
+            -24
           ],
           "met:mal__L_c": [
-            7,
-            -20
+            4,
+            -23
           ],
           "rxn:MDH": [
-            6,
-            -20
+            4,
+            -22
           ]
         },
         "displayed_node_ids": [
@@ -712,7 +712,9 @@
       "left": 4,
       "top_offset": -20,
       "side_length": 5,
-      "closed": true
+      "closed": true,
+      "orientation": "clockwise",
+      "signed_double_area": -50
     },
     "color": "#d62728",
     "fixed_node_offsets": {
@@ -817,72 +819,72 @@
         -20
       ],
       "rxn:CS": [
-        4,
-        -21
+        5,
+        -20
       ],
       "met:cit_c": [
-        4,
-        -22
+        6,
+        -20
       ],
       "rxn:ACONTa": [
-        4,
-        -23
+        7,
+        -20
       ],
       "met:acon_C_c": [
-        4,
-        -24
+        8,
+        -20
       ],
       "rxn:ACONTb": [
-        4,
-        -25
+        9,
+        -20
       ],
       "met:icit_c": [
-        5,
-        -25
+        9,
+        -21
       ],
       "rxn:ICDHyr": [
-        6,
-        -25
+        9,
+        -22
       ],
       "met:akg_c": [
-        7,
-        -25
+        9,
+        -23
       ],
       "rxn:AKGDH": [
         9,
         -25
       ],
       "met:succoa_c": [
-        9,
-        -24
+        8,
+        -25
       ],
       "rxn:SUCOAS": [
-        9,
-        -23
+        7,
+        -25
       ],
       "met:succ_c": [
-        9,
-        -22
+        6,
+        -25
       ],
       "rxn:SUCDi": [
-        9,
-        -21
+        5,
+        -25
       ],
       "met:fum_c": [
-        9,
-        -20
+        4,
+        -25
       ],
       "rxn:FUM": [
-        8,
-        -20
+        4,
+        -24
       ],
       "met:mal__L_c": [
-        7,
-        -20
+        4,
+        -23
       ],
       "rxn:MDH": [
-        6,
-        -20
+        4,
+        -22
       ]
     },
     "glucose_top_margin": 1,
@@ -1058,20 +1060,20 @@
       "objective": "Sum of Manhattan lengths of unique orange incidence edges; shared edges counted once",
       "method": "Greedy shared shortest-path forest alternating with constrained grid placement",
       "global_optimality_proven": false,
-      "total_length": 78,
+      "total_length": 73,
       "shared_coenzyme_ids": [],
       "optimization_history": [
         {
           "iteration": 1,
-          "before_reroute": 101,
-          "orange_length": 101,
-          "optimized_fixed_network_length": 101
+          "before_reroute": 81,
+          "orange_length": 81,
+          "optimized_fixed_network_length": 81
         },
         {
           "iteration": 2,
-          "before_reroute": 78,
-          "orange_length": 78,
-          "optimized_fixed_network_length": 78
+          "before_reroute": 73,
+          "orange_length": 73,
+          "optimized_fixed_network_length": 73
         }
       ]
     },
@@ -10805,5 +10807,5 @@
       "formula_missing": false
     }
   },
-  "note": "Display projection only: inorganic participants omitted; source_model.json retains original mass-balanced model."
+  "note": "Display projection only: inorganic participants omitted; source_model.json retains the original source model."
 }

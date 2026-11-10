@@ -10,6 +10,8 @@ import re
 
 import numpy as np
 
+from highlighting import BLUE, read_selection, grid_elements, catalog, inject_controls
+
 from flux_sampling2 import sample_fluxes
 from annotation_context import hidden_metabolite
 from grid_layout2 import optimize_grid
@@ -183,7 +185,13 @@ def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None):
             xy[key] = position.tolist()
 
 
-def render(output, nodes, edges, xy, records, selection, model_id, backbones=None, program_name='sbml2escher', sampling_report=None):
+def render(output, nodes, edges, xy, records, selection, model_id, backbones=None, program_name='sbml2escher', sampling_report=None, highlights=None, source_model=None):
+    highlights = highlights or dict(metabolites=[], reactions=[])
+    elements = grid_elements(nodes, edges)
+    if source_model is None:
+        source_model = {kind: [dict(id=key, name=next(n.get('name', '') for n in nodes.values() if n['original_id']==key))
+                             for key in sorted({e['key'] for e in elements if e['kind']==kind})]
+                        for kind in ('metabolites', 'reactions')}
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -278,6 +286,23 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     fig.text(.02, .018, f'Red: glucose exchange / glycolysis / {oxidation_label} / TCA. Gray nodes: local coenzymes.\n' + connector_label +
              ('Orthogonal branches: L1 length. Connectivity and bounds do not establish steady-state activity.' if structural else
               'Orthogonal branches: L1 length. Median describes the sampled feasible space, not a measured flux.'), fontsize=9)
+    # Keep the original SVG for reversible browser highlighting.
+    import io
+    original_svg = io.StringIO() if any(highlights.values()) else None
+    if original_svg is not None:
+        fig.savefig(original_svg, format='svg', bbox_inches='tight')
+    selected_gids = {gid for element in elements if element['key'] in highlights[element['kind']] for gid in element['ids']}
+    for artist in ax.get_children():
+        if artist.get_gid() not in selected_gids:
+            continue
+        if hasattr(artist, 'set_color'):
+            artist.set_color(BLUE)
+        if getattr(artist, 'arrow_patch', None) is not None:
+            artist.arrow_patch.set_color(BLUE)
+        if hasattr(artist, 'set_alpha'):
+            artist.set_alpha(1)
+    if any(highlights.values()):
+        fig.text(.02, .005, 'Blue: user selection', color=BLUE, fontsize=9)
     fig.savefig(output / 'layout.png', dpi=180, bbox_inches='tight')
     fig.savefig(output / 'layout.svg', bbox_inches='tight')
     if connectors:
@@ -296,7 +321,7 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         fig.savefig(output/'orange_routes.svg',bbox_inches='tight')
     plt.close(fig)
     # Preserve SVG IDs for filtering without changing exported scientific coordinates.
-    svg = (output / 'layout.svg').read_text()
+    svg = original_svg.getvalue() if original_svg is not None else (output / 'layout.svg').read_text()
     svg = svg[svg.index('<svg'):]
     registry = []
     for j, edge in enumerate(edges):
@@ -346,6 +371,7 @@ document.getElementById('coverage').oninput=update;document.getElementById('coen
             missing = len(connectors.get('disconnected_exchange_node_ids', []))
             page=page.replace('</h1>', f'</h1><p>EX reactions with no connection to main pathways: {missing}. These stay gray. No connections are added.</p>',1)
     page = page.replace('sbml2escher', html.escape(program_name)).replace('__MODEL__', html.escape(model_id)).replace('__MAX__', str(selection['coverage_percent'])).replace('__SVG__', svg).replace('__REGISTRY__', json.dumps(registry)).replace('__ELIGIBLE__', str(selection['eligible_reactions']))
+    page = inject_controls(page, source_model, elements, highlights, records)
     (output / 'index.html').write_text(page)
 
 
@@ -393,11 +419,13 @@ def sampling_data(args, model, digest):
 
 
 def run(args):
-    from export_escher import create_map, validate_map, write_preview
+    from export_escher import create_map, validate_map, write_pathway_preview
+    from escher_routing import separate_routes
     validate_sampling_options(args)
     output = args.output_dir
     output.mkdir(parents=True, exist_ok=True)
     model = load_model(args.model)
+    highlights = read_selection(args, model)
     strategy = getattr(args, '_strategy', None)
     program_name = getattr(args, 'program_name', 'sbml2escher')
     digest = model_hash(model)
@@ -538,45 +566,16 @@ def run(args):
         data[0]['metadata'][program_name] = metadata
         data[0]['map_description'] = ('Structural display projection. No sampling or flux statistics; directions from source bounds.' if no_sampling else
                                       'Flux median ranked display projection. Inorganic participants hidden. Sampling uses the full original model.')
+        orange_pairs = ({frozenset((edges[i]['source'],edges[i]['target']))
+                         for i in connectors['edge_indices']} if connectors else None)
+        separate_routes(data,major_reactions,orange_pairs)
         escher_check = validate_map(data, projected, nodes, xy)
         reaction_data = None if no_sampling else {r['reaction_id']: r['median'] * data[0]['metadata']['reactions'][r['reaction_id']]['coefficient_multiplier']
                          for r in records if r['selected']}
-        write_preview(output / 'escher_preview.html', data, reaction_data)
-        preview = output / 'escher_preview.html'
-        preview_html = preview.read_text()
-        css = []
-        orange_pairs = {frozenset((edges[i]['source'],edges[i]['target'])) for i in connectors['edge_indices']} if connectors else set()
-        source_ids = data[0]['metadata']['source_node_ids']
-        for rid, reaction in data[1]['reactions'].items():
-            if no_sampling and data[0]['metadata']['reactions'][reaction['bigg_id']]['direction'] == 'blocked':
-                css.append(f'#r{rid} .arrowheads {{display:none !important;}}')
-            if connectors:
-                css.append(f'#r{rid} .segment {{stroke:#cbd3d8 !important;}}')
-                css.append(f'#r{rid} .arrowheads path {{stroke:#cbd3d8 !important;fill:#cbd3d8 !important;}}')
-                for sid, segment in reaction['segments'].items():
-                    pair = frozenset((source_ids[segment['from_node_id']],source_ids[segment['to_node_id']]))
-                    if pair in orange_pairs:
-                        css.extend([f'#r{rid} #s{sid} .segment {{stroke:{ORANGE} !important;}}',
-                                    f'#r{rid} #s{sid} .arrowheads path {{stroke:{ORANGE} !important;fill:{ORANGE} !important;}}'])
-            if reaction['bigg_id'] not in major_reactions:
-                continue
-            css.extend([f'#r{rid} .segment {{stroke:{RED} !important;}}',
-                        f'#r{rid} .arrowheads path {{stroke:{RED} !important;fill:{RED} !important;}}',
-                        f'#r{rid} text {{fill:{RED} !important;}}'])
-        style = '<style id="major-pathway-colors">' + '\n'.join(css) + '</style>'
-        preview_html = preview_html.replace('<header>', style + '<header>', 1)
-        if not no_sampling and not sampling_report['mixing_checks_passed']:
-            notice=(f'<p class="sampling-warning" style="background:#fff0cc;padding:12px">Provisional result: sampling convergence checks failed. Maximum split R-hat={sampling_report["max_split_rhat"]:.3f}, minimum ESS={sampling_report["min_effective_sample_size"]:.1f}.</p>')
-            preview_html=preview_html.replace('<header>','<header>'+notice,1)
-        preview_html = preview_html.replace(': FBA flux in Escher', ': Median flux in Escher')
-        if no_sampling:
-            preview_html = preview_html.replace('<header>', '<header><p>No flux sampling. Red shows main pathways. Arrows show directions allowed by model bounds. Reactions with both bounds at zero are shown as blocked.</p>', 1)
-        preview_html = preview_html.replace('<p>Line width and color show ', '<p>Red shows main pathways (glucose exchange, glycolysis, PDH, TCA). For other lines, width and color show ')
-        if program_name=='sbml2escher':
-            preview_html=preview_html.replace(', PDH, ',', pyruvate oxidation, ')
-        if connectors:
-            preview_html=preview_html.replace('<header>','<header><p>Orange: undirected paths from main pathways to EX reactions. Gray: other branches. Path length is minimized for the right-angle branches in the PNG/SVG views.</p>',1)
-        preview.write_text(preview_html)
+        orange_pairs = ({frozenset((edges[i]['source'],edges[i]['target']))
+                         for i in connectors['edge_indices']} if connectors else None)
+        write_pathway_preview(output/'escher_preview.html',data,major_reactions,orange_pairs)
+
     else:
         data = [dict(schema='https://escher.github.io/escher/jsonschema/1-0-0#', homepage='https://escher.github.io',
                      map_id=digest[:24], map_name='sbml2escher empty', map_description='No reactions selected'),
@@ -622,7 +621,7 @@ def run(args):
                   limitations=['Global length optimality is reported, not assumed.',
                                'Crossings, coincident edge paths, and label overlap are not minimized.',
                                'Display model omits inorganic participants and is not suitable for FBA.',
-                               'Escher draws direct segments; orthogonal length objective describes layout.svg and layout.png.',
+                               'Escher uses orthogonal segments with routing nodes; original node coordinates and reaction chemistry are preserved.',
                                'Sampling uses original bounds without a growth floor or loopless constraints; internal cycles may dominate.'])
     if no_sampling:
         report['validation'].pop('no_zero_median_reactions')
@@ -646,8 +645,18 @@ def run(args):
             report['validation']['all_exchanges_connected_to_major_pathways'] = connectors['all_exchanges_connected']
             dump(output/'exchange_connectors.json',connectors)
         strategy.save(output)
+    elements = grid_elements(nodes, edges)
+    highlight_catalog = catalog(model, elements, records)
+    report['highlights'] = dict(selection=highlights, unavailable={kind: [item for item in highlight_catalog[kind]
+                               if item['id'] in highlights[kind] and not item['drawn']] for kind in highlights})
+    if any(report['highlights']['unavailable'].values()):
+        print('Highlight targets not in saved map: ' + json.dumps(report['highlights']['unavailable']), flush=True)
+    preview = output / 'escher_preview.html'
+    preview.write_text(inject_controls(preview.read_text(), model, elements, highlights, records, escher=True))
+    data[0].setdefault('metadata', {})['highlights'] = highlights
+    dump(output / 'escher_map.json', data)
     dump(output / 'report.json', report)
-    render(output, nodes, edges, xy, records, selection, model['id'], backbones, program_name, sampling_report)
+    render(output, nodes, edges, xy, records, selection, model['id'], backbones, program_name, sampling_report, highlights, model)
     print(json.dumps(dict(output=str(output.resolve()), selection=selection, sampling_passed=sampling_report.get('mixing_checks_passed'),
                           placement=placement, total_orthogonal_edge_length=length), indent=2), flush=True)
     return report
@@ -655,6 +664,9 @@ def run(args):
 
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--highlight-metabolites', nargs='+', action='extend', default=[], help='Exact source metabolite IDs to highlight blue')
+    p.add_argument('--highlight-reactions', nargs='+', action='extend', default=[], help='Exact source reaction IDs to highlight blue')
+    p.add_argument('--highlight-file', type=Path, help='JSON with metabolites and reactions ID lists')
     p.add_argument('--model', type=Path, default=BASE / 'e_coli_core.xml')
     p.add_argument('--output-dir', type=Path, default=BASE / 'e_coli_core_sbml2escher_output')
     p.add_argument('--coverage', type=float, default=100, help='Top percentage of eligible reactions (0..100); --no-sampling uses pathway membership and IDs')

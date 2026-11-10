@@ -11,6 +11,14 @@ BASE = Path(__file__).resolve().parent
 RED = '#d62728'
 
 
+def clockwise_square(left, top, side):
+    """Walk a square from top-left to the right; source coordinates have y up."""
+    return ([(left + t, top) for t in range(side)] +
+            [(left + side, top - t) for t in range(side)] +
+            [(left + side - t, top - side) for t in range(side)] +
+            [(left, top - side + t) for t in range(side)])
+
+
 def pathway_definitions(model):
     """Enable known routes only when their complete IDs exist in the source model."""
     sources = [('glycolysis', BASE / 'major_pathway.json'),
@@ -87,16 +95,13 @@ def backbone_plan(routes, displayed_nodes):
         side = math.ceil(len(chain) / 4)
         entry = all_offsets.get('met:accoa_c', [1, -3])
         left, top = entry[0] + 1, entry[1] + 1
-        perimeter = ([(left, top - t) for t in range(side)] +
-                     [(left + t, top - side) for t in range(side)] +
-                     [(left + side, top - side + t) for t in range(side)] +
-                     [(left + side - t, top) for t in range(side)])
+        perimeter = clockwise_square(left, top, side)
         local = {}
         slots = [i * len(perimeter) // len(chain) for i in range(len(chain))]
         for key, slot in zip(chain, slots):
             store(key, perimeter[slot], local)
         route_offsets['tca'] = local
-        square = dict(left=left, top_offset=top, side_length=side, perimeter_slots=slots,
+        square = dict(left=left, top_offset=top, side_length=side, orientation="clockwise", perimeter_slots=slots,
                       total_perimeter_length=4 * side, corners_occupied=all(c in slots for c in [0, side, 2 * side, 3 * side]))
     fixed = {key: point for key, point in all_offsets.items() if key in displayed_nodes}
     report_routes = [dict(route, displayed_reaction_ids=[r for r in route['reaction_ids'] if 'rxn:' + r in displayed_nodes],
@@ -123,5 +128,13 @@ def validate_backbones(plan, xy, rows):
             if any(not (left <= x <= left + side and top - side <= y <= top and
                         (x in (left, left + side) or y in (top - side, top))) for x, y in points):
                 raise RuntimeError('TCA node is not on its square perimeter')
+            ordered = list(route['node_offsets'].values())
+            if len(ordered) >= 3:
+                area2 = sum(a[0]*b[1] - b[0]*a[1]
+                            for a, b in zip(ordered, ordered[1:] + ordered[:1]))
+                if area2 >= 0:
+                    raise RuntimeError('TCA pathway order must be clockwise in y-up coordinates')
+                square['orientation'] = 'clockwise'
+                square['signed_double_area'] = area2
         checks.append(dict(id=route['id'], shape=route['shape'], checked_nodes=len(points), verified=True))
     return dict(all_displayed_backbone_positions_verified=True, routes=checks)

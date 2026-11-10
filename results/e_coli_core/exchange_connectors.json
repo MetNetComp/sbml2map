@@ -168,20 +168,20 @@
   "objective": "Sum of Manhattan lengths of unique orange incidence edges; shared edges counted once",
   "method": "Greedy shared shortest-path forest alternating with constrained grid placement",
   "global_optimality_proven": false,
-  "total_length": 78,
+  "total_length": 73,
   "shared_coenzyme_ids": [],
   "optimization_history": [
     {
       "iteration": 1,
-      "before_reroute": 101,
-      "orange_length": 101,
-      "optimized_fixed_network_length": 101
+      "before_reroute": 81,
+      "orange_length": 81,
+      "optimized_fixed_network_length": 81
     },
     {
       "iteration": 2,
-      "before_reroute": 78,
-      "orange_length": 78,
-      "optimized_fixed_network_length": 78
+      "before_reroute": 73,
+      "orange_length": 73,
+      "optimized_fixed_network_length": 73
     }
   ]
 }

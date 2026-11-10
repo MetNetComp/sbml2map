@@ -56,7 +56,12 @@
         "source_model_roundtrip_exact": true,
         "all_exchanges_connected_to_major_pathways": true,
         "samples_mass_balance_bounds_order_and_hash_verified": true,
-        "sampling_mixing_checks_passed": true
+        "sampling_mixing_checks_passed": true,
+        "tca_clockwise_in_grid_and_escher": true,
+        "fba_full_source_model_mass_balance_and_bounds_verified": true,
+        "fba_saved_coordinates_and_sampling_preserved": true,
+        "escher_segments_horizontal_or_vertical": true,
+        "escher_priority_layers_and_connected_offset_routes_verified": true
       },
       "status": "complete",
       "source_reactions": 95,
@@ -65,8 +70,8 @@
       "extraction_status": "complete_central_backbone",
       "artifacts": {
         "coordinates.csv": {
-          "bytes": 11164,
-          "sha256": "50c72f160f221244d15d2f6f634b0f345ca97b7eba96ec4475c787ee9ee2ccf2"
+          "bytes": 11171,
+          "sha256": "fecae568602f51913d41ab4f65c7c8f150a51cc28fddd9a99c7c1b4034be5736"
         },
         "display_model.json": {
           "bytes": 663328,
@@ -81,20 +86,20 @@
           "sha256": "92da2931394b1adb05c409055f492da6bbe10bea8c02b0e25b89142fabe21c65"
         },
         "escher_map.json": {
-          "bytes": 616496,
-          "sha256": "8ce1f04566e9ce6382aa0b169014327ed65bdab27540e8940997486e6b1434f2"
+          "bytes": 794394,
+          "sha256": "368ced73c58475fc890acf4bdea82118e15c405f7d925b26a76e7cc0876df0c2"
         },
         "escher_map_metadata.json": {
-          "bytes": 377419,
-          "sha256": "a7f39352384d1a31e1be59305835cc92bddf3e18b540d9942fd62290998396ae"
+          "bytes": 377480,
+          "sha256": "66299642fb71f1cc2efe99bcb5f9d45a06aeb4629df2130749b713935b58abbd"
         },
         "escher_preview.html": {
-          "bytes": 1220614,
-          "sha256": "7e005e07a829e94827a0b40de6e38abd4ccc031de79633555443975533f6e1e8"
+          "bytes": 1411058,
+          "sha256": "2c6b52211d4bea66aa6be6ef8ea6403b80170b716dc61794a740e58b0e842a42"
         },
         "exchange_connectors.json": {
-          "bytes": 3336,
-          "sha256": "03e0a85a49526e9b5f8cd134b60a4460f9bd0f5e1623871301dd7fa63ee624ec"
+          "bytes": 3333,
+          "sha256": "faa47a0297ecd31e45863a8db454a47232a222a7af921c46c1e9c561ef90a253"
         },
         "flux_samples.npz": {
           "bytes": 5029002,
@@ -109,32 +114,32 @@
           "sha256": "9029ff788c311540c11480c7a7ab34cddc9a32234a2222f873632872c5175c3d"
         },
         "index.html": {
-          "bytes": 500659,
-          "sha256": "915963ab432ea554b224fb797f7c641f6decc1baa347c4a849222665e56c353f"
+          "bytes": 587918,
+          "sha256": "c411de32577f82d0113f5a8e20dcc9a405440e096cdf34f3f1120ef7e009eada"
         },
         "layout.png": {
-          "bytes": 485535,
-          "sha256": "648b901cad10e7bdcef11f398990488d06c2d737e4fbc2d747df8771e55949b5"
+          "bytes": 486146,
+          "sha256": "b16e3f91a848ae3f03e05bc5a0f705bb8b6c0f83c60d06295a6f1be32a336eba"
         },
         "layout.svg": {
-          "bytes": 436464,
-          "sha256": "5d9eeac8ec179e19aefcd964d3e4faeaacbb63d481582250f4587a9d082ce761"
+          "bytes": 437043,
+          "sha256": "e811193f5829d4d73643addd27945da75adb095a1ab5ebc223516284f6496391"
         },
         "major_backbones.json": {
-          "bytes": 19675,
-          "sha256": "3b85f3c696846887a866844981665253928e434768a62a1ba58ab1ba51374148"
+          "bytes": 19735,
+          "sha256": "317ff605f7cf103b9c87582e834e911918067df32ee1c23776ff6163f77514ef"
         },
         "metabolite_classification.json": {
           "bytes": 13105,
           "sha256": "1c454fac51bf90a6ac632537db3802bfef701506ab01ba11d5b516ef35570a63"
         },
         "orange_routes.png": {
-          "bytes": 318082,
-          "sha256": "1f9939a496f9bd31ccc65cd372d1df3704366fd8d4d5a02626973f8bbf5661e6"
+          "bytes": 319069,
+          "sha256": "fe4ef9be279b89ca1e11f30d7b6f320f87e39767b134b2dea2b39e2f2071b8fe"
         },
         "orange_routes.svg": {
-          "bytes": 258137,
-          "sha256": "5e341645e4c911549b0085cd38b1b0d5c40deb16266014b29f2de68766952970"
+          "bytes": 258318,
+          "sha256": "05e90aca15da48175710f75727e8ba6a269a8fec736add85d7dbf67fce209aa6"
         },
         "pathway_extraction.json": {
           "bytes": 202310,
@@ -149,8 +154,8 @@
           "sha256": "7e1e18a9d69d2f6bcccf3e15811c173b5831f9d0d840ce983ee2eae181c207cd"
         },
         "report.json": {
-          "bytes": 37718,
-          "sha256": "29eb7ca79fc18d824fff335f673a292e60a83e979d27760b4f678ac375c770b1"
+          "bytes": 38536,
+          "sha256": "ea834b90d93cca59775273e30fb5eaeb0c2a6528f62cc8113eedb511fe504dcc"
         },
         "run.log": {
           "bytes": 7810,
@@ -163,19 +168,116 @@
         "source_model.json": {
           "bytes": 863493,
           "sha256": "332d5e296e1f41ecc314d09d4a15bd0a4ef8d5f80a17fcf91354be6f37324115"
+        },
+        "escher_fba.html": {
+          "bytes": 1339886,
+          "sha256": "019829add298f9dfd000675065319623696acd45e8d41cb1fa391568f98bf148"
+        },
+        "fba_report.json": {
+          "bytes": 2555,
+          "sha256": "7f3cc314297f5fb14afc198d8b864d0599b026b27715f8ca07aab0ff5f034fcd"
+        },
+        "fba_fluxes.csv": {
+          "bytes": 3799,
+          "sha256": "99e2f06447ab40372bcc664b22f9605d90efd8becaf24ac131f494dcb77b9c8d"
+        },
+        "fba_fluxes.json": {
+          "bytes": 2266,
+          "sha256": "bfaba3e7ce208043acae9a1221f607848e3b89d07821726fa18688e1b9413715"
+        },
+        "escher_fluxes.json": {
+          "bytes": 1742,
+          "sha256": "e8bea944f0e1a72a385cc5445186647fd7121e95d54d7f612ee6feb5867e96cb"
         }
       },
       "program_name": "sbml2escher",
-      "command": "python sbml2escher.py --model models/e_coli_core.xml --coverage 100 --samples 2000 --chains 4 --thinning 100 --burn-in 10000 --seed 0 --output-dir results/e_coli_core",
+      "command": "python sbml2escher.py --model models/e_coli_core.xml --reuse-samples results/e_coli_core --coverage 100 --grid-cols 12 --grid-rows 27 --time-limit 60 --output-dir results/e_coli_core",
       "raw_samples_file": "e_coli_core/flux_samples.npz",
-      "recalculated_at_utc": "2026-10-23T04:14:31.188491+00:00",
+      "recalculated_at_utc": "2026-11-10T08:44:57.454660+00:00",
       "source_files_sha256": {
-        "sbml2escher.py": "db4560919a7e6a45485d04fbcd564cdacfb3798407dfed71bdd383d9ab27f470",
-        "escher_grid.py": "783fca309498c00e4257ccc48459b25fe3582ba1200d20ce8484f2f7aa53f6fa",
+        "sbml2escher.py": "ee3dcbd61fe1c81d7f4bd1e89e83f869782f91bcc06de609055713123188f209",
+        "escher_grid.py": "a122789077b8372478dc630b194ef36a4f8bd72f4df565889db19828d4fc0142",
         "grid_layout2.py": "a289e525c6330e04a29e554da7444ef0e8b11f0e1717f24ab3d8b68da26d5787",
-        "bacterial_pathways.py": "f82ef19a7ca3dbe12404862aacfecd1ba9843ca2cfe3448d24538496dd831f5e",
+        "bacterial_pathways.py": "0d3a8f496612eff022c6544cb17852fc0af29b5345c7300e02585ebf721c221d",
         "flux_sampling2.py": "5d783ad99e096ed0b1402b2ece715f7d77de2c7fc3f930ec44ac701fe901516d",
-        "data/bacteria/central_reference.json": "f924f3fc28bbeef00e6ee8593acbc9e9c76f4e764333aee3dc460bc4e8a64380"
+        "data/bacteria/central_reference.json": "f924f3fc28bbeef00e6ee8593acbc9e9c76f4e764333aee3dc460bc4e8a64380",
+        "highlighting.py": "0eea4056b2ced0fd048c547de2b1a823065e50ba06f1d56ecefe4cf02caef58b",
+        "highlight_controls.js": "7df1fcf593b3a41b61511c7ed95875280dd7dc5d2446371ef114b582290f2d4f",
+        "run_fba_escher.py": "a3cbd85bca91ec06d91c145071f7335bd977865c828a56e837dd24189c5b68e1",
+        "export_escher.py": "c0ded189798b195790ef6f7b4bb0f913810de0edda8d9af29f4a17a8a58d711b",
+        "escher_routing.py": "38bae640581ac5fe059e211b29f3131510bcb6e2f7b6cd6087972d2a47492537",
+        "escher_layers.js": "ec20215491e3b3c02cf03f0e61113e76035161a643642f03a89260254d32058b"
+      },
+      "tca_orientation": "clockwise",
+      "fba": {
+        "status": "optimal",
+        "objective": {
+          "BIOMASS_Ecoli_core_w_GAM": 1.0
+        },
+        "objective_sense": "maximize",
+        "objective_value": 0.8739215069684304,
+        "mass_balance_max_abs": 5.684341886080802e-14,
+        "bound_violation_max": 0.0,
+        "reactions": 95,
+        "displayed_reactions": 76,
+        "source_model_used_for_fba": true,
+        "coordinates_changed": false,
+        "result_html": "escher_fba.html",
+        "pathway_highlighting": false
+      },
+      "escher_routing": {
+        "schema_valid": true,
+        "metadata_embedded": true,
+        "reaction_ids_preserved": true,
+        "stoichiometry_preserved": true,
+        "coordinate_transform_verified": true,
+        "segment_endpoints_verified": true,
+        "nodes": 629,
+        "source_nodes": 206,
+        "routing_nodes": 423,
+        "orthogonal_segments_verified": true,
+        "reactions": 76,
+        "segments": 660,
+        "primary_metabolites": 46,
+        "secondary_metabolites": 84,
+        "currency_copy_counts": {
+          "adp_c": 11,
+          "atp_c": 12,
+          "coa_c": 9,
+          "nad_c": 12,
+          "nadh_c": 12,
+          "amp_c": 2,
+          "nadp_c": 9,
+          "nadph_c": 9,
+          "q8_c": 4,
+          "q8h2_c": 4
+        },
+        "reverse_only_reactions": [
+          "FORt"
+        ],
+        "blocked_reactions": [],
+        "missing_gene_rule_count": 0
+      },
+      "escher_initial_flux_data_loaded": false,
+      "escher_data_overlay_disables_pathway_colors": true,
+      "escher_overlap_routing": {
+        "enabled": true,
+        "base_map_id": "8470a9ede15412b70d94a151",
+        "lane_spacing": 10.799999999999999,
+        "shifted_legs": 119,
+        "max_offset": 37.8,
+        "priority": [
+          "red",
+          "orange",
+          "gray"
+        ],
+        "shared_same_reaction_trunks": true,
+        "max_offset_by_priority": {
+          "red": 10.799999999999999,
+          "orange": 10.799999999999999,
+          "gray": 37.8
+        },
+        "primary_backbone_max_offset": 0.0
       }
     },
     {
@@ -1235,12 +1337,12 @@
           "sha256": "6c3f0d05cd259d00bdcd67416a1c1117f244c22071bcf7b109338eb73c495770"
         },
         "index.html": {
-          "bytes": 8575515,
-          "sha256": "5c3a03111252f25f237cbfbba1de00ea58e4ca24f2c0bfd5bf9d02019bf5b228"
+          "bytes": 10388375,
+          "sha256": "290daec1a6daf6bf52f8e92725f16697bf27aeff12977a3d1fb44864786dc936"
         },
         "escher_preview.html": {
-          "bytes": 5252009,
-          "sha256": "092b33fdad3342fed5eb5ddc597cd45017373a1808a506a5dcf26001f98736f2"
+          "bytes": 6957889,
+          "sha256": "ad029b0bfb4fdca2c25df7ccb557c621664e594943acf2834611b500729cea8c"
         },
         "escher_map.json": {
           "bytes": 7136204,
@@ -1262,7 +1364,9 @@
           "bytes": 1343012,
           "sha256": "ca8449b76bb1ca7247701c9d62fd9914b6510bf57e94376be31eca70e2c42a2e"
         }
-      }
+      },
+      "escher_initial_flux_data_loaded": false,
+      "escher_data_overlay_disables_pathway_colors": true
     },
     {
       "name": "iMM904",
@@ -2048,12 +2152,12 @@
           "sha256": "333ceced4c21802e2569c587ccfdf27f8b5cb5b712aec4492ee7090716f51b8a"
         },
         "index.html": {
-          "bytes": 4519477,
-          "sha256": "a9b064ca130d978703119ca12425310a91fdc14c5103baf64ec081a28a5928a7"
+          "bytes": 5513920,
+          "sha256": "7f511a29561e7ed3015df08dcb9965caa9ff233c4bb0f53b6386ce9dbd4e9e5c"
         },
         "escher_preview.html": {
-          "bytes": 3355590,
-          "sha256": "ee4e4018569276844501e55cc89daef74d13b46269847be125e23869cd5d36bd"
+          "bytes": 4295452,
+          "sha256": "68c1e47b14b2fdfd56e25eddc7b1c078bfa184241e8031fd9d1140b027e6c261"
         },
         "escher_map.json": {
           "bytes": 4177173,
@@ -2075,7 +2179,9 @@
           "bytes": 909392,
           "sha256": "b78e6b8b354541d17256d5d1a969b8e7b2b41a42ee876164f215a7cf4a5c8918"
         }
-      }
+      },
+      "escher_initial_flux_data_loaded": false,
+      "escher_data_overlay_disables_pathway_colors": true
     },
     {
       "name": "Human-GEM",
@@ -2140,12 +2246,12 @@
           "sha256": "5c8e766fd88b2f167c5170e54a279a680da22c5e3cbf4b6a18eb68a42295c239"
         },
         "index.html": {
-          "bytes": 70994958,
-          "sha256": "6345136da0a2885a7929b7c24151643ba5a4e6370b5c1cc1cd980b5b4b3a3ea3"
+          "bytes": 83701851,
+          "sha256": "02124cba31e33287b9ead4f453bee9b4ab3d59584e0eaf0eae7ec663138bd8b4"
         },
         "escher_preview.html": {
-          "bytes": 31556378,
-          "sha256": "54b36b1435950cc90bb9f7900aa245e050713ceb972c800fbad6eea88534bade"
+          "bytes": 44263834,
+          "sha256": "12913b4e45d4aa05ba30c917e42fc6b6443f4d93dc869445b08a740134f801ee"
         },
         "escher_map.json": {
           "bytes": 45509273,
@@ -2167,7 +2273,9 @@
           "bytes": 13004773,
           "sha256": "8997d60901df560570e3fbb519299271a53e1631dd7ea823b18117efa5e8ba4b"
         }
-      }
+      },
+      "escher_initial_flux_data_loaded": false,
+      "escher_data_overlay_disables_pathway_colors": true
     },
     {
       "name": "iNESC2DN_CMap",
@@ -2214,8 +2322,8 @@
           "sha256": "61e937a79d8216784a0a63f7a2308aee430bb47df89fd8b63c8967a77cfdb9ad"
         },
         "escher_preview.html": {
-          "bytes": 4101059,
-          "sha256": "8183062593238dcdde1a2ee40976e26ffa27786a7a423647a22b86e1873ff877"
+          "bytes": 5757027,
+          "sha256": "13cba368ee16e0c3f39ba05ac8b994bdbb58c65573e6b00b72bd673d04a35063"
         },
         "exchange_connectors.json": {
           "bytes": 64475,
@@ -2226,8 +2334,8 @@
           "sha256": "02e4f886ec4e9689f814b2e144e2532fbfa8d2372cc84398dc8c6448fcdf2e43"
         },
         "index.html": {
-          "bytes": 9255179,
-          "sha256": "90cd58da229b45bebdbd7b16fa137c75994b5e58eaaf7f82491e09580596ec41"
+          "bytes": 10910583,
+          "sha256": "1d0bc48fba936578c248d85f53df8b11d60ba918e1ab97d257d0b9da1b81aa7c"
         },
         "layout.png": {
           "bytes": 5135481,
@@ -2539,7 +2647,9 @@
         "sbml2escher.py": "ee3dcbd61fe1c81d7f4bd1e89e83f869782f91bcc06de609055713123188f209",
         "stoichiometric_network.py": "c97c1db8cb6d23904ee6ecb2ae4c544d86da584ad6c83fd0555d5342764abf24",
         "data/bacteria/central_reference.json": "f924f3fc28bbeef00e6ee8593acbc9e9c76f4e764333aee3dc460bc4e8a64380"
-      }
+      },
+      "escher_initial_flux_data_loaded": false,
+      "escher_data_overlay_disables_pathway_colors": true
     },
     {
       "name": "iNESC2DN_CTMap",
@@ -2586,8 +2696,8 @@
           "sha256": "d5313f69487a0930b328adb57829b80931361ee09f845303cd58232b0f06fcfa"
         },
         "escher_preview.html": {
-          "bytes": 4340943,
-          "sha256": "f4c881772bdc8f6e439ed9d459f908bd594afaafaa3ed9cde0aa22013a0ff91f"
+          "bytes": 6120823,
+          "sha256": "5046efece11d4d08414783d148039f5519a4a0275dac5f5a580b04fa445d6ba0"
         },
         "exchange_connectors.json": {
           "bytes": 75463,
@@ -2598,8 +2708,8 @@
           "sha256": "50dce6425f9a078f7f4d7721b15cfedf3da65d54c8972c975edd40ea9c46e818"
         },
         "index.html": {
-          "bytes": 9926940,
-          "sha256": "0cf8103457c1d7ca4646a136167d36015bddd86252085f817f80abf7483c957a"
+          "bytes": 11706256,
+          "sha256": "f08a8af33ebc5aa9d45d9560c613dd601f8a8cfdaa2605c0528d7c8eacb93db9"
         },
         "layout.png": {
           "bytes": 5614810,
@@ -2920,7 +3030,9 @@
         "sbml2escher.py": "ee3dcbd61fe1c81d7f4bd1e89e83f869782f91bcc06de609055713123188f209",
         "stoichiometric_network.py": "c97c1db8cb6d23904ee6ecb2ae4c544d86da584ad6c83fd0555d5342764abf24",
         "data/bacteria/central_reference.json": "f924f3fc28bbeef00e6ee8593acbc9e9c76f4e764333aee3dc460bc4e8a64380"
-      }
+      },
+      "escher_initial_flux_data_loaded": false,
+      "escher_data_overlay_disables_pathway_colors": true
     },
     {
       "name": "iNESC2DN_ComboMap",
@@ -2967,8 +3079,8 @@
           "sha256": "05435ba68c856691f27674a68e37968083dae97b8561162c68d4e63824f90feb"
         },
         "escher_preview.html": {
-          "bytes": 4758175,
-          "sha256": "c89fac634ededa1a755efa386f9e6a783f1e3ea96c94a66909d322dc6c83416d"
+          "bytes": 6760587,
+          "sha256": "3d8696456e60a611cb511fff27418e7f9b5af26ca47677cd27cc55afad8152aa"
         },
         "exchange_connectors.json": {
           "bytes": 64037,
@@ -2979,8 +3091,8 @@
           "sha256": "60381013ce9fe373f3b2eccdedfc87b2dacedaf953a42d8251bcabc3d39b92de"
         },
         "index.html": {
-          "bytes": 11271627,
-          "sha256": "ef215059ec8298ce250fd93c29355d5b815000ac71c6bead996911f6e2f21ee9"
+          "bytes": 13273475,
+          "sha256": "6aafcca198462170b26ab9e7098ee53a78c93355dd71c5eb9e93c6c9fd762796"
         },
         "layout.png": {
           "bytes": 5873628,
@@ -3325,7 +3437,9 @@
         "sbml2escher.py": "ee3dcbd61fe1c81d7f4bd1e89e83f869782f91bcc06de609055713123188f209",
         "stoichiometric_network.py": "c97c1db8cb6d23904ee6ecb2ae4c544d86da584ad6c83fd0555d5342764abf24",
         "data/bacteria/central_reference.json": "f924f3fc28bbeef00e6ee8593acbc9e9c76f4e764333aee3dc460bc4e8a64380"
-      }
+      },
+      "escher_initial_flux_data_loaded": false,
+      "escher_data_overlay_disables_pathway_colors": true
     }
   ],
   "completed_at_utc": "2026-10-23T04:43:39.605666+00:00",

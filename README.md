@@ -1,5 +1,9 @@
 # sbml2escher
 
+The structural Escher view paints red above orange above gray and offsets coincident routes of different reactions.
+Biological nodes and primary backbone centerlines stay fixed; same-reaction trunks remain bundled.
+FBA uses the original neutral orthogonal routes without structural priority.
+
 `sbml2escher.py` draws metabolic networks with nodes on a grid.
 Cofactors may also be placed off the grid. Inorganic species are ignored.
 Exchange reactions are placed on the outer boundary. Key pathways, such as
@@ -11,6 +15,20 @@ pathways to all exchange reactions. These connecting paths are shown in orange.
 
 The criteria for selecting key pathways are provisional. The drawing criteria
 are also provisional, and we welcome all ideas for improvement.
+
+## Browse saved results and publish with GitHub Pages
+
+Open [`results/e_coli_core/index.html`](results/e_coli_core/index.html) for the SVG
+viewer, [`escher_preview.html`](results/e_coli_core/escher_preview.html) for the
+structural Escher view, or [`escher_fba.html`](results/e_coli_core/escher_fba.html)
+for the FBA result. The structural view starts without a flux overlay; FBA uses
+only simulation-driven colors and widths.
+
+The ready-to-publish [`docs/`](docs/README.md) directory contains the E. coli core
+views. After updating results, run `python3 prepare_github_pages.py` and commit/push
+`docs/`. An enabled Pages site can use branch `main`, directory `/docs`.
+
+Run the packaged checks with `python -m unittest discover`.
 
 ## Installation
 
@@ -56,6 +74,8 @@ Always specify `--model` to select an input file.
   pathway_output/                Additional canonical backbone references
   vendor/escher/                 Bundled viewer, schema, license, and provenance
   models/                        Input SBML models
+  prepare_github_pages.py        Refresh the E. coli core Pages files
+  docs/                          E. coli core website and downloads
   results/                       Saved drawing results
     manifest.json                Model-to-result mapping and verification record
 ```
@@ -156,6 +176,61 @@ shows verified connections to exchange reactions. Unmatched compounds and
 unreachable exchanges are listed in the result reports.
 
 ### Use a drawing in Escher
+
+The initial Escher view has no reaction flux data loaded: sampled values, flux
+widths, and the flux color scale are hidden. Arrows show model-permitted
+directions; red and orange describe the pathway structure. Loading reaction
+data automatically disables those fixed pathway colors, and clearing the data
+restores them. FBA pages start with simulation values and a light-to-dark blue
+flux scale (gray for zero), with fixed pathway colors off.
+
+Escher connections are exported as horizontal and vertical segments. Diagonal
+incidences receive an intermediate `multimarker` at the corner; already aligned
+connections remain one segment. These routing nodes do not add compounds or
+reactions. Original node coordinates, stoichiometry, bounds, and flux values are
+preserved. Arrowheads stay on terminal metabolite segments, and pathway colors
+and blue reaction highlights apply to both parts of a routed connection.
+Moving nodes manually in Escher does not automatically reroute them.
+
+To show a biomass-maximizing FBA solution on the saved E. coli core layout:
+
+```bash
+python run_fba_escher.py --model models/e_coli_core.xml --layout-dir results/e_coli_core
+```
+
+Open `results/e_coli_core/escher_fba.html`. FBA uses the full source model and its
+original bounds, including participants omitted from the drawing. Existing
+coordinates and sampled medians are preserved. All 95 source reaction values
+are available in `fba_fluxes.csv` and `fba_fluxes.json`; `escher_fluxes.json`
+contains sign-adjusted values for the 76 displayed reactions.
+The bundled result has a biomass objective of approximately 0.873922 h⁻¹.
+This is one optimal FBA solution; other optimal flux distributions may exist.
+
+Both HTML views include a blue-highlight panel. Choose compounds or reactions,
+search by ID or name, and click a result to select it. You can also add exact
+model IDs in bulk, separated by commas or newlines. Compound selection colors
+all displayed copies; reaction selection colors its lines, arrows, labels, and
+grid-view reaction node. Blue overrides pathway colors. Clear selections to
+restore the original palette.
+
+In `index.html`, **Always show blue targets** overrides the display filters for
+selected objects and shows the compounds connected to selected reactions in
+their own colors. Objects omitted when the map was generated cannot be added;
+their status is shown in the panel. Selection does not change layout or fluxes.
+Save/load selections as JSON, or save the currently displayed SVG. Browser
+changes do not update PNG files. To generate blue highlights in PNG, SVG, and
+the initial HTML selection, run:
+
+```bash
+python sbml2escher.py --model models/e_coli_core.xml --no-sampling \
+  --highlight-metabolites pyr_c accoa_c --highlight-reactions PDH CS \
+  --output-dir results/runs/e_coli_core_highlight
+```
+
+Alternatively, use `--highlight-file highlights.json`, with the same format as
+the panel export: `{"metabolites": ["pyr_c"], "reactions": ["PDH"]}`.
+Unknown IDs cause a CLI error. Known targets omitted from the drawing are
+reported in `report.json` under `highlights.unavailable`.
 
 Open the [E. coli core Escher preview](results/e_coli_core/escher_preview.html)
 in a browser to explore the map.

@@ -4,6 +4,7 @@ import argparse
 import base64
 from collections import Counter
 import csv
+import copy
 import hashlib
 import html
 import json
@@ -12,6 +13,7 @@ from pathlib import Path
 import re
 
 from reaction_network import build_network, reaction_direction, validate_network
+from escher_routing import separate_routes
 
 BASE = Path(__file__).resolve().parent
 SCHEMA = BASE / 'vendor/escher/map-schema-1-0-0.json'
@@ -78,6 +80,8 @@ def create_map(model, nodes, edges, xy, scale=4000.0, padding=180.0, layout_meth
     gene_names = {g['id']: g.get('name', '') for g in model.get('genes', [])}
     segment_number = len(nodes) + len(model['reactions'])
     missing_gene_rules = []
+    routing_node_ids = []
+    segment_source_edges = {}
     for i, reaction in enumerate(model['reactions']):
         rid = reaction['id']
         reaction_id = str(len(nodes) + i)
@@ -96,8 +100,25 @@ def create_map(model, nodes, edges, xy, scale=4000.0, padding=180.0, layout_meth
                                    for mid, coefficient in sorted(reaction['metabolites'].items())], segments={})
         for edge in incidence.get(rid, []):
             key = edge['source'] if nodes[edge['source']]['kind'] != 'reaction' else edge['target']
-            record['segments'][str(segment_number)] = dict(from_node_id=marker, to_node_id=ids[key], b1=None, b2=None)
-            segment_number += 1
+            target = ids[key]
+            a, b = map_nodes[marker], map_nodes[target]
+            path = [marker]
+            if not math.isclose(a['x'], b['x'], abs_tol=1e-9, rel_tol=0) and not math.isclose(a['y'], b['y'], abs_tol=1e-9, rel_tol=0):
+                # Substrates enter horizontally; products leave vertically after
+                # an elbow. The terminal metabolite segment owns the arrowhead.
+                substrate = multiplier * edge['coefficient'] < 0
+                bend = str(len(map_nodes))
+                map_nodes[bend] = dict(node_type='multimarker',
+                                       x=a['x'] if substrate else b['x'],
+                                       y=b['y'] if substrate else a['y'])
+                routing_node_ids.append(bend)
+                path.append(bend)
+            path.append(target)
+            for start, end in zip(path, path[1:]):
+                sid = str(segment_number)
+                record['segments'][sid] = dict(from_node_id=start, to_node_id=end, b1=None, b2=None)
+                segment_source_edges[sid] = [edge['source'], edge['target']]
+                segment_number += 1
         reactions[reaction_id] = record
         def bound(value):
             return value if math.isfinite(value) else str(value)
@@ -118,11 +139,12 @@ def create_map(model, nodes, edges, xy, scale=4000.0, padding=180.0, layout_meth
     canvas = dict(x=lo_x, y=lo_y, width=hi_x - lo_x + 350, height=hi_y - lo_y)
     metadata = dict(exporter='drawing/export_escher.py',
                     source_node_ids={ids[key]: key for key in ids},
+                    routing='orthogonal', routing_node_ids=routing_node_ids, segment_source_edges=segment_source_edges,
                     coordinate_transform=dict(scale=scale, padding=padding, x_min=x_min, y_max=y_max, y_inverted=True),
                     reactions=reaction_metadata, currency_ids=sorted({n['original_id'] for n in nodes.values() if n['kind'] == 'currency'}),
                     missing_gene_rule_reactions=missing_gene_rules,
                     limitation='Bounds and blocked status are metadata; reverse-only coefficients are negated. Multiply corresponding fluxes by coefficient_multiplier.')
-    signature = hashlib.sha256(json.dumps([model, xy, scale, padding], sort_keys=True).encode()).hexdigest()[:24]
+    signature = hashlib.sha256(json.dumps([model, xy, scale, padding, 'orthogonal-v1'], sort_keys=True).encode()).hexdigest()[:24]
     header = dict(schema='https://escher.github.io/escher/jsonschema/1-0-0#', homepage='https://escher.github.io',
                   map_id=signature, map_name=model['id'] + '.' + layout_method,
                   map_description=layout_method + '. Reaction-local currency copies, original bounds and node identities are retained in metadata.',
@@ -144,8 +166,17 @@ def validate_map(data, model, source_nodes, source_xy, schema_path=SCHEMA, sourc
     if metadata is None:
         raise ValueError('Original export metadata is required to verify a saved map')
     source_ids = metadata['source_node_ids']
-    if set(source_ids) != set(map_nodes) or set(source_ids.values()) != set(source_nodes):
+    routing_ids = set(metadata.get('routing_node_ids', []))
+    if (set(source_ids) & routing_ids or set(source_ids) | routing_ids != set(map_nodes) or
+            len(source_ids) != len(source_nodes) or set(source_ids.values()) != set(source_nodes)):
         raise ValueError('Map nodes were added or lost')
+    orthogonal = metadata.get('routing') == 'orthogonal'
+    if routing_ids and not orthogonal:
+        raise ValueError('Routing nodes require orthogonal routing metadata')
+    for node_id in routing_ids:
+        node = map_nodes[node_id]
+        if node['node_type'] != 'multimarker' or not all(math.isfinite(node[k]) for k in ('x','y')):
+            raise ValueError('Invalid routing node')
     transform = metadata['coordinate_transform']
     counts = Counter()
     for node_id, source_id in source_ids.items():
@@ -166,6 +197,7 @@ def validate_map(data, model, source_nodes, source_xy, schema_path=SCHEMA, sourc
         raise ValueError('Reaction IDs missing or duplicated')
     original = {r['id']: r for r in model['reactions']}
     segment_ids = set()
+    used_routing = set()
     for reaction_id, reaction in reactions.items():
         rid = reaction['bigg_id']
         source = original[rid]
@@ -186,32 +218,82 @@ def validate_map(data, model, source_nodes, source_xy, schema_path=SCHEMA, sourc
         if details['original_stoichiometry'] != source['metabolites']:
             raise ValueError('Original stoichiometry metadata mismatch')
         participants = Counter()
+        graph = {}
         for sid, segment in reaction['segments'].items():
             if sid in segment_ids:
                 raise ValueError('Duplicate segment ID')
             segment_ids.add(sid)
             a, b = segment['from_node_id'], segment['to_node_id']
-            if a not in map_nodes or b not in map_nodes:
-                raise ValueError('Unknown segment endpoint')
-            pair = [source_nodes[source_ids[a]], source_nodes[source_ids[b]]]
-            markers = [n for n in pair if n['kind'] == 'reaction']
-            metabolites = [n for n in pair if n['kind'] != 'reaction']
-            if len(markers) != 1 or len(metabolites) != 1 or markers[0]['original_id'] != rid:
-                raise ValueError('Segment must connect a metabolite to its reaction')
-            mid = metabolites[0]['original_id']
-            participants[mid] += 1
-            if metabolites[0]['kind'] == 'currency' and metabolites[0]['parent_id'] != 'rxn:' + rid:
+            if a not in map_nodes or b not in map_nodes or a == b:
+                raise ValueError('Unknown or invalid segment endpoint')
+            if orthogonal:
+                pa, pb = map_nodes[a], map_nodes[b]
+                # Escher may serialize straight lines as collinear Beziers.
+                controls = [segment[k] for k in ('b1','b2') if segment[k] is not None]
+                straight = any(math.isclose(pa[axis],pb[axis],abs_tol=1e-6,rel_tol=0) and
+                               all(math.isfinite(c['x']) and math.isfinite(c['y']) and
+                                   math.isclose(c[axis],pa[axis],abs_tol=1e-6,rel_tol=0) for c in controls)
+                               for axis in ('x','y'))
+                if not straight:
+                    raise ValueError('Segment is not horizontal or vertical')
+            graph.setdefault(a,[]).append((b,sid))
+            graph.setdefault(b,[]).append((a,sid))
+            for endpoint in (a,b):
+                if endpoint in source_ids:
+                    counts[source_ids[endpoint]] += 1
+        marker = details['marker_node_id']
+        if marker not in graph:
+            raise ValueError('Missing reaction marker connection')
+        visited_segments = set()
+        for node_id in graph:
+            if node_id in routing_ids:
+                if len(graph[node_id]) != 2:
+                    raise ValueError('Routing node must join exactly two segments')
+                continue
+            node = source_nodes[source_ids[node_id]]
+            if node['kind'] == 'reaction':
+                if node_id != marker:
+                    raise ValueError('Path attached to wrong reaction')
+                continue
+            if len(graph[node_id]) != 1:
+                raise ValueError('Metabolite must terminate one reaction path')
+            if node['kind'] == 'currency' and node['parent_id'] != 'rxn:' + rid:
                 raise ValueError('Currency attached to wrong reaction')
-            counts[source_ids[a]] += 1; counts[source_ids[b]] += 1
+            participants[node['original_id']] += 1
+            previous, current = None, node_id
+            seen = set()
+            while current != marker:
+                if current in seen:
+                    raise ValueError('Cycle in reaction routing')
+                seen.add(current)
+                options = [(n,sid) for n,sid in graph[current] if n!=previous]
+                if len(options) != 1:
+                    raise ValueError('Branched or disconnected metabolite path')
+                following, sid = options[0]
+                visited_segments.add(sid)
+                if orthogonal and set(metadata.get('segment_source_edges',{}).get(sid,[])) != {source_ids[marker],source_ids[node_id]}:
+                    raise ValueError('Segment source incidence metadata mismatch')
+                if current in routing_ids:
+                    if current in used_routing:
+                        raise ValueError('Routing node shared between reaction paths')
+                    used_routing.add(current)
+                if following != marker and following not in routing_ids:
+                    raise ValueError('Path does not end at its reaction marker')
+                previous,current = current,following
+        if visited_segments != set(reaction['segments']):
+            raise ValueError('Disconnected or unused reaction segments')
         if participants != Counter({m: 1 for m in source['metabolites']}):
             raise ValueError('Reaction participants lost or duplicated')
+    if used_routing != routing_ids:
+        raise ValueError('Routing nodes were lost or unused')
     for key, node in source_nodes.items():
         if node['kind'] == 'currency' and counts[key] != 1:
             raise ValueError('Currency copy must have one segment')
     return dict(schema_valid=True, metadata_embedded='metadata' in header,
                 reaction_ids_preserved=True, stoichiometry_preserved=True,
                 coordinate_transform_verified=True, segment_endpoints_verified=True,
-                nodes=len(map_nodes), reactions=len(reactions), segments=len(segment_ids),
+                nodes=len(map_nodes), source_nodes=len(source_nodes), routing_nodes=len(routing_ids),
+                orthogonal_segments_verified=orthogonal, reactions=len(reactions), segments=len(segment_ids),
                 primary_metabolites=sum(n['node_type'] == 'metabolite' and n['node_is_primary'] for n in map_nodes.values()),
                 secondary_metabolites=sum(n['node_type'] == 'metabolite' and not n['node_is_primary'] for n in map_nodes.values()),
                 currency_copy_counts=dict(Counter(n['original_id'] for n in source_nodes.values() if n['kind'] == 'currency')),
@@ -227,7 +309,7 @@ def write_preview(path, data, reaction_data=None, fba_report=None):
     page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>Escher MILP layout</title>
 <style>html,body{height:100%;margin:0;font:14px system-ui}header{padding:10px 18px;background:#f3f5f7}#map{height:calc(100vh - 100px);width:100%}#status{margin-left:16px}</style>
 <header><b>e_coli_core: Escher layout</b><p>Reaction positions and CO2 copies are kept. This view uses Escher styles. Use the mouse wheel to zoom.</p>
-<button id="save">Save map JSON</button><span id="status">Loading...</span></header><div id="map"></div>
+<p id="escher-display-mode"></p><button id="save">Save map JSON</button><span id="status">Loading...</span></header><div id="map"></div>
 <script>window.escherErrors=[];window.addEventListener('error',e=>window.escherErrors.push(e.message));</script>
 <script src="data:application/javascript;base64,LIBRARY_PLACEHOLDER"></script><script>
 const mapData=MAP_PLACEHOLDER;
@@ -237,7 +319,18 @@ window.builder=escher.Builder(mapData,null,null,escher.libs.d3_select('#map'),{
   primary_metabolite_radius:10,secondary_metabolite_radius:3,marker_radius:3,
   reaction_no_data_size:3,hide_secondary_metabolites:false
 });
+function syncEscherDisplayMode(){
+const loaded=!!window.builder.map?.has_data_on_reactions;
+const colors=document.getElementById('major-pathway-colors');
+if(colors?.sheet)colors.sheet.disabled=loaded;
+for(const legend of document.querySelectorAll('[data-pathway-legend]'))legend.hidden=loaded;
+document.getElementById('escher-display-mode').textContent=loaded?
+  'Reaction data loaded: colors, width, values and arrows reflect data. Fixed pathway colors are off.':
+  'No flux data loaded. Arrows show directions allowed by model bounds.';
+window.syncEscherLayers?.();
+}
 const wait=setInterval(()=>{if(!window.builder.map)return;clearInterval(wait);window.escherReady=true;
+window.builder.callback_manager.set('update_data.pathway_colors',syncEscherDisplayMode);syncEscherDisplayMode();
 const m=window.builder.map;document.getElementById('status').textContent=Object.keys(m.reactions).length+' reactions, '+Object.keys(m.nodes).length+' nodes';},100);
 document.getElementById('save').onclick=()=>{const data=window.builder.map.map_for_export();data[0].metadata=mapData[0].metadata;const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='escher_map.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 </script></html>'''
@@ -251,10 +344,10 @@ document.getElementById('save').onclick=()=>{const data=window.builder.map.map_f
         first = min(min(active), maximum * 0.02) if active else maximum * 0.02
         options = dict(reaction_data=reaction_data, reaction_styles=['color', 'size', 'text', 'abs'],
                        reaction_scale=[dict(type='value', value=0, color='#b8b8b8', size=1),
-                                       dict(type='value', value=first, color='#e6ab02', size=3),
-                                       dict(type='value', value=maximum * 0.1, color='#ff7f00', size=5),
-                                       dict(type='value', value=maximum * 0.5, color='#e31a1c', size=9),
-                                       dict(type='value', value=maximum, color='#9e0142', size=14)])
+                                       dict(type='value', value=first, color='#deebf7' if fba_report else '#e6ab02', size=3),
+                                       dict(type='value', value=maximum * 0.1, color='#9ecae1' if fba_report else '#ff7f00', size=5),
+                                       dict(type='value', value=maximum * 0.5, color='#4292c6' if fba_report else '#e31a1c', size=9),
+                                       dict(type='value', value=maximum, color='#08519c' if fba_report else '#9e0142', size=14)])
         page = page.replace('enable_editing:true,', json.dumps(options, allow_nan=False)[1:-1] + ',enable_editing:true,')
         page = page.replace('Escher layout', 'FBA flux in Escher')
         summary = ('Line width and color show absolute flux. Labels show signed values. '
@@ -262,15 +355,65 @@ document.getElementById('save').onclick=()=>{const data=window.builder.map.map_f
                    f'Scale: 0 to {maximum:.4g}. Arrows show the calculated flow direction. '
                    'Arrows on zero-flux reactions show allowed directions, not flow.')
         if fba_report:
+            summary = summary.replace('Higher flux changes from yellow to orange, red, and purple.', 'Higher flux changes from light blue to dark blue. Fixed pathway colors are not applied.')
             summary += (f' Biomass reaction: {fba_report["objective_value"]:.6f} h⁻¹. '
                         'This is one optimal solution that maximizes growth within the SBML bounds.')
         page = page.replace('Reaction positions and CO2 copies are kept. This view uses Escher styles. Use the mouse wheel to zoom.', summary)
         page = page.replace('const mapData=MAP_PLACEHOLDER;',
                             'window.fbaFluxes=' + json.dumps(reaction_data, allow_nan=False) + ';const mapData=MAP_PLACEHOLDER;')
         page = page.replace('#map{height:calc(100vh - 100px)', '#map{height:calc(100vh - 140px)')
-    page = page.replace('e_coli_core: Escher layout', html.escape(data[0]['map_name']))
+    if reaction_data is None:
+        view_name = data[0]['map_name'].replace('flux-median-ranked grid map','grid map')
+    else:
+        view_name = data[0]['map_name']
+    page = page.replace('e_coli_core: Escher layout', html.escape(view_name))
     page = page.replace('e_coli_core: FBA flux in Escher', html.escape(data[0]['map_name']) + ': FBA flux in Escher')
+    page = page.replace('</html>','<script>'+BASE.joinpath('escher_layers.js').read_text()+'</script></html>')
     path.write_text(page.replace('LIBRARY_PLACEHOLDER', library).replace('MAP_PLACEHOLDER', map_json))
+
+
+
+def write_pathway_preview(path, data, major_reactions=(), connector_pairs=None,
+                          model=None, elements=(), initial_highlights=None, records=()):
+    """Start with pathway structure; disable fixed colors when reaction data loads."""
+    if data[0]['metadata'].get('routing')=='orthogonal' and not data[0]['metadata'].get('overlap_routing',{}).get('enabled'):
+        data = separate_routes(copy.deepcopy(data),major_reactions,connector_pairs)
+    write_preview(path, data)
+    metadata = data[0]['metadata']
+    source_ids = metadata['source_node_ids']
+    major_reactions = set(major_reactions)
+    css = ['#reactions .segment {stroke-width:3 !important;}']
+    for rid, reaction in data[1]['reactions'].items():
+        if connector_pairs is not None:
+            css.extend([f'#r{rid} .segment {{stroke:#cbd3d8 !important;}}',
+                        f'#r{rid} .arrowheads path {{stroke:#cbd3d8 !important;fill:#cbd3d8 !important;}}'])
+            for sid, segment in reaction['segments'].items():
+                pair = metadata.get('segment_source_edges',{}).get(sid)
+                if pair is None:
+                    pair = [source_ids[segment['from_node_id']],source_ids[segment['to_node_id']]]
+                if reaction['bigg_id'] not in major_reactions and frozenset(pair) in connector_pairs:
+                    css.extend([f'#r{rid} #s{sid} .segment {{stroke:#f28e2b !important;stroke-width:5 !important;}}',
+                                f'#r{rid} #s{sid} .arrowheads path {{stroke:#f28e2b !important;fill:#f28e2b !important;}}'])
+        if reaction['bigg_id'] in major_reactions:
+            css.extend([f'#r{rid} .segment {{stroke:#d62728 !important;stroke-width:6 !important;}}',
+                        f'#r{rid} .arrowheads path {{stroke:#d62728 !important;fill:#d62728 !important;}}',
+                        f'#r{rid} text {{fill:#d62728 !important;}}'])
+    blocked = '\n'.join(f'#r{rid} .arrowheads {{display:none !important;}}'
+                        for rid, r in data[1]['reactions'].items()
+                        if metadata['reactions'][r['bigg_id']]['direction']=='blocked')
+    style = '<style id="major-pathway-colors">'+'\n'.join(css)+'</style>'
+    style += '<style id="blocked-reaction-arrows">'+blocked+'</style>'
+    legend = '<p data-pathway-legend>Red: main pathways.'
+    if connector_pairs is not None:
+        legend += ' Orange: connections to exchange reactions. Gray: other branches.'
+    legend += ' These colors describe structure, not flux.</p>'
+    page = path.read_text().replace('<header>',style+'<header>'+legend,1)
+    if (path.parent/'escher_fba.html').exists():
+        page = page.replace('<header>','<header><p id="fba-result-link"><a href="escher_fba.html">View FBA result</a></p>',1)
+    if model is not None:
+        from highlighting import inject_controls
+        page = inject_controls(page,model,elements,initial_highlights,records,escher=True)
+    path.write_text(page)
 
 
 def export_layout(directory, output, scale=4000.0, padding=180.0, preview=None):

@@ -51,20 +51,20 @@
     "method": "Integer-coordinate MILP / SciPy HiGHS",
     "solver_status": 1,
     "solver_message": "Time limit reached. (HiGHS Status 13: model_status is Time limit reached; primal_status is None)",
-    "time_limit_seconds": 60,
+    "time_limit_seconds": 60.0,
     "grid_cols": 12,
     "grid_rows": 27,
     "variables": 29890,
     "constraints": 37120,
-    "objective": 78,
+    "objective": 73,
     "objective_metric": "Sum of Manhattan lengths of unique orange incidence edges; shared edges counted once",
     "optimality_proven": false,
     "selected_solution": "validated heuristic incumbent",
     "heuristic": {
       "method": "Spectral assignment, seeded annealing, exhaustive swaps/empty moves",
       "polishing_scope": "All grid cells",
-      "initial_length": 101,
-      "final_length": 78,
+      "initial_length": 81,
+      "final_length": 73,
       "initialization": "Validated previous placement"
     },
     "distinct_grid_points_verified": true,
@@ -306,77 +306,77 @@
           6
         ],
         "rxn:CS": [
-          4,
-          5
+          5,
+          6
         ],
         "met:cit_c": [
-          4,
-          4
+          6,
+          6
         ],
         "rxn:ACONTa": [
-          4,
-          3
+          7,
+          6
         ],
         "met:acon_C_c": [
-          4,
-          2
+          8,
+          6
         ],
         "rxn:ACONTb": [
-          4,
-          1
+          9,
+          6
         ],
         "met:icit_c": [
-          5,
-          1
+          9,
+          5
         ],
         "rxn:ICDHyr": [
-          6,
-          1
+          9,
+          4
         ],
         "met:akg_c": [
-          7,
-          1
+          9,
+          3
         ],
         "rxn:AKGDH": [
           9,
           1
         ],
         "met:succoa_c": [
-          9,
-          2
+          8,
+          1
         ],
         "rxn:SUCOAS": [
-          9,
-          3
+          7,
+          1
         ],
         "met:succ_c": [
-          9,
-          4
+          6,
+          1
         ],
         "rxn:SUCDi": [
-          9,
-          5
+          5,
+          1
         ],
         "met:fum_c": [
-          9,
-          6
+          4,
+          1
         ],
         "rxn:FUM": [
-          8,
-          6
+          4,
+          2
         ],
         "met:mal__L_c": [
-          7,
-          6
+          4,
+          3
         ],
         "rxn:MDH": [
-          6,
-          6
+          4,
+          4
         ]
       },
       "fixed_backbone_positions_verified": true
     },
-    "fixed_network_solver_objective": 78,
+    "fixed_network_solver_objective": 73,
     "fixed_network_lower_bound": 41.0
   },
   "major_backbones": {
@@ -940,72 +940,72 @@
             -20
           ],
           "rxn:CS": [
-            4,
-            -21
+            5,
+            -20
           ],
           "met:cit_c": [
-            4,
-            -22
+            6,
+            -20
           ],
           "rxn:ACONTa": [
-            4,
-            -23
+            7,
+            -20
           ],
           "met:acon_C_c": [
-            4,
-            -24
+            8,
+            -20
           ],
           "rxn:ACONTb": [
-            4,
-            -25
+            9,
+            -20
           ],
           "met:icit_c": [
-            5,
-            -25
+            9,
+            -21
           ],
           "rxn:ICDHyr": [
-            6,
-            -25
+            9,
+            -22
           ],
           "met:akg_c": [
-            7,
-            -25
+            9,
+            -23
           ],
           "rxn:AKGDH": [
             9,
             -25
           ],
           "met:succoa_c": [
-            9,
-            -24
+            8,
+            -25
           ],
           "rxn:SUCOAS": [
-            9,
-            -23
+            7,
+            -25
           ],
           "met:succ_c": [
-            9,
-            -22
+            6,
+            -25
           ],
           "rxn:SUCDi": [
-            9,
-            -21
+            5,
+            -25
           ],
           "met:fum_c": [
-            9,
-            -20
+            4,
+            -25
           ],
           "rxn:FUM": [
-            8,
-            -20
+            4,
+            -24
           ],
           "met:mal__L_c": [
-            7,
-            -20
+            4,
+            -23
           ],
           "rxn:MDH": [
-            6,
-            -20
+            4,
+            -22
           ]
         },
         "displayed_node_ids": [
@@ -1045,7 +1045,9 @@
       "left": 4,
       "top_offset": -20,
       "side_length": 5,
-      "closed": true
+      "closed": true,
+      "orientation": "clockwise",
+      "signed_double_area": -50
     },
     "color": "#d62728",
     "fixed_node_offsets": {
@@ -1150,72 +1152,72 @@
         -20
       ],
       "rxn:CS": [
-        4,
-        -21
+        5,
+        -20
       ],
       "met:cit_c": [
-        4,
-        -22
+        6,
+        -20
       ],
       "rxn:ACONTa": [
-        4,
-        -23
+        7,
+        -20
       ],
       "met:acon_C_c": [
-        4,
-        -24
+        8,
+        -20
       ],
       "rxn:ACONTb": [
-        4,
-        -25
+        9,
+        -20
       ],
       "met:icit_c": [
-        5,
-        -25
+        9,
+        -21
       ],
       "rxn:ICDHyr": [
-        6,
-        -25
+        9,
+        -22
       ],
       "met:akg_c": [
-        7,
-        -25
+        9,
+        -23
       ],
       "rxn:AKGDH": [
         9,
         -25
       ],
       "met:succoa_c": [
-        9,
-        -24
+        8,
+        -25
       ],
       "rxn:SUCOAS": [
-        9,
-        -23
+        7,
+        -25
       ],
       "met:succ_c": [
-        9,
-        -22
+        6,
+        -25
       ],
       "rxn:SUCDi": [
-        9,
-        -21
+        5,
+        -25
       ],
       "met:fum_c": [
-        9,
-        -20
+        4,
+        -25
       ],
       "rxn:FUM": [
-        8,
-        -20
+        4,
+        -24
       ],
       "met:mal__L_c": [
-        7,
-        -20
+        4,
+        -23
       ],
       "rxn:MDH": [
-        6,
-        -20
+        4,
+        -22
       ]
     },
     "glucose_top_margin": 1,
@@ -1391,20 +1393,20 @@
       "objective": "Sum of Manhattan lengths of unique orange incidence edges; shared edges counted once",
       "method": "Greedy shared shortest-path forest alternating with constrained grid placement",
       "global_optimality_proven": false,
-      "total_length": 78,
+      "total_length": 73,
       "shared_coenzyme_ids": [],
       "optimization_history": [
         {
           "iteration": 1,
-          "before_reroute": 101,
-          "orange_length": 101,
-          "optimized_fixed_network_length": 101
+          "before_reroute": 81,
+          "orange_length": 81,
+          "optimized_fixed_network_length": 81
         },
         {
           "iteration": 2,
-          "before_reroute": 78,
-          "orange_length": 78,
-          "optimized_fixed_network_length": 78
+          "before_reroute": 73,
+          "orange_length": 73,
+          "optimized_fixed_network_length": 73
         }
       ]
     },
@@ -1458,7 +1460,7 @@
     "EX_pyr_e",
     "EX_succ_e"
   ],
-  "total_orthogonal_edge_length": 936.8000000000013,
+  "total_orthogonal_edge_length": 982.8000000000013,
   "coenzyme_edge_length": 37.800000000000004,
   "inorganic_metabolites": [
     "h2o_c",
@@ -1528,9 +1530,12 @@
       "stoichiometry_preserved": true,
       "coordinate_transform_verified": true,
       "segment_endpoints_verified": true,
-      "nodes": 206,
+      "nodes": 629,
+      "source_nodes": 206,
+      "routing_nodes": 423,
+      "orthogonal_segments_verified": true,
       "reactions": 76,
-      "segments": 237,
+      "segments": 660,
       "primary_metabolites": 46,
       "secondary_metabolites": 84,
       "currency_copy_counts": {
@@ -1559,7 +1564,7 @@
     "Global length optimality is reported, not assumed.",
     "Crossings, coincident edge paths, and label overlap are not minimized.",
     "Display model omits inorganic participants and is not suitable for FBA.",
-    "Escher draws direct segments; orthogonal length objective describes layout.svg and layout.png.",
+    "Escher uses orthogonal segments with routing nodes; original node coordinates and reaction chemistry are preserved.",
     "Sampling uses original bounds without a growth floor or loopless constraints; internal cycles may dominate."
   ],
   "program_name": "sbml2escher",
@@ -1734,22 +1739,51 @@
     "objective": "Sum of Manhattan lengths of unique orange incidence edges; shared edges counted once",
     "method": "Greedy shared shortest-path forest alternating with constrained grid placement",
     "global_optimality_proven": false,
-    "total_length": 78,
+    "total_length": 73,
     "shared_coenzyme_ids": [],
     "optimization_history": [
       {
         "iteration": 1,
-        "before_reroute": 101,
-        "orange_length": 101,
-        "optimized_fixed_network_length": 101
+        "before_reroute": 81,
+        "orange_length": 81,
+        "optimized_fixed_network_length": 81
       },
       {
         "iteration": 2,
-        "before_reroute": 78,
-        "orange_length": 78,
-        "optimized_fixed_network_length": 78
+        "before_reroute": 73,
+        "orange_length": 73,
+        "optimized_fixed_network_length": 73
       }
     ]
   },
-  "orange_orthogonal_edge_length": 78
+  "orange_orthogonal_edge_length": 73,
+  "highlights": {
+    "selection": {
+      "metabolites": [],
+      "reactions": []
+    },
+    "unavailable": {
+      "metabolites": [],
+      "reactions": []
+    }
+  },
+  "escher_overlap_routing": {
+    "enabled": true,
+    "base_map_id": "8470a9ede15412b70d94a151",
+    "lane_spacing": 10.799999999999999,
+    "shifted_legs": 119,
+    "max_offset": 37.8,
+    "priority": [
+      "red",
+      "orange",
+      "gray"
+    ],
+    "shared_same_reaction_trunks": true,
+    "max_offset_by_priority": {
+      "red": 10.799999999999999,
+      "orange": 10.799999999999999,
+      "gray": 37.8
+    },
+    "primary_backbone_max_offset": 0.0
+  }
 }

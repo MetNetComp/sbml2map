@@ -15,7 +15,7 @@ import re
 
 from auto_pathways import annotation_ids
 from annotation_context import fallback_role_evidence, reaction_labels
-from major_backbones2 import RED, validate_backbones
+from major_backbones2 import RED, validate_backbones, clockwise_square
 
 REFERENCE = Path(__file__).parent / 'data/bacteria/central_reference.json'
 NAMESPACES = ('bigg.metabolite', 'kegg.compound', 'chebi', 'metanetx.chemical', 'seed.compound', 'biocyc', 'inchi_key')
@@ -385,14 +385,11 @@ def layout_plan(routes, displayed_nodes):
                 chain.extend(['met:'+mid if mid else None,'rxn:'+step['reaction_id'] if step else None])
         side=max(2,math.ceil(len(chain)/4));entry=last_acetyl or [1,-3-margin]
         left,top=entry[0]+1,entry[1]+1
-        ring=([(left,top-t) for t in range(side)]+[(left+t,top-side) for t in range(side)]+
-              [(left+side,top-side+t) for t in range(side)]+[(left+side-t,top) for t in range(side)])
-        # Keep the top-left start and follow oxidative TCA clockwise (y upward).
-        ring = ring[:1] + ring[:0:-1]
+        ring = clockwise_square(left, top, side)
         for i,key in enumerate(chain):
             if key:
                 put(key,ring[i*len(ring)//len(chain)],local)
-        per_route['tca']=local;square=dict(left=left,top_offset=top,side_length=side,closed=route['closed'])
+        per_route['tca']=local;square=dict(left=left,top_offset=top,side_length=side,closed=route['closed'],orientation='clockwise')
     fixed={k:v for k,v in offsets.items() if k in displayed_nodes}
     report_routes=[dict(r,node_offsets=per_route[r['id']],displayed_node_ids=[k for k in per_route[r['id']] if k in displayed_nodes],
                         displayed_reaction_ids=[rid for rid in r['reaction_ids'] if 'rxn:'+rid in displayed_nodes]) for r in ordered]
