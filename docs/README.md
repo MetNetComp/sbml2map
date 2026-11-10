@@ -37,3 +37,17 @@ These saved structural views show 326 of the source model's 349 reactions,
 without flux sampling. No new model files or source/display model snapshots
 are included. `prepare_github_pages.py` refreshes E. coli core and preserves
 this separately published iCH360 directory.
+
+## iCH360 misc representation
+
+- [SVG viewer](misc_ich_360/index.html)
+- [Escher viewer](misc_ich_360/escher_preview.html)
+- [Verification](misc_ich_360/verification.json)
+
+Live site: https://metnetcomp.github.io/sbml2escher/misc_ich_360/
+
+The structural map shows 327 of 353 reactions. Glycolysis (11 reactions), PDH
+(1 reaction), and the closed TCA cycle (9 reactions) are recognized, with 122
+orange incidence edges connecting all 20 visible boundary reactions. The
+original input model is preserved locally; model files and model snapshots
+are excluded from this publication. Sampling and SBML export were disabled.

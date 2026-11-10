@@ -1,0 +1,96 @@
+{
+  "input_file": "data/misc_iCH360.sbml3.xml",
+  "input_sha256": "c13df301c98fae3c8b4a105c14a418a5b396fdb95294ba794293b6d7484ade39",
+  "source_reactions": 353,
+  "drawn_reactions": 327,
+  "extraction_status": "complete_central_backbone",
+  "routes": [
+    {
+      "id": "glycolysis",
+      "reactions": 11,
+      "closed": false
+    },
+    {
+      "id": "pdh",
+      "reactions": 1,
+      "closed": false
+    },
+    {
+      "id": "tca",
+      "reactions": 9,
+      "closed": true
+    },
+    {
+      "id": "glucose_exchange",
+      "reactions": 1,
+      "closed": false
+    }
+  ],
+  "recognized_boundary_reactions": 27,
+  "original_exchanges_recognized": 26,
+  "visible_connected_boundary_reactions": 20,
+  "orange_incidence_edges": 122,
+  "hidden_boundary_species": 27,
+  "source_model_preserved": true,
+  "orange_paths_independently_verified": true,
+  "escher_validation": {
+    "schema_valid": true,
+    "metadata_embedded": true,
+    "reaction_ids_preserved": true,
+    "stoichiometry_preserved": true,
+    "coordinate_transform_verified": true,
+    "segment_endpoints_verified": true,
+    "nodes": 4356,
+    "source_nodes": 927,
+    "routing_nodes": 3429,
+    "orthogonal_segments_verified": true,
+    "reactions": 327,
+    "segments": 4522,
+    "primary_metabolites": 255,
+    "secondary_metabolites": 345,
+    "currency_copy_counts": {
+      "MNXM5@MNXC3": 47,
+      "MNXM738702@MNXC3": 47,
+      "MNXM1585118@MNXC3": 51,
+      "MNXM40333@MNXC3": 45,
+      "MNXM10@MNXC3": 31,
+      "MNXM8@MNXC3": 31,
+      "MNXM1584204@MNXC3": 5,
+      "MNXM191@MNXC3": 5,
+      "MNXM728294@MNXC3": 10,
+      "MNXM727276@MNXC3": 17,
+      "MNXM1103936@MNXC3": 7,
+      "MNXM1363962@MNXC3": 2,
+      "MNXM1583395@MNXC3": 6,
+      "MNXM1103285@MNXC3": 6,
+      "MNXM1102191@MNXC3": 3,
+      "MNXM1102128@MNXC3": 4,
+      "MNXM1102376@MNXC3": 3,
+      "MNXM1101285@MNXC3": 2,
+      "MNXM1101474@MNXC3": 3,
+      "MNXM1103718@MNXC3": 3,
+      "MNXM1104823@MNXC3": 3,
+      "MNXM1103553@MNXC3": 4,
+      "MNXM1368769@MNXC3": 4,
+      "MNXM1370053@MNXC3": 4,
+      "MNXM1585449@MNXC3": 2
+    },
+    "reverse_only_reactions": [],
+    "blocked_reactions": [],
+    "missing_gene_rule_count": 0
+  },
+  "html_links_and_javascript_valid": true,
+  "png_valid": true,
+  "sampling_performed": false,
+  "sbml_exported": false,
+  "root_tests_passed": 128,
+  "public_tests_run": 52,
+  "public_tests_skipped": 1,
+  "source_files_sha256": {
+    "chemical_identity.py": "494da12c2e2358135de3559fe31968bc32210ac773b6d673e6c7125797de1e7c",
+    "auto_pathways.py": "0bf690f2df82d86399dcfd8d062d2f40cd5e251ddcc32ac6528d05558c001247",
+    "annotation_context.py": "c564a385a85e801b21360b7138a19d4ef281690ea3660291ef6f0542c7744623",
+    "bacterial_pathways.py": "64ac1c4a0919e1fe6680b44681f74c462fd5145c3beae14253fe8d81563165f1",
+    "sbml2escher.py": "0f38b95483074fad39332beee28da61a4754f4d74903a573908a015c96b37b57"
+  }
+}
