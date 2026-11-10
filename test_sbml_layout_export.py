@@ -18,7 +18,7 @@ except ImportError:
 
 BASE=Path(__file__).resolve().parent
 MODEL=BASE/'models/e_coli_core.xml' if (BASE/'models').exists() else BASE/'e_coli_core.xml'
-RESULTS=BASE/'results/e_coli_core' if (BASE/'results').exists() else BASE/'public/results/e_coli_core'
+RESULTS=BASE/'results/e_coli_core' if (BASE/'results/e_coli_core').exists() else BASE/'public/results/e_coli_core'
 
 
 class DefaultExportTests(unittest.TestCase):

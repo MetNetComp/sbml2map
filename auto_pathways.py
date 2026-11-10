@@ -15,6 +15,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode, urlparse, unquote
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
+from chemical_identity import normalize_identifier, uri_identifier
 
 KEGG = 'https://rest.kegg.jp/'
 NCBI = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
@@ -84,24 +85,14 @@ def annotation_ids(entity, database, qualifiers=('is',)):
     for item in entity.get('annotations', []):
         if item['qualifier'].rsplit('}', 1)[-1] not in qualifiers:
             continue
-        uri = unquote(item['uri'])
-        if uri.startswith('urn:miriam:'):
-            namespace, _, value = uri[len('urn:miriam:'):].partition(':')
-        else:
-            parsed = urlparse(uri)
-            if parsed.hostname not in ('identifiers.org', 'www.identifiers.org'):
-                continue
-            part = parsed.path.strip('/')
-            if '/' in part:
-                namespace, value = part.split('/', 1)
-            else:
-                namespace, _, value = part.partition(':')
-        if namespace == database and value:
-            result.add(value)
-    values = entity.get('annotation', {}).get(database, [])
-    if isinstance(values, str):
-        values = [values]
-    result.update(values)
+        key = uri_identifier(item['uri'])
+        if key and key[0] == normalize_identifier(database,'')[0]:
+            result.add(key[1])
+    for namespace, values in entity.get('annotation', {}).items():
+        if isinstance(values,str):values=[values]
+        for value in values:
+            key=normalize_identifier(namespace,str(value))
+            if key[0]==normalize_identifier(database,'')[0]:result.add(key[1])
     return sorted(result)
 
 
@@ -168,7 +159,7 @@ def infer_organism(model, client, override=None, kegg_override=None):
             names = {'e_coli': 'Escherichia coli', 'Escherichia coli': 'Escherichia coli',
                      'Homo sapiens': 'Homo sapiens', 'Saccharomyces cerevisiae': 'Saccharomyces cerevisiae'}
             matches = sorted({name for token, name in names.items() if token.lower() in text.lower()})
-            matches += re.findall(r'(?:organism|species|\u751f\u7269\u7a2e)\s*[:=]\s*([A-Z][a-z]+ [a-z]+)\b', text)
+            matches += re.findall(r'(?:organism|species|生物種)\s*[:=]\s*([A-Z][a-z]+ [a-z]+)\b', text)
             matches = sorted(set(matches))
             if len(matches) != 1:
                 return dict(status='unresolved', candidates=matches, evidence=evidence, warnings=warnings)

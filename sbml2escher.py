@@ -33,9 +33,9 @@ def discovery_context(filename, model):
 
 
 class BacterialStrategy:
-    def __init__(self, model, reference=REFERENCE, identity_map=None, glucose_id=None, max_milp_nodes=180):
+    def __init__(self, model, reference=REFERENCE, identity_map=None, glucose_id=None, max_milp_nodes=180, mnxref_dir=None):
         self.context = model
-        self.routes,self.extraction,self.mapped,self.reference=discover(model,reference,identity_map,glucose_id)
+        self.routes,self.extraction,self.mapped,self.reference=discover(model,reference,identity_map,glucose_id,mnxref_dir)
         self.glucose_id=self.extraction['glucose_metabolite_id']
         self.max_milp_nodes=max_milp_nodes
         for route in self.routes:
@@ -99,6 +99,7 @@ def parser():
     p.set_defaults(output_dir=Path(__file__).parent/'e_coli_core_sbml2escher_output',program_name='sbml2escher')
     p.add_argument('--reference',type=Path,default=REFERENCE,help='Versioned BiGG/KEGG compound-role reference JSON')
     p.add_argument('--identity-map',type=Path,help='JSON mapping model-local metabolite IDs to reference chemical roles')
+    p.add_argument('--mnxref-dir',type=Path,help='Local MNXref release directory containing chem_xref.tsv and chem_depr.tsv; no automatic downloads')
     p.add_argument('--discover-only',action='store_true',help='Extract and report pathways without sampling or layout')
     p.add_argument('--max-milp-nodes',type=int,default=180,help='Above this grid-node count, preserve constraints with heuristic placement')
     return p
@@ -121,7 +122,7 @@ def run(args):
     model=load_model(args.model)
     identity=json.loads(args.identity_map.read_text()) if args.identity_map else None
     context=discovery_context(args.model,model)
-    strategy=BacterialStrategy(context,args.reference,identity,args.glucose_id,args.max_milp_nodes)
+    strategy=BacterialStrategy(context,args.reference,identity,args.glucose_id,args.max_milp_nodes,getattr(args,'mnxref_dir',None))
     args.output_dir.mkdir(parents=True,exist_ok=True)
     if args.discover_only:
         strategy.save(args.output_dir)
@@ -133,7 +134,7 @@ def run(args):
     if context.get('_unsupported_sampling_constraints') and not args.no_sampling:
         args._sampling_unavailable_reason = 'SBML userDefinedConstraint is not supported by flux sampling'
     if any(m.get('_boundary_placeholder') for m in context['metabolites']) and not args.no_sampling:
-        args._sampling_unavailable_reason = 'CellDesigner source/sink placeholders require explicit mass-balance semantics; structural display only'
+        args._sampling_unavailable_reason = 'Boundary/source-sink placeholders require explicit mass-balance semantics; structural display only'
     args._strategy=strategy
     return engine.run(args)
 

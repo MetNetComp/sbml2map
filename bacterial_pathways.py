@@ -14,7 +14,8 @@ from pathlib import Path
 import re
 
 from auto_pathways import annotation_ids
-from annotation_context import fallback_role_evidence, reaction_labels
+from annotation_context import fallback_role_evidence, reaction_labels, boundary_labels
+from chemical_identity import MetaNetXReference, metanetx_id, normalize_identifier
 from major_backbones2 import RED, validate_backbones, clockwise_square
 
 REFERENCE = Path(__file__).parent / 'data/bacteria/central_reference.json'
@@ -28,12 +29,13 @@ def normalized_name(value):
     return re.sub(r'[^a-z0-9]', '', value.lower())
 
 
-def map_roles(model, reference, overrides=None):
+def map_roles(model, reference, overrides=None, mnxref=None):
     roles = reference['roles']; index = defaultdict(set); names = defaultdict(set)
+    mnxref=mnxref or MetaNetXReference(reference)
     for role, record in roles.items():
         for ns, values in record['aliases'].items():
             for value in values:
-                index[(ns, value)].add(role)
+                index[normalize_identifier(ns,value)].add(role)
         for name in record['names']:
             names[normalized_name(name)].add(role)
     overrides = overrides or {}
@@ -42,7 +44,12 @@ def map_roles(model, reference, overrides=None):
         raise ValueError('Identity map must assign known source metabolite IDs to roles in the reference catalog')
     mapped, records = {}, []
     for metabolite in model['metabolites']:
-        mid = metabolite['id']; evidence = []
+        mid = metabolite['id']; evidence = []; mnx_ambiguities=[]
+        def mnx_candidates(value,tier):
+            terminals=mnxref.terminals(value)
+            if len(terminals)>1:
+                mnx_ambiguities.append(dict(value=value,tier=tier,replacement_ids=sorted(terminals)))
+            return mnxref.candidates(value)
         comp = metabolite.get('compartment', '')
         base = mid.removesuffix('_' + comp) if comp else re.sub(r'_[a-z][0-9]?$', '', mid)
         namespace='__'+str(model.get('id',''))+'__'
@@ -51,15 +58,30 @@ def map_roles(model, reference, overrides=None):
         # BiGG SBML ID normalization is performed by model_input, not guessed here.
         if base in roles:
             evidence.append(dict(role=base, tier=300, source='BiGG-compatible metabolite ID', value=base))
+        mnx_id=metanetx_id(mid)
+        if mnx_id:
+            for role in sorted(mnx_candidates(mnx_id,200)):
+                evidence.append(dict(role=role,tier=200,source='MetaNetX metabolite ID',value=mnx_id))
         if re.fullmatch(r'cpd\d+', base):
             for role in index.get(('seed.compound', base), []):
                 evidence.append(dict(role=role, tier=250, source='ModelSEED compound ID', value=base))
         for ns in NAMESPACES:
             values = annotation_ids(metabolite, ns)
             for value in values:
-                for role in index.get((ns, value), []):
+                candidates=set(index.get((ns,value),()))
+                if ns=='metanetx.chemical':candidates.update(mnx_candidates(value,200))
+                for role in sorted(candidates):
                     evidence.append(dict(role=role, tier=300 if ns=='bigg.metabolite' else 200 if ns in ('kegg.compound','metanetx.chemical','seed.compound','inchi_key') else 150,
                                          source='annotation:' + ns, value=value))
+            # Related identifiers are useful hints, but must not override an
+            # explicit identity annotation. Conflicting related roles remain
+            # ambiguous rather than being resolved by their order in the file.
+            for value in annotation_ids(metabolite, ns, ('isRelatedTo',)):
+                candidates=set(index.get((ns,value),()))
+                if ns=='metanetx.chemical':candidates.update(mnx_candidates(value,100))
+                for role in sorted(candidates):
+                    evidence.append(dict(role=role, tier=100,
+                                         source='annotation:' + ns + ':isRelatedTo', value=value))
         # Exact reference names are a last resort; never fuzzy substring matching.
         for role in names.get(normalized_name(metabolite.get('name', '')), []):
             evidence.append(dict(role=role, tier=50, source='exact reference name', value=metabolite.get('name')))
@@ -67,14 +89,16 @@ def map_roles(model, reference, overrides=None):
             evidence.extend(fallback_role_evidence(metabolite, reference))
         if mid in overrides:
             evidence.append(dict(role=overrides[mid], tier=1000, source='explicit identity map', value=overrides[mid]))
-        best = max((e['tier'] for e in evidence), default=0)
+        best = max([e['tier'] for e in evidence]+[e['tier'] for e in mnx_ambiguities], default=0)
         candidates = sorted({e['role'] for e in evidence if e['tier']==best})
-        status = 'mapped' if len(candidates)==1 else 'ambiguous' if candidates else 'unmapped'
+        uncertain=any(e['tier']==best for e in mnx_ambiguities)
+        status = 'ambiguous' if uncertain else 'mapped' if len(candidates)==1 else 'ambiguous' if candidates else 'unmapped'
         if status=='mapped':
             mapped[mid] = candidates[0]
         records.append(dict(model_id=mid, compartment=comp, role=mapped.get(mid), status=status,
                             candidate_roles=candidates, evidence=evidence,
                             lower_tier_conflicts=sorted({e['role'] for e in evidence} - set(candidates))))
+        if mnx_ambiguities:records[-1]['metanetx_split_identifiers']=mnx_ambiguities
         if metabolite.get('_identity_hints'):
             records[-1]['fallback_identity_hints'] = metabolite['_identity_hints']
             records[-1]['mapping_reason'] = ('recognized boundary placeholder, not a chemical role' if metabolite.get('_boundary_placeholder') else
@@ -96,30 +120,40 @@ def exchange_reactions(model, mapped):
         if len(reaction['metabolites']) != 1:
             placeholders = [m for m in reaction['metabolites'] if compounds[m].get('_boundary_placeholder')]
             physical = [m for m in reaction['metabolites'] if m not in placeholders]
-            labels = reaction_labels(reaction)
+            labels = boundary_labels(reaction)
             explicit = [(source, value) for source, value in labels if value.startswith('EX_')]
-            conflicting = any(value.startswith(('DM_', 'SK_')) for source, value in labels)
-            if (len(placeholders) == 1 and len(physical) == 1 and explicit and not conflicting
+            sbo=set(annotation_ids(reaction,'sbo',('is','isRelatedTo')))|{str(reaction.get('sbo_term',''))}
+            sbo_exchange=bool({'SBO:0000627','0000627'}&sbo)
+            kinds={v.split('_',1)[0] for _,v in labels}
+            conflicting = bool(kinds & {'DM','SK'})
+            if (len(placeholders) == 1 and len(physical) == 1 and (explicit or sbo_exchange or conflicting)
                     and reaction.get('_celldesigner_connections_verified', True)
                     and reaction['metabolites'][placeholders[0]] * reaction['metabolites'][physical[0]] < 0):
                 mid = physical[0]
                 result.append(dict(reaction_id=reaction['id'], metabolite_id=mid,
-                                   import_allowed=import_allowed(reaction, mid), boundary_kind='exchange',
+                                   import_allowed=import_allowed(reaction, mid),
+                                   boundary_kind='demand' if kinds=={'DM'} else 'sink' if kinds=={'SK'} else 'exchange_candidate' if len(kinds)>1 else 'exchange',
                                    boundary_placeholder_id=placeholders[0],
-                                   evidence='Explicit EX name plus verified CellDesigner boundary placeholder',
+                                   evidence='Exchange/DM/SK annotation plus verified boundary placeholder',
                                    name_evidence=[dict(source=s, value=v) for s, v in explicit]))
             continue
         mid = next(iter(reaction['metabolites'])); metabolite = compounds[mid]
-        sbo = set(annotation_ids(reaction, 'sbo')) | {str(reaction.get('sbo_term', ''))}
+        sbo = set(annotation_ids(reaction, 'sbo',('is','isRelatedTo'))) | {str(reaction.get('sbo_term', ''))}
         compartment=metabolite.get('compartment','')
         compartment_name=model.get('compartments',{}).get(compartment,compartment)
         external = compartment.lower() in ('e','e0','extracellular','external','outside','extracellular_space') or any(word in str(compartment_name).lower() for word in ('extracellular','external','outside'))
-        explicit = reaction['id'].startswith('EX_') or bool({'SBO:0000627','0000627'} & sbo)
-        if explicit or external or (mapped.get(mid)=='glc__D' and import_allowed(reaction, mid)):
-            result.append(dict(reaction_id=reaction['id'], metabolite_id=mid,
-                               import_allowed=import_allowed(reaction, mid),
-                               evidence='EX identifier/SBO' if explicit else 'single external species' if external else 'single glucose source',
-                               boundary_kind='exchange_candidate' if not explicit else 'exchange'))
+        labels=boundary_labels(reaction)
+        explicit = any(v.startswith('EX_') for _,v in labels) or bool({'SBO:0000627','0000627'} & sbo)
+        kinds={v.split('_',1)[0] for _,v in labels}
+        kind=('exchange_candidate' if len(kinds)>1 else
+              'demand' if kinds=={'DM'} else
+              'sink' if kinds=={'SK'} else
+              'exchange' if explicit or external else 'exchange_candidate')
+        # Count source participants before display filtering, never after it.
+        result.append(dict(reaction_id=reaction['id'], metabolite_id=mid,
+                           import_allowed=import_allowed(reaction, mid),
+                           evidence='EX identifier/SBO' if explicit else 'single external species' if external else 'single source participant',
+                           boundary_kind=kind))
     return result
 
 
@@ -153,7 +187,7 @@ def directed_graph(model, mapped, permitted_kinds=None, reference=None):
             for a in left:
                 for b in right:
                     preferred=reference.get('reaction_preferences',{}).get(mapped[a]+'|'+mapped[b],[])
-                    reaction_ids=annotation_ids(reaction,'kegg.reaction')
+                    reaction_ids=annotation_ids(reaction,'kegg.reaction',('is','isRelatedTo'))
                     preference=0 if not preferred or set(preferred)&set(reaction_ids) else .01
                     graph[a].append(dict(source=a,target=b,reaction_id=rid,direction=direction,
                                          organic_roles=sorted(organic_roles),reference_penalty=preference))
@@ -222,12 +256,13 @@ def match_pattern(graph, mapped, pattern, starts=None, closed=False, max_states=
     return None
 
 
-def discover(model, reference_path=REFERENCE, identity_map=None, glucose_id=None):
+def discover(model, reference_path=REFERENCE, identity_map=None, glucose_id=None, mnxref_dir=None):
     reference_path=Path(reference_path); raw=reference_path.read_bytes(); reference=json.loads(raw)
     overrides=dict(identity_map or {})
     if glucose_id:
         overrides[glucose_id]='glc__D'
-    mapped, mapping=map_roles(model,reference,overrides)
+    mnxref=MetaNetXReference(reference,mnxref_dir)
+    mapped, mapping=map_roles(model,reference,overrides,mnxref)
     graph=directed_graph(model,mapped,{'organic'},reference)
     exchanges=exchange_reactions(model,mapped)
     glucose_exchanges=[e for e in exchanges if mapped.get(e['metabolite_id'])=='glc__D']
@@ -317,6 +352,8 @@ def discover(model, reference_path=REFERENCE, identity_map=None, glucose_id=None
                                  'EMP is preferred when complete; otherwise ED variants are tried in documented order.'])
     fallback_records = [r for r in mapping if any(e['source'].startswith(('SBML notes:', 'SBML species name', 'CellDesigner ')) for e in r['evidence'])]
     placeholders = [m['id'] for m in model['metabolites'] if m.get('_boundary_placeholder')]
+    if mnxref.provenance:
+        extraction['metanetx_reference']=mnxref.provenance
     if fallback_records or placeholders:
         extraction['annotation_fallback'] = dict(
             mapped_with_supplemental_evidence=sum(r['status'] == 'mapped' for r in fallback_records),

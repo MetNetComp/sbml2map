@@ -137,17 +137,41 @@ The SBML reader targets metabolic models with fixed stoichiometry. Dynamic
 rules, events, initial assignments, and variable stoichiometry are unsupported.
 Models keep their original attribution and usage conditions.
 
+Chemical-role and reaction-identifier matching also accept `isRelatedTo`
+annotations. Explicit `is` annotations and recognized model IDs take precedence over related identifiers.
+Conflicting related identifiers remain ambiguous and can be resolved with
+`--identity-map`; their evidence is recorded in `id_mapping.json`.
+
+MetaNetX chemical IDs are read from annotations or species IDs such as
+`MNXM23@MNXC3`. Identifier namespaces and ChEBI prefixes are normalized.
+Structured notes `SOURCE: M_f6p_c` provide supplementary exact-ID evidence.
+To use an additional local MNXref release, pass `--mnxref-dir /path/to/release`
+containing `chem_xref.tsv` and `chem_depr.tsv`. The release headers and SHA-256
+hashes are saved in `pathway_extraction.json`; no automatic download is made.
+Deprecated IDs with multiple replacements stay ambiguous unless stronger
+identity evidence or an explicit override resolves them.
+
 When standard chemical identifiers are missing, the reader checks structured
 SBML notes (names, abbreviations, formulas, and VMH links) and CellDesigner
 species names. Matches use exact reference identifiers or names, including
 explicit legacy D/L aliases. Ambiguous matches stay unresolved and can be set
 with `--identity-map`. The evidence is saved in `id_mapping.json`.
 
-Explicitly named exchange reactions can include a CellDesigner source/sink
-symbol. Verified symbols are hidden only in the drawing, while the source model
-keeps every participant and bound. These symbols trigger structural mode when
-sampling is requested. CellDesigner coordinates and colors are not used to
-select pathways or position nodes.
+Exchange evidence includes SBO:0000627, BiGG EX annotations, and notes SOURCE
+labels. An explicit model-boundary compartment (including MetaNetX `BOUNDARY`)
+can supply the second participant of an exchange. A matching chemical,
+opposite coefficient signs, and boundary evidence on every use are required.
+Verified boundary participants and CellDesigner source/sink symbols are hidden
+only in the drawing; the source model keeps every participant and bound.
+They trigger structural mode when sampling is requested.
+
+Reactions with one participant in the source model are included as boundary
+reactions even without an EX label. DM/SK demand and sink subtypes are recorded;
+unlabeled single-participant reactions are marked `exchange_candidate`.
+Counting occurs before display filtering. Visible boundary reactions occupy
+the perimeter and participate in orange connector discovery. Disconnected
+ones are reported, with no fabricated connection. CellDesigner coordinates
+and colors are not used to select pathways or position nodes.
 
 ## Example commands
 

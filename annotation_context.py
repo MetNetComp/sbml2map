@@ -1,6 +1,7 @@
 """Read identity hints without changing source chemistry or using drawing coordinates."""
 import re
 from urllib.parse import unquote, urlparse
+from chemical_identity import source_values, uri_identifier, metanetx_id
 
 CD = '{http://www.sbml.org/2001/ns/celldesigner}'
 FIELDS = re.compile(r'(?:^|\s)(Name|Abbreviation|ChargedFormula|Formula|Charge):\s*')
@@ -31,9 +32,23 @@ def note_fields(text):
 
 
 def reaction_labels(reaction):
-    labels = [('SBML reaction name', reaction.get('name', ''))]
+    labels = [('SBML reaction ID', reaction.get('id', '')),
+              ('SBML reaction name', reaction.get('name', ''))]
     labels.extend(reaction.get('_reaction_labels', []))
+    labels.extend(('SBML notes:SOURCE',value.removeprefix('R_')) for value in source_values(reaction.get('notes','')))
+    for item in reaction.get('annotations',[]):
+        qualifier=local(item['qualifier']);key=uri_identifier(item['uri'])
+        if qualifier in ('is','isRelatedTo') and key and key[0]=='bigg.reaction':
+            labels.append(('annotation:bigg.reaction:'+qualifier,key[1].removeprefix('R_')))
     return [(source, value.strip()) for source, value in labels if value.strip()]
+
+
+def boundary_labels(reaction):
+    """Related aliases must not replace an explicit EX/DM/SK designation."""
+    labels=[(source,value) for source,value in reaction_labels(reaction)
+            if value.startswith(('EX_','DM_','SK_'))]
+    explicit=[(source,value) for source,value in labels if not source.endswith(':isRelatedTo')]
+    return explicit or labels
 
 
 def enrich_context(context, root):
@@ -68,6 +83,10 @@ def enrich_context(context, root):
                 record['_reaction_labels'] = labels
             continue
         hints = []
+        for value in source_values(record.get('notes','')):
+            source_id=decode(value,'M_')
+            source_id=re.sub(r'_[a-z][0-9]?$', '', source_id)
+            hints.append(dict(source='SBML notes:SOURCE',value=source_id,kind='identifier'))
         fields = note_fields(record.get('notes', ''))
         for field, kind in [('Abbreviation', 'identifier'), ('Name', 'name')]:
             for value in fields.get(field, []):
@@ -109,6 +128,38 @@ def enrich_context(context, root):
                         and len(r['metabolites']) == 2 for r in uses):
             metabolite['_boundary_placeholder'] = True
             metabolite['_boundary_evidence'] = 'CellDesigner UNKNOWN dot in default compartment; all uses explicitly labeled EX/DM/SK'
+    # MetaNetX represents exchange as physical species <-> same chemical in
+    # an explicit model-boundary compartment. It is hidden only in the view.
+    compartments=context.get('compartments',{})
+    def keys(m):
+        result={uri_identifier(a['uri']) for a in m.get('annotations',[])
+                if local(a['qualifier']) in ('is','isRelatedTo')}
+        result.discard(None)
+        if mid:=metanetx_id(m['id']):result.add(('metanetx.chemical',mid))
+        if '@' in m['id']:result.add(('model-local chemical ID',m['id'].split('@',1)[0]))
+        return result
+    def same_chemical(a,b):
+        left,right=metanetx_id(a['id']),metanetx_id(b['id'])
+        if left and right:return left==right
+        return bool(keys(a)&keys(b))
+    for mid,metabolite in metabolites.items():
+        comp=metabolite.get('compartment','')
+        if comp.upper()!='BOUNDARY' and str(compartments.get(comp,'')).lower()!='model boundary':continue
+        uses=[r for r in context['reactions'] if mid in r['metabolites']]
+        verified=True
+        for reaction in uses:
+            others=[m for m in reaction['metabolites'] if m!=mid]
+            labels=reaction_labels(reaction)
+            explicit=(reaction.get('sbo_term')=='SBO:0000627' or
+                      any(v.startswith(('EX_','DM_','SK_')) for _,v in labels))
+            if (len(others)!=1 or not explicit or
+                    metabolites[others[0]].get('compartment')==comp or
+                    reaction['metabolites'][mid]*reaction['metabolites'][others[0]]>=0 or
+                    not same_chemical(metabolite,metabolites[others[0]])):
+                verified=False;break
+        if uses and verified:
+            metabolite['_boundary_placeholder']=True
+            metabolite['_boundary_evidence']='Explicit model-boundary compartment; same chemical and exchange/SBO evidence on every use'
     return context
 
 

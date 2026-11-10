@@ -11,7 +11,7 @@ from run_fba_escher import read_objective, solve_fba, run, read_fba_layout
 
 BASE = Path(__file__).resolve().parent
 MODEL = BASE/'models/e_coli_core.xml' if (BASE/'models').is_dir() else BASE/'e_coli_core.xml'
-LAYOUT = BASE/'results/e_coli_core' if (BASE/'results').is_dir() else BASE/'public/results/e_coli_core'
+LAYOUT = BASE/'results/e_coli_core' if (BASE/'results/e_coli_core').is_dir() else BASE/'public/results/e_coli_core'
 
 
 class FbaTests(unittest.TestCase):
