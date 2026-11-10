@@ -30,6 +30,29 @@ views. After updating results, run `python3 prepare_github_pages.py` and commit/
 
 Run the packaged checks with `python -m unittest discover`.
 
+## Escher labels
+
+Use `--hide-metabolite-labels` and/or `--hide-reaction-labels` to initially hide
+labels in the Escher preview. Use `--allow-label-overlap` to show all enabled
+labels, including overlapping ones:
+
+```bash
+python sbml2escher.py --model models/e_coli_core.xml --no-sampling \
+  --hide-metabolite-labels --hide-reaction-labels --output-dir /tmp/ecore_no_labels
+```
+
+By default, overlapping labels are filtered together, with priority given to
+EX reactions and their connected compounds, red pathways, orange connectors,
+other reactions and primary compounds, then secondary compounds. Ties use IDs
+for stable ordering. Cofactor copies remain low priority except at EX reactions.
+Priorities come from structural metadata and stay the same when flux colors change.
+
+The generated HTML provides `Metabolite labels`, `Reaction labels`, and
+`Allow label overlap` checkboxes. Hidden label types stay hidden even when overlap
+is allowed. Bounds are measured again after zooming, resizing, and label edits.
+Names, IDs, chemistry and coordinates are preserved. These options apply to
+Escher views; `layout.png`, `layout.svg`, and the regular `index.html` are unchanged.
+
 ## Installation
 
 Run these commands from the project root:
@@ -432,3 +455,35 @@ source/sink symbols. It must not be used as an FBA model. The original parsed mo
   Restoring annotations does not prove physiological activity.
 - Human1 and iMM904 also have partial pathway recognition. Consult the individual
   extraction reports rather than interpreting unmatched pathways as absent.
+
+## Flux sampling with SBML boundary species
+
+Species explicitly marked `boundaryCondition=true` are excluded from the
+steady-state balance equations. All original reaction columns and bounds are
+retained; internal water, protons and cofactors remain balanced even when hidden
+in the drawing. Compartment names and drawing-only placeholder flags do not
+exempt species from balance. JSON accepts boolean `boundaryCondition` values
+(default: false). No growth constraint is added.
+
+Use `--require-sampling` to fail if sampling cannot be acquired or validated,
+instead of automatically producing a structural drawing. This cannot be combined
+with `--no-sampling`. Mixing diagnostics remain separate: check
+`sampling_report.json` for `mixing_checks_passed`, split R-hat and ESS. Saved-sample
+reuse verifies the balance policy, constraints fingerprint, model/sample hashes,
+actual balance residuals and bounds. Legacy samples without boundary species
+remain supported. Unsupported additional constraints and drawing placeholders
+without an explicit boundary flag remain excluded from sampling support.
+
+Sampled Escher previews provide a `Show reactions` slider (0–100% of saved
+reactions). Red pathways come first, followed by orange connectors, then other reactions;
+absolute sampled median flux determines order within each group. Attached nodes and labels follow the filter. Changing the
+percentage does not resample fluxes or recompute coordinates.
+
+Use `--orange-flux-weight 1` to favor larger absolute sampled medians during
+orange route selection and placement. The default is 1; use 0 for length only. Candidate
+non-red reactions receive midrank percentile values q in [0, 1], and each unique
+orange edge costs `length * (1 + weight * (1 - q))`. Shared edges count once.
+`exchange_connectors.json` records physical `total_length`, weighted `total_cost`,
+normalization values and reaction coefficients separately. Sampling-free runs
+use the original unweighted objective. Routing, heuristic moves, MILP and
+incumbent comparisons use the same objective; global optimality is not assumed.

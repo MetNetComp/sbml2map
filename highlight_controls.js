@@ -49,6 +49,7 @@ function paint(){
     for(const id of item.ids){const el=$(id);if(!el)continue;el.classList.add('user-blue');el.dataset.hlRole=item.role;blue.add(el);if(force)show(id);}
     if(force)for(const id of item.endpoints||[])show(id);
   }
+  if(config.escher)window.syncEscherCoverage?.();
 }
 function apply(){paint();results();list();}
 function validate(value){
@@ -103,6 +104,7 @@ if(!config.escher){
     }
     apply();
   }
+  document.addEventListener('escher-coverage-change',apply);
   const observer=new MutationObserver(records=>{
     if(!records.some(r=>r.type==='childList'))return;
     if(!scheduled){scheduled=true;requestAnimationFrame(()=>{scheduled=false;sync();});}

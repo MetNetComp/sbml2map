@@ -5,10 +5,28 @@ Warm-up covariance is adapted only before production. Frozen, symmetric random
 line directions and uniform chord draws have a uniform stationary distribution.
 Finite chains are correlated; split R-hat and ESS diagnose incomplete mixing.
 """
+import hashlib
+import json
+
 import numpy as np
 from scipy.linalg import null_space
 from scipy.optimize import linprog
-from stoichiometric_network import stoichiometric_matrix
+from stoichiometric_network import steady_state_matrix
+
+
+def sampling_constraints(model):
+    """One balance policy and fingerprint for sampling and saved-sample checks."""
+    S, mids, rids = steady_state_matrix(model)
+    S = np.asarray(S, dtype=float).reshape(len(mids), len(rids))
+    bounds = [[r['lower_bound'], r['upper_bound']] for r in model['reactions']]
+    boundary = [m['id'] for m in model['metabolites'] if m.get('boundaryCondition', False)]
+    description = dict(balance_policy='sbml-boundary-v1', balanced_metabolite_ids=mids,
+                       boundary_metabolite_ids=boundary, reaction_ids=rids)
+    fingerprint = hashlib.sha256(json.dumps(description, sort_keys=True).encode())
+    fingerprint.update(S.astype('<f8').tobytes())
+    fingerprint.update(np.asarray(bounds, dtype='<f8').tobytes())
+    description['constraints_sha256'] = fingerprint.hexdigest()
+    return S, mids, rids, description
 
 
 def diagnostics(chains):
@@ -42,8 +60,7 @@ def sample_fluxes(model, samples=2000, chains=4, thinning=100, burn_in=10000,
                   seed=0, tolerance=1e-7, progress=print):
     if samples < 20 or chains < 2 or thinning < 1 or burn_in < 1:
         raise ValueError('Require samples >= 20, chains >= 2, thinning >= 1, burn-in >= 1')
-    S, mids, rids = stoichiometric_matrix(model)
-    S = np.asarray(S, dtype=float)
+    S, mids, rids, constraints = sampling_constraints(model)
     lower = np.array([r['lower_bound'] for r in model['reactions']], dtype=float)
     upper = np.array([r['upper_bound'] for r in model['reactions']], dtype=float)
     if not np.all(np.isfinite([lower, upper])):
@@ -111,7 +128,7 @@ def sample_fluxes(model, samples=2000, chains=4, thinning=100, burn_in=10000,
             result[:, i] = states
             if (i + 1) % max(1, samples // 4) == 0:
                 progress(f'Sampling: {i + 1}/{samples} samples per chain', flush=True)
-    residual = float(np.max(np.abs(result @ S.T)))
+    residual = float(np.max(np.abs(result @ S.T), initial=0))
     violation = float(max(0, np.max(lower - result), np.max(result - upper)))
     if residual > tolerance or violation > tolerance or not np.all(np.isfinite(result)):
         raise RuntimeError(f'Sample validation failed: mass balance {residual}, bounds {violation}')
@@ -120,6 +137,7 @@ def sample_fluxes(model, samples=2000, chains=4, thinning=100, burn_in=10000,
     report = dict(method='Random-direction hit-and-run with discarded covariance adaptation',
                   stationary_target='Uniform volume in the affine feasible flux polytope',
                   bounds_modified=False, objective_conditioning=False, seed=seed,
+                  performed=True, mode='sampled', **constraints,
                   chains=chains, samples_per_chain=samples, total_samples=chains * samples,
                   thinning=thinning, burn_in=burn_in, adaptation_phases=4,
                   affine_dimension=N.shape[1], fixed_reaction_ids=[rids[i] for i in np.flatnonzero(fixed)],

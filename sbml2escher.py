@@ -106,6 +106,8 @@ def parser():
 
 
 def run(args):
+    if getattr(args, 'require_sampling', False) and args.discover_only:
+        raise ValueError('--require-sampling cannot be combined with --discover-only')
     if getattr(args,'export_sbml_layout',False) and args.discover_only:
         raise ValueError('--export-sbml-layout cannot be combined with --discover-only')
     if not math.isfinite(args.coverage) or not 0<=args.coverage<=100:
@@ -129,11 +131,10 @@ def run(args):
         print(json.dumps(dict(output=str(args.output_dir),status=strategy.extraction['status'],
                               pathways=[dict(id=r['id'],reactions=len(r['reaction_ids']),closed=r['closed']) for r in strategy.routes]),indent=2))
         return strategy.extraction
-    if context.get('_boundary_species') and not args.no_sampling:
-        args._sampling_unavailable_reason = 'Sampling boundaryCondition=true SBML species is unsupported'
     if context.get('_unsupported_sampling_constraints') and not args.no_sampling:
         args._sampling_unavailable_reason = 'SBML userDefinedConstraint is not supported by flux sampling'
-    if any(m.get('_boundary_placeholder') for m in context['metabolites']) and not args.no_sampling:
+    if any(m.get('_boundary_placeholder') and not m.get('boundaryCondition', False)
+           for m in context['metabolites']) and not args.no_sampling:
         args._sampling_unavailable_reason = 'Boundary/source-sink placeholders require explicit mass-balance semantics; structural display only'
     args._strategy=strategy
     return engine.run(args)

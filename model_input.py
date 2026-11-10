@@ -61,6 +61,7 @@ def load_model(path):
         raise ValueError('Duplicate metabolite IDs after SBML ID normalization')
     metabolites = [dict(id=id_map[s.attrib['id']], name=s.get('name', ''),
                         compartment=s.get('compartment', ''), **sbml_metadata(s),
+                        **({'boundaryCondition': True} if s.get('boundaryCondition') in ('true', '1') else {}),
                         **{k.rsplit('}', 1)[-1]: v for k, v in s.attrib.items()
                            if k.endswith(('}chemicalFormula', '}charge'))}) for s in species]
     def fbc_tag(element, name):

@@ -302,14 +302,70 @@ def validate_map(data, model, source_nodes, source_xy, schema_path=SCHEMA, sourc
                 missing_gene_rule_count=len(metadata['missing_gene_rule_reactions']))
 
 
+def configure_label_display(data, major_reactions=()):
+    """Keep structural label priorities independent of simulation colors."""
+    meta = data[0].setdefault('metadata', {})
+    options = meta.setdefault('label_display', {})
+    for key, value in dict(show_metabolites=True, show_reactions=True, allow_overlap=False).items():
+        options.setdefault(key, value)
+    exchanges = set(meta.get('exchange_reaction_ids', ()))
+    major = set(major_reactions)
+    reactions = {}
+    metabolites = {nid: 1 if not node.get('node_is_primary') else 2
+                   for nid, node in data[1]['nodes'].items() if node['node_type'] == 'metabolite'}
+    for rid, reaction in data[1]['reactions'].items():
+        identity = reaction['bigg_id']
+        rank = (5 if identity in exchanges or identity.upper().startswith('EX_') else
+                4 if identity in major else
+                2 + max((meta.get('segment_priorities', {}).get(sid, 0)
+                         for sid in reaction['segments']), default=0))
+        reactions[rid] = rank
+        # Only actual terminal nodes inherit priority, so cofactor copies remain local.
+        for segment in reaction['segments'].values():
+            for nid in (segment['from_node_id'], segment['to_node_id']):
+                if nid in metabolites and (data[1]['nodes'][nid].get('node_is_primary') or rank == 5):
+                    metabolites[nid] = max(metabolites[nid], rank)
+    options.update(reaction_priorities=reactions, metabolite_priorities=metabolites)
+    return options
+
+
+def configure_reaction_coverage(data, records):
+    """Rank saved reactions red, orange, then other, using the sampled medians."""
+    lookup = {record['reaction_id']: record for record in records}
+    reactions = data[1]['reactions']
+    if not reactions or not all(r['bigg_id'] in lookup and
+                               lookup[r['bigg_id']].get('median') is not None for r in reactions.values()):
+        return
+    from display_ranking import reaction_display_order
+    segment_priorities = data[0]['metadata'].get('segment_priorities', {})
+    priorities = {reaction['bigg_id']: max((segment_priorities.get(sid, 0)
+                   for sid in reaction.get('segments', {})), default=0)
+                  for reaction in reactions.values()}
+    ids = {reaction['bigg_id']: rid for rid, reaction in reactions.items()}
+    ordered = reaction_display_order([lookup[identity] for identity in ids], priorities)
+    data[0].setdefault('metadata', {})['reaction_coverage'] = dict(
+        reaction_order=[ids[identity] for identity in ordered], initial_percent=100,
+        ranking='Red first, then orange, then other reactions; descending absolute sampled median flux within each group; reaction ID breaks ties',
+        denominator='Reactions present in this saved map')
+
+
 def write_preview(path, data, reaction_data=None, fba_report=None):
+    if 'reaction_priorities' not in data[0].get('metadata', {}).get('label_display', {}):
+        configure_label_display(data)
     # Embedded library and map make this preview usable without a server or network.
     library = base64.b64encode(VIEWER.read_bytes()).decode('ascii')
     map_json = json.dumps(data, ensure_ascii=False, allow_nan=False).replace('<', '\\u003c')
     page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>Escher MILP layout</title>
 <style>html,body{height:100%;margin:0;font:14px system-ui}header{padding:10px 18px;background:#f3f5f7}#map{height:calc(100vh - 100px);width:100%}#status{margin-left:16px}</style>
 <header><b>e_coli_core: Escher layout</b><p>Reaction positions and CO2 copies are kept. This view uses Escher styles. Use the mouse wheel to zoom.</p>
-<p id="escher-display-mode"></p><button id="save">Save map JSON</button><span id="status">Loading...</span></header><div id="map"></div>
+<p id="escher-display-mode"></p>
+<p id="escher-coverage-controls" hidden><label>Show reactions
+<input id="escher-coverage" type="range" min="0" max="100" step="1" value="100">
+<output id="escher-coverage-value">100%</output></label> <span id="escher-coverage-count"></span>
+<br><small>Red first, then orange, then other reactions; within each group, descending absolute sampled median flux. Percentage of saved reactions.</small></p>
+<p id="escher-label-controls"><label><input id="show-metabolite-labels" type="checkbox">Metabolite labels</label>
+<label><input id="show-reaction-labels" type="checkbox">Reaction labels</label>
+<label><input id="allow-label-overlap" type="checkbox">Allow label overlap</label></p><button id="save">Save map JSON</button><span id="status">Loading...</span></header><div id="map"></div>
 <script>window.escherErrors=[];window.addEventListener('error',e=>window.escherErrors.push(e.message));</script>
 <script src="data:application/javascript;base64,LIBRARY_PLACEHOLDER"></script><script>
 const mapData=MAP_PLACEHOLDER;
@@ -368,7 +424,7 @@ document.getElementById('save').onclick=()=>{const data=window.builder.map.map_f
         view_name = data[0]['map_name']
     page = page.replace('e_coli_core: Escher layout', html.escape(view_name))
     page = page.replace('e_coli_core: FBA flux in Escher', html.escape(data[0]['map_name']) + ': FBA flux in Escher')
-    page = page.replace('</html>','<script>'+BASE.joinpath('escher_layers.js').read_text()+'</script></html>')
+    page = page.replace('</html>','<script>'+BASE.joinpath('escher_layers.js').read_text()+'</script><script>'+BASE.joinpath('escher_labels.js').read_text()+'</script><script>'+BASE.joinpath('escher_coverage.js').read_text()+'</script></html>')
     path.write_text(page.replace('LIBRARY_PLACEHOLDER', library).replace('MAP_PLACEHOLDER', map_json))
 
 
@@ -378,6 +434,8 @@ def write_pathway_preview(path, data, major_reactions=(), connector_pairs=None,
     """Start with pathway structure; disable fixed colors when reaction data loads."""
     if data[0]['metadata'].get('routing')=='orthogonal' and not data[0]['metadata'].get('overlap_routing',{}).get('enabled'):
         data = separate_routes(copy.deepcopy(data),major_reactions,connector_pairs)
+    configure_label_display(data, major_reactions)
+    configure_reaction_coverage(data, records)
     write_preview(path, data)
     metadata = data[0]['metadata']
     source_ids = metadata['source_node_ids']
@@ -406,6 +464,10 @@ def write_pathway_preview(path, data, major_reactions=(), connector_pairs=None,
     legend = '<p data-pathway-legend>Red: main pathways.'
     if connector_pairs is not None:
         legend += ' Orange: connections to exchange reactions. Gray: other branches.'
+    connector_details = metadata.get('sbml2escher', {}).get('major_backbones', {}).get('exchange_connectors', {})
+    flux_weight = connector_details.get('flux_costs', {}).get('flux_weight', 0)
+    if flux_weight:
+        legend += f' Orange route selection favors larger absolute sampled median fluxes (penalty strength {flux_weight:g}).'
     legend += ' These colors describe structure, not flux.</p>'
     page = path.read_text().replace('<header>',style+'<header>'+legend,1)
     if (path.parent/'escher_fba.html').exists():

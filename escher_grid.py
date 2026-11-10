@@ -12,14 +12,14 @@ import numpy as np
 
 from highlighting import BLUE, read_selection, grid_elements, catalog, inject_controls
 
-from flux_sampling2 import sample_fluxes
+from flux_sampling2 import sample_fluxes, sampling_constraints
 from annotation_context import hidden_metabolite
 from grid_layout2 import optimize_grid
 from major_backbones2 import RED, backbone_plan, pathway_definitions, validate_backbones
 from model_input import load_model
 from reaction_network import build_network, validate_network
 from stoichiometric_network import stoichiometric_matrix
-from exchange_routes import ORANGE, shared_coenzymes, connector_plan, connector_length
+from exchange_routes import ORANGE, shared_coenzymes, connector_plan, connector_length, connector_cost, orange_flux_costs
 
 BASE = Path(__file__).resolve().parent
 # Explicit biochemical display policy; acyl-CoA metabolites remain shared grid nodes.
@@ -204,6 +204,10 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     orange_edges = set(connectors['edge_indices']) if connectors else set()
     orange_nodes = {key for i in orange_edges for key in (edges[i]['source'], edges[i]['target'])}
     selected = [r for r in records if r['selected']]
+    from display_ranking import reaction_display_order
+    orange_reactions = {edges[i]['reaction_id']: 1 for i in orange_edges}
+    display_ranks = {rid: rank for rank, rid in enumerate(
+        reaction_display_order(selected, orange_reactions), 1)}
     priorities = [] if structural else [r['priority'] for r in selected if not r.get('is_major_pathway', False)]
     vmin, vmax = (min(priorities), max(priorities)) if priorities else (1, 10)
     vmax = max(vmax, vmin * 1.01)
@@ -283,6 +287,9 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     ax.margins(.08)
     oxidation_label='pyruvate oxidation' if program_name=='sbml2escher' else 'PDH'
     connector_label = (f'Orange: shared undirected EX connectors; unique orange L1 length = {connectors["total_length"]:g}.\n' if connectors else '')
+    if connectors and connectors.get('flux_costs', {}).get('flux_weight', 0):
+        connector_label += (f'Flux-weighted orange cost = {connectors["total_cost"]:.4g}; '
+                            f'low-flux penalty strength = {connectors["flux_costs"]["flux_weight"]:g}.\n')
     fig.text(.02, .018, f'Red: glucose exchange / glycolysis / {oxidation_label} / TCA. Gray nodes: local coenzymes.\n' + connector_label +
              ('Orthogonal branches: L1 length. Connectivity and bounds do not establish steady-state activity.' if structural else
               'Orthogonal branches: L1 length. Median describes the sampled feasible space, not a measured flux.'), fontsize=9)
@@ -325,23 +332,23 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     svg = svg[svg.index('<svg'):]
     registry = []
     for j, edge in enumerate(edges):
-        rank = stats[edge['reaction_id']]['rank']
+        rank = display_ranks[edge['reaction_id']]
         is_co = nodes[edge['source']]['kind'] == 'currency' or nodes[edge['target']]['kind'] == 'currency'
         highlight = j in orange_edges or stats[edge['reaction_id']].get('is_major_pathway',False)
         registry.extend([dict(id=f'edge-{j}', rank=rank, coenzyme=is_co, highlight=highlight), dict(id=f'arrow-{j}', rank=rank, coenzyme=is_co, highlight=highlight)])
         if structural:
             registry.append(dict(id=f'reverse-arrow-{j}', rank=rank, coenzyme=is_co, highlight=highlight))
     for j, (key, node) in enumerate(nodes.items()):
-        ranks = [stats[e['reaction_id']]['rank'] for e in edges if key in (e['source'], e['target'])]
+        ranks = [display_ranks[e['reaction_id']] for e in edges if key in (e['source'], e['target'])]
         if node['kind'] == 'reaction':
-            ranks = [stats[node['original_id']]['rank']]
+            ranks = [display_ranks[node['original_id']]]
         rank = min(ranks) if ranks else 1  # Always-visible glucose reference, except at 0%.
         highlight = key in orange_nodes or (node['kind']=='reaction' and stats[node['original_id']].get('is_major_pathway',False)) or (node['kind']=='metabolite' and node['original_id'] in major_mids)
         registry.extend([dict(id=f'node-{j}', rank=rank, coenzyme=node['kind'] == 'currency',highlight=highlight),
                          dict(id=f'label-{j}', rank=rank, coenzyme=node['kind'] == 'currency',highlight=highlight)])
     page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>sbml2escher</title>
 <style>body{font:15px system-ui;color:#203744;margin:20px}#viewer{height:78vh;overflow:auto;border:1px solid #ccd;background:white}#viewer svg{width:1600px;height:auto}header{margin-bottom:12px}a{margin-right:14px}</style>
-<header><h1>sbml2escher — __MODEL__</h1><p>Inorganic compounds are hidden. Red: main pathways (glucose exchange, glycolysis, PDH, TCA). Main pathways come first. Each group is sorted by absolute median flux. Squares: reactions. Circles: compounds. Small gray circles: cofactors. Arrows follow the sign of median flux.</p>
+<header><h1>sbml2escher — __MODEL__</h1><p>Inorganic compounds are hidden. Red: main pathways (glucose exchange, glycolysis, PDH, TCA). Red pathways come first, followed by orange connectors, then other reactions. Each group is sorted by absolute median flux. Squares: reactions. Circles: compounds. Small gray circles: cofactors. Arrows follow the sign of median flux.</p>
 <label>Top <input id="coverage" type="range" min="0" max="__MAX__" step="1" value="__MAX__"><span id="value"></span>%</label>
 <label><input id="coenzymes" type="checkbox" checked>Cofactors</label>
 <label>Zoom <input type="range" min="600" max="4200" value="1600" step="100" oninput="document.querySelector('#viewer svg').style.width=this.value+'px'"></label>
@@ -353,8 +360,8 @@ function update(){const v=Number(document.getElementById('coverage').value),limi
 document.getElementById('coverage').oninput=update;document.getElementById('coenzymes').onchange=update;update();</script></html>'''
     import html
     if structural:
-        page = page.replace('Main pathways come first. Each group is sorted by absolute median flux. ',
-                            'No flux sampling. Main pathways come first. Each group is sorted by reaction ID, not activity. ')
+        page = page.replace('Red pathways come first, followed by orange connectors, then other reactions. Each group is sorted by absolute median flux. ',
+                            'No flux sampling. Red pathways come first, followed by orange connectors, then other reactions. Each group is sorted by reaction ID, not activity. ')
         page = page.replace('Arrows follow the sign of median flux.', 'Arrows show directions allowed by model bounds. Reversible reactions have arrows both ways. Reactions with both bounds at zero have no arrows.')
     if provisional:
         notice=(f'<p class="sampling-warning" style="background:#fff0cc;padding:12px">Provisional result: sampling convergence checks failed. Rankings are provisional. Maximum split R-hat={sampling_report["max_split_rhat"]:.3f}, minimum ESS={sampling_report["min_effective_sample_size"]:.1f}.</p>')
@@ -370,6 +377,11 @@ document.getElementById('coverage').oninput=update;document.getElementById('coen
             page=page.replace('id="focus" type="checkbox" checked', 'id="focus" type="checkbox"')
             missing = len(connectors.get('disconnected_exchange_node_ids', []))
             page=page.replace('</h1>', f'</h1><p>EX reactions with no connection to main pathways: {missing}. These stay gray. No connections are added.</p>',1)
+    if connectors and connectors.get('flux_costs', {}).get('flux_weight', 0):
+        page = page.replace('共有枝を1回だけ数えた長さの総和を最小化します。',
+                            '共有枝は1回だけ数え、長さに低フラックスのペナルティを付けたコストを最小化します。')
+        page = page.replace('The layout minimizes total path length, counting shared branches once.',
+                            'The layout minimizes length with a low-flux penalty, counting shared branches once.')
     page = page.replace('sbml2escher', html.escape(program_name)).replace('__MODEL__', html.escape(model_id)).replace('__MAX__', str(selection['coverage_percent'])).replace('__SVG__', svg).replace('__REGISTRY__', json.dumps(registry)).replace('__ELIGIBLE__', str(selection['eligible_reactions']))
     page = inject_controls(page, source_model, elements, highlights, records)
     (output / 'index.html').write_text(page)
@@ -380,6 +392,10 @@ SAMPLING_FILES = ('flux_samples.npz', 'flux_statistics.json', 'sampling_report.j
 
 def validate_sampling_options(args):
     """Protect sampling outputs before any structural-mode files are written."""
+    if not math.isfinite(getattr(args, 'orange_flux_weight', 1)) or getattr(args, 'orange_flux_weight', 1) < 0:
+        raise ValueError('orange-flux-weight must be finite and nonnegative')
+    if getattr(args, 'require_sampling', False) and getattr(args, 'no_sampling', False):
+        raise ValueError('--require-sampling cannot be combined with --no-sampling')
     if not getattr(args, 'no_sampling', False):
         return
     if args.reuse_samples:
@@ -403,9 +419,15 @@ def sampling_data(args, model, digest):
                 raise ValueError('Saved sample reaction order mismatch')
         if samples.ndim != 3 or samples.shape[2] != len(model['reactions']) or not np.isfinite(samples).all():
             raise ValueError('Invalid saved sample dimensions/values')
-        S, _, _ = stoichiometric_matrix(model)
+        S, _, _, constraints = sampling_constraints(model)
+        saved_constraints = sampling_report.get('constraints_sha256')
+        if saved_constraints is not None and saved_constraints != constraints['constraints_sha256']:
+            raise ValueError('Saved sampling constraint hash differs from the current constraints')
+        if saved_constraints is None and constraints['boundary_metabolite_ids']:
+            raise ValueError('Boundary-aware saved samples require a constraint fingerprint')
+        sampling_report.update(constraints, performed=True, mode='reused')
         lo = np.array([r['lower_bound'] for r in model['reactions']]); hi = np.array([r['upper_bound'] for r in model['reactions']])
-        if np.abs(samples @ np.asarray(S).T).max() > 1e-7 or max(0, (lo - samples).max(), (samples - hi).max()) > 1e-7:
+        if np.max(np.abs(samples @ S.T), initial=0) > 1e-7 or max(0, (lo - samples).max(), (samples - hi).max()) > 1e-7:
             raise ValueError('Saved samples violate model constraints')
         stats = json.loads((source / 'flux_statistics.json').read_text())
         medians = np.median(samples.reshape(-1, samples.shape[-1]), axis=0)
@@ -443,6 +465,8 @@ def run(args):
             samples, stats, sampling_report = sampling_data(args, model, digest)
         except (ValueError, RuntimeError, OSError, ImportError, MemoryError, ArithmeticError, KeyError, TypeError, np.linalg.LinAlgError) as exc:
             # Only sampling acquisition is recoverable; layout/export failures propagate.
+            if getattr(args, 'require_sampling', False):
+                raise RuntimeError('Required flux sampling failed: ' + str(exc)) from exc
             reason = f'{type(exc).__name__}: {exc}'
             print(f'Flux sampling unavailable ({reason}); switching to no sample mode.', flush=True)
             no_sampling = True
@@ -494,32 +518,40 @@ def run(args):
     fixed_offsets, backbones = strategy.plan(routes, grid_ids) if strategy else backbone_plan(routes, grid_ids)
     backbones['skipped_routes'] = skipped_routes
     grid_options = strategy.grid_options(nodes, backbones) if strategy else {}
-    connectors = connector_plan(nodes, edges, roots, exchange_nodes, major_reactions, allow_disconnected=no_sampling) if strategy and selected else None
+    flux_costs = orange_flux_costs(nodes, edges, major_reactions, records,
+                                    0 if no_sampling else getattr(args, 'orange_flux_weight', 1))
+    flux_costs['requested_flux_weight'] = getattr(args, 'orange_flux_weight', 1)
+    reaction_weights = flux_costs['reaction_weights']
+    connectors = connector_plan(nodes, edges, roots, exchange_nodes, major_reactions, allow_disconnected=no_sampling, reaction_weights=reaction_weights) if strategy and selected else None
     history = []
     best = None
     previous_xy = None
     for iteration in range(2 if connectors else 1):
         objective_pairs = [(edges[i]['source'], edges[i]['target']) for i in connectors['edge_indices']] if connectors else grid_pairs
+        objective_weights = [reaction_weights.get(edges[i]['reaction_id'], 1) for i in connectors['edge_indices']] if connectors else None
         candidate_xy, candidate_placement = optimize_grid(grid_ids, objective_pairs, args.grid_cols, args.grid_rows, args.time_limit, args.seed + iteration,
                                       top_left_node=glucose_node, boundary_nodes=exchange_nodes, fixed_offsets=fixed_offsets,
-                                      initial_positions=previous_xy, **grid_options)
+                                      initial_positions=previous_xy, edge_weights=objective_weights, **grid_options)
         if not connectors:
             xy, placement = candidate_xy, candidate_placement
             break
-        candidate_plan = connector_plan(nodes, edges, roots, exchange_nodes, major_reactions, candidate_xy, allow_disconnected=no_sampling)
-        before_reroute = connector_length(connectors, edges, candidate_xy)
-        if connector_length(candidate_plan, edges, candidate_xy) > before_reroute:
+        candidate_plan = connector_plan(nodes, edges, roots, exchange_nodes, major_reactions, candidate_xy, allow_disconnected=no_sampling, reaction_weights=reaction_weights)
+        before_reroute = connector_cost(connectors, edges, candidate_xy)
+        if connector_cost(candidate_plan, edges, candidate_xy) > before_reroute:
             candidate_plan = connectors
-        value = connector_length(candidate_plan, edges, candidate_xy)
-        history.append(dict(iteration=iteration+1, before_reroute=before_reroute, orange_length=value,
-                            optimized_fixed_network_length=candidate_placement['objective']))
+        value = connector_cost(candidate_plan, edges, candidate_xy)
+        history.append(dict(iteration=iteration+1, before_reroute=before_reroute, orange_cost=value,
+                            orange_length=connector_length(candidate_plan, edges, candidate_xy),
+                            optimized_fixed_network_cost=candidate_placement['objective'],
+                            optimized_fixed_network_length=connector_length(connectors, edges, candidate_xy)))
         if best is None or value < best[0]:
             best = (value, candidate_xy, candidate_placement, candidate_plan)
         connectors = candidate_plan
         previous_xy = candidate_xy
     if connectors:
         value, xy, placement, connectors = best
-        connectors.update(total_length=value, shared_coenzyme_ids=sorted(shared), optimization_history=history)
+        connectors.update(total_length=connector_length(connectors, edges, xy), total_cost=value,
+                          flux_costs=flux_costs, shared_coenzyme_ids=sorted(shared), optimization_history=history)
         backbones['exchange_connectors'] = connectors
         placement['fixed_network_solver_objective'] = placement['objective']
         placement['objective'] = value
@@ -553,7 +585,7 @@ def run(args):
     grid_length = sum(sum(abs(a-b) for a,b in zip(xy[a_key],xy[b_key])) for a_key,b_key in grid_pairs)
     if not math.isclose(length, grid_length + .45 * coenzyme_count, abs_tol=1e-7):
         raise RuntimeError('Edge-length objective differs from drawn orthogonal geometry')
-    if connectors and not math.isclose(connector_length(connectors,edges,xy),placement['objective'],abs_tol=1e-7):
+    if connectors and not math.isclose(connector_cost(connectors,edges,xy),placement['objective'],abs_tol=1e-7):
         raise RuntimeError('Orange objective differs from drawn orthogonal geometry')
     original = {r['id']: r for r in model['reactions']}
     for reaction in projected['reactions']:
@@ -577,7 +609,12 @@ def run(args):
                          for r in records if r['selected']}
         orange_pairs = ({frozenset((edges[i]['source'],edges[i]['target']))
                          for i in connectors['edge_indices']} if connectors else None)
-        write_pathway_preview(output/'escher_preview.html',data,major_reactions,orange_pairs)
+        data[0]['metadata']['exchange_reaction_ids'] = sorted(nodes[k]['original_id'] for k in exchange_nodes)
+        data[0]['metadata']['label_display'] = dict(
+            show_metabolites=not getattr(args, 'hide_metabolite_labels', False),
+            show_reactions=not getattr(args, 'hide_reaction_labels', False),
+            allow_overlap=getattr(args, 'allow_label_overlap', False))
+        write_pathway_preview(output/'escher_preview.html',data,major_reactions,orange_pairs,records=records)
 
     else:
         data = [dict(schema='https://escher.github.io/escher/jsonschema/1-0-0#', homepage='https://escher.github.io',
@@ -645,6 +682,7 @@ def run(args):
         if connectors:
             report['exchange_connectors'] = connectors
             report['orange_orthogonal_edge_length'] = connectors['total_length']
+            report['orange_weighted_cost'] = connectors['total_cost']
             report['validation']['all_exchanges_connected_to_major_pathways'] = connectors['all_exchanges_connected']
             dump(output/'exchange_connectors.json',connectors)
         strategy.save(output)
@@ -673,6 +711,9 @@ def run(args):
 
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--hide-metabolite-labels', action='store_true', help='Initially hide metabolite labels in the Escher preview')
+    p.add_argument('--hide-reaction-labels', action='store_true', help='Initially hide reaction labels in the Escher preview')
+    p.add_argument('--allow-label-overlap', action='store_true', help='Show all enabled Escher labels even when they overlap')
     p.add_argument('--highlight-metabolites', nargs='+', action='extend', default=[], help='Exact source metabolite IDs to highlight blue')
     p.add_argument('--highlight-reactions', nargs='+', action='extend', default=[], help='Exact source reaction IDs to highlight blue')
     p.add_argument('--highlight-file', type=Path, help='JSON with metabolites and reactions ID lists')
@@ -682,6 +723,8 @@ def parser():
     p.add_argument('--output-dir', type=Path, default=BASE / 'e_coli_core_sbml2escher_output')
     p.add_argument('--coverage', type=float, default=100, help='Top percentage of eligible reactions (0..100); --no-sampling uses pathway membership and IDs')
     p.add_argument('--zero-tolerance', type=float, default=1e-7)
+    p.add_argument('--orange-flux-weight', type=float, default=1, help='Nonnegative low-flux penalty strength for orange routing (default: 1; 0: length only; ignored without sampling)')
+    p.add_argument('--require-sampling', action='store_true', help='Fail instead of falling back to a structural drawing if sampling is unavailable')
     p.add_argument('--samples', type=int, default=2000, help='Retained samples per chain')
     p.add_argument('--chains', type=int, default=4)
     p.add_argument('--thinning', type=int, default=100)

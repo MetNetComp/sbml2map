@@ -17,7 +17,8 @@ function sync(){
   const css=getComputedStyle(path),matrix=parent.getCTM().inverse().multiply(source.getCTM());
   items.push({source,rank,key:[sid,rank,path.getAttribute('d'),css.stroke,css.strokeWidth,source.innerHTML,matrix.toString()].join('|')});
  }
- const key=items.map(x=>x.key).join(';');
+ const labels=[...root.querySelectorAll('.reaction-label')].filter(label=>label.getClientRects().length);
+ const key=items.map(x=>x.key).join(';')+'::'+labels.map(label=>[label.closest('.reaction').id,label.textContent,label.getCTM()?.toString()].join('|')).join(';');
  if(key===last && (document.getElementById('escher-priority-layer') || !items.length))return;
  last=key;
  document.getElementById('escher-priority-layer')?.remove();
@@ -32,8 +33,9 @@ function sync(){
  items.sort((a,b)=>a.rank-b.rank);
  for(const item of items){const clone=copy(item.source);clone.dataset.sourceSegment=item.source.id;clone.dataset.priority=item.rank;layer.append(clone);}
  // Keep reaction labels and biological node symbols above the emphasized lines.
- for(const label of root.querySelectorAll('.reaction-label'))layer.append(copy(label));
+ for(const label of labels){const clone=copy(label);clone.dataset.sourceLabel=label.closest('.reaction').id;layer.append(clone);}
  for(const id of ['nodes','text-labels']){const el=document.getElementById(id);if(el?.parentNode===parent)parent.append(el);}
+ window.syncEscherLabels?.();
 }
 window.syncEscherLayers=sync;
 const observer=new MutationObserver(records=>{

@@ -1,4 +1,4 @@
-"""Distinct integer-grid placement minimizing unweighted incidence L1 length."""
+"""Distinct integer-grid placement minimizing positive-weighted incidence L1 cost."""
 import math
 import numpy as np
 from scipy.optimize import Bounds, LinearConstraint, linear_sum_assignment, milp
@@ -7,8 +7,18 @@ from scipy.sparse.csgraph import reverse_cuthill_mckee
 from scipy.spatial import cKDTree
 
 
-def edge_length(points, edges):
-    return int(np.abs(points[edges[:, 0]] - points[edges[:, 1]]).sum()) if len(edges) else 0
+def edge_length(points, edges, weights=None):
+    if not len(edges):
+        return 0
+    lengths = np.abs(points[edges[:, 0]] - points[edges[:, 1]]).sum(axis=1)
+    return int(lengths.sum()) if weights is None else float(np.dot(lengths, weights))
+
+
+def validated_edge_weights(weights, count):
+    weights = np.ones(count) if weights is None else np.asarray(weights, dtype=float)
+    if weights.shape != (count,) or not np.isfinite(weights).all() or np.any(weights <= 0):
+        raise ValueError('Edge weights must be finite, positive and aligned with edge pairs')
+    return weights
 
 
 def large_grid_initialization(n, edges, cells, allowed):
@@ -63,7 +73,8 @@ def large_grid_initialization(n, edges, cells, allowed):
     return points
 
 
-def heuristic_layout(n, edges, cols, rows, seed=0, allowed=None, initial_points=None):
+def heuristic_layout(n, edges, cols, rows, seed=0, allowed=None, initial_points=None, edge_weights=None):
+    weights = validated_edge_weights(edge_weights, len(edges))
     rng = np.random.default_rng(seed)
     cells = np.array([(x, y) for y in range(rows) for x in range(cols)])
     if n == 0:
@@ -74,8 +85,8 @@ def heuristic_layout(n, edges, cols, rows, seed=0, allowed=None, initial_points=
         points = large_grid_initialization(n, edges, cells, allowed)
     elif initial_points is None:
         adjacency = np.zeros((n, n))
-        for a, b in edges:
-            adjacency[a, b] += 1; adjacency[b, a] += 1
+        for (a, b), weight in zip(edges, weights):
+            adjacency[a, b] += weight; adjacency[b, a] += weight
         laplacian = np.diag(adjacency.sum(axis=1)) - adjacency
         _, vectors = np.linalg.eigh(laplacian)
         embedding = np.zeros((n, 2))
@@ -90,7 +101,7 @@ def heuristic_layout(n, edges, cols, rows, seed=0, allowed=None, initial_points=
         points = cells[assignment].copy()
     else:
         points = np.array(initial_points, dtype=int).copy()
-    initial = edge_length(points, edges)
+    initial = edge_length(points, edges, weights)
     neighbors = [[] for _ in range(n)]
     for a, b in edges:
         neighbors[a].append(b); neighbors[b].append(a)
@@ -107,12 +118,12 @@ def heuristic_layout(n, edges, cols, rows, seed=0, allowed=None, initial_points=
         if j is not None and not allowed[j, int(points[i, 1]) * cols + int(points[i, 0])]:
             continue
         affected = incident[i] if j is None else np.union1d(incident[i], incident[j])
-        before = edge_length(points, edges[affected])
+        before = edge_length(points, edges[affected], weights[affected])
         old = points[i].copy()
         points[i] = p
         if j is not None:
             points[j] = old
-        delta = edge_length(points, edges[affected]) - before
+        delta = edge_length(points, edges[affected], weights[affected]) - before
         temperature = 1.8 * (1 - iteration / max(20000, n * 600)) ** 2 + .02
         if delta <= 0 or rng.random() < math.exp(-delta / temperature):
             owner.pop(tuple(old)); owner[tuple(p)] = i
@@ -154,12 +165,12 @@ def heuristic_layout(n, edges, cols, rows, seed=0, allowed=None, initial_points=
                 if j is not None and not allowed[j, int(points[i, 1]) * cols + int(points[i, 0])]:
                     continue
                 affected = incident[i] if j is None else np.union1d(incident[i], incident[j])
-                before = edge_length(points, edges[affected])
+                before = edge_length(points, edges[affected], weights[affected])
                 old = points[i].copy(); points[i] = p
                 if j is not None:
                     points[j] = old
-                delta = edge_length(points, edges[affected]) - before
-                if delta < 0:
+                delta = edge_length(points, edges[affected], weights[affected]) - before
+                if delta < -1e-9:
                     owner.pop(tuple(old)); owner[tuple(p)] = i
                     if j is not None:
                         owner[tuple(old)] = j
@@ -174,12 +185,12 @@ def heuristic_layout(n, edges, cols, rows, seed=0, allowed=None, initial_points=
                                  'Spectral assignment, seeded annealing, sparse-neighborhood swaps/empty moves') if n > 300 else
                                 'Spectral assignment, seeded annealing, exhaustive swaps/empty moves'),
                         polishing_scope='Local neighborhoods of medians/current/adjacent points' if n > 300 else 'All grid cells',
-                        initial_length=initial, final_length=edge_length(points, edges))
+                        initial_length=initial, final_length=edge_length(points, edges, weights))
 
 
 def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, seed=0, progress=print,
                   *, top_left_node=None, boundary_nodes=(), fixed_offsets=None, top_left_margin=0, node_top_margins=None, max_milp_nodes=None,
-                  exclusive_boundary=False, initial_positions=None):
+                  exclusive_boundary=False, initial_positions=None, edge_weights=None):
     auto_cols, auto_rows = cols is None, rows is None
     n = len(node_ids)
     if len(set(node_ids)) != n:
@@ -205,6 +216,9 @@ def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, see
         raise ValueError('Unknown top-left or boundary node')
     index = {key: i for i, key in enumerate(node_ids)}
     edges = np.array([(index[a], index[b]) for a, b in edge_pairs], dtype=int).reshape(-1, 2)
+    weights = validated_edge_weights(edge_weights, len(edges))
+    metric = ('Unweighted Manhattan incidence length in grid units' if np.all(weights == 1) else
+              'Weighted Manhattan incidence cost in grid units')
     if cols is None and rows is None:
         cols = max(2, math.ceil(math.sqrt(max(n, 1) * 1.15)))
         rows = max(2, math.ceil(max(n, 1) * 1.15 / cols))
@@ -293,20 +307,20 @@ def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, see
             raise ValueError('Initial grid coordinates must be finite integers')
         validate_placement(initial_points)
     progress(f'Grid: initializing {n} nodes on {cols} x {rows} cells', flush=True)
-    points, heuristic = heuristic_layout(n, edges, cols, rows, seed, allowed, initial_points)
+    points, heuristic = heuristic_layout(n, edges, cols, rows, seed, allowed, initial_points, weights)
     heuristic['initialization'] = ('Validated previous placement' if initial_points is not None else
                                    'Graph-order spatial assignment' if n > 5000 else 'Spectral assignment')
     validate_placement(points)
-    incumbent = edge_length(points, edges)
+    incumbent = edge_length(points, edges, weights)
     progress(f'Grid: {n} nodes, {len(edges)} edges, {cols} x {rows}, initial length {incumbent}', flush=True)
     if not len(edges):
         return dict(zip(node_ids, points.tolist())), dict(grid_cols=cols, grid_rows=rows, objective=0,
                                                         optimality_proven=True, method='Edgeless graph',
                                                         position_constraints=constraint_report())
     if max_milp_nodes is not None and n > max_milp_nodes:
-        bound=float(len(edges))
+        bound=float(weights.sum())
         return dict(zip(node_ids, points.tolist())), dict(grid_cols=cols, grid_rows=rows,
-                    objective=incumbent, objective_metric='Unweighted Manhattan incidence length in grid units',
+                    objective=incumbent, objective_metric=metric,
                     method='Constraint-preserving heuristic; global MILP exceeds configured node budget',
                     selected_solution='validated heuristic incumbent', heuristic=heuristic,
                     optimality_proven=incumbent==bound, global_lower_bound=bound,
@@ -317,7 +331,7 @@ def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, see
     pairs = [(i, j) for i in range(n) for j in range(i + 1, n)]
     boundary_offset = 2 * n + 2 * e + 4 * len(pairs)
     size = boundary_offset + 4 * len(boundary_nodes)
-    cost = np.zeros(size); cost[2 * n:2 * n + 2 * e] = 1
+    cost = np.zeros(size); cost[2 * n:2 * n + e] = weights; cost[2 * n + e:2 * n + 2 * e] = weights
     lb, ub = np.zeros(size), np.ones(size)
     ub[:n] = cols - 1; ub[n:2 * n] = rows - 1
     ub[2 * n:2 * n + e] = cols - 1; ub[2 * n + e:2 * n + 2 * e] = rows - 1
@@ -354,7 +368,7 @@ def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, see
             add([(a + offset, 1), (b + offset, -1), (z + axis * 2, big_m)], high=big_m - 1)
             add([(b + offset, 1), (a + offset, -1), (z + axis * 2 + 1, big_m)], high=big_m - 1)
         add([(z + j, 1) for j in range(4)], low=1)
-    add([(j, 1) for j in range(2 * n, 2 * n + 2 * e)], high=incumbent)
+    add([(j, cost[j]) for j in range(2 * n, 2 * n + 2 * e)], high=incumbent)
     for k, key in enumerate(sorted(boundary_nodes)):
         i = index[key]; z = boundary_offset + 4 * k
         add([(i, 1), (z, cols)], high=cols)
@@ -374,17 +388,17 @@ def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, see
     if result.x is not None:
         proposal = np.rint(np.column_stack([result.x[:n], result.x[n:2 * n]])).astype(int)
         validate_placement(proposal)
-        if edge_length(proposal, edges) <= incumbent:
+        if edge_length(proposal, edges, weights) <= incumbent:
             points = proposal; used = 'HiGHS MILP incumbent'
     validate_placement(points)
-    objective = edge_length(points, edges)
+    objective = edge_length(points, edges, weights)
     bound = getattr(result, 'mip_dual_bound', None)
-    bound = max(float(len(edges)), float(bound)) if bound is not None and np.isfinite(bound) else float(len(edges))
+    bound = max(float(weights.sum()), float(bound)) if bound is not None and np.isfinite(bound) else float(weights.sum())
     proven = bool(result.status == 0 or objective <= bound + 1e-6)
     report = dict(method='Integer-coordinate MILP / SciPy HiGHS', solver_status=int(result.status),
                   solver_message=result.message, time_limit_seconds=time_limit,
                   grid_cols=cols, grid_rows=rows, variables=size, constraints=len(lows),
-                  objective=objective, objective_metric='Unweighted Manhattan incidence length in grid units',
+                  objective=objective, objective_metric=metric,
                   global_lower_bound=bound, relative_gap=(objective - bound) / max(objective, 1),
                   optimality_proven=proven, selected_solution=used, heuristic=heuristic,
                   distinct_grid_points_verified=len(set(map(tuple, points))) == n,

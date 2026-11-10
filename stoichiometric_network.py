@@ -31,6 +31,23 @@ def stoichiometric_matrix(model):
     return S, metabolites, reactions
 
 
+def steady_state_matrix(model):
+    """Balance internal species only; retain every original reaction column.
+
+    Missing boundaryCondition means false, preserving legacy JSON models.
+    Drawing-only placeholders do not imply exemption from mass balance.
+    """
+    S, mids, rids = stoichiometric_matrix(model)
+    balanced = []
+    for i, metabolite in enumerate(model['metabolites']):
+        boundary = metabolite.get('boundaryCondition', False)
+        if not isinstance(boundary, bool):
+            raise ValueError('boundaryCondition must be boolean: ' + metabolite['id'])
+        if not boundary:
+            balanced.append(i)
+    return [S[i] for i in balanced], [mids[i] for i in balanced], rids
+
+
 def adjacency_from_stoichiometry(S, network='metabolite', directed=False,
                                  bounds=None):
     """Return a 0/1 adjacency matrix from S, with no self-loops.
