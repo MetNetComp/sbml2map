@@ -9,7 +9,7 @@ import numpy as np
 
 from exchange_routes import orange_flux_costs, connector_plan, connector_length, connector_cost
 from grid_layout2 import optimize_grid, edge_length
-from sbml2escher import parser
+from sbml2map import parser
 from escher_grid import validate_sampling_options
 
 

@@ -35,7 +35,7 @@ def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True):
     sources=meta['source_node_ids'];old_nodes=body['nodes']
     base_id=meta.get('overlap_routing',{}).get('base_map_id',header['map_id'])
     backbone=set()
-    for namespace in ('sbml2escher','escher_grid'):
+    for namespace in ('sbml2map','sbml2escher','escher_grid'):
         for route in meta.get(namespace,{}).get('major_backbones',{}).get('routes',[]):
             for step in route.get('steps',[]):
                 reaction='rxn:'+step['reaction_id']

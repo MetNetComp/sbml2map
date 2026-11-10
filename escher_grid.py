@@ -185,7 +185,7 @@ def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None):
             xy[key] = position.tolist()
 
 
-def render(output, nodes, edges, xy, records, selection, model_id, backbones=None, program_name='sbml2escher', sampling_report=None, highlights=None, source_model=None):
+def render(output, nodes, edges, xy, records, selection, model_id, backbones=None, program_name='sbml2map', sampling_report=None, highlights=None, source_model=None):
     highlights = highlights or dict(metabolites=[], reactions=[])
     elements = grid_elements(nodes, edges)
     if source_model is None:
@@ -285,7 +285,7 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         ax.text(.5, .5, 'No reactions selected', transform=ax.transAxes, ha='center')
     ax.set_autoscale_on(True)
     ax.margins(.08)
-    oxidation_label='pyruvate oxidation' if program_name=='sbml2escher' else 'PDH'
+    oxidation_label='pyruvate oxidation' if program_name in ('sbml2map', 'sbml2escher') else 'PDH'
     connector_label = (f'Orange: shared undirected EX connectors; unique orange L1 length = {connectors["total_length"]:g}.\n' if connectors else '')
     if connectors and connectors.get('flux_costs', {}).get('flux_weight', 0):
         connector_label += (f'Flux-weighted orange cost = {connectors["total_cost"]:.4g}; '
@@ -346,9 +346,9 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         highlight = key in orange_nodes or (node['kind']=='reaction' and stats[node['original_id']].get('is_major_pathway',False)) or (node['kind']=='metabolite' and node['original_id'] in major_mids)
         registry.extend([dict(id=f'node-{j}', rank=rank, coenzyme=node['kind'] == 'currency',highlight=highlight),
                          dict(id=f'label-{j}', rank=rank, coenzyme=node['kind'] == 'currency',highlight=highlight)])
-    page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>sbml2escher</title>
+    page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>sbml2map</title>
 <style>body{font:15px system-ui;color:#203744;margin:20px}#viewer{height:78vh;overflow:auto;border:1px solid #ccd;background:white}#viewer svg{width:1600px;height:auto}header{margin-bottom:12px}a{margin-right:14px}</style>
-<header><h1>sbml2escher — __MODEL__</h1><p>Inorganic compounds are hidden. Red: main pathways (glucose exchange, glycolysis, PDH, TCA). Red pathways come first, followed by orange connectors, then other reactions. Each group is sorted by absolute median flux. Squares: reactions. Circles: compounds. Small gray circles: cofactors. Arrows follow the sign of median flux.</p>
+<header><h1>sbml2map — __MODEL__</h1><p>Inorganic compounds are hidden. Red: main pathways (glucose exchange, glycolysis, PDH, TCA). Red pathways come first, followed by orange connectors, then other reactions. Each group is sorted by absolute median flux. Squares: reactions. Circles: compounds. Small gray circles: cofactors. Arrows follow the sign of median flux.</p>
 <label>Top <input id="coverage" type="range" min="0" max="__MAX__" step="1" value="__MAX__"><span id="value"></span>%</label>
 <label><input id="coenzymes" type="checkbox" checked>Cofactors</label>
 <label>Zoom <input type="range" min="600" max="4200" value="1600" step="100" oninput="document.querySelector('#viewer svg').style.width=this.value+'px'"></label>
@@ -366,7 +366,7 @@ document.getElementById('coverage').oninput=update;document.getElementById('coen
     if provisional:
         notice=(f'<p class="sampling-warning" style="background:#fff0cc;padding:12px">Provisional result: sampling convergence checks failed. Rankings are provisional. Maximum split R-hat={sampling_report["max_split_rhat"]:.3f}, minimum ESS={sampling_report["min_effective_sample_size"]:.1f}.</p>')
         page=page.replace('</h1>', '</h1>'+notice,1)
-    if program_name=='sbml2escher':
+    if program_name in ('sbml2map', 'sbml2escher'):
         page=page.replace(', PDH, ',', pyruvate oxidation, ')
     if connectors:
         page=page.replace('</h1>', '</h1><p>Orange: undirected paths connecting main pathways to exchange (EX) reactions. The layout minimizes total path length, counting shared branches once. Gray: other branches. Only EX reactions use the outer grid boundary. Filters may hide parts of these paths.</p>',1)
@@ -382,7 +382,7 @@ document.getElementById('coverage').oninput=update;document.getElementById('coen
                             '共有枝は1回だけ数え、長さに低フラックスのペナルティを付けたコストを最小化します。')
         page = page.replace('The layout minimizes total path length, counting shared branches once.',
                             'The layout minimizes length with a low-flux penalty, counting shared branches once.')
-    page = page.replace('sbml2escher', html.escape(program_name)).replace('__MODEL__', html.escape(model_id)).replace('__MAX__', str(selection['coverage_percent'])).replace('__SVG__', svg).replace('__REGISTRY__', json.dumps(registry)).replace('__ELIGIBLE__', str(selection['eligible_reactions']))
+    page = page.replace('sbml2map', html.escape(program_name)).replace('__MODEL__', html.escape(model_id)).replace('__MAX__', str(selection['coverage_percent'])).replace('__SVG__', svg).replace('__REGISTRY__', json.dumps(registry)).replace('__ELIGIBLE__', str(selection['eligible_reactions']))
     page = inject_controls(page, source_model, elements, highlights, records)
     (output / 'index.html').write_text(page)
 
@@ -445,14 +445,14 @@ def run(args):
     from escher_routing import separate_routes
     if getattr(args,'export_sbml_layout',False):
         from export_sbml_layout import validate_export_request
-        validate_export_request(args.model,getattr(args,'sbml_layout_id','sbml2escher_layout'))
+        validate_export_request(args.model,getattr(args,'sbml_layout_id','sbml2map_layout'))
     validate_sampling_options(args)
     output = args.output_dir
     output.mkdir(parents=True, exist_ok=True)
     model = load_model(args.model)
     highlights = read_selection(args, model)
     strategy = getattr(args, '_strategy', None)
-    program_name = getattr(args, 'program_name', 'sbml2escher')
+    program_name = getattr(args, 'program_name', 'sbml2map')
     digest = model_hash(model)
     no_sampling = getattr(args, 'no_sampling', False)
     if no_sampling:
@@ -618,7 +618,7 @@ def run(args):
 
     else:
         data = [dict(schema='https://escher.github.io/escher/jsonschema/1-0-0#', homepage='https://escher.github.io',
-                     map_id=digest[:24], map_name='sbml2escher empty', map_description='No reactions selected'),
+                     map_id=digest[:24], map_name='sbml2map empty', map_description='No reactions selected'),
                 dict(nodes={}, reactions={}, text_labels={}, canvas=dict(x=0, y=0, width=500, height=500))]
         from jsonschema import Draft4Validator
         from export_escher import SCHEMA
@@ -700,7 +700,7 @@ def run(args):
     render(output, nodes, edges, xy, records, selection, model['id'], backbones, program_name, sampling_report, highlights, model)
     if getattr(args,'export_sbml_layout',False):
         from export_sbml_layout import export_sbml_layout
-        layout_report=export_sbml_layout(args.model,output,layout_id=getattr(args,'sbml_layout_id','sbml2escher_layout'))
+        layout_report=export_sbml_layout(args.model,output,layout_id=getattr(args,'sbml_layout_id','sbml2map_layout'))
         report['sbml_layout']=dict(file='layout.sbml',report='sbml_layout_report.json',layout_id=layout_report['layout_id'],
                                    validation=layout_report['validation'])
         dump(output/'report.json',report)
@@ -717,13 +717,13 @@ def parser():
     p.add_argument('--highlight-metabolites', nargs='+', action='extend', default=[], help='Exact source metabolite IDs to highlight blue')
     p.add_argument('--highlight-reactions', nargs='+', action='extend', default=[], help='Exact source reaction IDs to highlight blue')
     p.add_argument('--highlight-file', type=Path, help='JSON with metabolites and reactions ID lists')
-    p.add_argument('--export-sbml-layout', action='store_true', help='Explicitly export layout.sbml with standard SBML Level 3 Layout; disabled by default')
-    p.add_argument('--sbml-layout-id', default='sbml2escher_layout', help='ID for the added SBML Layout (existing layouts are preserved)')
+    p.add_argument('--export-sbml-layout', action='store_true', help='Write positions and connecting lines to layout.sbml (SBML Level 3 Layout; off by default)')
+    p.add_argument('--sbml-layout-id', default='sbml2map_layout', help='ID for the added SBML Layout (existing layouts are preserved)')
     p.add_argument('--model', type=Path, default=BASE / 'e_coli_core.xml')
-    p.add_argument('--output-dir', type=Path, default=BASE / 'e_coli_core_sbml2escher_output')
+    p.add_argument('--output-dir', type=Path, default=BASE / 'e_coli_core_sbml2map_output')
     p.add_argument('--coverage', type=float, default=100, help='Top percentage of eligible reactions (0..100); --no-sampling uses pathway membership and IDs')
     p.add_argument('--zero-tolerance', type=float, default=1e-7)
-    p.add_argument('--orange-flux-weight', type=float, default=1, help='Nonnegative low-flux penalty strength for orange routing (default: 1; 0: length only; ignored without sampling)')
+    p.add_argument('--orange-flux-weight', type=float, default=1, help='Penalty for low-flux orange routes (default: 1; 0: length only; larger values favor higher-flux reactions more; ignored without sampling)')
     p.add_argument('--require-sampling', action='store_true', help='Fail instead of falling back to a structural drawing if sampling is unavailable')
     p.add_argument('--samples', type=int, default=2000, help='Retained samples per chain')
     p.add_argument('--chains', type=int, default=4)

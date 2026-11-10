@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 from export_sbml_layout import export_sbml_layout,validate_export_request
 from model_input import load_model
-from sbml2escher import parser,run
+from sbml2map import parser,run
 
 try:
     import libsbml

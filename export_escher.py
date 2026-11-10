@@ -464,7 +464,7 @@ def write_pathway_preview(path, data, major_reactions=(), connector_pairs=None,
     legend = '<p data-pathway-legend>Red: main pathways.'
     if connector_pairs is not None:
         legend += ' Orange: connections to exchange reactions. Gray: other branches.'
-    connector_details = metadata.get('sbml2escher', {}).get('major_backbones', {}).get('exchange_connectors', {})
+    connector_details = metadata.get('sbml2map', metadata.get('sbml2escher', {})).get('major_backbones', {}).get('exchange_connectors', {})
     flux_weight = connector_details.get('flux_costs', {}).get('flux_weight', 0)
     if flux_weight:
         legend += f' Orange route selection favors larger absolute sampled median fluxes (penalty strength {flux_weight:g}).'

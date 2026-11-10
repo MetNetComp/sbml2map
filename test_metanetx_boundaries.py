@@ -11,7 +11,7 @@ from chemical_identity import MetaNetXReference, metanetx_id
 from annotation_context import reaction_labels
 from escher_grid import classify_metabolites, display_graph
 from model_input import load_model
-from sbml2escher import discovery_context, BacterialStrategy
+from sbml2map import discovery_context, BacterialStrategy
 
 
 class MetaNetXIdentityTests(unittest.TestCase):

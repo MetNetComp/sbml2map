@@ -13,7 +13,7 @@ import numpy as np
 from escher_grid import model_hash, sampling_data
 from flux_sampling2 import sample_fluxes, sampling_constraints
 from model_input import load_model
-from sbml2escher import parser, run
+from sbml2map import parser, run
 from stoichiometric_network import stoichiometric_matrix, steady_state_matrix
 
 

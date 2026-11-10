@@ -1,20 +1,37 @@
-# sbml2escher
+# sbml2map
+
+sbml2map draws metabolic maps from SBML models. It can export Escher maps,
+SVG images, and SBML files with compound and reaction positions and connecting lines.
+To export SBML with positions, use `--export-sbml-layout`.
 
 The structural Escher view paints red above orange above gray and offsets coincident routes of different reactions.
 Biological nodes and primary backbone centerlines stay fixed; same-reaction trunks remain bundled.
 FBA uses the original neutral orthogonal routes without structural priority.
 
-`sbml2escher.py` draws metabolic networks with nodes on a grid.
+`sbml2map.py` draws metabolic networks with nodes on a grid.
 Cofactors may also be placed off the grid. Inorganic species are ignored.
 Exchange reactions are placed on the outer boundary. Key pathways, such as
 glucose to pyruvate, are drawn as straight lines and highlighted in red.
 
 When flux sampling is available, reactions with zero median flux are not drawn.
-The layout aims to minimize the total length of paths connecting the key
-pathways to all exchange reactions. These connecting paths are shown in orange.
+Orange paths connect the key pathways to exchange reactions. With flux sampling,
+the layout favors short paths through reactions with larger absolute median flux.
+Use `--orange-flux-weight` to control this preference.
 
 The criteria for selecting key pathways are provisional. The drawing criteria
 are also provisional, and we welcome all ideas for improvement.
+
+## Two useful options
+
+| Option | What it does |
+| --- | --- |
+| `--export-sbml-layout` | Saves compound and reaction positions and connecting lines in `layout.sbml`. Requires SBML Level 3 input and the optional libSBML dependency. |
+| `--orange-flux-weight NUMBER` | Controls the penalty for low-flux orange routes. The default is `1`. Use `0` for length only, or a larger number to favor higher-flux reactions more strongly. |
+
+The orange penalty uses flux sampling results. It has no effect with
+`--no-sampling`. SBML Layout stores positions and lines; colors are not included.
+See [positioned SBML export](#export-positioned-sbml-optional) and
+[orange route penalty](#orange-route-penalty) for examples.
 
 ## Browse saved results and publish with GitHub Pages
 
@@ -28,6 +45,10 @@ The ready-to-publish [`docs/`](docs/README.md) directory contains the E. coli co
 views. After updating results, run `python3 prepare_github_pages.py` and commit/push
 `docs/`. An enabled Pages site can use branch `main`, directory `/docs`.
 
+The iCH360 structural drawing is also available in the [live SVG viewer](https://metnetcomp.github.io/sbml2escher/eco_ich_360/)
+and [live Escher viewer](https://metnetcomp.github.io/sbml2escher/eco_ich_360/escher_preview.html).
+It shows 326 of 349 reactions without flux sampling; no new model files are included.
+
 Run the packaged checks with `python -m unittest discover`.
 
 ## Escher labels
@@ -37,7 +58,7 @@ labels in the Escher preview. Use `--allow-label-overlap` to show all enabled
 labels, including overlapping ones:
 
 ```bash
-python sbml2escher.py --model models/e_coli_core.xml --no-sampling \
+python sbml2map.py --model models/e_coli_core.xml --no-sampling \
   --hide-metabolite-labels --hide-reaction-labels --output-dir /tmp/ecore_no_labels
 ```
 
@@ -89,7 +110,7 @@ SBML Level 3 model, install the optional dependency and pass the export flag:
 
 ```bash
 python -m pip install -r requirements-sbml-layout.txt
-python sbml2escher.py --model models/e_coli_core.xml --no-sampling \
+python sbml2map.py --model models/e_coli_core.xml --no-sampling \
   --export-sbml-layout --output-dir results/runs/e_coli_core_layout
 ```
 
@@ -120,7 +141,7 @@ package; Render colors and arrow styling are not exported in this first version.
 ```text
 ./
   README.md
-  sbml2escher.py                  Main command-line entry point
+  sbml2map.py                  Main command-line entry point
   *.py                           Supporting Python modules
   requirements-layout.txt        Numerical and plotting dependencies
   requirements-escher.txt        Escher schema-validation dependency
@@ -197,7 +218,7 @@ and colors are not used to select pathways or position nodes.
 ### Draw a structural map without flux sampling
 
 ```bash
-python sbml2escher.py \
+python sbml2map.py \
   --model models/e_coli_core.xml \
   --no-sampling \
   --coverage 100 \
@@ -212,7 +233,7 @@ zero-bound reactions have no arrows. No flux or activity ranking is calculated.
 A larger-model example:
 
 ```bash
-python sbml2escher.py \
+python sbml2map.py \
   --model models/iML1515.xml \
   --no-sampling \
   --output-dir results/runs/iML1515_structural
@@ -224,7 +245,7 @@ To calculate structural maps for every included model in Bash:
 for model in models/*.xml models/*.sbml; do
   [ -f "$model" ] || continue
   name=$(basename "$model")
-  python sbml2escher.py \
+  python sbml2map.py \
     --model "$model" \
     --no-sampling \
     --coverage 100 \
@@ -302,7 +323,7 @@ changes do not update PNG files. To generate blue highlights in PNG, SVG, and
 the initial HTML selection, run:
 
 ```bash
-python sbml2escher.py --model models/e_coli_core.xml --no-sampling \
+python sbml2map.py --model models/e_coli_core.xml --no-sampling \
   --highlight-metabolites pyr_c accoa_c --highlight-reactions PDH CS \
   --output-dir results/runs/e_coli_core_highlight
 ```
@@ -333,7 +354,7 @@ To use the interactive layout instead, open `results/e_coli_core/index.html`.
 ### Discover pathways without drawing
 
 ```bash
-python sbml2escher.py \
+python sbml2map.py \
   --model models/iMM904.xml \
   --discover-only \
   --output-dir results/runs/iMM904_discovery
@@ -347,7 +368,7 @@ layout calculation.
 Sampling is enabled when `--no-sampling` is omitted:
 
 ```bash
-python sbml2escher.py \
+python sbml2map.py \
   --model models/e_coli_core.xml \
   --samples 2000 \
   --chains 4 \
@@ -367,7 +388,7 @@ structural mode and records the reason in `report.json`.
 To reuse samples generated by the preceding command:
 
 ```bash
-python sbml2escher.py \
+python sbml2map.py \
   --model models/e_coli_core.xml \
   --reuse-samples results/runs/e_coli_core_sampled \
   --coverage 50 \
@@ -381,7 +402,7 @@ structural runs rather than one containing sampling files.
 ### Inspect available options
 
 ```bash
-python sbml2escher.py --help
+python sbml2map.py --help
 ```
 
 Useful options include `--coverage` (0–100), `--time-limit` (the grid MILP time
@@ -478,6 +499,20 @@ Sampled Escher previews provide a `Show reactions` slider (0–100% of saved
 reactions). Red pathways come first, followed by orange connectors, then other reactions;
 absolute sampled median flux determines order within each group. Attached nodes and labels follow the filter. Changing the
 percentage does not resample fluxes or recompute coordinates.
+
+## Orange route penalty
+
+This option makes reactions with lower absolute median flux cost more when
+choosing orange paths. Higher values give a stronger preference to higher-flux
+reactions, even if the path becomes longer. The default is `1`; use `0` to
+consider length only. A fractional value such as `0.5` is also allowed.
+
+```bash
+python sbml2map.py --model models/e_coli_core.xml \
+  --orange-flux-weight 0.5 --output-dir results/runs/e_coli_core_weighted
+```
+
+The value must be zero or positive. The option is ignored with `--no-sampling`.
 
 Use `--orange-flux-weight 1` to favor larger absolute sampled medians during
 orange route selection and placement. The default is 1; use 0 for length only. Candidate

@@ -28,7 +28,7 @@ def _library():
     return libsbml
 
 
-def validate_export_request(model_path, layout_id='sbml2escher_layout'):
+def validate_export_request(model_path, layout_id='sbml2map_layout'):
     path=Path(model_path)
     if path.suffix.lower()=='.json':
         raise ValueError('SBML Layout export currently requires an SBML Level 3 input, not JSON')
@@ -134,7 +134,7 @@ def _incidences(data):
             yield rid,target,path
 
 
-def export_sbml_layout(model_path,layout_dir,output=None,layout_id='sbml2escher_layout',verify_fba=False):
+def export_sbml_layout(model_path,layout_dir,output=None,layout_id='sbml2map_layout',verify_fba=False):
     model_path,layout_dir=Path(model_path),Path(layout_dir)
     output=Path(output) if output is not None else layout_dir/'layout.sbml'
     if output.resolve()==model_path.resolve():raise ValueError('Output must not overwrite the input SBML')
@@ -166,7 +166,7 @@ def export_sbml_layout(model_path,layout_dir,output=None,layout_id='sbml2escher_
     document.setPackageRequired('layout',False)
     plugin=document.getModel().getPlugin('layout');existing_layouts=plugin.getNumLayouts()
     layout=plugin.createLayout();layout.setId(layout_id)
-    layout.setName('sbml2escher saved diagram (displayed subset)')
+    layout.setName('sbml2map saved diagram (displayed subset)')
     body=data[1];metadata=data[0].get('metadata',{});canvas=body['canvas'];margin=20.0
     offset=(margin-canvas['x'],margin-canvas['y']);width=canvas['width']+2*margin;height=canvas['height']+2*margin
     glyph_ids={};coordinates={};reaction_glyphs={};curve_coordinates={};text_count=0;line_count=0;reference_count=0
@@ -320,7 +320,7 @@ def main():
     parser.add_argument('--model',type=Path,required=True)
     parser.add_argument('--layout-dir',type=Path,required=True)
     parser.add_argument('--output',type=Path)
-    parser.add_argument('--layout-id',default='sbml2escher_layout')
+    parser.add_argument('--layout-id',default='sbml2map_layout')
     parser.add_argument('--verify-fba',action='store_true',help='Also compare the full-model FBA objective before and after export')
     args=parser.parse_args()
     try:report=export_sbml_layout(args.model,args.layout_dir,args.output,args.layout_id,args.verify_fba)

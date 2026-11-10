@@ -1,0 +1,2654 @@
+{
+  "source_model": "/home/tamura/codex/drawing/data/e_coli_iCH360.sbml",
+  "source_model_sha256": "8f526442e3e9ca0e1b184be60c6d032c76d338e8d8b8065b0b3246e4ac8c5112",
+  "selection": {
+    "mode": "structure",
+    "coverage_percent": 100.0,
+    "eligible_reactions": 326,
+    "selected_reactions": 326,
+    "major_eligible_reactions": 22,
+    "major_selected_reactions": 22,
+    "ranking": "Major pathways first, then reaction ID; no flux or activity ranking",
+    "count_rule": "ceil(coverage / 100 * eligible_count); 0 gives empty map"
+  },
+  "sampling": {
+    "performed": false,
+    "mode": "disabled",
+    "model_sha256": "8f526442e3e9ca0e1b184be60c6d032c76d338e8d8b8065b0b3246e4ac8c5112"
+  },
+  "placement": {
+    "grid_cols": 26,
+    "grid_rows": 29,
+    "objective": 291,
+    "objective_metric": "Sum of Manhattan lengths of unique orange incidence edges; shared edges counted once",
+    "method": "Constraint-preserving heuristic; global MILP exceeds configured node budget",
+    "selected_solution": "validated heuristic incumbent",
+    "heuristic": {
+      "method": "Spectral assignment, seeded annealing, sparse-neighborhood swaps/empty moves",
+      "polishing_scope": "Local neighborhoods of medians/current/adjacent points",
+      "initial_length": 317,
+      "final_length": 291,
+      "initialization": "Validated previous placement"
+    },
+    "optimality_proven": false,
+    "max_milp_nodes": 180,
+    "position_constraints": {
+      "top_left_node": "met:glc__D_e",
+      "top_left_position": [
+        1,
+        27
+      ],
+      "top_left_margin": 1,
+      "node_top_margins": {
+        "met:dhap_c": 1,
+        "met:prbatp_c": 1,
+        "met:akg_e": 1,
+        "met:2pg_c": 1,
+        "met:13dpg_c": 1,
+        "met:prbamp_c": 1,
+        "met:fpram_c": 1,
+        "met:thr__L_c": 1,
+        "met:fum_p": 1,
+        "met:gln__L_e": 1,
+        "met:3ohexACP_c": 1,
+        "met:3ocddec5eACP_c": 1,
+        "met:r5p_c": 1,
+        "met:akg_c": 1,
+        "met:ac_c": 1,
+        "met:citr__L_c": 1,
+        "met:34hpp_c": 1,
+        "met:pep_c": 1,
+        "met:rib__D_c": 1,
+        "met:gthrd_c": 1,
+        "met:actACP_c": 1,
+        "met:actp_c": 1,
+        "met:pyr_p": 1,
+        "met:cyst__L_c": 1,
+        "met:dutp_c": 1,
+        "met:glyc3p_c": 1,
+        "met:2ahbut_c": 1,
+        "met:ser__L_c": 1,
+        "met:toct2eACP_c": 1,
+        "met:3pg_c": 1,
+        "met:dadp_c": 1,
+        "met:xu5p__D_c": 1,
+        "met:aspsa_c": 1,
+        "met:thex2eACP_c": 1,
+        "met:t3c9palmeACP_c": 1,
+        "met:accoa_c": 1,
+        "met:arg__L_c": 1,
+        "met:26dap_LL_c": 1,
+        "met:asp__L_c": 1,
+        "met:acg5sa_c": 1,
+        "met:hexACP_c": 1,
+        "met:skm_c": 1,
+        "met:imp_c": 1,
+        "met:succ_p": 1,
+        "met:phpyr_c": 1,
+        "met:fru_e": 1,
+        "met:pyr_e": 1,
+        "met:tdeACP_c": 1,
+        "met:3ocvac11eACP_c": 1,
+        "met:3hoctaACP_c": 1,
+        "met:mal__L_c": 1,
+        "met:g3p_c": 1,
+        "met:etoh_c": 1,
+        "met:met__L_c": 1,
+        "met:aicar_c": 1,
+        "met:5aizc_c": 1,
+        "met:ac_e": 1,
+        "met:glx_c": 1,
+        "met:etoh_e": 1,
+        "met:glcn_p": 1,
+        "met:air_c": 1,
+        "met:6pgc_c": 1,
+        "met:tdec2eACP_c": 1,
+        "met:hdeACP_c": 1,
+        "met:argsuc_c": 1,
+        "met:chor_c": 1,
+        "met:hom__L_c": 1,
+        "met:dgdp_c": 1,
+        "met:3odecACP_c": 1,
+        "met:tyr__L_c": 1,
+        "met:cys__L_c": 1,
+        "met:xylu__D_c": 1,
+        "met:e4p_c": 1,
+        "met:trp__L_c": 1,
+        "met:acser_c": 1,
+        "met:lys__L_c": 1,
+        "met:dudp_c": 1,
+        "met:indole_c": 1,
+        "met:eig3p_c": 1,
+        "met:26dap__M_c": 1,
+        "met:orot5p_c": 1,
+        "met:gln__L_p": 1,
+        "met:glyc_p": 1,
+        "met:5caiz_c": 1,
+        "met:mal__L_p": 1,
+        "met:3hcpalm9eACP_c": 1,
+        "met:3ocpalm9eACP_c": 1,
+        "met:butACP_c": 1,
+        "met:dttp_c": 1,
+        "met:lac__D_e": 1,
+        "met:3ig3p_c": 1,
+        "met:sl26da_c": 1,
+        "met:3hoctACP_c": 1,
+        "met:dctp_c": 1,
+        "met:toctd2eACP_c": 1,
+        "met:ru5p__D_c": 1,
+        "met:23dhmb_c": 1,
+        "met:pran_c": 1,
+        "met:glcn_c": 1,
+        "met:paps_c": 1,
+        "met:dhor__S_c": 1,
+        "met:glyc_e": 1,
+        "met:4mop_c": 1,
+        "met:fdp_c": 1,
+        "met:dtmp_c": 1,
+        "met:datp_c": 1,
+        "met:glu__L_c": 1,
+        "met:fum_c": 1,
+        "met:akg_p": 1,
+        "met:acorn_c": 1,
+        "met:glu5sa_c": 1,
+        "met:ile__L_c": 1,
+        "met:ocACP_c": 1,
+        "met:3dhq_c": 1,
+        "met:hisp_c": 1,
+        "met:glu__L_e": 1,
+        "met:cbp_c": 1,
+        "met:3mob_c": 1,
+        "met:suchms_c": 1,
+        "met:tpalm2eACP_c": 1,
+        "met:3hpalmACP_c": 1,
+        "met:gln__L_c": 1,
+        "met:3c3hmp_c": 1,
+        "met:anth_c": 1,
+        "met:pap_c": 1,
+        "met:xmp_c": 1,
+        "met:2cpr5p_c": 1,
+        "met:rib__D_p": 1,
+        "met:xyl__D_p": 1,
+        "met:octeACP_c": 1,
+        "met:3hhexACP_c": 1,
+        "met:t3c5ddeceACP_c": 1,
+        "met:ala__L_c": 1,
+        "met:phe__L_c": 1,
+        "met:t3c7mrseACP_c": 1,
+        "met:t3c11vaceACP_c": 1,
+        "met:1pyr5c_c": 1,
+        "met:acald_p": 1,
+        "met:2ippm_c": 1,
+        "met:3psme_c": 1,
+        "met:imacp_c": 1,
+        "met:3c2hmp_c": 1,
+        "met:pser__L_c": 1,
+        "met:ocdcaACP_c": 1,
+        "met:3dhsk_c": 1,
+        "met:acACP_c": 1,
+        "met:alac__S_c": 1,
+        "met:dcdp_c": 1,
+        "met:gly_c": 1,
+        "met:malcoa_c": 1,
+        "met:fru_p": 1,
+        "met:xyl__D_e": 1,
+        "met:phom_c": 1,
+        "met:glc__D_e": 1,
+        "met:f6p_c": 1,
+        "met:pphn_c": 1,
+        "met:prlp_c": 1,
+        "met:s7p_c": 1,
+        "met:prfp_c": 1,
+        "met:tmrs2eACP_c": 1,
+        "met:succ_e": 1,
+        "met:glyc__R_c": 1,
+        "met:g6p_c": 1,
+        "met:methf_c": 1,
+        "met:ddcaACP_c": 1,
+        "met:prpp_c": 1,
+        "met:histd_c": 1,
+        "met:for_p": 1,
+        "met:orot_c": 1,
+        "met:glc__D_p": 1,
+        "met:orn_c": 1,
+        "met:dcaACP_c": 1,
+        "met:3hcddec5eACP_c": 1,
+        "met:tddec2eACP_c": 1,
+        "met:fgam_c": 1,
+        "met:cit_c": 1,
+        "met:skm5p_c": 1,
+        "met:oaa_c": 1,
+        "met:23dhmp_c": 1,
+        "met:fprica_c": 1,
+        "met:glcn_e": 1,
+        "met:ac_p": 1,
+        "met:his__L_c": 1,
+        "met:6pgl_c": 1,
+        "met:2dda7p_c": 1,
+        "met:sl2a6o_c": 1,
+        "met:succ_c": 1,
+        "met:aps_c": 1,
+        "met:thdp_c": 1,
+        "met:glyc__R_e": 1,
+        "met:acglu_c": 1,
+        "met:3hddecACP_c": 1,
+        "met:2obut_c": 1,
+        "met:cddec5eACP_c": 1,
+        "met:glyc_c": 1,
+        "met:val__L_c": 1,
+        "met:pro__L_c": 1,
+        "met:cbasp_c": 1,
+        "met:lac__D_p": 1,
+        "met:malACP_c": 1,
+        "met:3hdecACP_c": 1,
+        "met:cdec3eACP_c": 1,
+        "met:3hcmrs7eACP_c": 1,
+        "met:glu__L_p": 1,
+        "met:3oddecACP_c": 1,
+        "met:glyc__R_p": 1,
+        "met:3ooctdACP_c": 1,
+        "met:but2eACP_c": 1,
+        "met:pyr_c": 1,
+        "met:dump_c": 1,
+        "met:acon_C_c": 1,
+        "met:icit_c": 1,
+        "met:lac__D_c": 1,
+        "met:3php_c": 1,
+        "met:dtdp_c": 1,
+        "met:for_c": 1,
+        "met:3opalmACP_c": 1,
+        "met:3hcvac11eACP_c": 1,
+        "met:asn__L_c": 1,
+        "met:leu__L_c": 1,
+        "met:25aics_c": 1,
+        "met:3omrsACP_c": 1,
+        "met:acald_c": 1,
+        "met:3hmrsACP_c": 1,
+        "met:pram_c": 1,
+        "met:3c4mop_c": 1,
+        "met:hcys__L_c": 1,
+        "met:mal__L_e": 1,
+        "met:fum_e": 1,
+        "met:acald_e": 1,
+        "met:etoh_p": 1,
+        "met:gthox_c": 1,
+        "met:gar_c": 1,
+        "met:3haACP_c": 1,
+        "met:3ooctACP_c": 1,
+        "met:3ocmrs7eACP_c": 1,
+        "met:acg5p_c": 1,
+        "met:4pasp_c": 1,
+        "met:glu5p_c": 1,
+        "met:23dhdp_c": 1,
+        "met:3mop_c": 1,
+        "met:dgtp_c": 1,
+        "met:rib__D_e": 1,
+        "met:dcamp_c": 1,
+        "met:myrsACP_c": 1,
+        "met:ACP_c": 1,
+        "met:palmACP_c": 1,
+        "met:succoa_c": 1,
+        "met:xyl__D_c": 1,
+        "met:for_e": 1,
+        "rxn:NDPK5": 1,
+        "rxn:SHK3Dr": 1,
+        "rxn:NDPK6": 1,
+        "rxn:NDPK8": 1,
+        "rxn:DHORTS": 1,
+        "rxn:OMPDC": 1,
+        "rxn:G5SD": 1,
+        "rxn:CS": 1,
+        "rxn:ICDHyr": 1,
+        "rxn:ACALD": 1,
+        "rxn:PPCK": 1,
+        "rxn:ME1": 1,
+        "rxn:ALATA_L": 1,
+        "rxn:XYLK": 1,
+        "rxn:RBK": 1,
+        "rxn:GLYK": 1,
+        "rxn:ASPTA": 1,
+        "rxn:FBP": 1,
+        "rxn:PYK": 1,
+        "rxn:GTHOr": 1,
+        "rxn:ILETA": 1,
+        "rxn:DHORD5": 1,
+        "rxn:VALTA": 1,
+        "rxn:IPPMIb": 1,
+        "rxn:ORPT": 1,
+        "rxn:ACHBS": 1,
+        "rxn:DHAD2": 1,
+        "rxn:ACLS": 1,
+        "rxn:TRPS2": 1,
+        "rxn:PSCVT": 1,
+        "rxn:PFL": 1,
+        "rxn:ANS": 1,
+        "rxn:FRD2": 1,
+        "rxn:ANPRT": 1,
+        "rxn:CHORM": 1,
+        "rxn:PTAr": 1,
+        "rxn:CHORS": 1,
+        "rxn:IGPS": 1,
+        "rxn:ACKr": 1,
+        "rxn:LEUTAi": 1,
+        "rxn:ENO": 1,
+        "rxn:FBA": 1,
+        "rxn:IMPC": 1,
+        "rxn:IMPD": 1,
+        "rxn:PPS": 1,
+        "rxn:PGI": 1,
+        "rxn:PGK": 1,
+        "rxn:PGL": 1,
+        "rxn:RPE": 1,
+        "rxn:DHQTi": 1,
+        "rxn:IPMD": 1,
+        "rxn:AIRC3": 1,
+        "rxn:TALA": 1,
+        "rxn:ADSL2r": 1,
+        "rxn:TKT1": 1,
+        "rxn:RNDR1": 1,
+        "rxn:ALCD2x": 1,
+        "rxn:RNDR3": 1,
+        "rxn:RNDR4": 1,
+        "rxn:TMDS": 1,
+        "rxn:DHAD1": 1,
+        "rxn:IPPMIa": 1,
+        "rxn:MDH": 1,
+        "rxn:FUM": 1,
+        "rxn:KARA1": 1,
+        "rxn:KARA2": 1,
+        "rxn:ACCOAC": 1,
+        "rxn:KAS14": 1,
+        "rxn:ARGSS": 1,
+        "rxn:AGPR": 1,
+        "rxn:ICL": 1,
+        "rxn:GLYCL": 1,
+        "rxn:XYLI1": 1,
+        "rxn:PPC": 1,
+        "rxn:G3PT": 1,
+        "rxn:SADT2": 1,
+        "rxn:GHMT2r": 1,
+        "rxn:DHORD2": 1,
+        "rxn:SDPDS": 1,
+        "rxn:UMPK": 1,
+        "rxn:CTPS2": 1,
+        "rxn:NDPK7": 1,
+        "rxn:TRPS3": 1,
+        "rxn:ADK1": 1,
+        "rxn:NDPK2": 1,
+        "rxn:NDPK4": 1,
+        "rxn:ACODA": 1,
+        "rxn:ADSS": 1,
+        "rxn:ASNS2": 1,
+        "rxn:ASPCT": 1,
+        "rxn:MCOATA": 1,
+        "rxn:DAPE": 1,
+        "rxn:DHDPRy": 1,
+        "rxn:HSK": 1,
+        "rxn:SDPTA": 1,
+        "rxn:THRS": 1,
+        "rxn:HSST": 1,
+        "rxn:PPNDH": 1,
+        "rxn:DTMPK": 1,
+        "rxn:NDPK1": 1,
+        "rxn:TRDR": 1,
+        "rxn:DDPA": 1,
+        "rxn:MALS": 1,
+        "rxn:NADTRHD": 1,
+        "rxn:G3PD2": 1,
+        "rxn:GMPS2": 1,
+        "rxn:P5CR": 1,
+        "rxn:G5SADs": 1,
+        "rxn:AKGDH": 1,
+        "rxn:ATPPRT": 1,
+        "rxn:HISTD": 1,
+        "rxn:DHDPS": 1,
+        "rxn:IGPDH": 1,
+        "rxn:PRPPS": 1,
+        "rxn:PRATPP": 1,
+        "rxn:GLUN": 1,
+        "rxn:PRMICI": 1,
+        "rxn:GLUPRT": 1,
+        "rxn:SERAT": 1,
+        "rxn:CYSS": 1,
+        "rxn:BPNT": 1,
+        "rxn:PAPSR": 1,
+        "rxn:ASPK": 1,
+        "rxn:ASAD": 1,
+        "rxn:DAPDC": 1,
+        "rxn:OCBT": 1,
+        "rxn:GARFT": 1,
+        "rxn:PHETA1": 1,
+        "rxn:PPND": 1,
+        "rxn:PRAMPC": 1,
+        "rxn:GLYCK2": 1,
+        "rxn:ACOTA": 1,
+        "rxn:SULR": 1,
+        "rxn:PRAGSr": 1,
+        "rxn:PRFGS": 1,
+        "rxn:PSERT": 1,
+        "rxn:AIRC2": 1,
+        "rxn:GAPD": 1,
+        "rxn:GND": 1,
+        "rxn:G6PDH2r": 1,
+        "rxn:ME2": 1,
+        "rxn:ARGSL": 1,
+        "rxn:CBPS": 1,
+        "rxn:GLU5K": 1,
+        "rxn:IPPS": 1,
+        "rxn:ACOATA": 1,
+        "rxn:ACtex": 1,
+        "rxn:ACALDtex": 1,
+        "rxn:PSP_L": 1,
+        "rxn:ADSK": 1,
+        "rxn:SUCCt2_2pp": 1,
+        "rxn:HSDy": 1,
+        "rxn:CYSTL": 1,
+        "rxn:SHSL1": 1,
+        "rxn:SULabcpp": 1,
+        "rxn:GLUtex": 1,
+        "rxn:AKGt2rpp": 1,
+        "rxn:XYLt2pp": 1,
+        "rxn:GLYCtex": 1,
+        "rxn:PYRt2rpp": 1,
+        "rxn:THD2pp": 1,
+        "rxn:TKT2": 1,
+        "rxn:ATPS4rpp": 1,
+        "rxn:GK1": 1,
+        "rxn:GLCNtex": 1,
+        "rxn:GLNtex": 1,
+        "rxn:D_LACtex": 1,
+        "rxn:GLCtex_copy1": 1,
+        "rxn:FUMt2_2pp": 1,
+        "rxn:CYTBDpp": 1,
+        "rxn:CYTBD2pp": 1,
+        "rxn:ACALDtpp": 1,
+        "rxn:ACt2rpp": 1,
+        "rxn:METS": 1,
+        "rxn:FRUtex": 1,
+        "rxn:FUMtex": 1,
+        "rxn:PRASCSi": 1,
+        "rxn:MTHFC": 1,
+        "rxn:MTHFD": 1,
+        "rxn:XYLtex": 1,
+        "rxn:FORtppi": 1,
+        "rxn:PYRtex": 1,
+        "rxn:SUCCtex": 1,
+        "rxn:GRXR": 1,
+        "rxn:RNDR1b": 1,
+        "rxn:RNDR2b": 1,
+        "rxn:MALt2_2pp": 1,
+        "rxn:RIBabcpp": 1,
+        "rxn:GLYCAt2rpp": 1,
+        "rxn:GLYCAtex": 1,
+        "rxn:GLYCtpp": 1,
+        "rxn:GLNabcpp": 1,
+        "rxn:GLUt2rpp": 1,
+        "rxn:ACGK": 1,
+        "rxn:GNK": 1,
+        "rxn:GLUDy": 1,
+        "rxn:GLCNt2rpp": 1,
+        "rxn:GLCptspp": 1,
+        "rxn:HSTPT": 1,
+        "rxn:THDPS": 1,
+        "rxn:ATPM": 1,
+        "rxn:THRD_L": 1,
+        "rxn:ETOHtex": 1,
+        "rxn:RNDR2": 1,
+        "rxn:DHFR": 1,
+        "rxn:PRAIi": 1,
+        "rxn:TYRTA": 1,
+        "rxn:SHKK": 1,
+        "rxn:GLUSy": 1,
+        "rxn:OMCDC": 1,
+        "rxn:IG3PS": 1,
+        "rxn:PDH": 1,
+        "rxn:MTHFR2": 1,
+        "rxn:DUTPDP": 1,
+        "rxn:NTP5": 1,
+        "rxn:FORt2pp": 1,
+        "rxn:GLNS": 1,
+        "rxn:ACGS": 1,
+        "rxn:SUCOAS": 1,
+        "rxn:PRAIS": 1,
+        "rxn:HISTP": 1,
+        "rxn:LDH_D": 1,
+        "rxn:KAS15": 1,
+        "rxn:T2DECAI": 1,
+        "rxn:3OAS161": 1,
+        "rxn:DHQS": 1,
+        "rxn:EAR161x": 1,
+        "rxn:EAR161y": 1,
+        "rxn:PGCD": 1,
+        "rxn:MALtex": 1,
+        "rxn:3OAS141": 1,
+        "rxn:3OAR121": 1,
+        "rxn:ADSL1r": 1,
+        "rxn:AICART": 1,
+        "rxn:D_LACt2pp": 1,
+        "rxn:RIBtex": 1,
+        "rxn:FRUpts2pp": 1,
+        "rxn:FORtex": 1,
+        "rxn:PFK": 1,
+        "rxn:PGM": 1,
+        "rxn:CYTBO3_4pp": 1,
+        "rxn:EAR141x": 1,
+        "rxn:EAR141y": 1,
+        "rxn:EAR181x": 1,
+        "rxn:EAR181y": 1,
+        "rxn:TPI": 1,
+        "rxn:RPI": 1,
+        "rxn:3OAR120": 1,
+        "rxn:3HAD80": 1,
+        "rxn:3HAD120": 1,
+        "rxn:EAR180x": 1,
+        "rxn:AKGtex": 1,
+        "rxn:EAR180y": 1,
+        "rxn:ACONTb": 1,
+        "rxn:3HAD161": 1,
+        "rxn:SUCDi": 1,
+        "rxn:ASNS1": 1,
+        "rxn:EAR80y": 1,
+        "rxn:EAR120y": 1,
+        "rxn:3OAR181": 1,
+        "rxn:3HAD121": 1,
+        "rxn:EAR140x": 1,
+        "rxn:3OAS181": 1,
+        "rxn:3OAS140": 1,
+        "rxn:3OAR140": 1,
+        "rxn:EAR160y": 1,
+        "rxn:3OAR160": 1,
+        "rxn:3HAD181": 1,
+        "rxn:EAR100y": 1,
+        "rxn:3OAR141": 1,
+        "rxn:3OAR161": 1,
+        "rxn:3HAD141": 1,
+        "rxn:EAR121x": 1,
+        "rxn:EAR121y": 1,
+        "rxn:ACONTa": 1,
+        "rxn:3HAD40": 1,
+        "rxn:3OAS60": 1,
+        "rxn:3OAS160": 1,
+        "rxn:3OAR60": 1,
+        "rxn:3OAR80": 1,
+        "rxn:EAR100x": 1,
+        "rxn:EAR120x": 1,
+        "rxn:EAR160x": 1,
+        "rxn:EAR140y": 1,
+        "rxn:3OAS121": 1,
+        "rxn:3OAS80": 1,
+        "rxn:3OAS100": 1,
+        "rxn:3OAS120": 1,
+        "rxn:3OAR40": 1,
+        "rxn:3OAR100": 1,
+        "rxn:3HAD60": 1,
+        "rxn:3HAD100": 1,
+        "rxn:3HAD140": 1,
+        "rxn:3HAD160": 1,
+        "rxn:EAR40x": 1,
+        "rxn:EAR60y": 1,
+        "rxn:EAR60x": 1,
+        "rxn:EAR80x": 1,
+        "rxn:3OAR180": 1,
+        "rxn:3OAS180": 1,
+        "rxn:3HAD180": 1,
+        "rxn:NADH16pp": 1,
+        "rxn:NADH17pp": 1,
+        "rxn:ETOHtrpp": 1,
+        "rxn:VPAMTr": 1,
+        "rxn:SUCCt1pp": 1,
+        "rxn:Biomass": 1
+      },
+      "boundary_node_ids": [
+        "rxn:EX_ac_e",
+        "rxn:EX_acald_e",
+        "rxn:EX_akg_e",
+        "rxn:EX_etoh_e",
+        "rxn:EX_for_e",
+        "rxn:EX_fru_e",
+        "rxn:EX_fum_e",
+        "rxn:EX_glc__D_e",
+        "rxn:EX_glcn_e",
+        "rxn:EX_gln__L_e",
+        "rxn:EX_glu__L_e",
+        "rxn:EX_glyc__R_e",
+        "rxn:EX_glyc_e",
+        "rxn:EX_lac__D_e",
+        "rxn:EX_mal__L_e",
+        "rxn:EX_pyr_e",
+        "rxn:EX_rib__D_e",
+        "rxn:EX_succ_e",
+        "rxn:EX_xyl__D_e"
+      ],
+      "exclusive_boundary": true,
+      "top_left_verified": true,
+      "boundary_nodes_verified": true,
+      "fixed_backbone_positions": {
+        "rxn:EX_glc__D_e": [
+          1,
+          28
+        ],
+        "met:glc__D_e": [
+          1,
+          27
+        ],
+        "rxn:GLCtex_copy1": [
+          1,
+          26
+        ],
+        "met:glc__D_p": [
+          1,
+          25
+        ],
+        "rxn:GLCptspp": [
+          1,
+          24
+        ],
+        "met:g6p_c": [
+          1,
+          23
+        ],
+        "rxn:PGI": [
+          1,
+          22
+        ],
+        "met:f6p_c": [
+          1,
+          21
+        ],
+        "rxn:PFK": [
+          1,
+          20
+        ],
+        "met:fdp_c": [
+          1,
+          19
+        ],
+        "rxn:FBA": [
+          1,
+          18
+        ],
+        "met:dhap_c": [
+          1,
+          17
+        ],
+        "rxn:TPI": [
+          1,
+          16
+        ],
+        "met:g3p_c": [
+          1,
+          15
+        ],
+        "rxn:GAPD": [
+          1,
+          14
+        ],
+        "met:13dpg_c": [
+          1,
+          13
+        ],
+        "rxn:PGK": [
+          1,
+          12
+        ],
+        "met:3pg_c": [
+          1,
+          11
+        ],
+        "rxn:PGM": [
+          1,
+          10
+        ],
+        "met:2pg_c": [
+          1,
+          9
+        ],
+        "rxn:ENO": [
+          1,
+          8
+        ],
+        "met:pep_c": [
+          1,
+          7
+        ],
+        "rxn:PYK": [
+          1,
+          6
+        ],
+        "met:pyr_c": [
+          1,
+          5
+        ],
+        "rxn:PDH": [
+          2,
+          5
+        ],
+        "met:accoa_c": [
+          3,
+          5
+        ],
+        "met:oaa_c": [
+          4,
+          6
+        ],
+        "rxn:CS": [
+          5,
+          6
+        ],
+        "met:cit_c": [
+          6,
+          6
+        ],
+        "rxn:ACONTa": [
+          7,
+          6
+        ],
+        "met:acon_C_c": [
+          8,
+          6
+        ],
+        "rxn:ACONTb": [
+          9,
+          6
+        ],
+        "met:icit_c": [
+          9,
+          5
+        ],
+        "rxn:ICDHyr": [
+          9,
+          4
+        ],
+        "met:akg_c": [
+          9,
+          3
+        ],
+        "rxn:AKGDH": [
+          9,
+          1
+        ],
+        "met:succoa_c": [
+          8,
+          1
+        ],
+        "rxn:SUCOAS": [
+          7,
+          1
+        ],
+        "met:succ_c": [
+          6,
+          1
+        ],
+        "rxn:SUCDi": [
+          5,
+          1
+        ],
+        "met:fum_c": [
+          4,
+          1
+        ],
+        "rxn:FUM": [
+          4,
+          2
+        ],
+        "met:mal__L_c": [
+          4,
+          3
+        ],
+        "rxn:MDH": [
+          4,
+          4
+        ]
+      },
+      "fixed_backbone_positions_verified": true
+    },
+    "distinct_grid_points_verified": true,
+    "fixed_network_solver_objective": 291,
+    "fixed_network_lower_bound": 120.0
+  },
+  "major_backbones": {
+    "routes": [
+      {
+        "family": "EMP",
+        "metabolite_ids": [
+          "glc__D_e",
+          "glc__D_p",
+          "g6p_c",
+          "f6p_c",
+          "fdp_c",
+          "dhap_c",
+          "g3p_c",
+          "13dpg_c",
+          "3pg_c",
+          "2pg_c",
+          "pep_c",
+          "pyr_c"
+        ],
+        "reaction_ids": [
+          "GLCtex_copy1",
+          "GLCptspp",
+          "PGI",
+          "PFK",
+          "FBA",
+          "TPI",
+          "GAPD",
+          "PGK",
+          "PGM",
+          "ENO",
+          "PYK"
+        ],
+        "steps": [
+          {
+            "source": "glc__D_e",
+            "target": "glc__D_p",
+            "reaction_id": "GLCtex_copy1",
+            "direction": 1,
+            "organic_roles": [
+              "glc__D"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "glc__D_p",
+            "target": "g6p_c",
+            "reaction_id": "GLCptspp",
+            "direction": 1,
+            "organic_roles": [
+              "g6p",
+              "glc__D",
+              "pep",
+              "pyr"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "g6p_c",
+            "target": "f6p_c",
+            "reaction_id": "PGI",
+            "direction": 1,
+            "organic_roles": [
+              "f6p",
+              "g6p"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "f6p_c",
+            "target": "fdp_c",
+            "reaction_id": "PFK",
+            "direction": 1,
+            "organic_roles": [
+              "f6p",
+              "fdp"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "fdp_c",
+            "target": "dhap_c",
+            "reaction_id": "FBA",
+            "direction": 1,
+            "organic_roles": [
+              "dhap",
+              "fdp",
+              "g3p"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "dhap_c",
+            "target": "g3p_c",
+            "reaction_id": "TPI",
+            "direction": 1,
+            "organic_roles": [
+              "dhap",
+              "g3p"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "g3p_c",
+            "target": "13dpg_c",
+            "reaction_id": "GAPD",
+            "direction": 1,
+            "organic_roles": [
+              "13dpg",
+              "g3p"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "13dpg_c",
+            "target": "3pg_c",
+            "reaction_id": "PGK",
+            "direction": -1,
+            "organic_roles": [
+              "13dpg",
+              "3pg"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "3pg_c",
+            "target": "2pg_c",
+            "reaction_id": "PGM",
+            "direction": -1,
+            "organic_roles": [
+              "2pg",
+              "3pg"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "2pg_c",
+            "target": "pep_c",
+            "reaction_id": "ENO",
+            "direction": 1,
+            "organic_roles": [
+              "2pg",
+              "pep"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "pep_c",
+            "target": "pyr_c",
+            "reaction_id": "PYK",
+            "direction": 1,
+            "organic_roles": [
+              "pep",
+              "pyr"
+            ],
+            "reference_penalty": 0
+          }
+        ],
+        "pattern": [
+          "glc__D",
+          "g6p",
+          "f6p",
+          "fdp",
+          "dhap",
+          "g3p",
+          "13dpg",
+          "3pg",
+          "2pg",
+          "pep",
+          "pyr"
+        ],
+        "search_states": 12,
+        "id": "glycolysis",
+        "name": "Glucose to pyruvate (EMP)",
+        "shape": "vertical",
+        "closed": false,
+        "exchange_reaction_id": "EX_glc__D_e",
+        "evidence": "Reference chemical-role pattern + actual directed source-model incidences",
+        "flux_feasibility_proven": false,
+        "model_roles": {
+          "glc__D_e": "glc__D",
+          "glc__D_p": "glc__D",
+          "g6p_c": "g6p",
+          "f6p_c": "f6p",
+          "fdp_c": "fdp",
+          "dhap_c": "dhap",
+          "g3p_c": "g3p",
+          "13dpg_c": "13dpg",
+          "3pg_c": "3pg",
+          "2pg_c": "2pg",
+          "pep_c": "pep",
+          "pyr_c": "pyr"
+        },
+        "node_offsets": {
+          "rxn:EX_glc__D_e": [
+            1,
+            0
+          ],
+          "met:glc__D_e": [
+            1,
+            -1
+          ],
+          "rxn:GLCtex_copy1": [
+            1,
+            -2
+          ],
+          "met:glc__D_p": [
+            1,
+            -3
+          ],
+          "rxn:GLCptspp": [
+            1,
+            -4
+          ],
+          "met:g6p_c": [
+            1,
+            -5
+          ],
+          "rxn:PGI": [
+            1,
+            -6
+          ],
+          "met:f6p_c": [
+            1,
+            -7
+          ],
+          "rxn:PFK": [
+            1,
+            -8
+          ],
+          "met:fdp_c": [
+            1,
+            -9
+          ],
+          "rxn:FBA": [
+            1,
+            -10
+          ],
+          "met:dhap_c": [
+            1,
+            -11
+          ],
+          "rxn:TPI": [
+            1,
+            -12
+          ],
+          "met:g3p_c": [
+            1,
+            -13
+          ],
+          "rxn:GAPD": [
+            1,
+            -14
+          ],
+          "met:13dpg_c": [
+            1,
+            -15
+          ],
+          "rxn:PGK": [
+            1,
+            -16
+          ],
+          "met:3pg_c": [
+            1,
+            -17
+          ],
+          "rxn:PGM": [
+            1,
+            -18
+          ],
+          "met:2pg_c": [
+            1,
+            -19
+          ],
+          "rxn:ENO": [
+            1,
+            -20
+          ],
+          "met:pep_c": [
+            1,
+            -21
+          ],
+          "rxn:PYK": [
+            1,
+            -22
+          ],
+          "met:pyr_c": [
+            1,
+            -23
+          ]
+        },
+        "displayed_node_ids": [
+          "rxn:EX_glc__D_e",
+          "met:glc__D_e",
+          "rxn:GLCtex_copy1",
+          "met:glc__D_p",
+          "rxn:GLCptspp",
+          "met:g6p_c",
+          "rxn:PGI",
+          "met:f6p_c",
+          "rxn:PFK",
+          "met:fdp_c",
+          "rxn:FBA",
+          "met:dhap_c",
+          "rxn:TPI",
+          "met:g3p_c",
+          "rxn:GAPD",
+          "met:13dpg_c",
+          "rxn:PGK",
+          "met:3pg_c",
+          "rxn:PGM",
+          "met:2pg_c",
+          "rxn:ENO",
+          "met:pep_c",
+          "rxn:PYK",
+          "met:pyr_c"
+        ],
+        "displayed_reaction_ids": [
+          "GLCtex_copy1",
+          "GLCptspp",
+          "PGI",
+          "PFK",
+          "FBA",
+          "TPI",
+          "GAPD",
+          "PGK",
+          "PGM",
+          "ENO",
+          "PYK"
+        ]
+      },
+      {
+        "id": "glucose_exchange",
+        "name": "Glucose exchange",
+        "shape": "exchange",
+        "metabolite_ids": [
+          "glc__D_e"
+        ],
+        "reaction_ids": [
+          "EX_glc__D_e"
+        ],
+        "steps": [],
+        "closed": false,
+        "evidence": "Reference chemical-role pattern + actual directed source-model incidences",
+        "flux_feasibility_proven": false,
+        "model_roles": {
+          "glc__D_e": "glc__D"
+        },
+        "node_offsets": {
+          "rxn:EX_glc__D_e": [
+            1,
+            0
+          ],
+          "met:glc__D_e": [
+            1,
+            -1
+          ]
+        },
+        "displayed_node_ids": [
+          "rxn:EX_glc__D_e",
+          "met:glc__D_e"
+        ],
+        "displayed_reaction_ids": [
+          "EX_glc__D_e"
+        ]
+      },
+      {
+        "metabolite_ids": [
+          "pyr_c",
+          "accoa_c"
+        ],
+        "reaction_ids": [
+          "PDH"
+        ],
+        "steps": [
+          {
+            "source": "pyr_c",
+            "target": "accoa_c",
+            "reaction_id": "PDH",
+            "direction": 1,
+            "organic_roles": [
+              "accoa",
+              "pyr"
+            ],
+            "reference_penalty": 0
+          }
+        ],
+        "pattern": [
+          "pyr",
+          "accoa"
+        ],
+        "search_states": 2,
+        "id": "pdh",
+        "name": "Pyruvate to acetyl-CoA (model reaction)",
+        "shape": "horizontal",
+        "closed": false,
+        "evidence": "Reference chemical-role pattern + actual directed source-model incidences",
+        "flux_feasibility_proven": false,
+        "model_roles": {
+          "pyr_c": "pyr",
+          "accoa_c": "accoa"
+        },
+        "node_offsets": {
+          "met:pyr_c": [
+            1,
+            -23
+          ],
+          "rxn:PDH": [
+            2,
+            -23
+          ],
+          "met:accoa_c": [
+            3,
+            -23
+          ]
+        },
+        "displayed_node_ids": [
+          "met:pyr_c",
+          "rxn:PDH",
+          "met:accoa_c"
+        ],
+        "displayed_reaction_ids": [
+          "PDH"
+        ]
+      },
+      {
+        "metabolite_ids": [
+          "oaa_c",
+          "cit_c",
+          "acon_C_c",
+          "icit_c",
+          "akg_c",
+          "succoa_c",
+          "succ_c",
+          "fum_c",
+          "mal__L_c",
+          "oaa_c"
+        ],
+        "reaction_ids": [
+          "CS",
+          "ACONTa",
+          "ACONTb",
+          "ICDHyr",
+          "AKGDH",
+          "SUCOAS",
+          "SUCDi",
+          "FUM",
+          "MDH"
+        ],
+        "steps": [
+          {
+            "source": "oaa_c",
+            "target": "cit_c",
+            "reaction_id": "CS",
+            "direction": 1,
+            "organic_roles": [
+              "accoa",
+              "cit",
+              "oaa"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "cit_c",
+            "target": "acon_C_c",
+            "reaction_id": "ACONTa",
+            "direction": 1,
+            "organic_roles": [
+              "acon_C",
+              "cit"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "acon_C_c",
+            "target": "icit_c",
+            "reaction_id": "ACONTb",
+            "direction": 1,
+            "organic_roles": [
+              "acon_C",
+              "icit"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "icit_c",
+            "target": "akg_c",
+            "reaction_id": "ICDHyr",
+            "direction": 1,
+            "organic_roles": [
+              "akg",
+              "icit"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "akg_c",
+            "target": "succoa_c",
+            "reaction_id": "AKGDH",
+            "direction": 1,
+            "organic_roles": [
+              "akg",
+              "succoa"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "succoa_c",
+            "target": "succ_c",
+            "reaction_id": "SUCOAS",
+            "direction": -1,
+            "organic_roles": [
+              "succ",
+              "succoa"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "succ_c",
+            "target": "fum_c",
+            "reaction_id": "SUCDi",
+            "direction": 1,
+            "organic_roles": [
+              "fum",
+              "succ"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "fum_c",
+            "target": "mal__L_c",
+            "reaction_id": "FUM",
+            "direction": 1,
+            "organic_roles": [
+              "fum",
+              "mal__L"
+            ],
+            "reference_penalty": 0
+          },
+          {
+            "source": "mal__L_c",
+            "target": "oaa_c",
+            "reaction_id": "MDH",
+            "direction": 1,
+            "organic_roles": [
+              "mal__L",
+              "oaa"
+            ],
+            "reference_penalty": 0
+          }
+        ],
+        "pattern": [
+          "oaa",
+          "cit",
+          "acon_C",
+          "icit",
+          "akg",
+          "succoa",
+          "succ",
+          "fum",
+          "mal__L",
+          "oaa"
+        ],
+        "search_states": 14,
+        "id": "tca",
+        "name": "Directed model-local TCA cycle",
+        "shape": "square",
+        "closed": true,
+        "evidence": "Reference chemical-role pattern + actual directed source-model incidences",
+        "flux_feasibility_proven": false,
+        "model_roles": {
+          "oaa_c": "oaa",
+          "cit_c": "cit",
+          "acon_C_c": "acon_C",
+          "icit_c": "icit",
+          "akg_c": "akg",
+          "succoa_c": "succoa",
+          "succ_c": "succ",
+          "fum_c": "fum",
+          "mal__L_c": "mal__L"
+        },
+        "node_offsets": {
+          "met:oaa_c": [
+            4,
+            -22
+          ],
+          "rxn:CS": [
+            5,
+            -22
+          ],
+          "met:cit_c": [
+            6,
+            -22
+          ],
+          "rxn:ACONTa": [
+            7,
+            -22
+          ],
+          "met:acon_C_c": [
+            8,
+            -22
+          ],
+          "rxn:ACONTb": [
+            9,
+            -22
+          ],
+          "met:icit_c": [
+            9,
+            -23
+          ],
+          "rxn:ICDHyr": [
+            9,
+            -24
+          ],
+          "met:akg_c": [
+            9,
+            -25
+          ],
+          "rxn:AKGDH": [
+            9,
+            -27
+          ],
+          "met:succoa_c": [
+            8,
+            -27
+          ],
+          "rxn:SUCOAS": [
+            7,
+            -27
+          ],
+          "met:succ_c": [
+            6,
+            -27
+          ],
+          "rxn:SUCDi": [
+            5,
+            -27
+          ],
+          "met:fum_c": [
+            4,
+            -27
+          ],
+          "rxn:FUM": [
+            4,
+            -26
+          ],
+          "met:mal__L_c": [
+            4,
+            -25
+          ],
+          "rxn:MDH": [
+            4,
+            -24
+          ]
+        },
+        "displayed_node_ids": [
+          "met:oaa_c",
+          "rxn:CS",
+          "met:cit_c",
+          "rxn:ACONTa",
+          "met:acon_C_c",
+          "rxn:ACONTb",
+          "met:icit_c",
+          "rxn:ICDHyr",
+          "met:akg_c",
+          "rxn:AKGDH",
+          "met:succoa_c",
+          "rxn:SUCOAS",
+          "met:succ_c",
+          "rxn:SUCDi",
+          "met:fum_c",
+          "rxn:FUM",
+          "met:mal__L_c",
+          "rxn:MDH"
+        ],
+        "displayed_reaction_ids": [
+          "CS",
+          "ACONTa",
+          "ACONTb",
+          "ICDHyr",
+          "AKGDH",
+          "SUCOAS",
+          "SUCDi",
+          "FUM",
+          "MDH"
+        ]
+      }
+    ],
+    "square": {
+      "left": 4,
+      "top_offset": -22,
+      "side_length": 5,
+      "closed": true,
+      "orientation": "clockwise",
+      "signed_double_area": -50
+    },
+    "color": "#d62728",
+    "fixed_node_offsets": {
+      "rxn:EX_glc__D_e": [
+        1,
+        0
+      ],
+      "met:glc__D_e": [
+        1,
+        -1
+      ],
+      "rxn:GLCtex_copy1": [
+        1,
+        -2
+      ],
+      "met:glc__D_p": [
+        1,
+        -3
+      ],
+      "rxn:GLCptspp": [
+        1,
+        -4
+      ],
+      "met:g6p_c": [
+        1,
+        -5
+      ],
+      "rxn:PGI": [
+        1,
+        -6
+      ],
+      "met:f6p_c": [
+        1,
+        -7
+      ],
+      "rxn:PFK": [
+        1,
+        -8
+      ],
+      "met:fdp_c": [
+        1,
+        -9
+      ],
+      "rxn:FBA": [
+        1,
+        -10
+      ],
+      "met:dhap_c": [
+        1,
+        -11
+      ],
+      "rxn:TPI": [
+        1,
+        -12
+      ],
+      "met:g3p_c": [
+        1,
+        -13
+      ],
+      "rxn:GAPD": [
+        1,
+        -14
+      ],
+      "met:13dpg_c": [
+        1,
+        -15
+      ],
+      "rxn:PGK": [
+        1,
+        -16
+      ],
+      "met:3pg_c": [
+        1,
+        -17
+      ],
+      "rxn:PGM": [
+        1,
+        -18
+      ],
+      "met:2pg_c": [
+        1,
+        -19
+      ],
+      "rxn:ENO": [
+        1,
+        -20
+      ],
+      "met:pep_c": [
+        1,
+        -21
+      ],
+      "rxn:PYK": [
+        1,
+        -22
+      ],
+      "met:pyr_c": [
+        1,
+        -23
+      ],
+      "rxn:PDH": [
+        2,
+        -23
+      ],
+      "met:accoa_c": [
+        3,
+        -23
+      ],
+      "met:oaa_c": [
+        4,
+        -22
+      ],
+      "rxn:CS": [
+        5,
+        -22
+      ],
+      "met:cit_c": [
+        6,
+        -22
+      ],
+      "rxn:ACONTa": [
+        7,
+        -22
+      ],
+      "met:acon_C_c": [
+        8,
+        -22
+      ],
+      "rxn:ACONTb": [
+        9,
+        -22
+      ],
+      "met:icit_c": [
+        9,
+        -23
+      ],
+      "rxn:ICDHyr": [
+        9,
+        -24
+      ],
+      "met:akg_c": [
+        9,
+        -25
+      ],
+      "rxn:AKGDH": [
+        9,
+        -27
+      ],
+      "met:succoa_c": [
+        8,
+        -27
+      ],
+      "rxn:SUCOAS": [
+        7,
+        -27
+      ],
+      "met:succ_c": [
+        6,
+        -27
+      ],
+      "rxn:SUCDi": [
+        5,
+        -27
+      ],
+      "met:fum_c": [
+        4,
+        -27
+      ],
+      "rxn:FUM": [
+        4,
+        -26
+      ],
+      "met:mal__L_c": [
+        4,
+        -25
+      ],
+      "rxn:MDH": [
+        4,
+        -24
+      ]
+    },
+    "glucose_top_margin": 1,
+    "geometry_scope": "Displayed source-model nodes only; no missing edge is synthesized",
+    "skipped_routes": [],
+    "exchange_connectors": {
+      "color": "#f28e2b",
+      "edge_indices": [
+        32,
+        33,
+        51,
+        52,
+        55,
+        56,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        188,
+        189,
+        191,
+        194,
+        195,
+        217,
+        218,
+        227,
+        248,
+        254,
+        255,
+        258,
+        259,
+        275,
+        451,
+        454,
+        484,
+        487,
+        516,
+        517,
+        518,
+        519,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549,
+        550,
+        565,
+        566,
+        567,
+        568,
+        569,
+        570,
+        573,
+        574,
+        579,
+        580,
+        581,
+        582,
+        587,
+        588,
+        589,
+        590,
+        591,
+        603,
+        604,
+        607,
+        608,
+        609,
+        610,
+        617,
+        618,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627,
+        628,
+        631,
+        632,
+        633,
+        634,
+        639,
+        642,
+        647,
+        648,
+        665,
+        666,
+        675,
+        709,
+        710,
+        711,
+        731,
+        734,
+        759,
+        760,
+        776,
+        777,
+        778,
+        779,
+        780,
+        781,
+        784,
+        785,
+        826,
+        827,
+        1010,
+        1011,
+        1016,
+        1017,
+        1022,
+        1038,
+        1041,
+        1043,
+        1044,
+        1046,
+        1062
+      ],
+      "root_node_ids": [
+        "met:13dpg_c",
+        "met:2pg_c",
+        "met:3pg_c",
+        "met:accoa_c",
+        "met:acon_C_c",
+        "met:akg_c",
+        "met:cit_c",
+        "met:dhap_c",
+        "met:f6p_c",
+        "met:fdp_c",
+        "met:fum_c",
+        "met:g3p_c",
+        "met:g6p_c",
+        "met:glc__D_e",
+        "met:glc__D_p",
+        "met:icit_c",
+        "met:mal__L_c",
+        "met:oaa_c",
+        "met:pep_c",
+        "met:pyr_c",
+        "met:succ_c",
+        "met:succoa_c",
+        "rxn:ACONTa",
+        "rxn:ACONTb",
+        "rxn:AKGDH",
+        "rxn:CS",
+        "rxn:ENO",
+        "rxn:EX_glc__D_e",
+        "rxn:FBA",
+        "rxn:FUM",
+        "rxn:GAPD",
+        "rxn:GLCptspp",
+        "rxn:GLCtex_copy1",
+        "rxn:ICDHyr",
+        "rxn:MDH",
+        "rxn:PDH",
+        "rxn:PFK",
+        "rxn:PGI",
+        "rxn:PGK",
+        "rxn:PGM",
+        "rxn:PYK",
+        "rxn:SUCDi",
+        "rxn:SUCOAS",
+        "rxn:TPI"
+      ],
+      "exchange_paths": {
+        "rxn:EX_ac_e": [
+          "met:dhap_c",
+          "rxn:Biomass",
+          "met:ac_c",
+          "rxn:ACt2rpp",
+          "met:ac_p",
+          "rxn:ACtex",
+          "met:ac_e",
+          "rxn:EX_ac_e"
+        ],
+        "rxn:EX_acald_e": [
+          "met:accoa_c",
+          "rxn:ACALD",
+          "met:acald_c",
+          "rxn:ACALDtpp",
+          "met:acald_p",
+          "rxn:ACALDtex",
+          "met:acald_e",
+          "rxn:EX_acald_e"
+        ],
+        "rxn:EX_akg_e": [
+          "met:akg_c",
+          "rxn:AKGt2rpp",
+          "met:akg_p",
+          "rxn:AKGtex",
+          "met:akg_e",
+          "rxn:EX_akg_e"
+        ],
+        "rxn:EX_etoh_e": [
+          "met:accoa_c",
+          "rxn:ACALD",
+          "met:acald_c",
+          "rxn:ALCD2x",
+          "met:etoh_c",
+          "rxn:ETOHtrpp",
+          "met:etoh_p",
+          "rxn:ETOHtex",
+          "met:etoh_e",
+          "rxn:EX_etoh_e"
+        ],
+        "rxn:EX_for_e": [
+          "met:dhap_c",
+          "rxn:Biomass",
+          "met:for_c",
+          "rxn:FORt2pp",
+          "met:for_p",
+          "rxn:FORtex",
+          "met:for_e",
+          "rxn:EX_for_e"
+        ],
+        "rxn:EX_fru_e": [
+          "met:f6p_c",
+          "rxn:FRUpts2pp",
+          "met:fru_p",
+          "rxn:FRUtex",
+          "met:fru_e",
+          "rxn:EX_fru_e"
+        ],
+        "rxn:EX_fum_e": [
+          "met:fum_c",
+          "rxn:FUMt2_2pp",
+          "met:fum_p",
+          "rxn:FUMtex",
+          "met:fum_e",
+          "rxn:EX_fum_e"
+        ],
+        "rxn:EX_glc__D_e": [
+          "rxn:EX_glc__D_e"
+        ],
+        "rxn:EX_glcn_e": [
+          "met:dhap_c",
+          "rxn:Biomass",
+          "met:ru5p__D_c",
+          "rxn:GND",
+          "met:6pgc_c",
+          "rxn:GNK",
+          "met:glcn_c",
+          "rxn:GLCNt2rpp",
+          "met:glcn_p",
+          "rxn:GLCNtex",
+          "met:glcn_e",
+          "rxn:EX_glcn_e"
+        ],
+        "rxn:EX_gln__L_e": [
+          "met:dhap_c",
+          "rxn:Biomass",
+          "met:gln__L_c",
+          "rxn:GLNabcpp",
+          "met:gln__L_p",
+          "rxn:GLNtex",
+          "met:gln__L_e",
+          "rxn:EX_gln__L_e"
+        ],
+        "rxn:EX_glu__L_e": [
+          "met:dhap_c",
+          "rxn:Biomass",
+          "met:glu__L_c",
+          "rxn:GLUt2rpp",
+          "met:glu__L_p",
+          "rxn:GLUtex",
+          "met:glu__L_e",
+          "rxn:EX_glu__L_e"
+        ],
+        "rxn:EX_glyc__R_e": [
+          "met:2pg_c",
+          "rxn:GLYCK2",
+          "met:glyc__R_c",
+          "rxn:GLYCAt2rpp",
+          "met:glyc__R_p",
+          "rxn:GLYCAtex",
+          "met:glyc__R_e",
+          "rxn:EX_glyc__R_e"
+        ],
+        "rxn:EX_glyc_e": [
+          "met:dhap_c",
+          "rxn:Biomass",
+          "met:glyc3p_c",
+          "rxn:G3PT",
+          "met:glyc_c",
+          "rxn:GLYCtpp",
+          "met:glyc_p",
+          "rxn:GLYCtex",
+          "met:glyc_e",
+          "rxn:EX_glyc_e"
+        ],
+        "rxn:EX_lac__D_e": [
+          "met:pyr_c",
+          "rxn:LDH_D",
+          "met:lac__D_c",
+          "rxn:D_LACt2pp",
+          "met:lac__D_p",
+          "rxn:D_LACtex",
+          "met:lac__D_e",
+          "rxn:EX_lac__D_e"
+        ],
+        "rxn:EX_mal__L_e": [
+          "met:mal__L_c",
+          "rxn:MALt2_2pp",
+          "met:mal__L_p",
+          "rxn:MALtex",
+          "met:mal__L_e",
+          "rxn:EX_mal__L_e"
+        ],
+        "rxn:EX_pyr_e": [
+          "met:pyr_c",
+          "rxn:PYRt2rpp",
+          "met:pyr_p",
+          "rxn:PYRtex",
+          "met:pyr_e",
+          "rxn:EX_pyr_e"
+        ],
+        "rxn:EX_rib__D_e": [
+          "met:g3p_c",
+          "rxn:TKT1",
+          "met:r5p_c",
+          "rxn:RBK",
+          "met:rib__D_c",
+          "rxn:RIBabcpp",
+          "met:rib__D_p",
+          "rxn:RIBtex",
+          "met:rib__D_e",
+          "rxn:EX_rib__D_e"
+        ],
+        "rxn:EX_succ_e": [
+          "met:succ_c",
+          "rxn:SUCCt1pp",
+          "met:succ_p",
+          "rxn:SUCCtex",
+          "met:succ_e",
+          "rxn:EX_succ_e"
+        ],
+        "rxn:EX_xyl__D_e": [
+          "met:g3p_c",
+          "rxn:TKT1",
+          "met:xu5p__D_c",
+          "rxn:XYLK",
+          "met:xylu__D_c",
+          "rxn:XYLI1",
+          "met:xyl__D_c",
+          "rxn:XYLt2pp",
+          "met:xyl__D_p",
+          "rxn:XYLtex",
+          "met:xyl__D_e",
+          "rxn:EX_xyl__D_e"
+        ]
+      },
+      "all_exchanges_connected": true,
+      "disconnected_exchange_node_ids": [],
+      "connectivity": "Undirected displayed stoichiometric incidence; coenzyme copies excluded; red backbone allowed",
+      "objective": "Sum of Manhattan lengths of unique orange incidence edges; shared edges counted once",
+      "method": "Greedy shared shortest-path forest alternating with constrained grid placement",
+      "global_optimality_proven": false,
+      "total_length": 291,
+      "shared_coenzyme_ids": [],
+      "optimization_history": [
+        {
+          "iteration": 1,
+          "before_reroute": 327,
+          "orange_length": 317,
+          "optimized_fixed_network_length": 327
+        },
+        {
+          "iteration": 2,
+          "before_reroute": 291,
+          "orange_length": 291,
+          "optimized_fixed_network_length": 291
+        }
+      ]
+    },
+    "validation": {
+      "all_displayed_backbone_positions_verified": true,
+      "routes": [
+        {
+          "id": "glycolysis",
+          "shape": "vertical",
+          "checked_nodes": 24,
+          "verified": true
+        },
+        {
+          "id": "glucose_exchange",
+          "shape": "exchange",
+          "checked_nodes": 2,
+          "verified": true
+        },
+        {
+          "id": "pdh",
+          "shape": "horizontal",
+          "checked_nodes": 3,
+          "verified": true
+        },
+        {
+          "id": "tca",
+          "shape": "square",
+          "checked_nodes": 18,
+          "verified": true
+        }
+      ]
+    }
+  },
+  "source_reactions": 349,
+  "drawn_reactions": 326,
+  "grid_nodes": 576,
+  "coenzyme_copies": 345,
+  "edges": 1073,
+  "glucose_metabolite_id": "glc__D_e",
+  "glucose_anchor_active": true,
+  "glucose_reference_only": false,
+  "exchange_reaction_ids": [
+    "EX_ac_e",
+    "EX_acald_e",
+    "EX_akg_e",
+    "EX_etoh_e",
+    "EX_for_e",
+    "EX_fru_e",
+    "EX_fum_e",
+    "EX_glc__D_e",
+    "EX_glcn_e",
+    "EX_gln__L_e",
+    "EX_glu__L_e",
+    "EX_glyc__R_e",
+    "EX_glyc_e",
+    "EX_lac__D_e",
+    "EX_mal__L_e",
+    "EX_pyr_e",
+    "EX_rib__D_e",
+    "EX_succ_e",
+    "EX_xyl__D_e"
+  ],
+  "total_orthogonal_edge_length": 9616.249999999989,
+  "coenzyme_edge_length": 155.25,
+  "inorganic_metabolites": [
+    "co2_e",
+    "h_c",
+    "h2o_p",
+    "o2_c",
+    "h_p",
+    "so3_c",
+    "nh4_c",
+    "pi_c",
+    "nh4_p",
+    "h2s_c",
+    "h_e",
+    "trdox_c",
+    "grxrd_c",
+    "o2_p",
+    "ppi_c",
+    "so4_e",
+    "co2_p",
+    "hco3_c",
+    "h2o_c",
+    "nh4_e",
+    "o2_e",
+    "trdrd_c",
+    "so4_c",
+    "so4_p",
+    "grxox_c",
+    "pi_e",
+    "co2_c",
+    "pi_p",
+    "h2o_e"
+  ],
+  "validation": {
+    "all_noncoenzyme_nodes_on_distinct_grid_points": true,
+    "no_inorganic_nodes": true,
+    "glucose_top_left_verified": true,
+    "exchange_reactions_on_perimeter": true,
+    "all_nodes_within_grid_rectangle": true,
+    "major_backbones": {
+      "all_displayed_backbone_positions_verified": true,
+      "routes": [
+        {
+          "id": "glycolysis",
+          "shape": "vertical",
+          "checked_nodes": 24,
+          "verified": true
+        },
+        {
+          "id": "glucose_exchange",
+          "shape": "exchange",
+          "checked_nodes": 2,
+          "verified": true
+        },
+        {
+          "id": "pdh",
+          "shape": "horizontal",
+          "checked_nodes": 3,
+          "verified": true
+        },
+        {
+          "id": "tca",
+          "shape": "square",
+          "checked_nodes": 18,
+          "verified": true
+        }
+      ]
+    },
+    "visible_stoichiometry_preserved": true,
+    "network": {
+      "all_reactions_preserved": true,
+      "stoichiometry_preserved": true,
+      "directions_verified": true,
+      "bipartite": true,
+      "currency_copies_degree_one": true,
+      "reactions": 326,
+      "incidence_edges": 1073
+    },
+    "escher": {
+      "schema_valid": true,
+      "metadata_embedded": true,
+      "reaction_ids_preserved": true,
+      "stoichiometry_preserved": true,
+      "coordinate_transform_verified": true,
+      "segment_endpoints_verified": true,
+      "nodes": 4218,
+      "source_nodes": 921,
+      "routing_nodes": 3297,
+      "orthogonal_segments_verified": true,
+      "reactions": 326,
+      "segments": 4370,
+      "primary_metabolites": 250,
+      "secondary_metabolites": 345,
+      "currency_copy_counts": {
+        "adp_c": 45,
+        "atp_c": 51,
+        "nadp_c": 47,
+        "nadph_c": 47,
+        "ump_c": 3,
+        "coa_c": 17,
+        "nad_c": 31,
+        "nadh_c": 31,
+        "mql8_c": 4,
+        "mqn8_c": 4,
+        "amp_c": 10,
+        "cdp_c": 3,
+        "udp_c": 4,
+        "dhf_c": 2,
+        "mlthf_c": 6,
+        "thf_c": 7,
+        "gdp_c": 6,
+        "gtp_c": 4,
+        "q8_c": 5,
+        "q8h2_c": 5,
+        "ctp_c": 3,
+        "utp_c": 3,
+        "gmp_c": 2,
+        "10fthf_c": 3,
+        "5mthf_c": 2
+      },
+      "reverse_only_reactions": [],
+      "blocked_reactions": [],
+      "missing_gene_rule_count": 0
+    },
+    "no_sampling_or_flux_statistics_used": true,
+    "arrows_follow_source_bounds": true,
+    "glucose_is_top_left_compound": true,
+    "perimeter_exclusive_to_exchanges": true,
+    "all_exchanges_connected_to_major_pathways": true
+  },
+  "limitations": [
+    "Global length optimality is reported, not assumed.",
+    "Crossings, coincident edge paths, and label overlap are not minimized.",
+    "Display model omits inorganic participants and is not suitable for FBA.",
+    "Escher uses orthogonal segments with routing nodes; original node coordinates and reaction chemistry are preserved.",
+    "Structural connectivity includes inactive and zero-bound reactions; steady-state feasibility is not evaluated."
+  ],
+  "program_name": "sbml2escher",
+  "extraction_status": "complete_central_backbone",
+  "exchange_connectors": {
+    "color": "#f28e2b",
+    "edge_indices": [
+      32,
+      33,
+      51,
+      52,
+      55,
+      56,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      188,
+      189,
+      191,
+      194,
+      195,
+      217,
+      218,
+      227,
+      248,
+      254,
+      255,
+      258,
+      259,
+      275,
+      451,
+      454,
+      484,
+      487,
+      516,
+      517,
+      518,
+      519,
+      541,
+      542,
+      543,
+      544,
+      545,
+      546,
+      547,
+      548,
+      549,
+      550,
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      573,
+      574,
+      579,
+      580,
+      581,
+      582,
+      587,
+      588,
+      589,
+      590,
+      591,
+      603,
+      604,
+      607,
+      608,
+      609,
+      610,
+      617,
+      618,
+      621,
+      622,
+      623,
+      624,
+      625,
+      626,
+      627,
+      628,
+      631,
+      632,
+      633,
+      634,
+      639,
+      642,
+      647,
+      648,
+      665,
+      666,
+      675,
+      709,
+      710,
+      711,
+      731,
+      734,
+      759,
+      760,
+      776,
+      777,
+      778,
+      779,
+      780,
+      781,
+      784,
+      785,
+      826,
+      827,
+      1010,
+      1011,
+      1016,
+      1017,
+      1022,
+      1038,
+      1041,
+      1043,
+      1044,
+      1046,
+      1062
+    ],
+    "root_node_ids": [
+      "met:13dpg_c",
+      "met:2pg_c",
+      "met:3pg_c",
+      "met:accoa_c",
+      "met:acon_C_c",
+      "met:akg_c",
+      "met:cit_c",
+      "met:dhap_c",
+      "met:f6p_c",
+      "met:fdp_c",
+      "met:fum_c",
+      "met:g3p_c",
+      "met:g6p_c",
+      "met:glc__D_e",
+      "met:glc__D_p",
+      "met:icit_c",
+      "met:mal__L_c",
+      "met:oaa_c",
+      "met:pep_c",
+      "met:pyr_c",
+      "met:succ_c",
+      "met:succoa_c",
+      "rxn:ACONTa",
+      "rxn:ACONTb",
+      "rxn:AKGDH",
+      "rxn:CS",
+      "rxn:ENO",
+      "rxn:EX_glc__D_e",
+      "rxn:FBA",
+      "rxn:FUM",
+      "rxn:GAPD",
+      "rxn:GLCptspp",
+      "rxn:GLCtex_copy1",
+      "rxn:ICDHyr",
+      "rxn:MDH",
+      "rxn:PDH",
+      "rxn:PFK",
+      "rxn:PGI",
+      "rxn:PGK",
+      "rxn:PGM",
+      "rxn:PYK",
+      "rxn:SUCDi",
+      "rxn:SUCOAS",
+      "rxn:TPI"
+    ],
+    "exchange_paths": {
+      "rxn:EX_ac_e": [
+        "met:dhap_c",
+        "rxn:Biomass",
+        "met:ac_c",
+        "rxn:ACt2rpp",
+        "met:ac_p",
+        "rxn:ACtex",
+        "met:ac_e",
+        "rxn:EX_ac_e"
+      ],
+      "rxn:EX_acald_e": [
+        "met:accoa_c",
+        "rxn:ACALD",
+        "met:acald_c",
+        "rxn:ACALDtpp",
+        "met:acald_p",
+        "rxn:ACALDtex",
+        "met:acald_e",
+        "rxn:EX_acald_e"
+      ],
+      "rxn:EX_akg_e": [
+        "met:akg_c",
+        "rxn:AKGt2rpp",
+        "met:akg_p",
+        "rxn:AKGtex",
+        "met:akg_e",
+        "rxn:EX_akg_e"
+      ],
+      "rxn:EX_etoh_e": [
+        "met:accoa_c",
+        "rxn:ACALD",
+        "met:acald_c",
+        "rxn:ALCD2x",
+        "met:etoh_c",
+        "rxn:ETOHtrpp",
+        "met:etoh_p",
+        "rxn:ETOHtex",
+        "met:etoh_e",
+        "rxn:EX_etoh_e"
+      ],
+      "rxn:EX_for_e": [
+        "met:dhap_c",
+        "rxn:Biomass",
+        "met:for_c",
+        "rxn:FORt2pp",
+        "met:for_p",
+        "rxn:FORtex",
+        "met:for_e",
+        "rxn:EX_for_e"
+      ],
+      "rxn:EX_fru_e": [
+        "met:f6p_c",
+        "rxn:FRUpts2pp",
+        "met:fru_p",
+        "rxn:FRUtex",
+        "met:fru_e",
+        "rxn:EX_fru_e"
+      ],
+      "rxn:EX_fum_e": [
+        "met:fum_c",
+        "rxn:FUMt2_2pp",
+        "met:fum_p",
+        "rxn:FUMtex",
+        "met:fum_e",
+        "rxn:EX_fum_e"
+      ],
+      "rxn:EX_glc__D_e": [
+        "rxn:EX_glc__D_e"
+      ],
+      "rxn:EX_glcn_e": [
+        "met:dhap_c",
+        "rxn:Biomass",
+        "met:ru5p__D_c",
+        "rxn:GND",
+        "met:6pgc_c",
+        "rxn:GNK",
+        "met:glcn_c",
+        "rxn:GLCNt2rpp",
+        "met:glcn_p",
+        "rxn:GLCNtex",
+        "met:glcn_e",
+        "rxn:EX_glcn_e"
+      ],
+      "rxn:EX_gln__L_e": [
+        "met:dhap_c",
+        "rxn:Biomass",
+        "met:gln__L_c",
+        "rxn:GLNabcpp",
+        "met:gln__L_p",
+        "rxn:GLNtex",
+        "met:gln__L_e",
+        "rxn:EX_gln__L_e"
+      ],
+      "rxn:EX_glu__L_e": [
+        "met:dhap_c",
+        "rxn:Biomass",
+        "met:glu__L_c",
+        "rxn:GLUt2rpp",
+        "met:glu__L_p",
+        "rxn:GLUtex",
+        "met:glu__L_e",
+        "rxn:EX_glu__L_e"
+      ],
+      "rxn:EX_glyc__R_e": [
+        "met:2pg_c",
+        "rxn:GLYCK2",
+        "met:glyc__R_c",
+        "rxn:GLYCAt2rpp",
+        "met:glyc__R_p",
+        "rxn:GLYCAtex",
+        "met:glyc__R_e",
+        "rxn:EX_glyc__R_e"
+      ],
+      "rxn:EX_glyc_e": [
+        "met:dhap_c",
+        "rxn:Biomass",
+        "met:glyc3p_c",
+        "rxn:G3PT",
+        "met:glyc_c",
+        "rxn:GLYCtpp",
+        "met:glyc_p",
+        "rxn:GLYCtex",
+        "met:glyc_e",
+        "rxn:EX_glyc_e"
+      ],
+      "rxn:EX_lac__D_e": [
+        "met:pyr_c",
+        "rxn:LDH_D",
+        "met:lac__D_c",
+        "rxn:D_LACt2pp",
+        "met:lac__D_p",
+        "rxn:D_LACtex",
+        "met:lac__D_e",
+        "rxn:EX_lac__D_e"
+      ],
+      "rxn:EX_mal__L_e": [
+        "met:mal__L_c",
+        "rxn:MALt2_2pp",
+        "met:mal__L_p",
+        "rxn:MALtex",
+        "met:mal__L_e",
+        "rxn:EX_mal__L_e"
+      ],
+      "rxn:EX_pyr_e": [
+        "met:pyr_c",
+        "rxn:PYRt2rpp",
+        "met:pyr_p",
+        "rxn:PYRtex",
+        "met:pyr_e",
+        "rxn:EX_pyr_e"
+      ],
+      "rxn:EX_rib__D_e": [
+        "met:g3p_c",
+        "rxn:TKT1",
+        "met:r5p_c",
+        "rxn:RBK",
+        "met:rib__D_c",
+        "rxn:RIBabcpp",
+        "met:rib__D_p",
+        "rxn:RIBtex",
+        "met:rib__D_e",
+        "rxn:EX_rib__D_e"
+      ],
+      "rxn:EX_succ_e": [
+        "met:succ_c",
+        "rxn:SUCCt1pp",
+        "met:succ_p",
+        "rxn:SUCCtex",
+        "met:succ_e",
+        "rxn:EX_succ_e"
+      ],
+      "rxn:EX_xyl__D_e": [
+        "met:g3p_c",
+        "rxn:TKT1",
+        "met:xu5p__D_c",
+        "rxn:XYLK",
+        "met:xylu__D_c",
+        "rxn:XYLI1",
+        "met:xyl__D_c",
+        "rxn:XYLt2pp",
+        "met:xyl__D_p",
+        "rxn:XYLtex",
+        "met:xyl__D_e",
+        "rxn:EX_xyl__D_e"
+      ]
+    },
+    "all_exchanges_connected": true,
+    "disconnected_exchange_node_ids": [],
+    "connectivity": "Undirected displayed stoichiometric incidence; coenzyme copies excluded; red backbone allowed",
+    "objective": "Sum of Manhattan lengths of unique orange incidence edges; shared edges counted once",
+    "method": "Greedy shared shortest-path forest alternating with constrained grid placement",
+    "global_optimality_proven": false,
+    "total_length": 291,
+    "shared_coenzyme_ids": [],
+    "optimization_history": [
+      {
+        "iteration": 1,
+        "before_reroute": 327,
+        "orange_length": 317,
+        "optimized_fixed_network_length": 327
+      },
+      {
+        "iteration": 2,
+        "before_reroute": 291,
+        "orange_length": 291,
+        "optimized_fixed_network_length": 291
+      }
+    ]
+  },
+  "orange_orthogonal_edge_length": 291,
+  "highlights": {
+    "selection": {
+      "metabolites": [],
+      "reactions": []
+    },
+    "unavailable": {
+      "metabolites": [],
+      "reactions": []
+    }
+  }
+}

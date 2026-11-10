@@ -6,7 +6,7 @@ import unittest
 
 from export_escher import configure_label_display, write_pathway_preview
 import test_escher_display_modes
-from sbml2escher import parser
+from sbml2map import parser
 
 
 class LabelDisplayTests(unittest.TestCase):

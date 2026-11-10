@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 from major_backbones2 import backbone_plan, pathway_definitions, validate_backbones, clockwise_square
 from model_input import load_model
 from reaction_network import build_network
-from sbml2escher import BacterialStrategy
+from sbml2map import BacterialStrategy
 
 BASE = Path(__file__).resolve().parent
 MODEL = BASE/'models/e_coli_core.xml' if (BASE/'models').is_dir() else BASE/'e_coli_core.xml'

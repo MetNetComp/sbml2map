@@ -13,7 +13,7 @@ from annotation_context import CD, hidden_metabolite
 from bacterial_pathways import REFERENCE, discover, map_roles
 from escher_grid import display_graph, select_structural_reactions
 from model_input import load_model
-from sbml2escher import BacterialStrategy, discovery_context, parser, run
+from sbml2map import BacterialStrategy, discovery_context, parser, run
 
 CORE = '{http://www.sbml.org/sbml/level3/version1/core}'
 

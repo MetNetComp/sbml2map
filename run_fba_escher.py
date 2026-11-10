@@ -83,7 +83,7 @@ def solve_fba(model, objective, sense='maximize'):
 
 
 def read_fba_layout(directory, model):
-    """Read either a full legacy layout or a filtered sbml2escher display map."""
+    """Read either a full legacy layout or a filtered sbml2map display map."""
     if not (directory / 'display_model.json').exists():
         layout_model, nodes, edges, xy = read_layout(directory)
         if model != layout_model:

@@ -54,7 +54,7 @@ class DatabaseClient:
                 time.sleep(max(0, 0.4 - (time.monotonic() - self.last_request)))
                 self.last_request = time.monotonic()
                 try:
-                    with urlopen(Request(url, headers={'User-Agent': 'sbml2escher/auto-pathways',
+                    with urlopen(Request(url, headers={'User-Agent': 'sbml2map/auto-pathways',
                                                        'Accept': '*/*'}), timeout=self.timeout) as response:
                         body = response.read().decode('utf-8')
                     break
