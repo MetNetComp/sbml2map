@@ -1,11 +1,11 @@
-<!doctype html><html lang="ja"><meta charset="utf-8"><title>sbml2escher</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><title>sbml2escher</title>
 <style>body{font:15px system-ui;color:#203744;margin:20px}#viewer{height:78vh;overflow:auto;border:1px solid #ccd;background:white}#viewer svg{width:1600px;height:auto}header{margin-bottom:12px}a{margin-right:14px}</style>
-<header><h1>sbml2escher — e_coli_core</h1><p>オレンジ：主要経路と各EX反応を結ぶ無向の接続経路。共有枝を1回だけ数えた長さの総和を最小化します。灰色：その他の枝。外周格子点はEX反応専用です。表示を絞ると接続経路の一部が隠れます。</p><p>無機物質を除外。赤：最重要経路（グルコース交換・解糖系・ピルビン酸酸化・TCA）。最重要経路を優先し、その中とその他の反応は |flux median| 順。正方形：反応、丸：化合物、灰色小円：補酵素。矢印は中央値の符号方向。</p>
-<label>上位 <input id="coverage" type="range" min="0" max="100.0" step="1" value="100.0"><span id="value"></span>%</label>
-<label><input id="coenzymes" type="checkbox" checked>補酵素</label>
-<label><input id="focus" type="checkbox" checked>主要経路・EX接続のみ</label><label>拡大 <input type="range" min="600" max="4200" value="1600" step="100" oninput="document.querySelector('#viewer svg').style.width=this.value+'px'"></label>
-<p>スライダーは保存済み座標の表示を絞ります。再最適化にはCLIの --coverage を使用してください。</p>
-<a href="layout.png">PNG</a><a href="layout.svg">SVG</a><a href="escher_preview.html">Escher</a><a href="report.json">検証結果</a><a href="reaction_ranking.csv">優先順位</a></header>
+<header><h1>sbml2escher — e_coli_core</h1><p>Orange: undirected paths connecting main pathways to exchange (EX) reactions. The layout minimizes total path length, counting shared branches once. Gray: other branches. Only EX reactions use the outer grid boundary. Filters may hide parts of these paths.</p><p>Inorganic compounds are hidden. Red: main pathways (glucose exchange, glycolysis, pyruvate oxidation, TCA). Main pathways come first. Each group is sorted by absolute median flux. Squares: reactions. Circles: compounds. Small gray circles: cofactors. Arrows follow the sign of median flux.</p>
+<label>Top <input id="coverage" type="range" min="0" max="100.0" step="1" value="100.0"><span id="value"></span>%</label>
+<label><input id="coenzymes" type="checkbox" checked>Cofactors</label>
+<label><input id="focus" type="checkbox" checked>Main pathways and EX connections only</label><label>Zoom <input type="range" min="600" max="4200" value="1600" step="100" oninput="document.querySelector('#viewer svg').style.width=this.value+'px'"></label>
+<p>The slider filters the saved layout. To calculate a new layout, run the CLI with --coverage.</p>
+<a href="layout.png">PNG</a><a href="layout.svg">SVG</a><a href="escher_preview.html">Escher</a><a href="report.json">Validation</a><a href="reaction_ranking.csv">Ranking</a></header>
 <div id="viewer"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="717.545395pt" height="1491.931924pt" viewBox="0 0 717.545395 1491.931924" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">

@@ -387,6 +387,8 @@ def layout_plan(routes, displayed_nodes):
         left,top=entry[0]+1,entry[1]+1
         ring=([(left,top-t) for t in range(side)]+[(left+t,top-side) for t in range(side)]+
               [(left+side,top-side+t) for t in range(side)]+[(left+side-t,top) for t in range(side)])
+        # Keep the top-left start and follow oxidative TCA clockwise (y upward).
+        ring = ring[:1] + ring[:0:-1]
         for i,key in enumerate(chain):
             if key:
                 put(key,ring[i*len(ring)//len(chain)],local)

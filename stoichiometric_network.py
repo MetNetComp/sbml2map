@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""BiGG JSON / SBML → 化学量論行列 S → ネットワークの隣接行列（標準ライブラリのみ）。
+"""Build stoichiometric and adjacency matrices from BiGG JSON or SBML.
 
-S の行は代謝物、列は反応。負値は基質、正値は生成物。
-B = (S != 0) とすると、無向の代謝物隣接行列は (B B^T > 0)、
-反応隣接行列は (B^T B > 0)。どちらも対角成分を 0 にする。
-有向の場合は反応の許容方向ごとに基質→生成物を結ぶ。
-反応ネットワークでは、ある反応の生成物が別の反応の基質なら結ぶ。
-有向行列の A[i][j] = 1 は i → j を表す。
+Uses only the Python standard library. Rows of S are metabolites; columns are
+reactions. Negative values are substrates; positive values are products.
+For B = (S != 0), undirected adjacency is (B B^T > 0) for metabolites and
+(B^T B > 0) for reactions. Both have zero diagonals.
+Directed metabolite edges link substrates to products in each allowed direction.
+Directed reaction edges link a producer to a consumer of the same metabolite.
+A[i][j] = 1 means i -> j.
 
-これは構造上の接続であり、定常状態でのフラックス実現可能性や
-原子の移動を表すものではない。ATP、水なども通常の代謝物として含む。
+These edges show structure, not steady-state flux feasibility or atom transfer.
+ATP, water, and other compounds are included as ordinary metabolites.
 """
 
 import argparse
@@ -19,7 +20,7 @@ from model_input import load_model
 
 
 def stoichiometric_matrix(model):
-    """BiGG JSON の辞書から (S, metabolite_ids, reaction_ids) を返す。"""
+    """Return (S, metabolite_ids, reaction_ids) from a model dictionary."""
     metabolites = [m['id'] for m in model['metabolites']]
     reactions = [r['id'] for r in model['reactions']]
     index = {name: i for i, name in enumerate(metabolites)}
@@ -32,14 +33,14 @@ def stoichiometric_matrix(model):
 
 def adjacency_from_stoichiometry(S, network='metabolite', directed=False,
                                  bounds=None):
-    """S から 0/1 の隣接行列を返す（自己ループなし）。
+    """Return a 0/1 adjacency matrix from S, with no self-loops.
 
-    network: 'metabolite' または 'reaction'。
-    bounds: 反応順の (lower_bound, upper_bound) リスト。
-      有向の場合のみ使用。省略時は全反応を順方向と仮定する。
-      上限 > 0 なら順方向、下限 < 0 なら逆方向を含む。
-      上下限がともに 0 の反応は有向グラフで孤立扱いになる。
-      無向の場合は上下限に関係なく S の非ゼロ構造を使用する。
+    network: 'metabolite' or 'reaction'.
+    bounds: (lower_bound, upper_bound) pairs in reaction order.
+      Used only for directed graphs. If omitted, all reactions are forward.
+      An upper bound > 0 allows forward flow; a lower bound < 0 allows reverse.
+      Reactions with both bounds at zero are isolated in directed graphs.
+      Undirected graphs use nonzero entries of S, regardless of bounds.
     """
     if network not in ('metabolite', 'reaction'):
         raise ValueError('network must be metabolite or reaction')
@@ -50,7 +51,7 @@ def adjacency_from_stoichiometry(S, network='metabolite', directed=False,
     A = [[0] * size for _ in range(size)]
 
     if not directed:
-        # 非ゼロの集合を使い、符号付き S の積による相殺を避ける。
+        # Use nonzero sets to avoid cancellation from signed matrix products.
         groups = (
             [{i for i in range(n_met) if S[i][j] != 0}
              for j in range(n_rxn)] if network == 'metabolite' else
@@ -115,7 +116,7 @@ def main():
     parser.add_argument('--network', choices=['metabolite', 'reaction'],
                         default='metabolite')
     parser.add_argument('--directed', action='store_true',
-                        help='反応の上下限を反映した有向隣接行列を作成')
+                        help='Build a directed adjacency matrix using reaction bounds')
     parser.add_argument('--output-dir', type=Path, default=Path('network_output'))
     args = parser.parse_args()
     model = load_model(args.model)

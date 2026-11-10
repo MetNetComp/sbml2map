@@ -168,7 +168,7 @@ def infer_organism(model, client, override=None, kegg_override=None):
             names = {'e_coli': 'Escherichia coli', 'Escherichia coli': 'Escherichia coli',
                      'Homo sapiens': 'Homo sapiens', 'Saccharomyces cerevisiae': 'Saccharomyces cerevisiae'}
             matches = sorted({name for token, name in names.items() if token.lower() in text.lower()})
-            matches += re.findall(r'(?:organism|species|生物種)\s*[:=]\s*([A-Z][a-z]+ [a-z]+)\b', text)
+            matches += re.findall(r'(?:organism|species|\u751f\u7269\u7a2e)\s*[:=]\s*([A-Z][a-z]+ [a-z]+)\b', text)
             matches = sorted(set(matches))
             if len(matches) != 1:
                 return dict(status='unresolved', candidates=matches, evidence=evidence, warnings=warnings)

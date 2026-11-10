@@ -224,10 +224,10 @@ def write_preview(path, data, reaction_data=None, fba_report=None):
     # Embedded library and map make this preview usable without a server or network.
     library = base64.b64encode(VIEWER.read_bytes()).decode('ascii')
     map_json = json.dumps(data, ensure_ascii=False, allow_nan=False).replace('<', '\\u003c')
-    page = '''<!doctype html><html lang="ja"><meta charset="utf-8"><title>Escher MILP layout</title>
+    page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>Escher MILP layout</title>
 <style>html,body{height:100%;margin:0;font:14px system-ui}header{padding:10px 18px;background:#f3f5f7}#map{height:calc(100vh - 100px);width:100%}#status{margin-left:16px}</style>
-<header><b>e_coli_core：Escher形式の配置図</b><p>反応点配置とCO₂コピーを保持しています。Escherの表示スタイルを使用します。ホイールで拡大できます。</p>
-<button id="save">マップJSONを保存</button><span id="status">読込中</span></header><div id="map"></div>
+<header><b>e_coli_core: Escher layout</b><p>Reaction positions and CO2 copies are kept. This view uses Escher styles. Use the mouse wheel to zoom.</p>
+<button id="save">Save map JSON</button><span id="status">Loading...</span></header><div id="map"></div>
 <script>window.escherErrors=[];window.addEventListener('error',e=>window.escherErrors.push(e.message));</script>
 <script src="data:application/javascript;base64,LIBRARY_PLACEHOLDER"></script><script>
 const mapData=MAP_PLACEHOLDER;
@@ -238,7 +238,7 @@ window.builder=escher.Builder(mapData,null,null,escher.libs.d3_select('#map'),{
   reaction_no_data_size:3,hide_secondary_metabolites:false
 });
 const wait=setInterval(()=>{if(!window.builder.map)return;clearInterval(wait);window.escherReady=true;
-const m=window.builder.map;document.getElementById('status').textContent=Object.keys(m.reactions).length+'反応・'+Object.keys(m.nodes).length+'点';},100);
+const m=window.builder.map;document.getElementById('status').textContent=Object.keys(m.reactions).length+' reactions, '+Object.keys(m.nodes).length+' nodes';},100);
 document.getElementById('save').onclick=()=>{const data=window.builder.map.map_for_export();data[0].metadata=mapData[0].metadata;const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='escher_map.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 </script></html>'''
     if reaction_data is not None:
@@ -256,20 +256,20 @@ document.getElementById('save').onclick=()=>{const data=window.builder.map.map_f
                                        dict(type='value', value=maximum * 0.5, color='#e31a1c', size=9),
                                        dict(type='value', value=maximum, color='#9e0142', size=14)])
         page = page.replace('enable_editing:true,', json.dumps(options, allow_nan=False)[1:-1] + ',enable_editing:true,')
-        page = page.replace('Escher形式の配置図', 'FBAフラックスのEscher表示')
-        summary = ('線の太さ・色はフラックスの絶対値、ラベルは符号付きの値です。'
-                   '0は灰色、小さい流量は黄色、大きくなるとオレンジ・赤・赤紫になります。太い線ほど流量が大きくなります。単位：mmol/gDW/h。'
-                   f'尺度：0〜{maximum:.4g}。矢印は計算された流れの方向を示します。'
-                   'ゼロ反応の矢印は許容方向であり、流れを表しません。')
+        page = page.replace('Escher layout', 'FBA flux in Escher')
+        summary = ('Line width and color show absolute flux. Labels show signed values. '
+                   'Zero is gray. Higher flux changes from yellow to orange, red, and purple. Thicker lines mean higher flux. Units: mmol/gDW/h. '
+                   f'Scale: 0 to {maximum:.4g}. Arrows show the calculated flow direction. '
+                   'Arrows on zero-flux reactions show allowed directions, not flow.')
         if fba_report:
-            summary += (f' バイオマス反応：{fba_report["objective_value"]:.6f} h⁻¹。'
-                        'SBMLの上下限で成長を最大化した、最適解の一例です。')
-        page = page.replace('反応点配置とCO₂コピーを保持しています。Escherの表示スタイルを使用します。ホイールで拡大できます。', summary)
+            summary += (f' Biomass reaction: {fba_report["objective_value"]:.6f} h⁻¹. '
+                        'This is one optimal solution that maximizes growth within the SBML bounds.')
+        page = page.replace('Reaction positions and CO2 copies are kept. This view uses Escher styles. Use the mouse wheel to zoom.', summary)
         page = page.replace('const mapData=MAP_PLACEHOLDER;',
                             'window.fbaFluxes=' + json.dumps(reaction_data, allow_nan=False) + ';const mapData=MAP_PLACEHOLDER;')
         page = page.replace('#map{height:calc(100vh - 100px)', '#map{height:calc(100vh - 140px)')
-    page = page.replace('e_coli_core：Escher形式の配置図', html.escape(data[0]['map_name']))
-    page = page.replace('e_coli_core：FBAフラックスのEscher表示', html.escape(data[0]['map_name']) + '：FBAフラックスのEscher表示')
+    page = page.replace('e_coli_core: Escher layout', html.escape(data[0]['map_name']))
+    page = page.replace('e_coli_core: FBA flux in Escher', html.escape(data[0]['map_name']) + ': FBA flux in Escher')
     path.write_text(page.replace('LIBRARY_PLACEHOLDER', library).replace('MAP_PLACEHOLDER', map_json))
 
 

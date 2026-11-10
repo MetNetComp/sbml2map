@@ -314,37 +314,37 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         highlight = key in orange_nodes or (node['kind']=='reaction' and stats[node['original_id']].get('is_major_pathway',False)) or (node['kind']=='metabolite' and node['original_id'] in major_mids)
         registry.extend([dict(id=f'node-{j}', rank=rank, coenzyme=node['kind'] == 'currency',highlight=highlight),
                          dict(id=f'label-{j}', rank=rank, coenzyme=node['kind'] == 'currency',highlight=highlight)])
-    page = '''<!doctype html><html lang="ja"><meta charset="utf-8"><title>sbml2escher</title>
+    page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>sbml2escher</title>
 <style>body{font:15px system-ui;color:#203744;margin:20px}#viewer{height:78vh;overflow:auto;border:1px solid #ccd;background:white}#viewer svg{width:1600px;height:auto}header{margin-bottom:12px}a{margin-right:14px}</style>
-<header><h1>sbml2escher — __MODEL__</h1><p>無機物質を除外。赤：最重要経路（グルコース交換・解糖系・PDH・TCA）。最重要経路を優先し、その中とその他の反応は |flux median| 順。正方形：反応、丸：化合物、灰色小円：補酵素。矢印は中央値の符号方向。</p>
-<label>上位 <input id="coverage" type="range" min="0" max="__MAX__" step="1" value="__MAX__"><span id="value"></span>%</label>
-<label><input id="coenzymes" type="checkbox" checked>補酵素</label>
-<label>拡大 <input type="range" min="600" max="4200" value="1600" step="100" oninput="document.querySelector('#viewer svg').style.width=this.value+'px'"></label>
-<p>スライダーは保存済み座標の表示を絞ります。再最適化にはCLIの --coverage を使用してください。</p>
-<a href="layout.png">PNG</a><a href="layout.svg">SVG</a><a href="escher_preview.html">Escher</a><a href="report.json">検証結果</a><a href="reaction_ranking.csv">優先順位</a></header>
+<header><h1>sbml2escher — __MODEL__</h1><p>Inorganic compounds are hidden. Red: main pathways (glucose exchange, glycolysis, PDH, TCA). Main pathways come first. Each group is sorted by absolute median flux. Squares: reactions. Circles: compounds. Small gray circles: cofactors. Arrows follow the sign of median flux.</p>
+<label>Top <input id="coverage" type="range" min="0" max="__MAX__" step="1" value="__MAX__"><span id="value"></span>%</label>
+<label><input id="coenzymes" type="checkbox" checked>Cofactors</label>
+<label>Zoom <input type="range" min="600" max="4200" value="1600" step="100" oninput="document.querySelector('#viewer svg').style.width=this.value+'px'"></label>
+<p>The slider filters the saved layout. To calculate a new layout, run the CLI with --coverage.</p>
+<a href="layout.png">PNG</a><a href="layout.svg">SVG</a><a href="escher_preview.html">Escher</a><a href="report.json">Validation</a><a href="reaction_ranking.csv">Ranking</a></header>
 <div id="viewer">__SVG__</div>
 <script>const registry=__REGISTRY__,eligible=__ELIGIBLE__;
 function update(){const v=Number(document.getElementById('coverage').value),limit=Math.ceil(v*eligible/100),co=document.getElementById('coenzymes').checked;document.getElementById('value').textContent=v;for(const item of registry){const el=document.getElementById(item.id);if(el)el.style.display=(item.rank<=limit&&(co||!item.coenzyme))?'':'none';}}
 document.getElementById('coverage').oninput=update;document.getElementById('coenzymes').onchange=update;update();</script></html>'''
     import html
     if structural:
-        page = page.replace('最重要経路を優先し、その中とその他の反応は |flux median| 順。',
-                            'フラックスサンプリングなし。最重要経路を優先し、各群内は反応ID順（活性の順位ではありません）。')
-        page = page.replace('矢印は中央値の符号方向。', '矢印はモデルの上下限による許可方向（可逆は双方向、上下限0は矢印なし）。')
+        page = page.replace('Main pathways come first. Each group is sorted by absolute median flux. ',
+                            'No flux sampling. Main pathways come first. Each group is sorted by reaction ID, not activity. ')
+        page = page.replace('Arrows follow the sign of median flux.', 'Arrows show directions allowed by model bounds. Reversible reactions have arrows both ways. Reactions with both bounds at zero have no arrows.')
     if provisional:
-        notice=(f'<p class="sampling-warning" style="background:#fff0cc;padding:12px">暫定結果：samplingの収束基準が未達です。優先順位は暫定です。最大split R-hat={sampling_report["max_split_rhat"]:.3f}、最小ESS={sampling_report["min_effective_sample_size"]:.1f}。</p>')
+        notice=(f'<p class="sampling-warning" style="background:#fff0cc;padding:12px">Provisional result: sampling convergence checks failed. Rankings are provisional. Maximum split R-hat={sampling_report["max_split_rhat"]:.3f}, minimum ESS={sampling_report["min_effective_sample_size"]:.1f}.</p>')
         page=page.replace('</h1>', '</h1>'+notice,1)
     if program_name=='sbml2escher':
-        page=page.replace('・PDH・','・ピルビン酸酸化・')
+        page=page.replace(', PDH, ',', pyruvate oxidation, ')
     if connectors:
-        page=page.replace('</h1>', '</h1><p>オレンジ：主要経路と各EX反応を結ぶ無向の接続経路。共有枝を1回だけ数えた長さの総和を最小化します。灰色：その他の枝。外周格子点はEX反応専用です。表示を絞ると接続経路の一部が隠れます。</p>',1)
-        page=page.replace('<label>拡大','<label><input id="focus" type="checkbox" checked>主要経路・EX接続のみ</label><label>拡大',1)
+        page=page.replace('</h1>', '</h1><p>Orange: undirected paths connecting main pathways to exchange (EX) reactions. The layout minimizes total path length, counting shared branches once. Gray: other branches. Only EX reactions use the outer grid boundary. Filters may hide parts of these paths.</p>',1)
+        page=page.replace('<label>Zoom','<label><input id="focus" type="checkbox" checked>Main pathways and EX connections only</label><label>Zoom',1)
         page=page.replace('(item.rank<=limit&&(co||!item.coenzyme))', '(item.rank<=limit&&(co||!item.coenzyme)&&(!document.getElementById("focus").checked||item.highlight))')
         page=page.replace('update();</script>', 'document.getElementById("focus").onchange=update;update();</script>')
         if structural:
             page=page.replace('id="focus" type="checkbox" checked', 'id="focus" type="checkbox"')
             missing = len(connectors.get('disconnected_exchange_node_ids', []))
-            page=page.replace('</h1>', f'</h1><p>主要経路から接続できないEX反応：{missing}件。これらは灰色で保持し、接続を補いません。</p>',1)
+            page=page.replace('</h1>', f'</h1><p>EX reactions with no connection to main pathways: {missing}. These stay gray. No connections are added.</p>',1)
     page = page.replace('sbml2escher', html.escape(program_name)).replace('__MODEL__', html.escape(model_id)).replace('__MAX__', str(selection['coverage_percent'])).replace('__SVG__', svg).replace('__REGISTRY__', json.dumps(registry)).replace('__ELIGIBLE__', str(selection['eligible_reactions']))
     (output / 'index.html').write_text(page)
 
@@ -566,16 +566,16 @@ def run(args):
         style = '<style id="major-pathway-colors">' + '\n'.join(css) + '</style>'
         preview_html = preview_html.replace('<header>', style + '<header>', 1)
         if not no_sampling and not sampling_report['mixing_checks_passed']:
-            notice=(f'<p class="sampling-warning" style="background:#fff0cc;padding:12px">暫定結果：samplingの収束基準が未達です。最大split R-hat={sampling_report["max_split_rhat"]:.3f}、最小ESS={sampling_report["min_effective_sample_size"]:.1f}。</p>')
+            notice=(f'<p class="sampling-warning" style="background:#fff0cc;padding:12px">Provisional result: sampling convergence checks failed. Maximum split R-hat={sampling_report["max_split_rhat"]:.3f}, minimum ESS={sampling_report["min_effective_sample_size"]:.1f}.</p>')
             preview_html=preview_html.replace('<header>','<header>'+notice,1)
-        preview_html = preview_html.replace('：FBAフラックスのEscher表示', '：flux中央値のEscher表示')
+        preview_html = preview_html.replace(': FBA flux in Escher', ': Median flux in Escher')
         if no_sampling:
-            preview_html = preview_html.replace('<header>', '<header><p>フラックスサンプリングなし。赤：最重要経路。矢印はモデルの上下限による許可方向です。上下限0の反応は停止表示です。</p>', 1)
-        preview_html = preview_html.replace('<p>線の太さ・色は', '<p>赤色は最重要経路（グルコース交換・解糖系・PDH・TCA）です。その他の線の太さ・色は')
+            preview_html = preview_html.replace('<header>', '<header><p>No flux sampling. Red shows main pathways. Arrows show directions allowed by model bounds. Reactions with both bounds at zero are shown as blocked.</p>', 1)
+        preview_html = preview_html.replace('<p>Line width and color show ', '<p>Red shows main pathways (glucose exchange, glycolysis, PDH, TCA). For other lines, width and color show ')
         if program_name=='sbml2escher':
-            preview_html=preview_html.replace('・PDH・','・ピルビン酸酸化・')
+            preview_html=preview_html.replace(', PDH, ',', pyruvate oxidation, ')
         if connectors:
-            preview_html=preview_html.replace('<header>','<header><p>オレンジ：主要経路からEXへの無向接続。灰色：その他。長さの最小化はPNG/SVGの直交枝が対象です。</p>',1)
+            preview_html=preview_html.replace('<header>','<header><p>Orange: undirected paths from main pathways to EX reactions. Gray: other branches. Path length is minimized for the right-angle branches in the PNG/SVG views.</p>',1)
         preview.write_text(preview_html)
     else:
         data = [dict(schema='https://escher.github.io/escher/jsonschema/1-0-0#', homepage='https://escher.github.io',

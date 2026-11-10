@@ -89,8 +89,8 @@
           "sha256": "a7f39352384d1a31e1be59305835cc92bddf3e18b540d9942fd62290998396ae"
         },
         "escher_preview.html": {
-          "bytes": 1220719,
-          "sha256": "db09538177f99d9079eec0823674adf4b6e212880a39998f80910409982eed50"
+          "bytes": 1220614,
+          "sha256": "7e005e07a829e94827a0b40de6e38abd4ccc031de79633555443975533f6e1e8"
         },
         "exchange_connectors.json": {
           "bytes": 3336,
@@ -109,8 +109,8 @@
           "sha256": "9029ff788c311540c11480c7a7ab34cddc9a32234a2222f873632872c5175c3d"
         },
         "index.html": {
-          "bytes": 500727,
-          "sha256": "b05e778e30ad1f6bcd99da41600c3e2b37c319840f9b53daa79dfbabd4cc71ee"
+          "bytes": 500659,
+          "sha256": "915963ab432ea554b224fb797f7c641f6decc1baa347c4a849222665e56c353f"
         },
         "layout.png": {
           "bytes": 485535,
@@ -1235,12 +1235,12 @@
           "sha256": "6c3f0d05cd259d00bdcd67416a1c1117f244c22071bcf7b109338eb73c495770"
         },
         "index.html": {
-          "bytes": 8575586,
-          "sha256": "170e202bc08ade9ec8a50f95ede6be4f1d302de9e9897e1dcc33bef3051376ed"
+          "bytes": 8575515,
+          "sha256": "5c3a03111252f25f237cbfbba1de00ea58e4ca24f2c0bfd5bf9d02019bf5b228"
         },
         "escher_preview.html": {
-          "bytes": 5252113,
-          "sha256": "320cd8fb145ce6ddb5f53b29706410f33d98660cd703a96f206b09d2278b6112"
+          "bytes": 5252009,
+          "sha256": "092b33fdad3342fed5eb5ddc597cd45017373a1808a506a5dcf26001f98736f2"
         },
         "escher_map.json": {
           "bytes": 7136204,
@@ -2048,12 +2048,12 @@
           "sha256": "333ceced4c21802e2569c587ccfdf27f8b5cb5b712aec4492ee7090716f51b8a"
         },
         "index.html": {
-          "bytes": 4519548,
-          "sha256": "07511b94a7331b9c913e19ac3cd19213f5cc937de7fdd0a925e5dedece2ad2b3"
+          "bytes": 4519477,
+          "sha256": "a9b064ca130d978703119ca12425310a91fdc14c5103baf64ec081a28a5928a7"
         },
         "escher_preview.html": {
-          "bytes": 3355694,
-          "sha256": "23ee4a5041432c43e6aec84f1928a2c8a90637a994ef1427af376ddebfc82c67"
+          "bytes": 3355590,
+          "sha256": "ee4e4018569276844501e55cc89daef74d13b46269847be125e23869cd5d36bd"
         },
         "escher_map.json": {
           "bytes": 4177173,
@@ -2140,12 +2140,12 @@
           "sha256": "5c8e766fd88b2f167c5170e54a279a680da22c5e3cbf4b6a18eb68a42295c239"
         },
         "index.html": {
-          "bytes": 70995044,
-          "sha256": "b60e31642aef4c1bc34fdc039a8b59f9080af2df18b6cebd5cfec3c0b0a641f6"
+          "bytes": 70994958,
+          "sha256": "6345136da0a2885a7929b7c24151643ba5a4e6370b5c1cc1cd980b5b4b3a3ea3"
         },
         "escher_preview.html": {
-          "bytes": 31556420,
-          "sha256": "bdb58a7f8badcdebd8230076cff3560223b38b4a55126935a248e6f616952f98"
+          "bytes": 31556378,
+          "sha256": "54b36b1435950cc90bb9f7900aa245e050713ceb972c800fbad6eea88534bade"
         },
         "escher_map.json": {
           "bytes": 45509273,
@@ -2214,8 +2214,8 @@
           "sha256": "61e937a79d8216784a0a63f7a2308aee430bb47df89fd8b63c8967a77cfdb9ad"
         },
         "escher_preview.html": {
-          "bytes": 4101101,
-          "sha256": "66c3449e63b280a14bed7206e7e5393fb4e95dee49b47f77dc7cb78a033d6052"
+          "bytes": 4101059,
+          "sha256": "8183062593238dcdde1a2ee40976e26ffa27786a7a423647a22b86e1873ff877"
         },
         "exchange_connectors.json": {
           "bytes": 64475,
@@ -2226,8 +2226,8 @@
           "sha256": "02e4f886ec4e9689f814b2e144e2532fbfa8d2372cc84398dc8c6448fcdf2e43"
         },
         "index.html": {
-          "bytes": 9255265,
-          "sha256": "a28499b660235d5e4cf29c4c26aca82109d642bfc62123be87203f5bbaf2bf3b"
+          "bytes": 9255179,
+          "sha256": "90cd58da229b45bebdbd7b16fa137c75994b5e58eaaf7f82491e09580596ec41"
         },
         "layout.png": {
           "bytes": 5135481,
@@ -2586,8 +2586,8 @@
           "sha256": "d5313f69487a0930b328adb57829b80931361ee09f845303cd58232b0f06fcfa"
         },
         "escher_preview.html": {
-          "bytes": 4340985,
-          "sha256": "2591f0ca81a6cf5e2f80823317273d34c43bb7f4c680ced455418bc07bcb6733"
+          "bytes": 4340943,
+          "sha256": "f4c881772bdc8f6e439ed9d459f908bd594afaafaa3ed9cde0aa22013a0ff91f"
         },
         "exchange_connectors.json": {
           "bytes": 75463,
@@ -2598,8 +2598,8 @@
           "sha256": "50dce6425f9a078f7f4d7721b15cfedf3da65d54c8972c975edd40ea9c46e818"
         },
         "index.html": {
-          "bytes": 9927026,
-          "sha256": "8e29146a7c4a74a4eb87c89bc345a50d768cd083657c8cce82f7ae58b321ce66"
+          "bytes": 9926940,
+          "sha256": "0cf8103457c1d7ca4646a136167d36015bddd86252085f817f80abf7483c957a"
         },
         "layout.png": {
           "bytes": 5614810,
@@ -2967,8 +2967,8 @@
           "sha256": "05435ba68c856691f27674a68e37968083dae97b8561162c68d4e63824f90feb"
         },
         "escher_preview.html": {
-          "bytes": 4758217,
-          "sha256": "b31be80189b2f2dd8dd036d043eed4955779a6ffb27941aa4029385098d866b6"
+          "bytes": 4758175,
+          "sha256": "c89fac634ededa1a755efa386f9e6a783f1e3ea96c94a66909d322dc6c83416d"
         },
         "exchange_connectors.json": {
           "bytes": 64037,
@@ -2979,8 +2979,8 @@
           "sha256": "60381013ce9fe373f3b2eccdedfc87b2dacedaf953a42d8251bcabc3d39b92de"
         },
         "index.html": {
-          "bytes": 11271713,
-          "sha256": "e8d4bceb428dec1db61254b9e2ecb14bfdbf92249a4788139c71692a4347756f"
+          "bytes": 11271627,
+          "sha256": "ef215059ec8298ce250fd93c29355d5b815000ac71c6bead996911f6e2f21ee9"
         },
         "layout.png": {
           "bytes": 5873628,
