@@ -32,6 +32,10 @@ The iCH360 structural drawing is also available in the [live SVG viewer](https:/
 and [live Escher viewer](https://metnetcomp.github.io/sbml2escher/eco_ich_360/escher_preview.html).
 It shows 326 of 349 reactions without flux sampling; no new model files are included.
 
+The misc iCH360 drawing is available in the [SVG viewer](https://metnetcomp.github.io/sbml2escher/misc_ich_360/)
+and [Escher viewer](https://metnetcomp.github.io/sbml2escher/misc_ich_360/escher_preview.html).
+The Escher view provides label visibility and overlap controls.
+
 Run the packaged checks with `python -m unittest discover`.
 
 ## Installation

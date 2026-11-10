@@ -37,3 +37,15 @@ These saved structural views show 326 of the source model's 349 reactions,
 without flux sampling. No new model files or source/display model snapshots
 are included. `prepare_github_pages.py` refreshes E. coli core and preserves
 this separately published iCH360 directory.
+
+
+## misc iCH360
+
+- [Interactive SVG viewer](misc_ich_360/index.html)
+- [Escher viewer](misc_ich_360/escher_preview.html)
+- [PNG](misc_ich_360/layout.png)
+
+Escher URL: https://metnetcomp.github.io/sbml2escher/misc_ich_360/escher_preview.html
+
+These saved misc iCH360 views include label visibility and overlap controls in
+Escher. The E. coli core publishing script preserves this separate directory.
