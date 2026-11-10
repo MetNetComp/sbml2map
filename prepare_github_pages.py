@@ -15,6 +15,7 @@ FILES = (
 )
 
 FBA_FILES = ('escher_fba.html','fba_report.json','fba_fluxes.csv','fba_fluxes.json','escher_fluxes.json')
+SBML_FILES = ('layout.sbml','sbml_layout_report.json')
 
 
 def main():
@@ -31,7 +32,7 @@ def main():
         edges = list(csv.DictReader(stream))
     elements = grid_elements(nodes, edges)
     target.mkdir(parents=True, exist_ok=True)
-    files = FILES + tuple(name for name in FBA_FILES if (source/name).is_file())
+    files = FILES + tuple(name for name in FBA_FILES + SBML_FILES if (source/name).is_file())
     for name in files:
         if name.endswith('.html'):
             page = inject_controls((source / name).read_text(), model, elements,

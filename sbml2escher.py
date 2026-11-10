@@ -105,6 +105,8 @@ def parser():
 
 
 def run(args):
+    if getattr(args,'export_sbml_layout',False) and args.discover_only:
+        raise ValueError('--export-sbml-layout cannot be combined with --discover-only')
     if not math.isfinite(args.coverage) or not 0<=args.coverage<=100:
         raise ValueError('coverage must be in [0,100]')
     if not math.isfinite(args.time_limit) or args.time_limit<=0 or args.max_milp_nodes<1:

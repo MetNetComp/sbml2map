@@ -61,7 +61,8 @@
         "fba_full_source_model_mass_balance_and_bounds_verified": true,
         "fba_saved_coordinates_and_sampling_preserved": true,
         "escher_segments_horizontal_or_vertical": true,
-        "escher_priority_layers_and_connected_offset_routes_verified": true
+        "escher_priority_layers_and_connected_offset_routes_verified": true,
+        "sbml_layout_preserves_original_model_and_fba": true
       },
       "status": "complete",
       "source_reactions": 95,
@@ -94,8 +95,8 @@
           "sha256": "66299642fb71f1cc2efe99bcb5f9d45a06aeb4629df2130749b713935b58abbd"
         },
         "escher_preview.html": {
-          "bytes": 1411058,
-          "sha256": "2c6b52211d4bea66aa6be6ef8ea6403b80170b716dc61794a740e58b0e842a42"
+          "bytes": 1411142,
+          "sha256": "a2487798a7758c8f9ce8dad2559fbbd442fd5cf144ab47c149b28e7247c22a88"
         },
         "exchange_connectors.json": {
           "bytes": 3333,
@@ -114,8 +115,8 @@
           "sha256": "9029ff788c311540c11480c7a7ab34cddc9a32234a2222f873632872c5175c3d"
         },
         "index.html": {
-          "bytes": 587918,
-          "sha256": "c411de32577f82d0113f5a8e20dcc9a405440e096cdf34f3f1120ef7e009eada"
+          "bytes": 588002,
+          "sha256": "7e4cbd24cb1a94c3442f6fa5c77714f31112abff711ba75cb01743669167cac1"
         },
         "layout.png": {
           "bytes": 486146,
@@ -170,8 +171,8 @@
           "sha256": "332d5e296e1f41ecc314d09d4a15bd0a4ef8d5f80a17fcf91354be6f37324115"
         },
         "escher_fba.html": {
-          "bytes": 1339886,
-          "sha256": "019829add298f9dfd000675065319623696acd45e8d41cb1fa391568f98bf148"
+          "bytes": 1339970,
+          "sha256": "41e1379deb5d95b2441fdeb95c0e605cc7e9265d9a4bc906e92a6818689afb70"
         },
         "fba_report.json": {
           "bytes": 2555,
@@ -188,6 +189,14 @@
         "escher_fluxes.json": {
           "bytes": 1742,
           "sha256": "e8bea944f0e1a72a385cc5445186647fd7121e95d54d7f612ee6feb5867e96cb"
+        },
+        "layout.sbml": {
+          "bytes": 1187037,
+          "sha256": "2987120260afb8cef7788166f09384debb73c0813b11ed494c56b4150cd24af0"
+        },
+        "sbml_layout_report.json": {
+          "bytes": 13855,
+          "sha256": "a3a86098e099f60f0adbf8c3302c206106b3ce82655ad5dc82c2b03d2c058cd8"
         }
       },
       "program_name": "sbml2escher",
@@ -278,6 +287,30 @@
           "gray": 37.8
         },
         "primary_backbone_max_offset": 0.0
+      },
+      "sbml_layout": {
+        "enabled_by_default": false,
+        "command": "python export_sbml_layout.py --model models/e_coli_core.xml --layout-dir results/e_coli_core --verify-fba",
+        "output_file": "layout.sbml",
+        "report_file": "sbml_layout_report.json",
+        "format": "SBML Level 3 Layout Version 1",
+        "render_exported": false,
+        "source_files_sha256": {
+          "export_sbml_layout.py": "c6d9b3027022a5709731a5221b44668a8412efc19ed099640d6032a56820e693",
+          "requirements-sbml-layout.txt": "ddb49acbed8dfec654e9b5355940fe8ea1eeac8ddd7a67761ee667e2e1439e08"
+        },
+        "validation": {
+          "original_xml_semantics_preserved": true,
+          "source_model_preserved": true,
+          "sbml_consistency_errors": 0,
+          "glyph_references_and_coordinates_verified": true,
+          "curves_horizontal_or_vertical": true
+        },
+        "fba_verification": {
+          "before": 0.8739215069684304,
+          "after": 0.8739215069684304,
+          "unchanged": true
+        }
       }
     },
     {

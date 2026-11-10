@@ -1,0 +1,186 @@
+{
+  "status": "valid",
+  "format": "SBML Level 3 Layout Version 1",
+  "render_exported": false,
+  "source_sbml": "public/models/e_coli_core.xml",
+  "source_sha256": "b4db506aeed0e434c1f5f1fdd35feda0dfe5d82badcfda0e9d1342335ab31116",
+  "output_file": "layout.sbml",
+  "output_sha256": "2987120260afb8cef7788166f09384debb73c0813b11ed494c56b4150cd24af0",
+  "level": 3,
+  "version": 1,
+  "libsbml_version": "5.21.2",
+  "layout_id": "sbml2escher_layout",
+  "existing_layouts_preserved": 0,
+  "source_reactions": 95,
+  "source_species": 72,
+  "species_glyphs": 130,
+  "reaction_glyphs": 76,
+  "text_glyphs": 206,
+  "species_reference_glyphs": 237,
+  "line_segments": 660,
+  "undisplayed_reaction_ids": [
+    "CO2t",
+    "EX_co2_e",
+    "EX_fru_e",
+    "EX_fum_e",
+    "EX_gln__L_e",
+    "EX_h2o_e",
+    "EX_h_e",
+    "EX_mal__L_e",
+    "EX_nh4_e",
+    "EX_o2_e",
+    "EX_pi_e",
+    "FRUpts2",
+    "FUMt2_2",
+    "GLNabc",
+    "H2Ot",
+    "MALt2_2",
+    "NH4t",
+    "O2t",
+    "PIt2r"
+  ],
+  "undisplayed_species_ids": [
+    "co2_c",
+    "co2_e",
+    "fru_e",
+    "fum_e",
+    "gln__L_e",
+    "h2o_c",
+    "h2o_e",
+    "h_c",
+    "h_e",
+    "mal__L_e",
+    "nh4_c",
+    "nh4_e",
+    "o2_c",
+    "o2_e",
+    "pi_c",
+    "pi_e"
+  ],
+  "coordinate_offset": [
+    20.0,
+    35.0
+  ],
+  "layout_dimensions": [
+    2548.0,
+    4895.0
+  ],
+  "validation": {
+    "original_xml_semantics_preserved": true,
+    "source_model_preserved": true,
+    "sbml_consistency_errors": 0,
+    "glyph_references_and_coordinates_verified": true,
+    "curves_horizontal_or_vertical": true
+  },
+  "warning_count": 220,
+  "source_warning_count": 220,
+  "additional_warning_count": 0,
+  "warnings": [
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <compartment> 'e' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20518,
+      "severity": 1,
+      "message": "If neither the attribute 'units' nor the attribute 'spatialDimensions' on a Compartment object is set, the unit associated with that compartment's size is undefined.\nReference: L3V1 Section 4.5\n The <compartment> 'e' has no discernable units."
+    },
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <compartment> 'c' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20518,
+      "severity": 1,
+      "message": "If neither the attribute 'units' nor the attribute 'spatialDimensions' on a Compartment object is set, the unit associated with that compartment's size is undefined.\nReference: L3V1 Section 4.5\n The <compartment> 'c' has no discernable units."
+    },
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <species> 'M_glc__D_e' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20616,
+      "severity": 1,
+      "message": "If the attribute 'substanceUnits' in a Species object has not been set, then the unit of measurement associated with the species' quantity is determined by the value of the enclosing Model object's 'substanceUnits' attribute. If neither the Species object's 'substanceUnits' attribute nor the enclosing Model object's 'substanceUnits' attribute are set, then the unit of that species' quantity is undefined.\nReference: L3V1 Section 4.6.5\n The <species> with id 'M_glc__D_e' does not have a substanceUnits attribute, nor does its enclosing <model>."
+    },
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <species> 'M_gln__L_c' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20616,
+      "severity": 1,
+      "message": "If the attribute 'substanceUnits' in a Species object has not been set, then the unit of measurement associated with the species' quantity is determined by the value of the enclosing Model object's 'substanceUnits' attribute. If neither the Species object's 'substanceUnits' attribute nor the enclosing Model object's 'substanceUnits' attribute are set, then the unit of that species' quantity is undefined.\nReference: L3V1 Section 4.6.5\n The <species> with id 'M_gln__L_c' does not have a substanceUnits attribute, nor does its enclosing <model>."
+    },
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <species> 'M_gln__L_e' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20616,
+      "severity": 1,
+      "message": "If the attribute 'substanceUnits' in a Species object has not been set, then the unit of measurement associated with the species' quantity is determined by the value of the enclosing Model object's 'substanceUnits' attribute. If neither the Species object's 'substanceUnits' attribute nor the enclosing Model object's 'substanceUnits' attribute are set, then the unit of that species' quantity is undefined.\nReference: L3V1 Section 4.6.5\n The <species> with id 'M_gln__L_e' does not have a substanceUnits attribute, nor does its enclosing <model>."
+    },
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <species> 'M_glu__L_c' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20616,
+      "severity": 1,
+      "message": "If the attribute 'substanceUnits' in a Species object has not been set, then the unit of measurement associated with the species' quantity is determined by the value of the enclosing Model object's 'substanceUnits' attribute. If neither the Species object's 'substanceUnits' attribute nor the enclosing Model object's 'substanceUnits' attribute are set, then the unit of that species' quantity is undefined.\nReference: L3V1 Section 4.6.5\n The <species> with id 'M_glu__L_c' does not have a substanceUnits attribute, nor does its enclosing <model>."
+    },
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <species> 'M_glu__L_e' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20616,
+      "severity": 1,
+      "message": "If the attribute 'substanceUnits' in a Species object has not been set, then the unit of measurement associated with the species' quantity is determined by the value of the enclosing Model object's 'substanceUnits' attribute. If neither the Species object's 'substanceUnits' attribute nor the enclosing Model object's 'substanceUnits' attribute are set, then the unit of that species' quantity is undefined.\nReference: L3V1 Section 4.6.5\n The <species> with id 'M_glu__L_e' does not have a substanceUnits attribute, nor does its enclosing <model>."
+    },
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <species> 'M_glx_c' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20616,
+      "severity": 1,
+      "message": "If the attribute 'substanceUnits' in a Species object has not been set, then the unit of measurement associated with the species' quantity is determined by the value of the enclosing Model object's 'substanceUnits' attribute. If neither the Species object's 'substanceUnits' attribute nor the enclosing Model object's 'substanceUnits' attribute are set, then the unit of that species' quantity is undefined.\nReference: L3V1 Section 4.6.5\n The <species> with id 'M_glx_c' does not have a substanceUnits attribute, nor does its enclosing <model>."
+    },
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <species> 'M_h2o_c' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20616,
+      "severity": 1,
+      "message": "If the attribute 'substanceUnits' in a Species object has not been set, then the unit of measurement associated with the species' quantity is determined by the value of the enclosing Model object's 'substanceUnits' attribute. If neither the Species object's 'substanceUnits' attribute nor the enclosing Model object's 'substanceUnits' attribute are set, then the unit of that species' quantity is undefined.\nReference: L3V1 Section 4.6.5\n The <species> with id 'M_h2o_c' does not have a substanceUnits attribute, nor does its enclosing <model>."
+    },
+    {
+      "id": 99508,
+      "severity": 1,
+      "message": "In situations where a mathematical expression refers to a compartment, species or parameter, it is necessary to know the units of the object to establish unit consistency. In models where the units of an object have not been declared, libSBML does not yet have the functionality to accurately verify the consistency of the units in mathematical expressions referring to that object. \n The units of the <species> 'M_h2o_e' cannot be fully checked. Unit consistency reported as either no errors or further unit errors related to this object may not be accurate."
+    },
+    {
+      "id": 20616,
+      "severity": 1,
+      "message": "If the attribute 'substanceUnits' in a Species object has not been set, then the unit of measurement associated with the species' quantity is determined by the value of the enclosing Model object's 'substanceUnits' attribute. If neither the Species object's 'substanceUnits' attribute nor the enclosing Model object's 'substanceUnits' attribute are set, then the unit of that species' quantity is undefined.\nReference: L3V1 Section 4.6.5\n The <species> with id 'M_h2o_e' does not have a substanceUnits attribute, nor does its enclosing <model>."
+    }
+  ],
+  "fba_verification": {
+    "before": 0.8739215069684304,
+    "after": 0.8739215069684304,
+    "unchanged": true
+  },
+  "limitation": "Layout stores geometry only. Colors and arrow styling require Render support in a consuming application."
+}

@@ -21,3 +21,6 @@ python3 prepare_github_pages.py
 
 Commit and push `docs/` to update an enabled Pages site. This folder publishes
 only the E. coli core views and related downloads, without raw samples or other models.
+
+The explicitly exported positioned SBML example is available as [layout.sbml](e_coli_core/layout.sbml),
+with its [validation report](e_coli_core/sbml_layout_report.json). The CLI does not generate or update SBML by default.

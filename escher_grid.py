@@ -421,6 +421,9 @@ def sampling_data(args, model, digest):
 def run(args):
     from export_escher import create_map, validate_map, write_pathway_preview
     from escher_routing import separate_routes
+    if getattr(args,'export_sbml_layout',False):
+        from export_sbml_layout import validate_export_request
+        validate_export_request(args.model,getattr(args,'sbml_layout_id','sbml2escher_layout'))
     validate_sampling_options(args)
     output = args.output_dir
     output.mkdir(parents=True, exist_ok=True)
@@ -657,6 +660,12 @@ def run(args):
     dump(output / 'escher_map.json', data)
     dump(output / 'report.json', report)
     render(output, nodes, edges, xy, records, selection, model['id'], backbones, program_name, sampling_report, highlights, model)
+    if getattr(args,'export_sbml_layout',False):
+        from export_sbml_layout import export_sbml_layout
+        layout_report=export_sbml_layout(args.model,output,layout_id=getattr(args,'sbml_layout_id','sbml2escher_layout'))
+        report['sbml_layout']=dict(file='layout.sbml',report='sbml_layout_report.json',layout_id=layout_report['layout_id'],
+                                   validation=layout_report['validation'])
+        dump(output/'report.json',report)
     print(json.dumps(dict(output=str(output.resolve()), selection=selection, sampling_passed=sampling_report.get('mixing_checks_passed'),
                           placement=placement, total_orthogonal_edge_length=length), indent=2), flush=True)
     return report
@@ -667,6 +676,8 @@ def parser():
     p.add_argument('--highlight-metabolites', nargs='+', action='extend', default=[], help='Exact source metabolite IDs to highlight blue')
     p.add_argument('--highlight-reactions', nargs='+', action='extend', default=[], help='Exact source reaction IDs to highlight blue')
     p.add_argument('--highlight-file', type=Path, help='JSON with metabolites and reactions ID lists')
+    p.add_argument('--export-sbml-layout', action='store_true', help='Explicitly export layout.sbml with standard SBML Level 3 Layout; disabled by default')
+    p.add_argument('--sbml-layout-id', default='sbml2escher_layout', help='ID for the added SBML Layout (existing layouts are preserved)')
     p.add_argument('--model', type=Path, default=BASE / 'e_coli_core.xml')
     p.add_argument('--output-dir', type=Path, default=BASE / 'e_coli_core_sbml2escher_output')
     p.add_argument('--coverage', type=float, default=100, help='Top percentage of eligible reactions (0..100); --no-sampling uses pathway membership and IDs')
