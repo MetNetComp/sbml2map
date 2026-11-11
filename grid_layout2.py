@@ -190,7 +190,16 @@ def heuristic_layout(n, edges, cols, rows, seed=0, allowed=None, initial_points=
 
 def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, seed=0, progress=print,
                   *, top_left_node=None, boundary_nodes=(), fixed_offsets=None, top_left_margin=0, node_top_margins=None, max_milp_nodes=None,
-                  exclusive_boundary=False, initial_positions=None, edge_weights=None):
+                  exclusive_boundary=False, initial_positions=None, edge_weights=None,
+                  red_edges=(), red_parallel_spacing=1.0, red_obstacle_node_ids=()):
+    from red_route_layout import plan_red_routes,validate_red_spacing
+    validate_red_spacing(red_parallel_spacing)
+    def finish(positions,report):
+        if red_edges:
+            report['red_parallel_layout']=plan_red_routes(positions,red_edges,red_parallel_spacing,
+                red_obstacle_node_ids,time_limit=min(3,max(.05,time_limit)),
+                use_milp='MILP' in report.get('method','') and report.get('selected_solution')!='validated heuristic incumbent')
+        return positions,report
     auto_cols, auto_rows = cols is None, rows is None
     n = len(node_ids)
     if len(set(node_ids)) != n:
@@ -243,7 +252,7 @@ def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, see
     if cols < 1 or rows < 1 or cols * rows < n:
         raise ValueError('Grid must contain at least one distinct point per non-coenzyme node')
     if n == 0:
-        return {}, dict(grid_cols=cols, grid_rows=rows, objective=0, optimality_proven=True, method='Empty graph')
+        return finish({}, dict(grid_cols=cols, grid_rows=rows, objective=0, optimality_proven=True, method='Empty graph'))
     def occupied_boundary_slots():
         fixed = {key: [x, rows - 1 + y] for key, (x, y) in fixed_offsets.items()}
         if top_left_node is not None:
@@ -314,18 +323,18 @@ def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, see
     incumbent = edge_length(points, edges, weights)
     progress(f'Grid: {n} nodes, {len(edges)} edges, {cols} x {rows}, initial length {incumbent}', flush=True)
     if not len(edges):
-        return dict(zip(node_ids, points.tolist())), dict(grid_cols=cols, grid_rows=rows, objective=0,
+        return finish(dict(zip(node_ids, points.tolist())), dict(grid_cols=cols, grid_rows=rows, objective=0,
                                                         optimality_proven=True, method='Edgeless graph',
-                                                        position_constraints=constraint_report())
+                                                        position_constraints=constraint_report()))
     if max_milp_nodes is not None and n > max_milp_nodes:
         bound=float(weights.sum())
-        return dict(zip(node_ids, points.tolist())), dict(grid_cols=cols, grid_rows=rows,
+        return finish(dict(zip(node_ids, points.tolist())), dict(grid_cols=cols, grid_rows=rows,
                     objective=incumbent, objective_metric=metric,
                     method='Constraint-preserving heuristic; global MILP exceeds configured node budget',
                     selected_solution='validated heuristic incumbent', heuristic=heuristic,
                     optimality_proven=incumbent==bound, global_lower_bound=bound,
                     relative_gap=(incumbent-bound)/max(incumbent,1), max_milp_nodes=max_milp_nodes,
-                    position_constraints=constraint_report(), distinct_grid_points_verified=True)
+                    position_constraints=constraint_report(), distinct_grid_points_verified=True))
     # x_i, y_i integer; d_xe, d_ye continuous; four directional binaries per pair.
     e = len(edges)
     pairs = [(i, j) for i in range(n) for j in range(i + 1, n)]
@@ -403,4 +412,4 @@ def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, see
                   optimality_proven=proven, selected_solution=used, heuristic=heuristic,
                   distinct_grid_points_verified=len(set(map(tuple, points))) == n,
                   position_constraints=constraint_report())
-    return dict(zip(node_ids, points.tolist())), report
+    return finish(dict(zip(node_ids, points.tolist())), report)

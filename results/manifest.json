@@ -62,7 +62,17 @@
         "fba_saved_coordinates_and_sampling_preserved": true,
         "escher_segments_horizontal_or_vertical": true,
         "escher_priority_layers_and_connected_offset_routes_verified": true,
-        "sbml_layout_preserves_original_model_and_fba": true
+        "sbml_layout_preserves_original_model_and_fba": true,
+        "parallel_detours_geometry_and_browser_verified": true,
+        "whole_segment_node_avoidance_verified": true,
+        "formate_branch_clears_succinate_with_endpoint_step": true,
+        "only_structural_red_orange_nodes_are_obstacles": true,
+        "glucose_uptake_branch_stays_straight_in_both_viewers": true,
+        "layout_stage_red_parallel_spacing_verified_in_both_viewers": true,
+        "acetate_uses_two_bends_and_gray_pgl_yields": true,
+        "svg_escher_fba_label_controls_and_white_halos_verified": true,
+        "fba_all_reactions_and_connections_verified": true,
+        "fba_square_root_palette_browser_verified": true
       },
       "status": "complete",
       "source_reactions": 95,
@@ -87,16 +97,16 @@
           "sha256": "92da2931394b1adb05c409055f492da6bbe10bea8c02b0e25b89142fabe21c65"
         },
         "escher_map.json": {
-          "bytes": 794394,
-          "sha256": "368ced73c58475fc890acf4bdea82118e15c405f7d925b26a76e7cc0876df0c2"
+          "bytes": 839997,
+          "sha256": "9c64649926d8a26ccb3f97046a47190a8b92cc7afafee67e2f7dc2281b3ee525"
         },
         "escher_map_metadata.json": {
           "bytes": 377480,
           "sha256": "66299642fb71f1cc2efe99bcb5f9d45a06aeb4629df2130749b713935b58abbd"
         },
         "escher_preview.html": {
-          "bytes": 1411142,
-          "sha256": "a2487798a7758c8f9ce8dad2559fbbd442fd5cf144ab47c149b28e7247c22a88"
+          "bytes": 1441525,
+          "sha256": "fce62248388098f3482ef2bfdee17f247b6f416efa0bae01306acc9b324773f2"
         },
         "exchange_connectors.json": {
           "bytes": 3333,
@@ -115,32 +125,32 @@
           "sha256": "9029ff788c311540c11480c7a7ab34cddc9a32234a2222f873632872c5175c3d"
         },
         "index.html": {
-          "bytes": 588002,
-          "sha256": "7e4cbd24cb1a94c3442f6fa5c77714f31112abff711ba75cb01743669167cac1"
+          "bytes": 1380249,
+          "sha256": "9182e3d006ec31bf89e67832afd54fc9ccc3e3a6a53d633a49cc0a27b643bbc5"
         },
         "layout.png": {
-          "bytes": 486146,
-          "sha256": "b16e3f91a848ae3f03e05bc5a0f705bb8b6c0f83c60d06295a6f1be32a336eba"
+          "bytes": 524818,
+          "sha256": "9b99b2779fb48f40ad1ffd792c620d229cb1e08e9e1c1c5dbbd7a16d6a15dbd9"
         },
         "layout.svg": {
-          "bytes": 437043,
-          "sha256": "e811193f5829d4d73643addd27945da75adb095a1ab5ebc223516284f6496391"
+          "bytes": 1216094,
+          "sha256": "bfe7bc90865451a4972fa4114337b3c627f958146e0b8c2df181c826218f29dd"
         },
         "major_backbones.json": {
-          "bytes": 19735,
-          "sha256": "317ff605f7cf103b9c87582e834e911918067df32ee1c23776ff6163f77514ef"
+          "bytes": 44580,
+          "sha256": "326e0f2965f4a8e9326da18e6d56d025c38ee88d2b48b4ffec96a8802953f661"
         },
         "metabolite_classification.json": {
           "bytes": 13105,
           "sha256": "1c454fac51bf90a6ac632537db3802bfef701506ab01ba11d5b516ef35570a63"
         },
         "orange_routes.png": {
-          "bytes": 319069,
-          "sha256": "fe4ef9be279b89ca1e11f30d7b6f320f87e39767b134b2dea2b39e2f2071b8fe"
+          "bytes": 352216,
+          "sha256": "cd37135995cae55939d4ada9fc1414e2207904b5f26c2f8844ddacc773c9d02e"
         },
         "orange_routes.svg": {
-          "bytes": 258318,
-          "sha256": "05e90aca15da48175710f75727e8ba6a269a8fec736add85d7dbf67fce209aa6"
+          "bytes": 1021819,
+          "sha256": "fb07fed57c3391211595a2c06504a897cb075c47187dbb2c29feb386dbb17265"
         },
         "pathway_extraction.json": {
           "bytes": 202310,
@@ -155,8 +165,8 @@
           "sha256": "7e1e18a9d69d2f6bcccf3e15811c173b5831f9d0d840ce983ee2eae181c207cd"
         },
         "report.json": {
-          "bytes": 38536,
-          "sha256": "ea834b90d93cca59775273e30fb5eaeb0c2a6528f62cc8113eedb511fe504dcc"
+          "bytes": 105040,
+          "sha256": "1296d8809d3ebfebd4f5cadf4f0e3131e2b6e8001afaaa8d9bfe1e4025f1ceb9"
         },
         "run.log": {
           "bytes": 7810,
@@ -171,24 +181,24 @@
           "sha256": "332d5e296e1f41ecc314d09d4a15bd0a4ef8d5f80a17fcf91354be6f37324115"
         },
         "escher_fba.html": {
-          "bytes": 1339970,
-          "sha256": "41e1379deb5d95b2441fdeb95c0e605cc7e9265d9a4bc906e92a6818689afb70"
+          "bytes": 1187797,
+          "sha256": "fd5623b61dc96398d214c618c5d724834669fbeb6a80a573da418053b4f63c3c"
         },
         "fba_report.json": {
-          "bytes": 2555,
-          "sha256": "7f3cc314297f5fb14afc198d8b864d0599b026b27715f8ca07aab0ff5f034fcd"
+          "bytes": 2754,
+          "sha256": "b133de796cd0d8e5b73d5b95c6cb7d5c576cac5238350708a5770b083053f677"
         },
         "fba_fluxes.csv": {
-          "bytes": 3799,
-          "sha256": "99e2f06447ab40372bcc664b22f9605d90efd8becaf24ac131f494dcb77b9c8d"
+          "bytes": 4022,
+          "sha256": "7f74f71e0efe7c56f5eb6058eb86f9ae75d47db2f28ce72689788493f2cd439d"
         },
         "fba_fluxes.json": {
           "bytes": 2266,
           "sha256": "bfaba3e7ce208043acae9a1221f607848e3b89d07821726fa18688e1b9413715"
         },
         "escher_fluxes.json": {
-          "bytes": 1742,
-          "sha256": "e8bea944f0e1a72a385cc5445186647fd7121e95d54d7f612ee6feb5867e96cb"
+          "bytes": 2246,
+          "sha256": "6e1d47a578bbebc2c05eb81c29bfbce04f7e3a56b3c2bef0dd077ac7a43a3713"
         },
         "layout.sbml": {
           "bytes": 1187037,
@@ -197,6 +207,14 @@
         "sbml_layout_report.json": {
           "bytes": 13855,
           "sha256": "a3a86098e099f60f0adbf8c3302c206106b3ce82655ad5dc82c2b03d2c058cd8"
+        },
+        "parallel_routing.json": {
+          "bytes": 20276,
+          "sha256": "fb5544d8457fe985c7d3cbc0d534c54aad15bcb086f8a382e6e81a46443c20d2"
+        },
+        "escher_fba_map.json": {
+          "bytes": 383807,
+          "sha256": "23cfc97f0e8ff00de73ef820c935d783d70e136a5735a6249f694be4327edbfb"
         }
       },
       "program_name": "sbml2escher",
@@ -204,18 +222,26 @@
       "raw_samples_file": "e_coli_core/flux_samples.npz",
       "recalculated_at_utc": "2026-11-10T08:44:57.454660+00:00",
       "source_files_sha256": {
-        "sbml2escher.py": "ee3dcbd61fe1c81d7f4bd1e89e83f869782f91bcc06de609055713123188f209",
-        "escher_grid.py": "a122789077b8372478dc630b194ef36a4f8bd72f4df565889db19828d4fc0142",
-        "grid_layout2.py": "a289e525c6330e04a29e554da7444ef0e8b11f0e1717f24ab3d8b68da26d5787",
-        "bacterial_pathways.py": "0d3a8f496612eff022c6544cb17852fc0af29b5345c7300e02585ebf721c221d",
-        "flux_sampling2.py": "5d783ad99e096ed0b1402b2ece715f7d77de2c7fc3f930ec44ac701fe901516d",
+        "sbml2escher.py": "2d17e97c6556986dbab2fe7c0bb527d7d41d776623ac3498b5dd10ab7e88d812",
+        "escher_grid.py": "8a91494e874d3a39c36000dc1838a05b2ce07ddd1de17123e99bc95bf11cd676",
+        "grid_layout2.py": "3ec3e68bd26a8d804c69f1c8bb215b4ad244920a158f942fcb249fe40e6e7af9",
+        "bacterial_pathways.py": "64ac1c4a0919e1fe6680b44681f74c462fd5145c3beae14253fe8d81563165f1",
+        "flux_sampling2.py": "b49d4afbd4e523c37b0dabec2884948f17d19f0809ebba27b47a41a1b1373b4c",
         "data/bacteria/central_reference.json": "f924f3fc28bbeef00e6ee8593acbc9e9c76f4e764333aee3dc460bc4e8a64380",
-        "highlighting.py": "0eea4056b2ced0fd048c547de2b1a823065e50ba06f1d56ecefe4cf02caef58b",
-        "highlight_controls.js": "7df1fcf593b3a41b61511c7ed95875280dd7dc5d2446371ef114b582290f2d4f",
-        "run_fba_escher.py": "a3cbd85bca91ec06d91c145071f7335bd977865c828a56e837dd24189c5b68e1",
-        "export_escher.py": "c0ded189798b195790ef6f7b4bb0f913810de0edda8d9af29f4a17a8a58d711b",
-        "escher_routing.py": "38bae640581ac5fe059e211b29f3131510bcb6e2f7b6cd6087972d2a47492537",
-        "escher_layers.js": "ec20215491e3b3c02cf03f0e61113e76035161a643642f03a89260254d32058b"
+        "highlighting.py": "14e92fd157d99f570600101ab3abe60a726c9f5f3c31cf3585dcd6cc1e5c1893",
+        "highlight_controls.js": "927a41cca49c7c659491ec21ebd4248f4abe4d8dee0a182ef4175185734c785d",
+        "run_fba_escher.py": "a428fe7f72d92defa76efe4d50af76bc37b808eac2b47b34fd6bbf15f44da540",
+        "export_escher.py": "c7970bceaf9fa62b48cc26ec2c058a4133c7426954accbbcc174b90f9d95a7de",
+        "escher_routing.py": "408a3f2611f4df0d7835d6b02b75010628bc49db70390dd539b2a3a6e8464476",
+        "escher_layers.js": "ee9ff0b89c485cdcc17ddda2e3c51006209df51cc738e8d40b01569b22258774",
+        "parallel_routing.py": "aaa798492c0cdacd005cc8ece78e478b6f91d7ded5908c567a52c530531b8636",
+        "sbml2map.py": "f2c4f002bfe015c522f6710e4ea31b54646a5c15ba4500b730cd635d41d5fbe6",
+        "red_route_layout.py": "e45676712ad26edc4b9cb413451e88f527581aefd2ebf0a15d5713eb14a96e29",
+        "routing_simplification.py": "ab887da0513fb5293710a30be74766723254ec928dabf8200ff6af75f59400c6",
+        "grid_labels.js": "dbc01beaa5acc0c1b3d8d415703b5311c32d931d90f96a276f47e8d6682923c1",
+        "escher_labels.js": "bf38b656fd8d13809ee6762772a898bc83dbf3ea475ff2d345044a446928017a",
+        "full_fba_layout.py": "7316ba95b9342aacb16c952b6e9f672974291887fb6dfc63b35b10532b15c961",
+        "prepare_github_pages.py": "b457b53ac5fbc0b54712d04b9490d50bac2861a15af68592829a7bcd31287c69"
       },
       "tca_orientation": "clockwise",
       "fba": {
@@ -235,18 +261,18 @@
         "pathway_highlighting": false
       },
       "escher_routing": {
-        "schema_valid": true,
+        "schema_valid": null,
         "metadata_embedded": true,
         "reaction_ids_preserved": true,
         "stoichiometry_preserved": true,
         "coordinate_transform_verified": true,
         "segment_endpoints_verified": true,
-        "nodes": 629,
+        "nodes": 602,
         "source_nodes": 206,
-        "routing_nodes": 423,
+        "routing_nodes": 396,
         "orthogonal_segments_verified": true,
         "reactions": 76,
-        "segments": 660,
+        "segments": 633,
         "primary_metabolites": 46,
         "secondary_metabolites": 84,
         "currency_copy_counts": {
@@ -265,11 +291,506 @@
           "FORt"
         ],
         "blocked_reactions": [],
-        "missing_gene_rule_count": 0
+        "missing_gene_rule_count": 0,
+        "schema_validation": "not rerun; geometry and browser verified",
+        "browser_validation": "Firefox: loaded without errors; segments orthogonal; filters available"
       },
       "escher_initial_flux_data_loaded": false,
       "escher_data_overlay_disables_pathway_colors": true,
       "escher_overlap_routing": {
+        "routing_preference": "important_bends_then_length_gray_yields",
+        "important_simplification": {
+          "policy": "important_bends_then_length_gray_yields",
+          "changed_paths": 11,
+          "removed_bends": 16,
+          "details": [
+            {
+              "reaction_id": "ACALD",
+              "bends_before": 1,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "ACALD",
+              "bends_before": 0,
+              "bends_after": 3
+            },
+            {
+              "reaction_id": "ACALDt",
+              "bends_before": 1,
+              "bends_after": 1
+            },
+            {
+              "reaction_id": "ACt2r",
+              "bends_before": 1,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "D_LACt2",
+              "bends_before": 4,
+              "bends_after": 0
+            },
+            {
+              "reaction_id": "ETOHt2r",
+              "bends_before": 4,
+              "bends_after": 0
+            },
+            {
+              "reaction_id": "EX_glu__L_e",
+              "bends_before": 1,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "EX_lac__D_e",
+              "bends_before": 8,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "PFL",
+              "bends_before": 4,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "PTAr",
+              "bends_before": 8,
+              "bends_after": 3
+            },
+            {
+              "reaction_id": "SUCCt2_2",
+              "bends_before": 3,
+              "bends_after": 2
+            }
+          ],
+          "unresolved": [
+            {
+              "reaction_id": "LDH_D",
+              "reason": "No simpler feasible important route"
+            }
+          ]
+        },
+        "gray_yield": {
+          "changed_paths": 10,
+          "details": [
+            {
+              "reaction_id": "FBP",
+              "bends_before": 5,
+              "bends_after": 1
+            },
+            {
+              "reaction_id": "FORt2",
+              "bends_before": 3,
+              "bends_after": 1
+            },
+            {
+              "reaction_id": "GLUDy",
+              "bends_before": 3,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "GLUN",
+              "bends_before": 5,
+              "bends_after": 1
+            },
+            {
+              "reaction_id": "MALS",
+              "bends_before": 5,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "PGL",
+              "bends_before": 3,
+              "bends_after": 1
+            },
+            {
+              "reaction_id": "PPCK",
+              "bends_before": 3,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "PPS",
+              "bends_before": 5,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "TKT1",
+              "bends_before": 3,
+              "bends_after": 2
+            },
+            {
+              "reaction_id": "TKT1",
+              "bends_before": 5,
+              "bends_after": 2
+            }
+          ],
+          "unresolved": [
+            {
+              "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "FRD7",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "FRD7",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "GLUSy",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "GND",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "GND",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "GND",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "ICL",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "MALS",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "ME1",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "ME2",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "PFL",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "PPC",
+              "reason": "No free gray route found"
+            },
+            {
+              "reaction_id": "PPS",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "SUCCt3",
+              "reason": "No free gray route found"
+            },
+            {
+              "reaction_id": "TKT1",
+              "reason": "No free gray route found"
+            },
+            {
+              "reaction_id": "TKT2",
+              "reason": "Shared gray trunk retained"
+            },
+            {
+              "reaction_id": "TKT2",
+              "reason": "Shared gray trunk retained"
+            }
+          ]
+        },
+        "red_layout_signature": "35f6293f0bbba6043e7472fd",
+        "red_parallel_spacing": {
+          "requested_spacing_grid": 1,
+          "min_parallel_length_grid": 1,
+          "minimum_parallel_gap_grid": 1.0,
+          "parallel_pairs": 62,
+          "violations": [],
+          "verified": true
+        },
+        "trunk_grouping": "positive_length_overlap",
+        "node_obstacle_policy": "red_orange_structural_nodes",
+        "obstacle_node_ids": [
+          "met:13dpg_c",
+          "met:2pg_c",
+          "met:3pg_c",
+          "met:ac_c",
+          "met:ac_e",
+          "met:acald_c",
+          "met:acald_e",
+          "met:accoa_c",
+          "met:acon_C_c",
+          "met:actp_c",
+          "met:akg_c",
+          "met:akg_e",
+          "met:cit_c",
+          "met:dhap_c",
+          "met:etoh_c",
+          "met:etoh_e",
+          "met:f6p_c",
+          "met:fdp_c",
+          "met:for_c",
+          "met:for_e",
+          "met:fum_c",
+          "met:g3p_c",
+          "met:g6p_c",
+          "met:glc__D_e",
+          "met:glu__L_c",
+          "met:glu__L_e",
+          "met:icit_c",
+          "met:lac__D_c",
+          "met:lac__D_e",
+          "met:mal__L_c",
+          "met:oaa_c",
+          "met:pep_c",
+          "met:pyr_c",
+          "met:pyr_e",
+          "met:succ_c",
+          "met:succ_e",
+          "met:succoa_c",
+          "rxn:ACALD",
+          "rxn:ACALDt",
+          "rxn:ACKr",
+          "rxn:ACONTa",
+          "rxn:ACONTb",
+          "rxn:ACt2r",
+          "rxn:AKGDH",
+          "rxn:AKGt2r",
+          "rxn:ALCD2x",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "rxn:CS",
+          "rxn:D_LACt2",
+          "rxn:ENO",
+          "rxn:ETOHt2r",
+          "rxn:EX_ac_e",
+          "rxn:EX_acald_e",
+          "rxn:EX_akg_e",
+          "rxn:EX_etoh_e",
+          "rxn:EX_for_e",
+          "rxn:EX_glc__D_e",
+          "rxn:EX_glu__L_e",
+          "rxn:EX_lac__D_e",
+          "rxn:EX_pyr_e",
+          "rxn:EX_succ_e",
+          "rxn:FBA",
+          "rxn:FORt",
+          "rxn:FUM",
+          "rxn:GAPD",
+          "rxn:GLCpts",
+          "rxn:GLUt2r",
+          "rxn:ICDHyr",
+          "rxn:LDH_D",
+          "rxn:MDH",
+          "rxn:PDH",
+          "rxn:PFK",
+          "rxn:PFL",
+          "rxn:PGI",
+          "rxn:PGK",
+          "rxn:PGM",
+          "rxn:PTAr",
+          "rxn:PYK",
+          "rxn:PYRt2",
+          "rxn:SUCCt2_2",
+          "rxn:SUCDi",
+          "rxn:SUCOAS",
+          "rxn:TPI"
+        ],
+        "node_detours": {
+          "trunk_grouping": "positive_length_overlap",
+          "route_offset_grid": 0.3,
+          "enabled": true,
+          "shifted_segments": 3,
+          "unresolved": [
+            {
+              "reaction_id": "ACALD",
+              "axis": 0,
+              "level": 3320.0,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  620.0,
+                  3320.0
+                ]
+              ]
+            },
+            {
+              "reaction_id": "ACALD",
+              "axis": 1,
+              "level": 620.0,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  620.0,
+                  3320.0
+                ],
+                [
+                  620.0,
+                  3500.0
+                ]
+              ]
+            },
+            {
+              "reaction_id": "ACALDt",
+              "axis": 0,
+              "level": 3140.0,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  1340.0,
+                  3140.0
+                ],
+                [
+                  1520.0,
+                  3140.0
+                ]
+              ]
+            },
+            {
+              "reaction_id": "ACALDt",
+              "axis": 1,
+              "level": 1340.0,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  1340.0,
+                  3140.0
+                ]
+              ]
+            },
+            {
+              "reaction_id": "EX_glu__L_e",
+              "axis": 0,
+              "level": 3140.0,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  80.0,
+                  3140.0
+                ],
+                [
+                  260.0,
+                  3140.0
+                ]
+              ]
+            },
+            {
+              "reaction_id": "EX_glu__L_e",
+              "axis": 1,
+              "level": 80.0,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  80.0,
+                  3140.0
+                ]
+              ]
+            },
+            {
+              "reaction_id": "LDH_D",
+              "axis": 0,
+              "level": 3690.8,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  260.0,
+                  3680.0
+                ]
+              ]
+            },
+            {
+              "reaction_id": "LDH_D",
+              "axis": 1,
+              "level": 270.8,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  260.0,
+                  3680.0
+                ]
+              ]
+            },
+            {
+              "reaction_id": "SUCCt2_2",
+              "axis": 0,
+              "level": 4400.0,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  1160.0,
+                  4400.0
+                ]
+              ]
+            },
+            {
+              "reaction_id": "SUCCt2_2",
+              "axis": 1,
+              "level": 1170.8,
+              "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+              "nodes": [
+                [
+                  1160.0,
+                  4400.0
+                ]
+              ]
+            }
+          ],
+          "shape": "rectangle with optional endpoint steps",
+          "endpoint_step_grid": 0.15,
+          "endpoint_step_fallback_segments": 1,
+          "detours": [
+            {
+              "reaction_id": "EX_ac_e",
+              "axis": 0,
+              "offset_grid": 0.3,
+              "inset_start": false,
+              "inset_end": false,
+              "segments": 1,
+              "existing_endpoint_stem_overlaps": 0
+            },
+            {
+              "reaction_id": "EX_for_e",
+              "axis": 1,
+              "offset_grid": -0.3,
+              "inset_start": false,
+              "inset_end": true,
+              "segments": 1,
+              "existing_endpoint_stem_overlaps": 0
+            },
+            {
+              "reaction_id": "PFL",
+              "axis": 0,
+              "offset_grid": 0.3,
+              "inset_start": false,
+              "inset_end": false,
+              "segments": 1,
+              "existing_endpoint_stem_overlaps": 0
+            }
+          ],
+          "fixed_endpoints": true,
+          "shared_same_reaction_trunks": true,
+          "backbone_shifted_segments": 0,
+          "max_offset_grid": 0.3,
+          "backbone_max_offset_grid": 0
+        },
+        "parallel_detours": {
+          "trunk_grouping": "positive_length_overlap",
+          "clearance_grid": 0.3,
+          "min_parallel_length_grid": 1.0,
+          "shifted_segments": 2,
+          "unresolved": [],
+          "max_offset_grid": 0.24000000000000024,
+          "fixed_endpoints": true,
+          "shared_same_reaction_trunks": true
+        },
         "enabled": true,
         "base_map_id": "8470a9ede15412b70d94a151",
         "lane_spacing": 10.799999999999999,
@@ -286,6 +807,7 @@
           "orange": 10.799999999999999,
           "gray": 37.8
         },
+        "primary_backbone_nodes_fixed": true,
         "primary_backbone_max_offset": 0.0
       },
       "sbml_layout": {
@@ -311,6 +833,42 @@
           "after": 0.8739215069684304,
           "unchanged": true
         }
+      },
+      "route_offset_grid": 0.3,
+      "red_parallel_layout": {
+        "requested_spacing_grid": 1,
+        "min_parallel_length_grid": 1,
+        "minimum_parallel_gap_grid": 1.0,
+        "parallel_pairs": 62,
+        "violations": [],
+        "verified": true
+      },
+      "fba_complete_map": {
+        "reactions": 95,
+        "connections": 360,
+        "existing_nodes_preserved": 206,
+        "added_nodes": 132,
+        "zero_flux_reactions": 47,
+        "schema_valid": true,
+        "browser_validation": "Firefox: 95 reactions, all 625 line segments visible; 47 zero-flux reactions retained in gray; label toggles preserve all branches; no JavaScript errors."
+      },
+      "fba_color_display": {
+        "palette": [
+          "#2166ac",
+          "#756bb1",
+          "#c05a88",
+          "#d73027"
+        ],
+        "scaling": "square root of absolute flux, normalized over active range; 64 interpolation intervals",
+        "active_width_range": [
+          3,
+          8
+        ],
+        "zero_color": "#b8b8b8",
+        "zero_width": 1,
+        "numerical_fluxes_unchanged": true,
+        "visible_segments": 625,
+        "tests_passed": 20
       }
     },
     {

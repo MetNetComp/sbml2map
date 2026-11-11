@@ -3,8 +3,8 @@
 (()=>{
 const NS='http://www.w3.org/2000/svg';
 let pending=false,last='';
-const props=['stroke','fill','stroke-width','stroke-opacity','fill-opacity','opacity','stroke-dasharray','stroke-linecap','stroke-linejoin','display','visibility','font-family','font-size','font-weight','text-anchor'];
-function sync(){
+const props=['stroke','fill','stroke-width','stroke-opacity','fill-opacity','opacity','stroke-dasharray','stroke-linecap','stroke-linejoin','display','visibility','font-family','font-size','font-weight','text-anchor','paint-order','vector-effect'];
+function sync(force=false){
  const map=window.builder?.map,root=document.getElementById('reactions');
  if(!map||!root)return;
  const fixed=document.getElementById('major-pathway-colors');
@@ -19,7 +19,7 @@ function sync(){
  }
  const labels=[...root.querySelectorAll('.reaction-label')].filter(label=>label.getClientRects().length);
  const key=items.map(x=>x.key).join(';')+'::'+labels.map(label=>[label.closest('.reaction').id,label.textContent,label.getCTM()?.toString()].join('|')).join(';');
- if(key===last && (document.getElementById('escher-priority-layer') || !items.length))return;
+ if(!force && key===last && (document.getElementById('escher-priority-layer') || !items.length))return;
  last=key;
  document.getElementById('escher-priority-layer')?.remove();
  if(!items.length)return;

@@ -3,12 +3,15 @@
 const host=document.getElementById('map');
 const options=mapData[0].metadata.label_display;
 const style=document.createElement('style');
-style.textContent='[data-escher-label-hidden]{visibility:hidden !important;}';
+style.textContent=`[data-escher-label-hidden],[data-escher-label-hidden] *{visibility:hidden!important;}
+#map .reaction-label,#map .reaction-label text,#map .node-label,#map .node-label text{
+ paint-order:stroke fill;stroke:#fff!important;stroke-width:3px;stroke-linejoin:round;vector-effect:non-scaling-stroke;
+}`;
 document.head.append(style);
 let pending=false;
 const controls=[['show-metabolite-labels','show_metabolites'],['show-reaction-labels','show_reactions'],['allow-label-overlap','allow_overlap']];
 for(const [id,key] of controls){
- const input=document.getElementById(id);input.checked=options[key];
+ const input=document.getElementById(id);if(!input)continue;input.checked=options[key];
  input.addEventListener('change',()=>{options[key]=input.checked;schedule();});
 }
 function schedule(){if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;sync();});}}
@@ -55,11 +58,17 @@ function sync(){
  // The priority layer contains non-interactive copies of reaction labels.
  for(const clone of host.querySelectorAll('#escher-priority-layer [data-source-label]')){
   const source=byKey.get(clone.dataset.sourceLabel);
-  clone.removeAttribute('data-escher-label-hidden');
-  clone.style.visibility=source?getComputedStyle(source).visibility:'hidden';
+  const hidden=!source||getComputedStyle(source).visibility==='hidden'||getComputedStyle(source).display==='none';
+  clone.toggleAttribute('data-escher-label-hidden',hidden);
+  const originals=source?[source,...source.querySelectorAll('*')]:[];
+  [clone,...clone.querySelectorAll('*')].forEach((el,i)=>{
+   const visibility=hidden?'hidden':getComputedStyle(originals[i]||source).visibility;
+   if(el.style.visibility!==visibility)el.style.visibility=visibility;
+  });
  }
 }
 window.syncEscherLabels=sync;
+window.syncEscherLayers?.(true);
 const observer=new MutationObserver(records=>{
  if(records.some(r=>!r.target.closest?.('#escher-priority-layer')))schedule();
 });

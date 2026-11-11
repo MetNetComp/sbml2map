@@ -44,16 +44,41 @@ class DisplayModeTests(unittest.TestCase):
             self.assertNotIn('reaction_data',builder_options(page))
             self.assertIn("callback_manager.set('update_data.pathway_colors'",page)
 
-    def test_fba_uses_flux_only_blue_scale_without_pathway_css(self):
+    def test_fba_uses_flux_only_blue_to_red_scale_without_pathway_css(self):
         with tempfile.TemporaryDirectory() as directory:
             path=Path(directory)/'escher_fba.html'
-            write_preview(path,self.fixture(),{'in':5.0,'out':5.0},{'objective_value':5.0})
+            write_preview(path,self.fixture(),{'in':-5.0,'out':5.0},{'objective_value':5.0})
             page=path.read_text();options=builder_options(page)
-            self.assertEqual(options['reaction_data'],{'in':5.0,'out':5.0})
+            self.assertEqual(options['reaction_data'],{'in':-5.0,'out':5.0})
             colors=[x['color'] for x in options['reaction_scale']]
-            self.assertEqual(colors,['#b8b8b8','#deebf7','#9ecae1','#4292c6','#08519c'])
+            self.assertEqual(colors[0:2],['#b8b8b8','#2166ac'])
+            self.assertEqual(colors[-1],'#d73027')
+            self.assertEqual(max(x['size'] for x in options['reaction_scale']),8)
+            self.assertEqual(len(colors),66)
             self.assertNotIn('<style id="major-pathway-colors">',page)
             self.assertIn('Fixed pathway colors are not applied.',page)
+            self.assertIn('abs', options['reaction_styles'])
+            self.assertIn('id="fba-color-legend"', page)
+            self.assertIn('from blue through violet and magenta to red', page)
+
+    def test_square_root_mapping_keeps_signed_data_and_bounds(self):
+        from export_escher import fba_flux_scale, fba_flux_style
+        scale=fba_flux_scale(100, .01)
+        self.assertEqual(scale[0]['size'],1)
+        self.assertEqual(scale[1]['size'],3)
+        self.assertEqual(scale[-1]['size'],8)
+        self.assertTrue(all(a['value']<b['value'] for a,b in zip(scale,scale[1:])))
+        self.assertTrue(all(a['size']<=b['size'] for a,b in zip(scale,scale[1:])))
+        # A quarter of maximum receives almost half of the active width range.
+        self.assertAlmostEqual(fba_flux_style(25,100,.01)['size'],3+5*(.5-.01)/.99)
+        self.assertGreater(fba_flux_style(25,100,.01)['size'],3+5*.25)
+        self.assertEqual(fba_flux_style(-25,100,.01)['color'],fba_flux_style(25,100,.01)['color'])
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'zero.html'
+            write_preview(path,self.fixture(),{'in':0,'out':0},{'objective_value':0})
+            options=builder_options(path.read_text())
+            self.assertEqual(options['reaction_data'],{'in':0,'out':0})
+            self.assertEqual(options['reaction_scale'][0]['color'],'#b8b8b8')
 
     def test_saved_e_coli_views_have_distinct_initial_modes(self):
         root=Path(__file__).resolve().parent;folder=root/'results/e_coli_core'

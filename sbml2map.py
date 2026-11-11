@@ -106,6 +106,8 @@ def parser():
 
 
 def run(args):
+    engine.validate_route_offset(getattr(args,'route_offset',.3))
+    engine.validate_red_spacing(getattr(args,'red_parallel_spacing',1.0))
     if getattr(args, 'require_sampling', False) and args.discover_only:
         raise ValueError('--require-sampling cannot be combined with --discover-only')
     if getattr(args,'export_sbml_layout',False) and args.discover_only:

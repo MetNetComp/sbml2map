@@ -12,10 +12,10 @@ import numpy as np
 import scipy
 from scipy.optimize import linprog
 
-from export_escher import read_layout, write_preview, validate_map
+from export_escher import read_layout, write_preview, validate_map, create_map
 from reaction_network import build_network, validate_network
 from highlighting import inject_controls, grid_elements
-from escher_routing import separate_routes
+from full_fba_layout import complete_layout
 from model_input import load_model
 from stoichiometric_network import stoichiometric_matrix
 
@@ -121,17 +121,21 @@ def run(model_path, directory):
     model = load_model(model_path)
     layout_model, nodes, edges, xy = read_fba_layout(directory, model)
     data = json.loads((directory / 'escher_map.json').read_text())
-    if data[0].get('metadata',{}).get('overlap_routing',{}).get('enabled'):
-        separate_routes(data,enabled=False)
-    map_validation = validate_map(data, layout_model, nodes, xy)
+    validate_map(data, layout_model, nodes, xy)
+    transform = data[0]['metadata']['coordinate_transform']
+    label_options = data[0]['metadata'].get('label_display', {})
+    nodes, edges, xy, layout_validation = complete_layout(model, nodes, xy)
+    data = create_map(model, nodes, edges, xy, scale=transform['scale'],
+                      padding=transform['padding'], layout_method='complete FBA layout')
+    data[0]['metadata']['label_display'] = {
+        key: value for key, value in label_options.items() if isinstance(value, bool)}
+    map_validation = validate_map(data, model, nodes, xy)
     mapped = {r['bigg_id']: r for r in data[1]['reactions'].values()}
-    if len(mapped) != len(layout_model['reactions']) or set(mapped) != {r['id'] for r in layout_model['reactions']}:
-        raise ValueError('Map reaction IDs do not match the saved display model')
     # Balance and optimize the full source model, including invisible participants.
     objective, sense = read_objective(model_path, {r['id'] for r in model['reactions']})
     fluxes, report = solve_fba(model, objective, sense)
     display = {}
-    for reaction in layout_model['reactions']:
+    for reaction in model['reactions']:
         rid = reaction['id']
         multiplier = data[0]['metadata']['reactions'][rid]['coefficient_multiplier']
         expected = -1 if reaction['upper_bound'] <= 0 and reaction['lower_bound'] < 0 else 1
@@ -143,7 +147,10 @@ def run(model_path, directory):
     omitted = sorted(set(fluxes)-set(display))
     report.update(source_sbml=str(model_path), source_sha256=hashlib.sha256(model_path.read_bytes()).hexdigest(),
                   map_id=data[0]['map_id'], display_zero_tolerance=TOLERANCE,
-                  source_model_used_for_fba=True, coordinates_changed=False, pathway_highlighting=False,
+                  source_model_used_for_fba=True,
+                  coordinates_changed=layout_validation['existing_coordinates_changed'],
+                  complete_layout_validation=layout_validation, all_participants_drawn=True,
+                  displayed_connections=len(edges), pathway_highlighting=False,
                   displayed_reactions=len(display), map_validation=map_validation,
                   undisplayed_reactions=omitted,
                   undisplayed_active_reactions={rid:fluxes[rid] for rid in omitted if abs(fluxes[rid])>TOLERANCE},
@@ -157,13 +164,17 @@ def run(model_path, directory):
             writer.writerow([r['id'], fluxes[r['id']], display.get(r['id'], ''), r['lower_bound'], r['upper_bound']])
     for name, content in [('fba_fluxes.json', fluxes), ('escher_fluxes.json', display), ('fba_report.json', report)]:
         (directory / name).write_text(json.dumps(content, indent=2, ensure_ascii=False, allow_nan=False) + '\n')
-    data[0]['map_name'] = model['id'] + ': FBA on saved layout'
-    data[0]['map_description'] = 'One optimal FBA solution on the original saved coordinates. Full source model used for optimization.'
+    data[0]['map_name'] = model['id'] + ': FBA with all reactions and connections'
+    data[0]['map_description'] = 'All source reactions and participants, including zero flux. Existing pathway coordinates retained.'
     data[0]['metadata']['fba'] = report
+    (directory / 'escher_fba_map.json').write_text(json.dumps(data, indent=2, ensure_ascii=False, allow_nan=False) + '\n')
     write_preview(directory / 'escher_fba.html', data, display, report)
     page = (directory / 'escher_fba.html').read_text()
-    notice = (f'<p>FBA uses all {len(fluxes)} source reactions. This saved map displays {len(display)} reactions. '
-              f'{len(report["undisplayed_active_reactions"])} active reactions are outside the saved map. '
+    connections = sum(len(r['metabolites']) for r in model['reactions'])
+    notice = (f'<p>FBA uses all {len(fluxes)} source reactions. '
+              f'Displaying {len(display)}/{len(fluxes)} reactions and {len(edges)}/{connections} connections, including zero flux. '
+              'Water, protons and cofactors are included as reaction-local copies. '
+              '<a href="escher_fba_map.json">Complete FBA map (JSON)</a> · '
               '<a href="fba_fluxes.csv">All fluxes (CSV)</a> · <a href="fba_fluxes.json">All fluxes (JSON)</a> · '
               '<a href="escher_fluxes.json">Escher reaction data</a> · <a href="fba_report.json">FBA report</a> · '
               '<a href="index.html">Original drawing</a></p>')

@@ -1057,5 +1057,1320 @@
         "verified": true
       }
     ]
+  },
+  "red_parallel_layout": {
+    "enabled": true,
+    "requested_spacing_grid": 1,
+    "min_parallel_length_grid": 1,
+    "stage": "grid layout routing-channel allocation",
+    "obstacle_node_ids": [
+      "met:13dpg_c",
+      "met:2pg_c",
+      "met:3pg_c",
+      "met:ac_c",
+      "met:ac_e",
+      "met:acald_c",
+      "met:acald_e",
+      "met:accoa_c",
+      "met:acon_C_c",
+      "met:actp_c",
+      "met:akg_c",
+      "met:akg_e",
+      "met:cit_c",
+      "met:dhap_c",
+      "met:etoh_c",
+      "met:etoh_e",
+      "met:f6p_c",
+      "met:fdp_c",
+      "met:for_c",
+      "met:for_e",
+      "met:fum_c",
+      "met:g3p_c",
+      "met:g6p_c",
+      "met:glc__D_e",
+      "met:glu__L_c",
+      "met:glu__L_e",
+      "met:icit_c",
+      "met:lac__D_c",
+      "met:lac__D_e",
+      "met:mal__L_c",
+      "met:oaa_c",
+      "met:pep_c",
+      "met:pyr_c",
+      "met:pyr_e",
+      "met:succ_c",
+      "met:succ_e",
+      "met:succoa_c",
+      "rxn:ACALD",
+      "rxn:ACALDt",
+      "rxn:ACKr",
+      "rxn:ACONTa",
+      "rxn:ACONTb",
+      "rxn:ACt2r",
+      "rxn:AKGDH",
+      "rxn:AKGt2r",
+      "rxn:ALCD2x",
+      "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "rxn:CS",
+      "rxn:D_LACt2",
+      "rxn:ENO",
+      "rxn:ETOHt2r",
+      "rxn:EX_ac_e",
+      "rxn:EX_acald_e",
+      "rxn:EX_akg_e",
+      "rxn:EX_etoh_e",
+      "rxn:EX_for_e",
+      "rxn:EX_glc__D_e",
+      "rxn:EX_glu__L_e",
+      "rxn:EX_lac__D_e",
+      "rxn:EX_pyr_e",
+      "rxn:EX_succ_e",
+      "rxn:FBA",
+      "rxn:FORt",
+      "rxn:FUM",
+      "rxn:GAPD",
+      "rxn:GLCpts",
+      "rxn:GLUt2r",
+      "rxn:ICDHyr",
+      "rxn:LDH_D",
+      "rxn:MDH",
+      "rxn:PDH",
+      "rxn:PFK",
+      "rxn:PFL",
+      "rxn:PGI",
+      "rxn:PGK",
+      "rxn:PGM",
+      "rxn:PTAr",
+      "rxn:PYK",
+      "rxn:PYRt2",
+      "rxn:SUCCt2_2",
+      "rxn:SUCDi",
+      "rxn:SUCOAS",
+      "rxn:TPI"
+    ],
+    "routes": [
+      {
+        "rid": "ACONTa",
+        "mid": "acon_C_c",
+        "source": "rxn:ACONTa",
+        "target": "met:acon_C_c",
+        "points": [
+          [
+            7.0,
+            6.0
+          ],
+          [
+            8.0,
+            6.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "ACONTa",
+        "mid": "cit_c",
+        "source": "met:cit_c",
+        "target": "rxn:ACONTa",
+        "points": [
+          [
+            6.0,
+            6.0
+          ],
+          [
+            7.0,
+            6.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "ACONTb",
+        "mid": "acon_C_c",
+        "source": "met:acon_C_c",
+        "target": "rxn:ACONTb",
+        "points": [
+          [
+            8.0,
+            6.0
+          ],
+          [
+            9.0,
+            6.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "ACONTb",
+        "mid": "icit_c",
+        "source": "rxn:ACONTb",
+        "target": "met:icit_c",
+        "points": [
+          [
+            9.0,
+            6.0
+          ],
+          [
+            9.0,
+            5.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "AKGDH",
+        "mid": "akg_c",
+        "source": "met:akg_c",
+        "target": "rxn:AKGDH",
+        "points": [
+          [
+            9.0,
+            3.0
+          ],
+          [
+            9.0,
+            1.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "AKGDH",
+        "mid": "succoa_c",
+        "source": "rxn:AKGDH",
+        "target": "met:succoa_c",
+        "points": [
+          [
+            9.0,
+            1.0
+          ],
+          [
+            8.0,
+            1.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "CS",
+        "mid": "accoa_c",
+        "source": "met:accoa_c",
+        "target": "rxn:CS",
+        "points": [
+          [
+            3.0,
+            5.0
+          ],
+          [
+            5.0,
+            5.0
+          ],
+          [
+            5.0,
+            6.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "CS",
+        "mid": "cit_c",
+        "source": "rxn:CS",
+        "target": "met:cit_c",
+        "points": [
+          [
+            5.0,
+            6.0
+          ],
+          [
+            6.0,
+            6.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "CS",
+        "mid": "oaa_c",
+        "source": "met:oaa_c",
+        "target": "rxn:CS",
+        "points": [
+          [
+            4.0,
+            6.0
+          ],
+          [
+            5.0,
+            6.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "ENO",
+        "mid": "2pg_c",
+        "source": "met:2pg_c",
+        "target": "rxn:ENO",
+        "points": [
+          [
+            1.0,
+            9.0
+          ],
+          [
+            1.0,
+            8.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "ENO",
+        "mid": "pep_c",
+        "source": "rxn:ENO",
+        "target": "met:pep_c",
+        "points": [
+          [
+            1.0,
+            8.0
+          ],
+          [
+            1.0,
+            7.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "EX_glc__D_e",
+        "mid": "glc__D_e",
+        "source": "met:glc__D_e",
+        "target": "rxn:EX_glc__D_e",
+        "points": [
+          [
+            1.0,
+            25.0
+          ],
+          [
+            1.0,
+            26.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "FBA",
+        "mid": "dhap_c",
+        "source": "rxn:FBA",
+        "target": "met:dhap_c",
+        "points": [
+          [
+            1.0,
+            18.0
+          ],
+          [
+            3.0,
+            18.0
+          ],
+          [
+            3.0,
+            17.15
+          ],
+          [
+            1.0,
+            17.15
+          ],
+          [
+            1.0,
+            17.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "FBA",
+        "mid": "fdp_c",
+        "source": "met:fdp_c",
+        "target": "rxn:FBA",
+        "points": [
+          [
+            1.0,
+            19.0
+          ],
+          [
+            1.0,
+            18.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "FBA",
+        "mid": "g3p_c",
+        "source": "rxn:FBA",
+        "target": "met:g3p_c",
+        "points": [
+          [
+            1.0,
+            18.0
+          ],
+          [
+            3.0,
+            18.0
+          ],
+          [
+            3.0,
+            15.15
+          ],
+          [
+            1.0,
+            15.15
+          ],
+          [
+            1.0,
+            15.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "FUM",
+        "mid": "fum_c",
+        "source": "met:fum_c",
+        "target": "rxn:FUM",
+        "points": [
+          [
+            4.0,
+            1.0
+          ],
+          [
+            4.0,
+            2.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "FUM",
+        "mid": "mal__L_c",
+        "source": "rxn:FUM",
+        "target": "met:mal__L_c",
+        "points": [
+          [
+            4.0,
+            2.0
+          ],
+          [
+            4.0,
+            3.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "GAPD",
+        "mid": "13dpg_c",
+        "source": "rxn:GAPD",
+        "target": "met:13dpg_c",
+        "points": [
+          [
+            1.0,
+            14.0
+          ],
+          [
+            1.0,
+            13.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "GAPD",
+        "mid": "g3p_c",
+        "source": "met:g3p_c",
+        "target": "rxn:GAPD",
+        "points": [
+          [
+            1.0,
+            15.0
+          ],
+          [
+            1.0,
+            14.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "GLCpts",
+        "mid": "g6p_c",
+        "source": "rxn:GLCpts",
+        "target": "met:g6p_c",
+        "points": [
+          [
+            1.0,
+            24.0
+          ],
+          [
+            -1.0,
+            24.0
+          ],
+          [
+            -1.0,
+            23.0
+          ],
+          [
+            1.0,
+            23.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "GLCpts",
+        "mid": "glc__D_e",
+        "source": "met:glc__D_e",
+        "target": "rxn:GLCpts",
+        "points": [
+          [
+            1.0,
+            25.0
+          ],
+          [
+            1.0,
+            24.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "GLCpts",
+        "mid": "pep_c",
+        "source": "met:pep_c",
+        "target": "rxn:GLCpts",
+        "points": [
+          [
+            1.0,
+            7.0
+          ],
+          [
+            -1.0,
+            7.0
+          ],
+          [
+            -1.0,
+            24.0
+          ],
+          [
+            1.0,
+            24.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "GLCpts",
+        "mid": "pyr_c",
+        "source": "rxn:GLCpts",
+        "target": "met:pyr_c",
+        "points": [
+          [
+            1.0,
+            24.0
+          ],
+          [
+            -1.0,
+            24.0
+          ],
+          [
+            -1.0,
+            5.0
+          ],
+          [
+            1.0,
+            5.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "ICDHyr",
+        "mid": "akg_c",
+        "source": "rxn:ICDHyr",
+        "target": "met:akg_c",
+        "points": [
+          [
+            9.0,
+            4.0
+          ],
+          [
+            9.0,
+            3.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "ICDHyr",
+        "mid": "icit_c",
+        "source": "met:icit_c",
+        "target": "rxn:ICDHyr",
+        "points": [
+          [
+            9.0,
+            5.0
+          ],
+          [
+            9.0,
+            4.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "MDH",
+        "mid": "mal__L_c",
+        "source": "met:mal__L_c",
+        "target": "rxn:MDH",
+        "points": [
+          [
+            4.0,
+            3.0
+          ],
+          [
+            4.0,
+            4.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "MDH",
+        "mid": "oaa_c",
+        "source": "rxn:MDH",
+        "target": "met:oaa_c",
+        "points": [
+          [
+            4.0,
+            4.0
+          ],
+          [
+            4.0,
+            6.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PDH",
+        "mid": "accoa_c",
+        "source": "rxn:PDH",
+        "target": "met:accoa_c",
+        "points": [
+          [
+            2.0,
+            5.0
+          ],
+          [
+            3.0,
+            5.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PDH",
+        "mid": "pyr_c",
+        "source": "met:pyr_c",
+        "target": "rxn:PDH",
+        "points": [
+          [
+            1.0,
+            5.0
+          ],
+          [
+            2.0,
+            5.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PFK",
+        "mid": "f6p_c",
+        "source": "met:f6p_c",
+        "target": "rxn:PFK",
+        "points": [
+          [
+            1.0,
+            21.0
+          ],
+          [
+            1.0,
+            20.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PFK",
+        "mid": "fdp_c",
+        "source": "rxn:PFK",
+        "target": "met:fdp_c",
+        "points": [
+          [
+            1.0,
+            20.0
+          ],
+          [
+            1.0,
+            19.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PGI",
+        "mid": "f6p_c",
+        "source": "rxn:PGI",
+        "target": "met:f6p_c",
+        "points": [
+          [
+            1.0,
+            22.0
+          ],
+          [
+            1.0,
+            21.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PGI",
+        "mid": "g6p_c",
+        "source": "met:g6p_c",
+        "target": "rxn:PGI",
+        "points": [
+          [
+            1.0,
+            23.0
+          ],
+          [
+            1.0,
+            22.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PGK",
+        "mid": "13dpg_c",
+        "source": "rxn:PGK",
+        "target": "met:13dpg_c",
+        "points": [
+          [
+            1.0,
+            12.0
+          ],
+          [
+            1.0,
+            13.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PGK",
+        "mid": "3pg_c",
+        "source": "met:3pg_c",
+        "target": "rxn:PGK",
+        "points": [
+          [
+            1.0,
+            11.0
+          ],
+          [
+            1.0,
+            12.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PGM",
+        "mid": "2pg_c",
+        "source": "met:2pg_c",
+        "target": "rxn:PGM",
+        "points": [
+          [
+            1.0,
+            9.0
+          ],
+          [
+            1.0,
+            10.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PGM",
+        "mid": "3pg_c",
+        "source": "rxn:PGM",
+        "target": "met:3pg_c",
+        "points": [
+          [
+            1.0,
+            10.0
+          ],
+          [
+            1.0,
+            11.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PYK",
+        "mid": "pep_c",
+        "source": "met:pep_c",
+        "target": "rxn:PYK",
+        "points": [
+          [
+            1.0,
+            7.0
+          ],
+          [
+            1.0,
+            6.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "PYK",
+        "mid": "pyr_c",
+        "source": "rxn:PYK",
+        "target": "met:pyr_c",
+        "points": [
+          [
+            1.0,
+            6.0
+          ],
+          [
+            1.0,
+            5.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "SUCDi",
+        "mid": "fum_c",
+        "source": "rxn:SUCDi",
+        "target": "met:fum_c",
+        "points": [
+          [
+            5.0,
+            1.0
+          ],
+          [
+            4.0,
+            1.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "SUCDi",
+        "mid": "succ_c",
+        "source": "met:succ_c",
+        "target": "rxn:SUCDi",
+        "points": [
+          [
+            6.0,
+            1.0
+          ],
+          [
+            5.0,
+            1.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "SUCOAS",
+        "mid": "succ_c",
+        "source": "met:succ_c",
+        "target": "rxn:SUCOAS",
+        "points": [
+          [
+            6.0,
+            1.0
+          ],
+          [
+            7.0,
+            1.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "SUCOAS",
+        "mid": "succoa_c",
+        "source": "rxn:SUCOAS",
+        "target": "met:succoa_c",
+        "points": [
+          [
+            7.0,
+            1.0
+          ],
+          [
+            8.0,
+            1.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "TPI",
+        "mid": "dhap_c",
+        "source": "met:dhap_c",
+        "target": "rxn:TPI",
+        "points": [
+          [
+            1.0,
+            17.0
+          ],
+          [
+            1.0,
+            16.0
+          ]
+        ],
+        "priority": 2
+      },
+      {
+        "rid": "TPI",
+        "mid": "g3p_c",
+        "source": "rxn:TPI",
+        "target": "met:g3p_c",
+        "points": [
+          [
+            1.0,
+            16.0
+          ],
+          [
+            1.0,
+            15.0
+          ]
+        ],
+        "priority": 2
+      }
+    ],
+    "allocations": [
+      {
+        "rid": "GLCpts",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": -1.0,
+        "offset": -2,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "FBA",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 3.0,
+        "offset": 2,
+        "inset_start": false,
+        "inset_end": true
+      },
+      {
+        "rid": "AKGDH",
+        "axis": 1,
+        "original_level": 9.0,
+        "lane_level": 9.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "MDH",
+        "axis": 1,
+        "original_level": 4.0,
+        "lane_level": 4.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "ACONTa",
+        "axis": 0,
+        "original_level": 6.0,
+        "lane_level": 6.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "ACONTa",
+        "axis": 0,
+        "original_level": 6.0,
+        "lane_level": 6.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "ACONTb",
+        "axis": 0,
+        "original_level": 6.0,
+        "lane_level": 6.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "ACONTb",
+        "axis": 1,
+        "original_level": 9.0,
+        "lane_level": 9.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "AKGDH",
+        "axis": 0,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "CS",
+        "axis": 0,
+        "original_level": 6.0,
+        "lane_level": 6.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "CS",
+        "axis": 0,
+        "original_level": 6.0,
+        "lane_level": 6.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "ENO",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "ENO",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "FBA",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "FUM",
+        "axis": 1,
+        "original_level": 4.0,
+        "lane_level": 4.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "FUM",
+        "axis": 1,
+        "original_level": 4.0,
+        "lane_level": 4.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "GAPD",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "GAPD",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "GLCpts",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "ICDHyr",
+        "axis": 1,
+        "original_level": 9.0,
+        "lane_level": 9.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "ICDHyr",
+        "axis": 1,
+        "original_level": 9.0,
+        "lane_level": 9.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "MDH",
+        "axis": 1,
+        "original_level": 4.0,
+        "lane_level": 4.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PDH",
+        "axis": 0,
+        "original_level": 5.0,
+        "lane_level": 5.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PDH",
+        "axis": 0,
+        "original_level": 5.0,
+        "lane_level": 5.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PFK",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PFK",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PGI",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PGI",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PGK",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PGK",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PGM",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PGM",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PYK",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "PYK",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "SUCDi",
+        "axis": 0,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "SUCDi",
+        "axis": 0,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "SUCOAS",
+        "axis": 0,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "SUCOAS",
+        "axis": 0,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "TPI",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "TPI",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "CS",
+        "axis": 0,
+        "original_level": 5.0,
+        "lane_level": 5.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "CS",
+        "axis": 1,
+        "original_level": 5.0,
+        "lane_level": 5.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      },
+      {
+        "rid": "EX_glc__D_e",
+        "axis": 1,
+        "original_level": 1.0,
+        "lane_level": 1.0,
+        "offset": 0,
+        "inset_start": false,
+        "inset_end": false
+      }
+    ],
+    "unresolved": [],
+    "nodes_moved": false,
+    "global_optimality_proven": false,
+    "minimum_parallel_gap_grid": 1.0,
+    "parallel_pairs": 62,
+    "violations": [],
+    "verified": true,
+    "method": "Constraint-checked greedy routing channels",
+    "elapsed_seconds": 0.3480150350078475,
+    "signature": "35f6293f0bbba6043e7472fd",
+    "routing_envelope": {
+      "x_min": -1.0,
+      "x_max": 9.0,
+      "y_min": 1.0,
+      "y_max": 26.0
+    }
   }
 }

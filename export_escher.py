@@ -14,10 +14,37 @@ import re
 
 from reaction_network import build_network, reaction_direction, validate_network
 from escher_routing import separate_routes
+from red_route_layout import plan_from_metadata
+from routing_simplification import POLICY
 
 BASE = Path(__file__).resolve().parent
 SCHEMA = BASE / 'vendor/escher/map-schema-1-0-0.json'
 VIEWER = BASE / 'vendor/escher/escher-1.8.1.min.js'
+
+
+def fba_flux_style(value, maximum, first):
+    """Square-root intensity on absolute flux; keep signed reaction data intact."""
+    if value == 0:
+        return dict(type='value', value=0, color='#b8b8b8', size=1)
+    low = math.sqrt(first / maximum)
+    intensity = max(0.0, min(1.0, (math.sqrt(abs(value) / maximum) - low) / (1 - low)))
+    anchors = [(0.0, '#2166ac'), (.35, '#756bb1'), (.7, '#c05a88'), (1.0, '#d73027')]
+    for (a, left), (b, right) in zip(anchors, anchors[1:]):
+        if intensity <= b:
+            weight = (intensity - a) / (b - a)
+            channels = [round(int(left[i:i+2], 16) * (1-weight) + int(right[i:i+2], 16) * weight)
+                        for i in (1, 3, 5)]
+            return dict(type='value', value=value,
+                        color='#' + ''.join(f'{channel:02x}' for channel in channels),
+                        size=3 + 5 * intensity)
+
+
+def fba_flux_scale(maximum, first):
+    # Escher interpolates linearly in raw flux. Dense stops approximate the
+    # square-root transfer without changing data, labels, tooltips or arrows.
+    low = math.sqrt(first / maximum)
+    values = [first] + [maximum * (low + (1-low)*i/64)**2 for i in range(1, 64)] + [maximum]
+    return [fba_flux_style(0, maximum, first)] + [fba_flux_style(v, maximum, first) for v in values]
 
 
 def read_layout(directory):
@@ -158,6 +185,13 @@ def validate_map(data, model, source_nodes, source_xy, schema_path=SCHEMA, sourc
     except ImportError as exc:
         raise RuntimeError('jsonschema is required: use a Python with jsonschema or install requirements-escher.txt') from exc
     Draft4Validator(json.loads(schema_path.read_text())).validate(data)
+    report = validate_map_geometry(data, model, source_nodes, source_xy, source_metadata)
+    report['schema_valid'] = True
+    return report
+
+
+def validate_map_geometry(data, model, source_nodes, source_xy, source_metadata=None):
+    """Verify identity, chemistry and connected orthogonal paths independently of schema."""
     if len(data) != 2:
         raise ValueError('An Escher map must have exactly two items')
     header, body = data
@@ -289,7 +323,7 @@ def validate_map(data, model, source_nodes, source_xy, schema_path=SCHEMA, sourc
     for key, node in source_nodes.items():
         if node['kind'] == 'currency' and counts[key] != 1:
             raise ValueError('Currency copy must have one segment')
-    return dict(schema_valid=True, metadata_embedded='metadata' in header,
+    return dict(schema_valid=None, metadata_embedded='metadata' in header,
                 reaction_ids_preserved=True, stoichiometry_preserved=True,
                 coordinate_transform_verified=True, segment_endpoints_verified=True,
                 nodes=len(map_nodes), source_nodes=len(source_nodes), routing_nodes=len(routing_ids),
@@ -400,10 +434,12 @@ document.getElementById('save').onclick=()=>{const data=window.builder.map.map_f
         first = min(min(active), maximum * 0.02) if active else maximum * 0.02
         options = dict(reaction_data=reaction_data, reaction_styles=['color', 'size', 'text', 'abs'],
                        reaction_scale=[dict(type='value', value=0, color='#b8b8b8', size=1),
-                                       dict(type='value', value=first, color='#deebf7' if fba_report else '#e6ab02', size=3),
-                                       dict(type='value', value=maximum * 0.1, color='#9ecae1' if fba_report else '#ff7f00', size=5),
-                                       dict(type='value', value=maximum * 0.5, color='#4292c6' if fba_report else '#e31a1c', size=9),
-                                       dict(type='value', value=maximum, color='#08519c' if fba_report else '#9e0142', size=14)])
+                                       dict(type='value', value=first, color='#2166ac' if fba_report else '#e6ab02', size=3),
+                                       dict(type='value', value=maximum * 0.1, color='#67a9cf' if fba_report else '#ff7f00', size=5),
+                                       dict(type='value', value=maximum * 0.5, color='#fdae61' if fba_report else '#e31a1c', size=9),
+                                       dict(type='value', value=maximum, color='#d73027' if fba_report else '#9e0142', size=14)])
+        if fba_report:
+            options['reaction_scale'] = fba_flux_scale(maximum, first)
         page = page.replace('enable_editing:true,', json.dumps(options, allow_nan=False)[1:-1] + ',enable_editing:true,')
         page = page.replace('Escher layout', 'FBA flux in Escher')
         summary = ('Line width and color show absolute flux. Labels show signed values. '
@@ -411,9 +447,21 @@ document.getElementById('save').onclick=()=>{const data=window.builder.map.map_f
                    f'Scale: 0 to {maximum:.4g}. Arrows show the calculated flow direction. '
                    'Arrows on zero-flux reactions show allowed directions, not flow.')
         if fba_report:
-            summary = summary.replace('Higher flux changes from yellow to orange, red, and purple.', 'Higher flux changes from light blue to dark blue. Fixed pathway colors are not applied.')
+            summary = summary.replace('Higher flux changes from yellow to orange, red, and purple.', 'Higher flux changes from blue through violet and magenta to red. Color and width use a square-root scale; legend ticks show actual absolute flux. Fixed pathway colors are not applied.')
             summary += (f' Biomass reaction: {fba_report["objective_value"]:.6f} h⁻¹. '
                         'This is one optimal solution that maximizes growth within the SBML bounds.')
+        if fba_report:
+            # The header legend uses readable physical ticks; the built-in
+            # legend would label every interpolation stop.
+            page = page.replace('</head>', '<style>#map .legend-container,#map .vertical-legend-container{display:none!important}</style></head>', 1)
+            legend = '<p id="fba-color-legend" aria-label="Absolute FBA flux color scale">Absolute flux (mmol/gDW/h): '
+            ticks = sorted({0, *[v for v in (1, 5, 10, 20) if first <= v < maximum], maximum})
+            legend_stops = [fba_flux_style(v, maximum, first) for v in ticks]
+            legend += ' &nbsp; '.join(
+                f'<span><span aria-hidden="true" style="display:inline-block;width:1em;height:1em;background:{stop["color"]};border:1px solid #777"></span> {stop["value"]:.4g}</span>'
+                for stop in legend_stops)
+            legend += '</p>'
+            page = page.replace('<p id="escher-display-mode">', legend + '<p id="escher-display-mode">', 1)
         page = page.replace('Reaction positions and CO2 copies are kept. This view uses Escher styles. Use the mouse wheel to zoom.', summary)
         page = page.replace('const mapData=MAP_PLACEHOLDER;',
                             'window.fbaFluxes=' + json.dumps(reaction_data, allow_nan=False) + ';const mapData=MAP_PLACEHOLDER;')
@@ -432,7 +480,11 @@ document.getElementById('save').onclick=()=>{const data=window.builder.map.map_f
 def write_pathway_preview(path, data, major_reactions=(), connector_pairs=None,
                           model=None, elements=(), initial_highlights=None, records=()):
     """Start with pathway structure; disable fixed colors when reaction data loads."""
-    if data[0]['metadata'].get('routing')=='orthogonal' and not data[0]['metadata'].get('overlap_routing',{}).get('enabled'):
+    if data[0]['metadata'].get('routing')=='orthogonal' and (not data[0]['metadata'].get('overlap_routing',{}).get('enabled') or
+            data[0]['metadata'].get('overlap_routing',{}).get('node_obstacle_policy')!='red_orange_structural_nodes' or
+            data[0]['metadata'].get('overlap_routing',{}).get('trunk_grouping')!='positive_length_overlap' or
+            data[0]['metadata'].get('overlap_routing',{}).get('red_layout_signature')!=(plan_from_metadata(data[0]['metadata']) or {}).get('signature') or
+            data[0]['metadata'].get('overlap_routing',{}).get('routing_preference')!=POLICY):
         data = separate_routes(copy.deepcopy(data),major_reactions,connector_pairs)
     configure_label_display(data, major_reactions)
     configure_reaction_coverage(data, records)

@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 
-BLUE = '#1677ff'
+HIGHLIGHT_COLOR = '#7b2cbf'
 
 
 def validate_selection(value, model):
@@ -63,13 +63,13 @@ def inject_controls(page, model, elements=(), initial=None, records=(), escher=F
                    initial=initial or dict(metabolites=[], reactions=[]), escher=escher)
     encoded = json.dumps(payload, ensure_ascii=False).replace('<', '\\u003c')
     panel = '''<section id="highlight-panel" aria-label="Highlight compounds and reactions">
-<p><b>Blue: user selection</b></p>
+<p><b>Purple: user selection</b></p>
 <label>Type <select id="hl-kind"><option value="metabolites">Compounds</option><option value="reactions">Reactions</option></select></label>
 <label>Search ID or name <input id="hl-search" type="search"></label>
 <div id="hl-results" aria-label="Search results"></div>
 <label>IDs (comma or newline separated) <textarea id="hl-bulk" rows="2"></textarea></label>
 <button id="hl-add" type="button">Add</button>
-<label><input id="hl-force" type="checkbox">Always show blue targets</label>
+<label><input id="hl-force" type="checkbox">Always show purple targets</label>
 <div id="hl-selected" aria-label="Selected targets"></div>
 <button id="hl-clear" type="button">Clear</button>
 <button id="hl-save" type="button">Save selection JSON</button>
@@ -82,12 +82,13 @@ def inject_controls(page, model, elements=(), initial=None, records=(), escher=F
 #highlight-panel{padding:10px;border:1px solid #ccd;margin:10px 0;font:14px system-ui}
 #highlight-panel label{display:inline-block;margin:4px}#highlight-panel button{margin:3px}
 #hl-results{max-height:130px;overflow:auto}#hl-results button{display:block;text-align:left}
+body #viewer [id^=label-].user-blue path,body #viewer [id^=label-].user-blue use{stroke:white!important;stroke-width:2px!important;paint-order:stroke fill;}
 #hl-selected{max-height:130px;overflow:auto}#hl-bulk{vertical-align:middle}
-body #viewer .user-blue path,body #viewer .user-blue use,body #viewer .user-blue text{stroke:#1677ff!important;fill:#1677ff!important}
-body #viewer .user-blue[data-hl-role="edge"] path{fill:none!important;stroke:#1677ff!important;stroke-opacity:1!important}
+body #viewer .user-blue path,body #viewer .user-blue use,body #viewer .user-blue text{stroke:#7b2cbf!important;fill:#7b2cbf!important}
+body #viewer .user-blue[data-hl-role="edge"] path{fill:none!important;stroke:#7b2cbf!important;stroke-opacity:1!important}
 body #viewer .user-blue[data-hl-role="edge"]{opacity:1!important}
-body #map#map .user-blue .segment,body #map#map .user-blue .arrowheads path{stroke:#1677ff!important;stroke-opacity:1!important}
-body #map#map .user-blue .arrowheads path,body #map#map .user-blue circle,body #map#map .user-blue text{fill:#1677ff!important}
+body #map#map .user-blue .segment,body #map#map .user-blue .arrowheads path{stroke:#7b2cbf!important;stroke-opacity:1!important}
+body #map#map .user-blue .arrowheads path,body #map#map .user-blue circle,body #map#map .user-blue text{fill:#7b2cbf!important}
 </style>'''
     js = Path(__file__).with_name('highlight_controls.js').read_text()
     injection = style + panel + '<script>\n(()=>{const config=' + encoded + ';\n' + js + '\n})();</script>'

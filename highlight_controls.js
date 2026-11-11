@@ -79,7 +79,7 @@ $('hl-load').onchange=async event=>{
 $('hl-svg').onclick=()=>{
   const source=document.querySelector(config.escher?'#map svg':'#viewer svg');if(!source)return;
   const clone=source.cloneNode(true), a=[source,...source.querySelectorAll('*')],b=[clone,...clone.querySelectorAll('*')];
-  const props=['fill','stroke','stroke-width','stroke-opacity','fill-opacity','opacity','display','visibility','font-family','font-size','font-weight','text-anchor'];
+  const props=['fill','stroke','stroke-width','stroke-opacity','fill-opacity','opacity','display','visibility','font-family','font-size','font-weight','text-anchor','paint-order','stroke-linejoin','vector-effect'];
   a.forEach((el,i)=>{const css=getComputedStyle(el);for(const prop of props)b[i].style.setProperty(prop,css.getPropertyValue(prop));});
   clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
   download('highlighted_map.svg',new XMLSerializer().serializeToString(clone),'image/svg+xml');

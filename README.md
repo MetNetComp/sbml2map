@@ -5,8 +5,14 @@ SVG images, and SBML files with compound and reaction positions and connecting l
 To export SBML with positions, use `--export-sbml-layout`.
 
 The structural Escher view paints red above orange above gray and offsets coincident routes of different reactions.
-Biological nodes and primary backbone centerlines stay fixed; same-reaction trunks remain bundled.
-FBA uses the original neutral orthogonal routes without structural priority.
+Biological nodes stay fixed; same-reaction trunks remain bundled. Primary backbone
+centerlines stay fixed during parallel-lane separation, but may detour around unrelated red/orange nodes.
+Parallel red/orange segments from different reactions that run together for at
+least one grid unit are separated by approximately 0.3 grid units using rectangular
+detours in both SVG and Escher structural views. Node collisions are avoided;
+unresolved routes are recorded in `parallel_routing.json` (SVG) and map metadata
+(Escher). Display detours add length without changing the original layout objective.
+FBA uses a dedicated complete map with neutral orthogonal routes, retaining the saved pathway coordinates.
 
 `sbml2map.py` draws metabolic networks with nodes on a grid.
 Cofactors may also be placed off the grid. Inorganic species are ignored.
@@ -72,7 +78,9 @@ The generated HTML provides `Metabolite labels`, `Reaction labels`, and
 `Allow label overlap` checkboxes. Hidden label types stay hidden even when overlap
 is allowed. Bounds are measured again after zooming, resizing, and label edits.
 Names, IDs, chemistry and coordinates are preserved. These options apply to
-Escher views; `layout.png`, `layout.svg`, and the regular `index.html` are unchanged.
+interactive SVG and Escher views, including FBA. Static PNG/SVG downloads retain
+the complete annotation set. Important SVG/PNG labels have white halos and are
+painted above lines; Escher labels also use white halos without changing colors.
 
 ## Installation
 
@@ -282,15 +290,15 @@ The initial Escher view has no reaction flux data loaded: sampled values, flux
 widths, and the flux color scale are hidden. Arrows show model-permitted
 directions; red and orange describe the pathway structure. Loading reaction
 data automatically disables those fixed pathway colors, and clearing the data
-restores them. FBA pages start with simulation values and a light-to-dark blue
-flux scale (gray for zero), with fixed pathway colors off.
+restores them. FBA pages start with simulation values and a blue-to-red
+absolute flux scale (gray for zero), with fixed pathway colors off.
 
 Escher connections are exported as horizontal and vertical segments. Diagonal
 incidences receive an intermediate `multimarker` at the corner; already aligned
 connections remain one segment. These routing nodes do not add compounds or
 reactions. Original node coordinates, stoichiometry, bounds, and flux values are
 preserved. Arrowheads stay on terminal metabolite segments, and pathway colors
-and blue reaction highlights apply to both parts of a routed connection.
+and purple reaction highlights apply to both parts of a routed connection.
 Moving nodes manually in Escher does not automatically reroute them.
 
 To show a biomass-maximizing FBA solution on the saved E. coli core layout:
@@ -300,26 +308,29 @@ python run_fba_escher.py --model models/e_coli_core.xml --layout-dir results/e_c
 ```
 
 Open `results/e_coli_core/escher_fba.html`. FBA uses the full source model and its
-original bounds, including participants omitted from the drawing. Existing
-coordinates and sampled medians are preserved. All 95 source reaction values
-are available in `fba_fluxes.csv` and `fba_fluxes.json`; `escher_fluxes.json`
-contains sign-adjusted values for the 76 displayed reactions.
+original bounds. Its dedicated `escher_fba_map.json` includes all 95 reactions
+and all 360 reaction–metabolite connections, including water, protons and
+cofactors as reaction-local copies. Zero-flux reactions remain visible in thin
+gray. Existing pathway coordinates and sampled medians are preserved. All 95
+source reaction values are available in `fba_fluxes.csv` and `fba_fluxes.json`;
+`escher_fluxes.json` contains sign-adjusted values for all 95 reactions.
+Label controls only change label visibility; the full FBA map has no coverage filter.
 The bundled result has a biomass objective of approximately 0.873922 h⁻¹.
 This is one optimal FBA solution; other optimal flux distributions may exist.
 
-Both HTML views include a blue-highlight panel. Choose compounds or reactions,
+Both HTML views include a purple-highlight panel. Choose compounds or reactions,
 search by ID or name, and click a result to select it. You can also add exact
 model IDs in bulk, separated by commas or newlines. Compound selection colors
 all displayed copies; reaction selection colors its lines, arrows, labels, and
-grid-view reaction node. Blue overrides pathway colors. Clear selections to
+grid-view reaction node. Purple overrides pathway colors. Clear selections to
 restore the original palette.
 
-In `index.html`, **Always show blue targets** overrides the display filters for
+In `index.html`, **Always show purple targets** overrides the display filters for
 selected objects and shows the compounds connected to selected reactions in
 their own colors. Objects omitted when the map was generated cannot be added;
 their status is shown in the panel. Selection does not change layout or fluxes.
 Save/load selections as JSON, or save the currently displayed SVG. Browser
-changes do not update PNG files. To generate blue highlights in PNG, SVG, and
+changes do not update PNG files. To generate purple highlights in PNG, SVG, and
 the initial HTML selection, run:
 
 ```bash
@@ -522,3 +533,115 @@ orange edge costs `length * (1 + weight * (1 - q))`. Shared edges count once.
 normalization values and reaction coefficients separately. Sampling-free runs
 use the original unweighted objective. Routing, heuristic moves, MILP and
 incumbent comparisons use the same objective; global optimality is not assumed.
+
+
+## Avoid nodes with whole-segment rectangular detours
+
+In structural SVG and Escher views, red/orange segments that cross an unrelated
+red/orange metabolite or reaction node can move sideways as three sides of a rectangle.
+The direct U uses two bends to connect the segment endpoints to the shifted line;
+node positions, reaction participants and flux values stay unchanged. This also
+applies to primary pathway lines. Both the long side and the two short sides
+must be free of unrelated red/orange nodes. Gray and other nodes may be crossed.
+The same structural node classification drives SVG colors and both viewers’
+obstacle lists; purple selections and display filters do not change it.
+Gray cofactor copies on red reactions remain outside the obstacle list.
+If a direct U is obstructed, the line first
+steps approximately 0.15 grid units along the original direction at one endpoint,
+then turns twice to reach the offset lane. Both endpoints can use this fallback.
+On short segments, the step is capped at one quarter of the segment length.
+Existing short coincident endpoint stems may remain, without increasing their
+overlap; new coincident paths are rejected. If every candidate is obstructed,
+the original segment is retained and the reason is recorded.
+
+```bash
+python sbml2map.py --model models/e_coli_core.xml --no-sampling \
+  --route-offset 0.3 --output-dir results/runs/e_coli_core_node_detours
+```
+
+`--route-offset` specifies the displacement from the original line in grid units
+(default `0.3`). Use `0.5` for a wider detour or `0` to disable node avoidance.
+Negative or non-finite values are rejected. Existing parallel-lane separation
+is independent and remains at 0.3 grid units. The setting and unresolved cases
+are saved under `node_detours` in `parallel_routing.json` for SVG and
+`overlap_routing.node_detours` in Escher map metadata. This is display routing;
+layout objectives still use the original routes.
+
+Accepted node detours record the chosen side and endpoint steps in `detours`.
+`endpoint_step_fallback_segments` counts segments that needed this fallback.
+For E. coli core, the saved SVG and Escher routes from `for_e` to `EX_for_e`
+now avoid `succ_c` with the default 0.3-grid displacement.
+
+Shared trunks are grouped only when their collinear intervals overlap with
+positive length. Sharing an endpoint alone does not bundle branches. This keeps
+collision-free short branches straight, including `glc__D_e`–`GLCpts` in the
+saved E. coli core SVG; long branches still detour when needed.
+
+
+## Reserve red parallel channels during layout
+
+`--red-parallel-spacing` sets the minimum centerline spacing for red segments
+of different reactions that run in parallel for at least one grid unit. The
+default is `1.0`; use `0` to disable this layout condition. Same-reaction shared
+trunks and endpoint-only contacts are excluded. Negative/non-finite values fail.
+
+```bash
+python sbml2map.py --model models/e_coli_core.xml --no-sampling \
+  --red-parallel-spacing 1 --route-offset 0.3 \
+  --output-dir results/runs/e_coli_core_red_spacing
+```
+
+The grid layout stage reserves compatible routing channels before rendering;
+SVG and Escher consume the same planned red paths. Fixed biological node
+positions are preserved. When fixed endpoints cannot be separated by moving
+nodes, routing channels can extend the drawing grid; `routing_envelope` records
+this expansion. The layout objective remains the original node-incidence cost;
+channel displacement is optimized separately, without a joint global-optimality
+claim. Both MILP-based and heuristic grid layouts use the same geometric checks.
+A bounded greedy allocation is tried first; the MILP path can use a bounded
+finite-candidate solver if necessary. Each channel-allocation search has a budget of at most 3 seconds (or the smaller
+layout time limit), plus final geometry validation. Candidate grid layouts can
+invoke this allocation more than once; the placement report records the total
+additional time as `red_parallel_layout_total_seconds`.
+Unresolved assignments are reported, never marked as satisfying the condition.
+
+`--route-offset` still controls ordinary red/orange node-avoidance detours.
+Verified red channels are kept fixed by subsequent display routing. Reports
+record the requested spacing, minimum actual spacing, violations, elapsed time
+and selected channels under `red_parallel_layout` / `red_parallel_spacing`.
+
+
+## Prefer simple important routes; let gray paths yield
+
+Structural red/orange routing selects feasible candidates by bend count first,
+then path length, then crossings/interference. Protected red/orange nodes and
+verified red/red channel spacing remain constraints. Gray coincidences cannot
+force extra bends on an important path: conflicting gray paths are rerouted
+separately while important geometry stays fixed. Shared reaction trunks remain
+bundled. Candidates include straight, L/Z/U and endpoint-step forms; unresolved
+gray paths are recorded rather than changing important routes to accommodate
+them. Preallocated red channels are preserved.
+
+The saved E. coli core `EX_ac_e`–`ac_e` branch uses a two-bend U. The conflicting
+gray PGL route yields. Diagnostics are `important_simplification` and `gray_yield`
+in SVG reports and Escher `overlap_routing` metadata.
+
+
+## Label visibility and readability
+
+SVG, structural Escher, and FBA viewers expose the same three controls:
+`Metabolite labels`, `Reaction labels`, and `Allow label overlap`. Hiding a
+reaction label also hides its displayed flux value. Disabled label types remain
+hidden when overlap is allowed, when filters/zoom change, and when selected
+objects are forced visible. Important labels take priority during overlap
+filtering. Reaction-label copies in Escher’s priority layer follow the same
+visibility state. Saved current-view SVG exports retain visibility and halos.
+
+White outlines separate important labels from red/orange lines without moving
+nodes, routes, label coordinates or changing reaction data. Labels are drawn in
+front of the lines. This first readability pass uses halos and overlap filtering.
+
+FBA colors run from blue through violet and magenta to red, with square-root
+scaling to distinguish low and moderate absolute fluxes. Widths range from 3 to
+8; zero flux stays gray at width 1. Legend ticks and signed labels retain actual
+flux units. Numerical FBA results and branch visibility are unchanged.

@@ -46,15 +46,33 @@ class FbaTests(unittest.TestCase):
             self.assertEqual(len(fluxes),95)
             self.assertAlmostEqual(report['objective_value'],0.8739215069684304,places=8)
             display=json.loads((directory/'escher_fluxes.json').read_text())
-            data=json.loads(original_map)
+            data=json.loads((directory/'escher_fba_map.json').read_text())
             self.assertEqual(set(display),{r['bigg_id'] for r in data[1]['reactions'].values()})
-            self.assertEqual(len(display),76)
+            self.assertEqual(len(display),95)
+            self.assertEqual(set(display),set(fluxes))
+            self.assertTrue(report['map_validation']['schema_valid'])
+            self.assertEqual(report['displayed_connections'],360)
+            self.assertTrue(report['all_participants_drawn'])
+            self.assertNotIn('reaction_coverage',data[0]['metadata'])
+            self.assertEqual(report['complete_layout_validation']['existing_nodes_preserved'],206)
             self.assertEqual((directory/'escher_map.json').read_bytes(),original_map)
             self.assertEqual((directory/'escher_flux_medians.json').read_bytes(),original_medians)
             self.assertEqual(set(json.loads((directory/'fba_fluxes.json').read_text())),set(fluxes))
             self.assertTrue(report['source_model_used_for_fba'])
             self.assertFalse(report['coordinates_changed'])
-            self.assertIn('EX_o2_e',report['undisplayed_active_reactions'])
+            self.assertEqual(report['undisplayed_active_reactions'],{})
+            self.assertEqual(report['undisplayed_reactions'],[])
+            original_nodes=json.loads(original_map)[0]['metadata']['source_node_ids']
+            new_nodes=data[0]['metadata']['source_node_ids']
+            old_body=json.loads(original_map)[1]['nodes']
+            new_by_key={key:data[1]['nodes'][nid] for nid,key in new_nodes.items()}
+            for nid,key in original_nodes.items():
+                # Original grid coordinates remain fixed; display origin may translate.
+                old_transform=json.loads(original_map)[0]['metadata']['coordinate_transform']
+                new_transform=data[0]['metadata']['coordinate_transform']
+                for axis,origin,sign in [('x','x_min',1),('y','y_max',-1)]:
+                    shift=sign*old_transform['scale']*(old_transform[origin]-new_transform[origin])
+                    self.assertAlmostEqual(new_by_key[key][axis],old_body[nid][axis]+shift)
             self.assertIn('highlight-panel',(directory/'escher_fba.html').read_text())
             self.assertIn('FBA uses all 95 source reactions',(directory/'escher_fba.html').read_text())
             self.assertIn('fba-result-link',(directory/'index.html').read_text())

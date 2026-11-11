@@ -46,13 +46,13 @@ class RouteLaneTests(unittest.TestCase):
         self.assertEqual(data[0]['metadata']['overlap_routing']['shifted_legs'],0)
         self.assertFalse(any(data[0]['metadata']['segment_priorities'].values()))
 
-    def test_e_coli_backbones_stay_fixed_and_fba_has_no_priority(self):
+    def test_e_coli_backbone_nodes_stay_fixed_and_fba_has_no_priority(self):
         root=Path(__file__).resolve().parent;p=root/'results/e_coli_core'
         if not p.exists():p=root/'public/results/e_coli_core'
         data=json.loads((p/'escher_map.json').read_text());source=json.loads((p/'source_model.json').read_text())
         model,nodes,edges,xy=read_fba_layout(p,source)
         self.assertTrue(validate_map(data,model,nodes,xy)['orthogonal_segments_verified'])
-        self.assertEqual(data[0]['metadata']['overlap_routing']['primary_backbone_max_offset'],0)
+        self.assertTrue(data[0]['metadata']['overlap_routing']['primary_backbone_nodes_fixed'])
         report=json.loads((p/'fba_report.json').read_text())
         self.assertFalse(report['pathway_highlighting'])
         self.assertAlmostEqual(report['objective_value'],0.8739215069684304,places=8)

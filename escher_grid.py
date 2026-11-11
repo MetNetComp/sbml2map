@@ -10,7 +10,13 @@ import re
 
 import numpy as np
 
-from highlighting import BLUE, read_selection, grid_elements, catalog, inject_controls
+from routing_simplification import POLICY,simplify_important,yield_gray
+
+from red_route_layout import validate_red_spacing,plan_red_routes,spacing_report
+
+from parallel_routing import separate_parallel, avoid_nodes, validate_route_offset, structural_node_priorities
+
+from highlighting import HIGHLIGHT_COLOR, read_selection, grid_elements, catalog, inject_controls
 
 from flux_sampling2 import sample_fluxes, sampling_constraints
 from annotation_context import hidden_metabolite
@@ -185,8 +191,10 @@ def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None):
             xy[key] = position.tolist()
 
 
-def render(output, nodes, edges, xy, records, selection, model_id, backbones=None, program_name='sbml2map', sampling_report=None, highlights=None, source_model=None):
+def render(output, nodes, edges, xy, records, selection, model_id, backbones=None, program_name='sbml2map', sampling_report=None, highlights=None, source_model=None, route_offset=.3, label_options=None):
     highlights = highlights or dict(metabolites=[], reactions=[])
+    label_options={key:bool((label_options or {}).get(key,default)) for key,default in
+        [('show_metabolites',True),('show_reactions',True),('allow_overlap',False)]}
     elements = grid_elements(nodes, edges)
     if source_model is None:
         source_model = {kind: [dict(id=key, name=next(n.get('name', '') for n in nodes.values() if n['original_id']==key))
@@ -195,6 +203,7 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
+    import matplotlib.patheffects as path_effects
     from matplotlib.colors import LogNorm
     from matplotlib.cm import ScalarMappable
     stats = {r['reaction_id']: r for r in records}
@@ -203,6 +212,11 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     connectors = (backbones or {}).get('exchange_connectors')
     orange_edges = set(connectors['edge_indices']) if connectors else set()
     orange_nodes = {key for i in orange_edges for key in (edges[i]['source'], edges[i]['target'])}
+    orange_pairs={frozenset((edges[i]['source'],edges[i]['target'])) for i in orange_edges}
+    node_priorities=structural_node_priorities(nodes,
+        {rid for rid,record in stats.items() if record.get('is_major_pathway',False)},major_mids,orange_pairs)
+    obstacle_keys=sorted(key for key,rank in node_priorities.items() if rank>0)
+    obstacles=[xy[key] for key in obstacle_keys]
     selected = [r for r in records if r['selected']]
     from display_ranking import reaction_display_order
     orange_reactions = {edges[i]['reaction_id']: 1 for i in orange_edges}
@@ -225,6 +239,55 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     # Defer autoscaling until all artists exist; scatter otherwise rescans
     # previous collections for every added node on genome-scale maps.
     ax.set_autoscale_on(False)
+    backbone_pairs=set()
+    for route in (backbones or {}).get('routes', []):
+        for step in route.get('steps', []):
+            for mid in (step['source'],step['target']):
+                backbone_pairs.add(frozenset(('rxn:'+step['reaction_id'],'met:'+mid)))
+    display_paths=[]
+    for j, edge in enumerate(edges):
+        rid=edge['reaction_id']
+        a,b=tuple(xy[edge['source']]),tuple(xy[edge['target']])
+        reverse=edge['direction']=='reverse' if structural else stats[rid]['median']<0
+        if reverse:a,b=b,a
+        elbow=(b[0],a[1])
+        points=[a]+([elbow] if elbow!=a and elbow!=b else [])+[b]
+        display_paths.append(dict(rid=rid,points=points,
+            priority=2 if stats[rid].get('is_major_pathway',False) else 1 if j in orange_edges else 0,
+            backbone=frozenset((edge['source'],edge['target'])) in backbone_pairs))
+    original_route_length=sum(sum(abs(a[k]-b[k]) for k in (0,1)) for p in display_paths for a,b in zip(p['points'],p['points'][1:]))
+    red_plan=(backbones or {}).get('red_parallel_layout')
+    if red_plan and red_plan.get('enabled') and red_plan.get('verified'):
+        planned={(r['rid'],r['mid']):r for r in red_plan['routes']}
+        for edge,path in zip(edges,display_paths):
+            route=planned.get((edge['reaction_id'],edge['metabolite_id']))
+            if route:
+                points=[tuple(p) for p in route['points']]
+                if path['points'][0]!=points[0]:points.reverse()
+                path.update(points=points,routing_locked=True)
+    parallel_report=separate_parallel(display_paths,obstacles=obstacles)
+    parallel_report['node_detours']=avoid_nodes(display_paths,obstacles=obstacles,route_offset=route_offset)
+    parallel_report['routing_preference']=POLICY
+    requested_red_spacing=red_plan['requested_spacing_grid'] if red_plan and red_plan.get('enabled') else .3
+    parallel_report['important_simplification']=simplify_important(display_paths,obstacles=obstacles,
+        route_offset=route_offset,red_spacing=requested_red_spacing)
+    parallel_report['gray_yield']=yield_gray(display_paths,obstacles=obstacles,route_offset=route_offset)
+
+    if red_plan:
+        parallel_report['red_parallel_layout']={k:v for k,v in red_plan.items() if k not in ('routes','allocations')}
+        parallel_report['red_parallel_spacing']=spacing_report(display_paths,red_plan['requested_spacing_grid'])
+        if red_plan.get('enabled') and red_plan.get('verified') and not parallel_report['red_parallel_spacing']['verified']:
+            raise RuntimeError('Preallocated red spacing changed during SVG rendering')
+    route_points=[p for path in display_paths for p in path['points']]
+    if route_points:
+        ax.set_xticks(np.arange(math.floor(min(p[0] for p in route_points)),math.ceil(max(p[0] for p in route_points))+1))
+        ax.set_yticks(np.arange(math.floor(min(p[1] for p in route_points)),math.ceil(max(p[1] for p in route_points))+1))
+    parallel_report['node_obstacle_policy']='red_orange_structural_nodes'
+    parallel_report['obstacle_node_ids']=obstacle_keys
+    parallel_report['structural_node_priorities']=node_priorities
+    parallel_report['original_route_length']=original_route_length
+    parallel_report['display_route_length']=sum(sum(abs(a[k]-b[k]) for k in (0,1)) for p in display_paths for a,b in zip(p['points'],p['points'][1:]))
+    dump(output/'parallel_routing.json',parallel_report)
     for j, edge in enumerate(edges):
         rid = edge['reaction_id']
         a, b = np.array(xy[edge['source']]), np.array(xy[edge['target']])
@@ -235,13 +298,13 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         orange = j in orange_edges
         color = RED if major else ORANGE if orange else '#cbd3d8' if connectors or structural else cmap(norm(stats[rid]['priority']))
         coenzyme = nodes[edge['source']]['kind'] == 'currency' or nodes[edge['target']]['kind'] == 'currency'
-        elbow = np.array([b[0], a[1]])
-        path, = ax.plot([a[0], elbow[0], b[0]], [a[1], elbow[1], b[1]],
+        points=np.array(display_paths[j]['points'])
+        path, = ax.plot(points[:,0], points[:,1],
                         color=color, lw=.7 if coenzyme else 2.3 if major or orange else 1.0,
                         alpha=.95 if major or orange else .35 if connectors else .65 if coenzyme else .55,
                         zorder=2 if major or orange else 1)
         path.set_gid(f'edge-{j}')
-        direction = b - elbow if np.linalg.norm(b - elbow) > 1e-10 else b - a
+        direction = points[-1]-points[-2]
         length = np.linalg.norm(direction)
         if length and (not structural or edge['direction'] != 'blocked'):
             start = b - direction / length * min(.25, length * .6)
@@ -250,7 +313,7 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
             if structural:
                 arrow.arrow_patch.set_gid(f'arrow-{j}')
         if structural and edge['direction'] == 'reversible':
-            initial = elbow - a if np.linalg.norm(elbow - a) > 1e-10 else b - a
+            initial = points[1]-points[0]
             initial_length = np.linalg.norm(initial)
             if initial_length:
                 start = a + initial / initial_length * min(.25, initial_length * .6)
@@ -261,7 +324,7 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         p = xy[key]; rid = node['original_id'] if node['kind'] == 'reaction' else node['parent_id'].removeprefix('rxn:')
         is_reaction = node['kind'] == 'reaction'; coenzyme = node['kind'] == 'currency'
         major = stats[rid].get('is_major_pathway', False) if is_reaction else node['original_id'] in major_mids
-        color = RED if major and not coenzyme else ORANGE if key in orange_nodes else '#83949d' if connectors or structural else cmap(norm(stats[rid]['priority'])) if is_reaction else '#83949d' if coenzyme else '#173c53'
+        color = RED if node_priorities[key]==2 else ORANGE if node_priorities[key]==1 else '#83949d' if connectors or structural else cmap(norm(stats[rid]['priority'])) if is_reaction else '#83949d' if coenzyme else '#173c53'
         artist = ax.scatter(*p, marker='s' if is_reaction else 'o', s=25 if is_reaction else 9 if coenzyme else 32,
                             c=[color], zorder=3, edgecolor='white', linewidth=.4)
         artist.set_gid(f'node-{j}')
@@ -270,7 +333,10 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
             label += '\n' + f"{stats[rid]['median']:.3g}"
         text = ax.annotate(label, p, xytext=(4, 5) if not coenzyme else (3, -8), textcoords='offset points',
                            fontsize=5 if coenzyme else 6 if is_reaction else 7,
-                           color=color, fontweight='normal' if coenzyme else 'bold', zorder=4)
+                           color=color, fontweight='normal' if coenzyme else 'bold',
+                           zorder=22 if node_priorities[key]==2 else 21 if node_priorities[key]==1 else 4)
+        if node_priorities[key]>0:
+            text.set_path_effects([path_effects.Stroke(linewidth=2.5,foreground='white'),path_effects.Normal()])
         text.set_gid(f'label-{j}')
     provisional = bool(not structural and sampling_report and not sampling_report['mixing_checks_passed'])
     title_prefix = 'PROVISIONAL: sampling convergence criteria not met\n' if provisional else ''
@@ -291,8 +357,8 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         connector_label += (f'Flux-weighted orange cost = {connectors["total_cost"]:.4g}; '
                             f'low-flux penalty strength = {connectors["flux_costs"]["flux_weight"]:g}.\n')
     fig.text(.02, .018, f'Red: glucose exchange / glycolysis / {oxidation_label} / TCA. Gray nodes: local coenzymes.\n' + connector_label +
-             ('Orthogonal branches: L1 length. Connectivity and bounds do not establish steady-state activity.' if structural else
-              'Orthogonal branches: L1 length. Median describes the sampled feasible space, not a measured flux.'), fontsize=9)
+             ('Layout objective uses original L1 routes; display detours add length. Connectivity and bounds do not establish steady-state activity.' if structural else
+              'Layout objective uses original L1 routes; display detours add length. Median describes the sampled feasible space, not a measured flux.'), fontsize=9)
     # Keep the original SVG for reversible browser highlighting.
     import io
     original_svg = io.StringIO() if any(highlights.values()) else None
@@ -303,13 +369,13 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         if artist.get_gid() not in selected_gids:
             continue
         if hasattr(artist, 'set_color'):
-            artist.set_color(BLUE)
+            artist.set_color(HIGHLIGHT_COLOR)
         if getattr(artist, 'arrow_patch', None) is not None:
-            artist.arrow_patch.set_color(BLUE)
+            artist.arrow_patch.set_color(HIGHLIGHT_COLOR)
         if hasattr(artist, 'set_alpha'):
             artist.set_alpha(1)
     if any(highlights.values()):
-        fig.text(.02, .005, 'Blue: user selection', color=BLUE, fontsize=9)
+        fig.text(.02, .005, 'Purple: user selection', color=HIGHLIGHT_COLOR, fontsize=9)
     fig.savefig(output / 'layout.png', dpi=180, bbox_inches='tight')
     fig.savefig(output / 'layout.svg', bbox_inches='tight')
     if connectors:
@@ -345,18 +411,22 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         rank = min(ranks) if ranks else 1  # Always-visible glucose reference, except at 0%.
         highlight = key in orange_nodes or (node['kind']=='reaction' and stats[node['original_id']].get('is_major_pathway',False)) or (node['kind']=='metabolite' and node['original_id'] in major_mids)
         registry.extend([dict(id=f'node-{j}', rank=rank, coenzyme=node['kind'] == 'currency',highlight=highlight),
-                         dict(id=f'label-{j}', rank=rank, coenzyme=node['kind'] == 'currency',highlight=highlight)])
+                         dict(id=f'label-{j}', rank=rank, coenzyme=node['kind'] == 'currency',highlight=highlight,
+                              label_kind='reaction' if node['kind']=='reaction' else 'metabolite',label_priority=node_priorities[key])])
     page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>sbml2map</title>
 <style>body{font:15px system-ui;color:#203744;margin:20px}#viewer{height:78vh;overflow:auto;border:1px solid #ccd;background:white}#viewer svg{width:1600px;height:auto}header{margin-bottom:12px}a{margin-right:14px}</style>
 <header><h1>sbml2map — __MODEL__</h1><p>Inorganic compounds are hidden. Red: main pathways (glucose exchange, glycolysis, PDH, TCA). Red pathways come first, followed by orange connectors, then other reactions. Each group is sorted by absolute median flux. Squares: reactions. Circles: compounds. Small gray circles: cofactors. Arrows follow the sign of median flux.</p>
 <label>Top <input id="coverage" type="range" min="0" max="__MAX__" step="1" value="__MAX__"><span id="value"></span>%</label>
 <label><input id="coenzymes" type="checkbox" checked>Cofactors</label>
-<label>Zoom <input type="range" min="600" max="4200" value="1600" step="100" oninput="document.querySelector('#viewer svg').style.width=this.value+'px'"></label>
+<p id="grid-label-controls"><label><input id="show-metabolite-labels" type="checkbox">Metabolite labels</label>
+<label><input id="show-reaction-labels" type="checkbox">Reaction labels</label>
+<label><input id="allow-label-overlap" type="checkbox">Allow label overlap</label></p>
+<label>Zoom <input type="range" min="600" max="4200" value="1600" step="100" oninput="document.querySelector('#viewer svg').style.width=this.value+'px';window.syncGridLabels?.()"></label>
 <p>The slider filters the saved layout. To calculate a new layout, run the CLI with --coverage.</p>
 <a href="layout.png">PNG</a><a href="layout.svg">SVG</a><a href="escher_preview.html">Escher</a><a href="report.json">Validation</a><a href="reaction_ranking.csv">Ranking</a></header>
 <div id="viewer">__SVG__</div>
 <script>const registry=__REGISTRY__,eligible=__ELIGIBLE__;
-function update(){const v=Number(document.getElementById('coverage').value),limit=Math.ceil(v*eligible/100),co=document.getElementById('coenzymes').checked;document.getElementById('value').textContent=v;for(const item of registry){const el=document.getElementById(item.id);if(el)el.style.display=(item.rank<=limit&&(co||!item.coenzyme))?'':'none';}}
+function update(){const v=Number(document.getElementById('coverage').value),limit=Math.ceil(v*eligible/100),co=document.getElementById('coenzymes').checked;document.getElementById('value').textContent=v;for(const item of registry){const el=document.getElementById(item.id);if(el)el.style.display=(item.rank<=limit&&(co||!item.coenzyme))?'':'none';}window.syncGridLabels?.();}
 document.getElementById('coverage').oninput=update;document.getElementById('coenzymes').onchange=update;update();</script></html>'''
     import html
     if structural:
@@ -383,6 +453,7 @@ document.getElementById('coverage').oninput=update;document.getElementById('coen
         page = page.replace('The layout minimizes total path length, counting shared branches once.',
                             'The layout minimizes length with a low-flux penalty, counting shared branches once.')
     page = page.replace('sbml2map', html.escape(program_name)).replace('__MODEL__', html.escape(model_id)).replace('__MAX__', str(selection['coverage_percent'])).replace('__SVG__', svg).replace('__REGISTRY__', json.dumps(registry)).replace('__ELIGIBLE__', str(selection['eligible_reactions']))
+    page=page.replace('</html>','<script>window.gridLabelOptions='+json.dumps(label_options)+';</script><script>'+BASE.joinpath('grid_labels.js').read_text()+'</script></html>')
     page = inject_controls(page, source_model, elements, highlights, records)
     (output / 'index.html').write_text(page)
 
@@ -447,6 +518,8 @@ def run(args):
         from export_sbml_layout import validate_export_request
         validate_export_request(args.model,getattr(args,'sbml_layout_id','sbml2map_layout'))
     validate_sampling_options(args)
+    route_offset=validate_route_offset(getattr(args,'route_offset',.3))
+    red_spacing=validate_red_spacing(getattr(args,'red_parallel_spacing',1.0))
     output = args.output_dir
     output.mkdir(parents=True, exist_ok=True)
     model = load_model(args.model)
@@ -523,7 +596,20 @@ def run(args):
     flux_costs['requested_flux_weight'] = getattr(args, 'orange_flux_weight', 1)
     reaction_weights = flux_costs['reaction_weights']
     connectors = connector_plan(nodes, edges, roots, exchange_nodes, major_reactions, allow_disconnected=no_sampling, reaction_weights=reaction_weights) if strategy and selected else None
+    record_map={record['reaction_id']:record for record in records}
+    backbone_pairs={frozenset(('rxn:'+step['reaction_id'],'met:'+mid))
+        for route in backbones.get('routes',[]) for step in route.get('steps',[])
+        for mid in (step['source'],step['target'])}
+    red_edges=[dict(rid=e['reaction_id'],mid=e['metabolite_id'],source=e['source'],target=e['target'],
+        reverse=(e['direction']=='reverse' if no_sampling else record_map[e['reaction_id']]['median']<0),
+        backbone=frozenset((e['source'],e['target'])) in backbone_pairs)
+        for e in edges if e['reaction_id'] in major_reactions and e['source'] in grid_ids and e['target'] in grid_ids]
+    major_mids={mid for route in routes for mid in route['metabolite_ids']}
+    def routing_obstacles(plan):
+        orange_pairs={frozenset((edges[i]['source'],edges[i]['target'])) for i in (plan or {}).get('edge_indices',[])}
+        return sorted(key for key,rank in structural_node_priorities(nodes,major_reactions,major_mids,orange_pairs).items() if rank and key in grid_ids)
     history = []
+    red_planning_seconds=0.0
     best = None
     previous_xy = None
     for iteration in range(2 if connectors else 1):
@@ -531,7 +617,9 @@ def run(args):
         objective_weights = [reaction_weights.get(edges[i]['reaction_id'], 1) for i in connectors['edge_indices']] if connectors else None
         candidate_xy, candidate_placement = optimize_grid(grid_ids, objective_pairs, args.grid_cols, args.grid_rows, args.time_limit, args.seed + iteration,
                                       top_left_node=glucose_node, boundary_nodes=exchange_nodes, fixed_offsets=fixed_offsets,
-                                      initial_positions=previous_xy, edge_weights=objective_weights, **grid_options)
+                                      initial_positions=previous_xy, edge_weights=objective_weights, red_edges=red_edges,
+                                      red_parallel_spacing=red_spacing,red_obstacle_node_ids=routing_obstacles(connectors), **grid_options)
+        red_planning_seconds+=candidate_placement.get('red_parallel_layout',{}).get('elapsed_seconds',0)
         if not connectors:
             xy, placement = candidate_xy, candidate_placement
             break
@@ -540,16 +628,23 @@ def run(args):
         if connector_cost(candidate_plan, edges, candidate_xy) > before_reroute:
             candidate_plan = connectors
         value = connector_cost(candidate_plan, edges, candidate_xy)
-        history.append(dict(iteration=iteration+1, before_reroute=before_reroute, orange_cost=value,
+        candidate_red=candidate_placement.get('red_parallel_layout')
+        if red_edges and (candidate_red is None or candidate_red.get('obstacle_node_ids')!=routing_obstacles(candidate_plan)):
+            candidate_red=plan_red_routes(candidate_xy,red_edges,red_spacing,routing_obstacles(candidate_plan),
+                time_limit=min(3,max(.05,args.time_limit)),use_milp=not bool(getattr(args,'max_milp_nodes',None) and len(grid_ids)>args.max_milp_nodes))
+            candidate_placement['red_parallel_layout']=candidate_red
+            red_planning_seconds+=candidate_red.get('elapsed_seconds',0)
+        red_valid=not red_spacing or not red_edges or bool(candidate_red and candidate_red.get('verified'))
+        history.append(dict(iteration=iteration+1, red_spacing_verified=red_valid, before_reroute=before_reroute, orange_cost=value,
                             orange_length=connector_length(candidate_plan, edges, candidate_xy),
                             optimized_fixed_network_cost=candidate_placement['objective'],
                             optimized_fixed_network_length=connector_length(connectors, edges, candidate_xy)))
-        if best is None or value < best[0]:
-            best = (value, candidate_xy, candidate_placement, candidate_plan)
+        if best is None or (not red_valid,value)<(not best[4],best[0]):
+            best = (value, candidate_xy, candidate_placement, candidate_plan,red_valid)
         connectors = candidate_plan
         previous_xy = candidate_xy
     if connectors:
-        value, xy, placement, connectors = best
+        value, xy, placement, connectors, _ = best
         connectors.update(total_length=connector_length(connectors, edges, xy), total_cost=value,
                           flux_costs=flux_costs, shared_coenzyme_ids=sorted(shared), optimization_history=history)
         backbones['exchange_connectors'] = connectors
@@ -560,6 +655,15 @@ def run(args):
         # Fixed-forest MILP bounds cannot certify the joint routing problem.
         placement['fixed_network_lower_bound'] = placement.pop('global_lower_bound', None)
         placement.pop('relative_gap', None)
+    red_plan=placement.pop('red_parallel_layout',None)
+    if red_edges and (red_plan is None or red_plan.get('obstacle_node_ids')!=routing_obstacles(connectors)):
+        red_plan=plan_red_routes(xy,red_edges,red_spacing,routing_obstacles(connectors),
+            time_limit=min(3,max(.05,args.time_limit)),use_milp=not bool(getattr(args,'max_milp_nodes',None) and len(grid_ids)>args.max_milp_nodes))
+        red_planning_seconds+=red_plan.get('elapsed_seconds',0)
+    placement['red_parallel_layout_total_seconds']=red_planning_seconds
+    if red_plan:
+        backbones['red_parallel_layout']=red_plan
+        placement['red_parallel_layout']={k:v for k,v in red_plan.items() if k not in ('routes','allocations')}
     cols, rows = placement['grid_cols'], placement['grid_rows']
     attach_coenzymes(nodes, xy, grid_shape=(cols, rows))
     backbone_validation = validate_backbones(backbones, xy, rows)
@@ -603,7 +707,7 @@ def run(args):
                                       'Flux median ranked display projection. Inorganic participants hidden. Sampling uses the full original model.')
         orange_pairs = ({frozenset((edges[i]['source'],edges[i]['target']))
                          for i in connectors['edge_indices']} if connectors else None)
-        separate_routes(data,major_reactions,orange_pairs)
+        separate_routes(data,major_reactions,orange_pairs,route_offset=route_offset)
         escher_check = validate_map(data, projected, nodes, xy)
         reaction_data = None if no_sampling else {r['reaction_id']: r['median'] * data[0]['metadata']['reactions'][r['reaction_id']]['coefficient_multiplier']
                          for r in records if r['selected']}
@@ -674,6 +778,8 @@ def run(args):
         report['boundary_placeholder_metabolites'] = placeholders
         report['validation']['no_boundary_placeholder_nodes'] = True
         report['limitations'].append('CellDesigner source/sink placeholders are omitted only in the display; original stoichiometry and sampling constraints are unchanged.')
+    report['red_parallel_spacing_grid'] = red_spacing
+    report['route_offset_grid'] = route_offset
     report['program_name'] = program_name
     if strategy:
         report['extraction_status'] = strategy.extraction['status']
@@ -697,7 +803,7 @@ def run(args):
     data[0].setdefault('metadata', {})['highlights'] = highlights
     dump(output / 'escher_map.json', data)
     dump(output / 'report.json', report)
-    render(output, nodes, edges, xy, records, selection, model['id'], backbones, program_name, sampling_report, highlights, model)
+    render(output, nodes, edges, xy, records, selection, model['id'], backbones, program_name, sampling_report, highlights, model, route_offset=route_offset,label_options=data[0].get('metadata',{}).get('label_display'))
     if getattr(args,'export_sbml_layout',False):
         from export_sbml_layout import export_sbml_layout
         layout_report=export_sbml_layout(args.model,output,layout_id=getattr(args,'sbml_layout_id','sbml2map_layout'))
@@ -709,10 +815,22 @@ def run(args):
     return report
 
 
+def validate_red_spacing_arg(value):
+    try:return validate_red_spacing(float(value))
+    except ValueError as exc:raise argparse.ArgumentTypeError(str(exc)) from exc
+
+
+def validate_route_offset_arg(value):
+    try:
+        return validate_route_offset(float(value))
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(str(exc)) from exc
+
+
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--hide-metabolite-labels', action='store_true', help='Initially hide metabolite labels in the Escher preview')
-    p.add_argument('--hide-reaction-labels', action='store_true', help='Initially hide reaction labels in the Escher preview')
+    p.add_argument('--hide-metabolite-labels', action='store_true', help='Initially hide metabolite labels in interactive SVG and Escher views')
+    p.add_argument('--hide-reaction-labels', action='store_true', help='Initially hide reaction labels in interactive SVG and Escher views')
     p.add_argument('--allow-label-overlap', action='store_true', help='Show all enabled Escher labels even when they overlap')
     p.add_argument('--highlight-metabolites', nargs='+', action='extend', default=[], help='Exact source metabolite IDs to highlight blue')
     p.add_argument('--highlight-reactions', nargs='+', action='extend', default=[], help='Exact source reaction IDs to highlight blue')
@@ -722,6 +840,8 @@ def parser():
     p.add_argument('--model', type=Path, default=BASE / 'e_coli_core.xml')
     p.add_argument('--output-dir', type=Path, default=BASE / 'e_coli_core_sbml2map_output')
     p.add_argument('--coverage', type=float, default=100, help='Top percentage of eligible reactions (0..100); --no-sampling uses pathway membership and IDs')
+    p.add_argument('--red-parallel-spacing',type=validate_red_spacing_arg,default=1.0,help='Minimum red/red channel spacing for parallel runs of at least one grid unit (default: 1; 0 disables layout channel allocation)')
+    p.add_argument('--route-offset', type=validate_route_offset_arg, default=.3, help='Whole-segment U-shaped node avoidance offset in grid units (default: 0.3; 0 disables node avoidance)')
     p.add_argument('--zero-tolerance', type=float, default=1e-7)
     p.add_argument('--orange-flux-weight', type=float, default=1, help='Penalty for low-flux orange routes (default: 1; 0: length only; larger values favor higher-flux reactions more; ignored without sampling)')
     p.add_argument('--require-sampling', action='store_true', help='Fail instead of falling back to a structural drawing if sampling is unavailable')

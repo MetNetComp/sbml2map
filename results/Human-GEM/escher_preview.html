@@ -38697,19 +38697,19 @@ document.getElementById('save').onclick=()=>{const data=window.builder.map.map_f
 #highlight-panel label{display:inline-block;margin:4px}#highlight-panel button{margin:3px}
 #hl-results{max-height:130px;overflow:auto}#hl-results button{display:block;text-align:left}
 #hl-selected{max-height:130px;overflow:auto}#hl-bulk{vertical-align:middle}
-body #viewer .user-blue path,body #viewer .user-blue use,body #viewer .user-blue text{stroke:#1677ff!important;fill:#1677ff!important}
-body #viewer .user-blue[data-hl-role="edge"] path{fill:none!important;stroke:#1677ff!important;stroke-opacity:1!important}
+body #viewer .user-blue path,body #viewer .user-blue use,body #viewer .user-blue text{stroke:#7b2cbf!important;fill:#7b2cbf!important}
+body #viewer .user-blue[data-hl-role="edge"] path{fill:none!important;stroke:#7b2cbf!important;stroke-opacity:1!important}
 body #viewer .user-blue[data-hl-role="edge"]{opacity:1!important}
-body #map#map .user-blue .segment,body #map#map .user-blue .arrowheads path{stroke:#1677ff!important;stroke-opacity:1!important}
-body #map#map .user-blue .arrowheads path,body #map#map .user-blue circle,body #map#map .user-blue text{fill:#1677ff!important}
+body #map#map .user-blue .segment,body #map#map .user-blue .arrowheads path{stroke:#7b2cbf!important;stroke-opacity:1!important}
+body #map#map .user-blue .arrowheads path,body #map#map .user-blue circle,body #map#map .user-blue text{fill:#7b2cbf!important}
 </style><section id="highlight-panel" aria-label="Highlight compounds and reactions">
-<p><b>Blue: user selection</b></p>
+<p><b>Purple: user selection</b></p>
 <label>Type <select id="hl-kind"><option value="metabolites">Compounds</option><option value="reactions">Reactions</option></select></label>
 <label>Search ID or name <input id="hl-search" type="search"></label>
 <div id="hl-results" aria-label="Search results"></div>
 <label>IDs (comma or newline separated) <textarea id="hl-bulk" rows="2"></textarea></label>
 <button id="hl-add" type="button">Add</button>
-<label><input id="hl-force" type="checkbox">Always show blue targets</label>
+<label><input id="hl-force" type="checkbox">Always show purple targets</label>
 <div id="hl-selected" aria-label="Selected targets"></div>
 <button id="hl-clear" type="button">Clear</button>
 <button id="hl-save" type="button">Save selection JSON</button>
