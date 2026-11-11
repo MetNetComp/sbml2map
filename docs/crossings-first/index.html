@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sbml2map — crossing-first results</title>
+<style>body{font:16px/1.6 system-ui,sans-serif;max-width:1100px;margin:36px auto;padding:0 20px;color:#203744}table{border-collapse:collapse;width:100%}th,td{padding:12px;text-align:left;border-bottom:1px solid #ccd}a{color:#155d9c}code{background:#eef2f5;padding:2px 5px}</style>
+<h1>sbml2map — crossing-first results</h1>
+<p>New routing examples. The <a href="../">original results</a> remain unchanged.</p>
+<p>The default objective minimizes crossings first, then bends, then route length.
+A route with fewer crossings can have more bends. Before and after use the same initial layout and all saved routes, including gray branches and cofactor copies.</p>
+<table><thead><tr><th>Model</th><th>Crossings: before → after</th><th>Bends: before → after</th><th>New drawings</th></tr></thead><tbody><tr><th>E. coli core</th><td>1,130 → 1,044</td><td>250 → 260</td><td><a href="e_coli_core/">SVG viewer</a> · <a href="e_coli_core/escher_preview.html">Escher viewer</a> · <a href="e_coli_core/layout.png">PNG</a> · <a href="e_coli_core/escher_fba.html">Full FBA viewer</a></td></tr><tr><th>iCH360</th><td>37,253 → 37,038</td><td>1,063 → 1,077</td><td><a href="eco_ich_360/">SVG viewer</a> · <a href="eco_ich_360/escher_preview.html">Escher viewer</a> · <a href="eco_ich_360/layout.png">PNG</a></td></tr></tbody></table>
+<p>SVG, PNG, Escher and optional SBML Layout use a shared route geometry.
+The E. coli core full FBA viewer adds all source participants and optimizes added branches separately, so its counts differ from the structural drawing.</p>
+<p>This is a time-limited local search, not a proven global minimum.
+Existing line overlaps and node passages remain in these examples and are reported in each drawing's validation report; candidate changes do not introduce new ones.</p>
+<p><code>--routing-objective crossings-first</code> is the default.
+Use <code>--routing-objective sum</code> for crossings + bends, or
+<code>--routing-objective weighted --crossing-weight 10 --bend-weight 1</code> for weighted costs.
+Use <code>--routing-time-limit 20</code> to set the search budget and
+<code>--no-routing-node-moves</code> to keep nodes fixed.</p>
+<p><a href="routing_benchmarks.json">Comparison data (JSON)</a></p>
+</html>

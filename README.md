@@ -645,3 +645,61 @@ FBA colors run from blue through violet and magenta to red, with square-root
 scaling to distinguish low and moderate absolute fluxes. Widths range from 3 to
 8; zero flux stays gray at width 1. Legend ticks and signed labels retain actual
 flux units. Numerical FBA results and branch visibility are unchanged.
+
+## Crossing and bend optimization
+
+Routing defaults to `--routing-objective crossings-first`: minimize crossings
+first, then bends, then total route length. A reduction in bends never justifies
+an additional crossing in this mode. All three structural colors and local
+cofactor branches are included in the counts.
+
+```bash
+python sbml2map.py --model models/e_coli_core.xml --no-sampling \
+  --routing-objective crossings-first --routing-time-limit 20 \
+  --output-dir results/runs/e_coli_core_crossings
+```
+
+Alternative objectives:
+
+```bash
+# Equal cost for a crossing and a bend, with route length breaking ties.
+python sbml2map.py --model models/e_coli_core.xml --no-sampling --routing-objective sum
+
+# A crossing costs ten times as much as a bend.
+python sbml2map.py --model models/e_coli_core.xml --no-sampling \
+  --routing-objective weighted --crossing-weight 10 --bend-weight 1
+```
+
+`--crossing-weight` and `--bend-weight` apply only to `weighted` mode. Weights
+must be finite and nonnegative, with at least one positive weight.
+`--routing-time-limit` sets the local search budget (default 20 seconds).
+`--no-routing-node-moves` keeps all node coordinates fixed while optimizing
+routes. A zero budget retains the initial routing; `--route-offset 0` also
+skips the search. Measurement and output validation still take time beyond the
+search budget.
+
+The search alternates route candidates with legal grid-node moves/swaps.
+Backbone, EX and structural red/orange nodes remain fixed. Reaction-local
+cofactor copies move with a moved reaction. Source reaction chemistry, bounds,
+flux values, pathway membership and orange connector selection are preserved.
+No new unrelated line overlaps or node passages are accepted. Existing overlap
+and node-passage violations can remain; they are reported explicitly, rather
+than hidden in the objective. A finite, time-bounded local search does not
+establish a global minimum.
+
+Crossings are unique reaction-pair intersection coordinates, including contacts
+at bends and unrelated endpoints. Shared biological endpoints and connections
+within the same reaction are excluded. Same-reaction collinear trunks are
+merged, and shared corners count once. Route length is the length of the
+same-reaction geometric union. These definitions are independent of renderer
+segment splitting.
+
+`routing_geometry.json` stores canonical grid-coordinate polylines. SVG, PNG,
+Escher JSON/HTML and optional SBML Layout use the same geometry. Full-model FBA
+retains matching structural incidences and optimizes added branches separately,
+without moving nodes or changing numerical fluxes.
+
+`report.json` and `parallel_routing.json` record before/after crossings, bends,
+sum and length, accepted moves, time budget, remaining constraint violations,
+and the lack of a global optimality proof. See `routing_benchmarks.json` for
+verified E. coli core and iCH360 comparisons.

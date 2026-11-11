@@ -129,6 +129,31 @@ def run(model_path, directory):
                       padding=transform['padding'], layout_method='complete FBA layout')
     data[0]['metadata']['label_display'] = {
         key: value for key, value in label_options.items() if isinstance(value, bool)}
+    routing_optimization = None
+    saved_routing = directory / 'routing_geometry.json'
+    if saved_routing.exists():
+        from routing_geometry import build_routes
+        from routing_optimizer import optimize
+        from escher_routing import separate_routes
+        saved = json.loads(saved_routing.read_text())
+        settings = saved['optimization']
+        # Full FBA adds reaction-local participants. Reuse all matching structural
+        # incidences exactly, and optimize added branches without moving nodes.
+        records = [dict(reaction_id=r['id'], selected=True) for r in model['reactions']]
+        paths, _ = build_routes(nodes, edges, xy, records, {'mode': 'structure'}, route_offset=0)
+        old = {(p['rid'], frozenset((p['source'], p['target']))): p for p in saved['routes']}
+        for path in paths:
+            parent = old.get((path['rid'], frozenset((path['source'], path['target']))))
+            if parent:
+                points = list(parent['points'])
+                if parent['source'] != path['source']:
+                    points.reverse()
+                path.update(points=points, routing_locked=True)
+        paths, _, routing_optimization = optimize(paths, xy, mode=settings['objective'],
+            crossing_weight=settings['crossing_weight'], bend_weight=settings['bend_weight'],
+            time_limit=settings['time_limit_seconds'], node_moves=False)
+        separate_routes(data, enabled=False, route_geometry=paths,
+                        routing_report={'optimization': routing_optimization, 'routing_preference': settings['objective']})
     map_validation = validate_map(data, model, nodes, xy)
     mapped = {r['bigg_id']: r for r in data[1]['reactions'].values()}
     # Balance and optimize the full source model, including invisible participants.
@@ -144,6 +169,8 @@ def run(model_path, directory):
             raise ValueError('Map stoichiometry/sign mismatch: ' + rid)
         value = multiplier * fluxes[rid]
         display[rid] = 0.0 if abs(value) <= TOLERANCE else value
+    if routing_optimization is not None:
+        report['routing_optimization'] = routing_optimization
     omitted = sorted(set(fluxes)-set(display))
     report.update(source_sbml=str(model_path), source_sha256=hashlib.sha256(model_path.read_bytes()).hexdigest(),
                   map_id=data[0]['map_id'], display_zero_tolerance=TOLERANCE,

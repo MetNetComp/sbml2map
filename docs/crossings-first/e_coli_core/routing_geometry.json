@@ -1,0 +1,6993 @@
+{
+  "schema_version": 1,
+  "coordinate_system": "grid",
+  "routes": [
+    {
+      "rid": "ACALD",
+      "mid": "acald_c",
+      "source": "met:acald_c",
+      "target": "rxn:ACALD",
+      "points": [
+        [
+          3,
+          14
+        ],
+        [
+          3,
+          13.92
+        ],
+        [
+          2.85,
+          13.92
+        ],
+        [
+          2.85,
+          6.08
+        ],
+        [
+          3,
+          6.08
+        ],
+        [
+          3,
+          6
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ACALD",
+      "mid": "accoa_c",
+      "source": "rxn:ACALD",
+      "target": "met:accoa_c",
+      "points": [
+        [
+          3,
+          6
+        ],
+        [
+          2.7,
+          6
+        ],
+        [
+          2.7,
+          5.15
+        ],
+        [
+          3,
+          5.15
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ACALD",
+      "mid": "coa_c",
+      "source": "copy:ACALD:coa_c",
+      "target": "rxn:ACALD",
+      "points": [
+        [
+          3.4498274933083937,
+          6.000172506691606
+        ],
+        [
+          3,
+          6.000172506691606
+        ],
+        [
+          3,
+          6
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ACALD",
+      "mid": "nad_c",
+      "source": "copy:ACALD:nad_c",
+      "target": "rxn:ACALD",
+      "points": [
+        [
+          2.8353193965216104,
+          6.2853193965216105
+        ],
+        [
+          3,
+          6.2853193965216105
+        ],
+        [
+          3,
+          6
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ACALD",
+      "mid": "nadh_c",
+      "source": "rxn:ACALD",
+      "target": "copy:ACALD:nadh_c",
+      "points": [
+        [
+          3,
+          6
+        ],
+        [
+          2.8351344588266256,
+          6
+        ],
+        [
+          2.8351344588266256,
+          5.714865541173374
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ACALDt",
+      "mid": "acald_c",
+      "source": "rxn:ACALDt",
+      "target": "met:acald_c",
+      "points": [
+        [
+          3,
+          15
+        ],
+        [
+          3,
+          14
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ACALDt",
+      "mid": "acald_e",
+      "source": "met:acald_e",
+      "target": "rxn:ACALDt",
+      "points": [
+        [
+          2,
+          15
+        ],
+        [
+          3,
+          15
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ACKr",
+      "mid": "ac_c",
+      "source": "met:ac_c",
+      "target": "rxn:ACKr",
+      "points": [
+        [
+          4,
+          10
+        ],
+        [
+          4,
+          9
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ACKr",
+      "mid": "actp_c",
+      "source": "rxn:ACKr",
+      "target": "met:actp_c",
+      "points": [
+        [
+          4,
+          9
+        ],
+        [
+          4,
+          8
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ACKr",
+      "mid": "adp_c",
+      "source": "rxn:ACKr",
+      "target": "copy:ACKr:adp_c",
+      "points": [
+        [
+          4,
+          9
+        ],
+        [
+          4,
+          9.000172506691607
+        ],
+        [
+          4.449827493308394,
+          9.000172506691607
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ACKr",
+      "mid": "atp_c",
+      "source": "copy:ACKr:atp_c",
+      "target": "rxn:ACKr",
+      "points": [
+        [
+          3.550172506691606,
+          8.999827493308393
+        ],
+        [
+          4,
+          8.999827493308393
+        ],
+        [
+          4,
+          9
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ACONTa",
+      "mid": "acon_C_c",
+      "source": "rxn:ACONTa",
+      "target": "met:acon_C_c",
+      "points": [
+        [
+          7,
+          6
+        ],
+        [
+          8,
+          6
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "ACONTa",
+      "mid": "cit_c",
+      "source": "met:cit_c",
+      "target": "rxn:ACONTa",
+      "points": [
+        [
+          6,
+          6
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "ACONTb",
+      "mid": "acon_C_c",
+      "source": "met:acon_C_c",
+      "target": "rxn:ACONTb",
+      "points": [
+        [
+          8,
+          6
+        ],
+        [
+          9,
+          6
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "ACONTb",
+      "mid": "icit_c",
+      "source": "rxn:ACONTb",
+      "target": "met:icit_c",
+      "points": [
+        [
+          9,
+          6
+        ],
+        [
+          9,
+          5
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "ACt2r",
+      "mid": "ac_c",
+      "source": "rxn:ACt2r",
+      "target": "met:ac_c",
+      "points": [
+        [
+          4,
+          11
+        ],
+        [
+          4,
+          10
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ACt2r",
+      "mid": "ac_e",
+      "source": "met:ac_e",
+      "target": "rxn:ACt2r",
+      "points": [
+        [
+          7,
+          11
+        ],
+        [
+          4,
+          11
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ADK1",
+      "mid": "adp_c",
+      "source": "rxn:ADK1",
+      "target": "copy:ADK1:adp_c",
+      "points": [
+        [
+          3,
+          10
+        ],
+        [
+          3,
+          10.000172506691607
+        ],
+        [
+          3.4498274933083937,
+          10.000172506691607
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ADK1",
+      "mid": "amp_c",
+      "source": "copy:ADK1:amp_c",
+      "target": "rxn:ADK1",
+      "points": [
+        [
+          2.8353193965216104,
+          10.28531939652161
+        ],
+        [
+          2.8353193965216104,
+          10
+        ],
+        [
+          3,
+          10
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ADK1",
+      "mid": "atp_c",
+      "source": "copy:ADK1:atp_c",
+      "target": "rxn:ADK1",
+      "points": [
+        [
+          2.8351344588266256,
+          9.714865541173374
+        ],
+        [
+          2.8351344588266256,
+          10
+        ],
+        [
+          3,
+          10
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "AKGDH",
+      "mid": "akg_c",
+      "source": "met:akg_c",
+      "target": "rxn:AKGDH",
+      "points": [
+        [
+          9,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "AKGDH",
+      "mid": "coa_c",
+      "source": "copy:AKGDH:coa_c",
+      "target": "rxn:AKGDH",
+      "points": [
+        [
+          9.449827493308394,
+          1.0001725066916063
+        ],
+        [
+          9,
+          1.0001725066916063
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "AKGDH",
+      "mid": "nad_c",
+      "source": "copy:AKGDH:nad_c",
+      "target": "rxn:AKGDH",
+      "points": [
+        [
+          8.83531939652161,
+          1.2853193965216103
+        ],
+        [
+          9,
+          1.2853193965216103
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "AKGDH",
+      "mid": "nadh_c",
+      "source": "rxn:AKGDH",
+      "target": "copy:AKGDH:nadh_c",
+      "points": [
+        [
+          9,
+          1
+        ],
+        [
+          8.835134458826627,
+          1
+        ],
+        [
+          8.835134458826627,
+          0.7148655411733744
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "AKGDH",
+      "mid": "succoa_c",
+      "source": "rxn:AKGDH",
+      "target": "met:succoa_c",
+      "points": [
+        [
+          9,
+          1
+        ],
+        [
+          8,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "AKGt2r",
+      "mid": "akg_c",
+      "source": "rxn:AKGt2r",
+      "target": "met:akg_c",
+      "points": [
+        [
+          10,
+          1
+        ],
+        [
+          9.5,
+          1
+        ],
+        [
+          9.5,
+          3
+        ],
+        [
+          9,
+          3
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "AKGt2r",
+      "mid": "akg_e",
+      "source": "met:akg_e",
+      "target": "rxn:AKGt2r",
+      "points": [
+        [
+          11,
+          1
+        ],
+        [
+          10,
+          1
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ALCD2x",
+      "mid": "acald_c",
+      "source": "rxn:ALCD2x",
+      "target": "met:acald_c",
+      "points": [
+        [
+          6,
+          15
+        ],
+        [
+          5.7,
+          15
+        ],
+        [
+          5.7,
+          14
+        ],
+        [
+          3,
+          14
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ALCD2x",
+      "mid": "etoh_c",
+      "source": "met:etoh_c",
+      "target": "rxn:ALCD2x",
+      "points": [
+        [
+          9,
+          15
+        ],
+        [
+          6,
+          15
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ALCD2x",
+      "mid": "nad_c",
+      "source": "copy:ALCD2x:nad_c",
+      "target": "rxn:ALCD2x",
+      "points": [
+        [
+          6.449827493308394,
+          15.000172506691607
+        ],
+        [
+          6.449827493308394,
+          15
+        ],
+        [
+          6,
+          15
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ALCD2x",
+      "mid": "nadh_c",
+      "source": "rxn:ALCD2x",
+      "target": "copy:ALCD2x:nadh_c",
+      "points": [
+        [
+          6,
+          15
+        ],
+        [
+          5.550172506691606,
+          15
+        ],
+        [
+          5.550172506691606,
+          14.999827493308393
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ATPM",
+      "mid": "adp_c",
+      "source": "rxn:ATPM",
+      "target": "copy:ATPM:adp_c",
+      "points": [
+        [
+          3,
+          16
+        ],
+        [
+          3,
+          16.000172506691605
+        ],
+        [
+          3.4498274933083937,
+          16.000172506691605
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ATPM",
+      "mid": "atp_c",
+      "source": "copy:ATPM:atp_c",
+      "target": "rxn:ATPM",
+      "points": [
+        [
+          2.550172506691606,
+          15.999827493308393
+        ],
+        [
+          3,
+          15.999827493308393
+        ],
+        [
+          3,
+          16
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ATPS4r",
+      "mid": "adp_c",
+      "source": "copy:ATPS4r:adp_c",
+      "target": "rxn:ATPS4r",
+      "points": [
+        [
+          2.4498274933083937,
+          4.000172506691606
+        ],
+        [
+          2.4498274933083937,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ATPS4r",
+      "mid": "atp_c",
+      "source": "rxn:ATPS4r",
+      "target": "copy:ATPS4r:atp_c",
+      "points": [
+        [
+          2,
+          4
+        ],
+        [
+          1.5501725066916061,
+          4
+        ],
+        [
+          1.5501725066916061,
+          3.999827493308394
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "3pg_c",
+      "source": "met:3pg_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          1,
+          11
+        ],
+        [
+          1.08,
+          11
+        ],
+        [
+          1.08,
+          11.3
+        ],
+        [
+          9.92,
+          11.3
+        ],
+        [
+          9.92,
+          11
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "accoa_c",
+      "source": "met:accoa_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          3,
+          5
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "adp_c",
+      "source": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "target": "copy:BIOMASS_Ecoli_core_w_GAM:adp_c",
+      "points": [
+        [
+          10,
+          11
+        ],
+        [
+          10,
+          11.000172506691607
+        ],
+        [
+          10.449827493308394,
+          11.000172506691607
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "akg_c",
+      "source": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "target": "met:akg_c",
+      "points": [
+        [
+          10,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          3
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "atp_c",
+      "source": "copy:BIOMASS_Ecoli_core_w_GAM:atp_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          10.199611138467798,
+          11.250388861532201
+        ],
+        [
+          10,
+          11.250388861532201
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "coa_c",
+      "source": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "target": "copy:BIOMASS_Ecoli_core_w_GAM:coa_c",
+      "points": [
+        [
+          10,
+          11
+        ],
+        [
+          9.9163940641479,
+          11
+        ],
+        [
+          9.9163940641479,
+          11.366394064147899
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "e4p_c",
+      "source": "met:e4p_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          2,
+          16
+        ],
+        [
+          10,
+          16
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "f6p_c",
+      "source": "met:f6p_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          1,
+          21
+        ],
+        [
+          10,
+          21
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "g3p_c",
+      "source": "met:g3p_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          1,
+          15
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "g6p_c",
+      "source": "met:g6p_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          1,
+          23
+        ],
+        [
+          10,
+          23
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "gln__L_c",
+      "source": "met:gln__L_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          10,
+          12
+        ],
+        [
+          9.7,
+          12
+        ],
+        [
+          9.7,
+          11.15
+        ],
+        [
+          10,
+          11.15
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "glu__L_c",
+      "source": "met:glu__L_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          10,
+          14
+        ],
+        [
+          9.7,
+          14
+        ],
+        [
+          9.7,
+          11.15
+        ],
+        [
+          10,
+          11.15
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "nad_c",
+      "source": "copy:BIOMASS_Ecoli_core_w_GAM:nad_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          9.696338267790795,
+          11.146338267790794
+        ],
+        [
+          10,
+          11.146338267790794
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "nadh_c",
+      "source": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "target": "copy:BIOMASS_Ecoli_core_w_GAM:nadh_c",
+      "points": [
+        [
+          10,
+          11
+        ],
+        [
+          9.696144550160703,
+          11
+        ],
+        [
+          9.696144550160703,
+          10.853855449839296
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "nadp_c",
+      "source": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "target": "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+      "points": [
+        [
+          10,
+          11
+        ],
+        [
+          9.916153456620346,
+          11
+        ],
+        [
+          9.916153456620346,
+          10.633846543379653
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "nadph_c",
+      "source": "copy:BIOMASS_Ecoli_core_w_GAM:nadph_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          10.199436353144998,
+          10.749436353144997
+        ],
+        [
+          10,
+          10.749436353144997
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "oaa_c",
+      "source": "met:oaa_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          4,
+          6
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "pep_c",
+      "source": "met:pep_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          1,
+          7
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "pyr_c",
+      "source": "met:pyr_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          1,
+          5
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "BIOMASS_Ecoli_core_w_GAM",
+      "mid": "r5p_c",
+      "source": "met:r5p_c",
+      "target": "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "points": [
+        [
+          8,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "CS",
+      "mid": "accoa_c",
+      "source": "met:accoa_c",
+      "target": "rxn:CS",
+      "points": [
+        [
+          3,
+          5
+        ],
+        [
+          3.15,
+          5
+        ],
+        [
+          3.15,
+          7
+        ],
+        [
+          4.85,
+          7
+        ],
+        [
+          4.85,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          6,
+          5.85
+        ],
+        [
+          5,
+          5.85
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "priority": 2,
+      "backbone": false,
+      "routing_locked": true
+    },
+    {
+      "rid": "CS",
+      "mid": "cit_c",
+      "source": "rxn:CS",
+      "target": "met:cit_c",
+      "points": [
+        [
+          5,
+          6
+        ],
+        [
+          6,
+          6
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "CS",
+      "mid": "coa_c",
+      "source": "rxn:CS",
+      "target": "copy:CS:coa_c",
+      "points": [
+        [
+          5,
+          6
+        ],
+        [
+          5.449827493308394,
+          6
+        ],
+        [
+          5.449827493308394,
+          6.000172506691606
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "CS",
+      "mid": "oaa_c",
+      "source": "met:oaa_c",
+      "target": "rxn:CS",
+      "points": [
+        [
+          4,
+          6
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          4.85,
+          7
+        ],
+        [
+          4.85,
+          6
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "CYTBD",
+      "mid": "q8_c",
+      "source": "rxn:CYTBD",
+      "target": "copy:CYTBD:q8_c",
+      "points": [
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          7.000172506691606
+        ],
+        [
+          4.449827493308394,
+          7.000172506691606
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "CYTBD",
+      "mid": "q8h2_c",
+      "source": "copy:CYTBD:q8h2_c",
+      "target": "rxn:CYTBD",
+      "points": [
+        [
+          3.550172506691606,
+          6.999827493308394
+        ],
+        [
+          3.550172506691606,
+          7.149827493308394
+        ],
+        [
+          4,
+          7.149827493308394
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "D_LACt2",
+      "mid": "lac__D_c",
+      "source": "rxn:D_LACt2",
+      "target": "met:lac__D_c",
+      "points": [
+        [
+          3,
+          9
+        ],
+        [
+          2.5,
+          9
+        ],
+        [
+          2.5,
+          7
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "D_LACt2",
+      "mid": "lac__D_e",
+      "source": "met:lac__D_e",
+      "target": "rxn:D_LACt2",
+      "points": [
+        [
+          3,
+          11
+        ],
+        [
+          3.1351344588266254,
+          11
+        ],
+        [
+          3.1351344588266254,
+          9
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ENO",
+      "mid": "2pg_c",
+      "source": "met:2pg_c",
+      "target": "rxn:ENO",
+      "points": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "ENO",
+      "mid": "pep_c",
+      "source": "rxn:ENO",
+      "target": "met:pep_c",
+      "points": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "ETOHt2r",
+      "mid": "etoh_c",
+      "source": "rxn:ETOHt2r",
+      "target": "met:etoh_c",
+      "points": [
+        [
+          11,
+          15
+        ],
+        [
+          9,
+          15
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "ETOHt2r",
+      "mid": "etoh_e",
+      "source": "met:etoh_e",
+      "target": "rxn:ETOHt2r",
+      "points": [
+        [
+          11,
+          18
+        ],
+        [
+          11,
+          15
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_ac_e",
+      "mid": "ac_e",
+      "source": "met:ac_e",
+      "target": "rxn:EX_ac_e",
+      "points": [
+        [
+          7,
+          11
+        ],
+        [
+          7,
+          10.700172506691606
+        ],
+        [
+          12,
+          10.700172506691606
+        ],
+        [
+          12,
+          11
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_acald_e",
+      "mid": "acald_e",
+      "source": "met:acald_e",
+      "target": "rxn:EX_acald_e",
+      "points": [
+        [
+          2,
+          15
+        ],
+        [
+          2,
+          14.7
+        ],
+        [
+          0,
+          14.7
+        ],
+        [
+          0,
+          15
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_akg_e",
+      "mid": "akg_e",
+      "source": "met:akg_e",
+      "target": "rxn:EX_akg_e",
+      "points": [
+        [
+          11,
+          1
+        ],
+        [
+          12,
+          1
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_etoh_e",
+      "mid": "etoh_e",
+      "source": "met:etoh_e",
+      "target": "rxn:EX_etoh_e",
+      "points": [
+        [
+          11,
+          18
+        ],
+        [
+          12,
+          18
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_for_e",
+      "mid": "for_e",
+      "source": "met:for_e",
+      "target": "rxn:EX_for_e",
+      "points": [
+        [
+          11,
+          7
+        ],
+        [
+          12,
+          7
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_fru_e",
+      "mid": "fru_e",
+      "source": "met:fru_e",
+      "target": "rxn:EX_fru_e",
+      "points": [
+        [
+          2,
+          22
+        ],
+        [
+          2,
+          22.3
+        ],
+        [
+          0,
+          22.3
+        ],
+        [
+          0,
+          22
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_fum_e",
+      "mid": "fum_e",
+      "source": "met:fum_e",
+      "target": "rxn:EX_fum_e",
+      "points": [
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_glc__D_e",
+      "mid": "glc__D_e",
+      "source": "met:glc__D_e",
+      "target": "rxn:EX_glc__D_e",
+      "points": [
+        [
+          1,
+          25
+        ],
+        [
+          1,
+          26
+        ]
+      ],
+      "priority": 2,
+      "backbone": false,
+      "routing_locked": true
+    },
+    {
+      "rid": "EX_gln__L_e",
+      "mid": "gln__L_e",
+      "source": "met:gln__L_e",
+      "target": "rxn:EX_gln__L_e",
+      "points": [
+        [
+          11,
+          13
+        ],
+        [
+          12,
+          13
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_glu__L_e",
+      "mid": "glu__L_e",
+      "source": "met:glu__L_e",
+      "target": "rxn:EX_glu__L_e",
+      "points": [
+        [
+          11,
+          11
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          12,
+          10
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_lac__D_e",
+      "mid": "lac__D_e",
+      "source": "met:lac__D_e",
+      "target": "rxn:EX_lac__D_e",
+      "points": [
+        [
+          3,
+          11
+        ],
+        [
+          3,
+          10.7
+        ],
+        [
+          0,
+          10.7
+        ],
+        [
+          0,
+          11
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_mal__L_e",
+      "mid": "mal__L_e",
+      "source": "met:mal__L_e",
+      "target": "rxn:EX_mal__L_e",
+      "points": [
+        [
+          10,
+          3
+        ],
+        [
+          12,
+          3
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_pyr_e",
+      "mid": "pyr_e",
+      "source": "met:pyr_e",
+      "target": "rxn:EX_pyr_e",
+      "points": [
+        [
+          2,
+          9
+        ],
+        [
+          2,
+          9.3
+        ],
+        [
+          0,
+          9.3
+        ],
+        [
+          0,
+          9
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "EX_succ_e",
+      "mid": "succ_e",
+      "source": "met:succ_e",
+      "target": "rxn:EX_succ_e",
+      "points": [
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "FBA",
+      "mid": "dhap_c",
+      "source": "rxn:FBA",
+      "target": "met:dhap_c",
+      "points": [
+        [
+          1,
+          18
+        ],
+        [
+          2,
+          18
+        ],
+        [
+          2,
+          17.15
+        ],
+        [
+          1,
+          17.15
+        ],
+        [
+          1,
+          17
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "FBA",
+      "mid": "fdp_c",
+      "source": "met:fdp_c",
+      "target": "rxn:FBA",
+      "points": [
+        [
+          1,
+          19
+        ],
+        [
+          1,
+          18
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "FBA",
+      "mid": "g3p_c",
+      "source": "rxn:FBA",
+      "target": "met:g3p_c",
+      "points": [
+        [
+          1,
+          18
+        ],
+        [
+          2,
+          18
+        ],
+        [
+          2,
+          15.15
+        ],
+        [
+          1,
+          15.15
+        ],
+        [
+          1,
+          15
+        ]
+      ],
+      "priority": 2,
+      "backbone": false,
+      "routing_locked": true
+    },
+    {
+      "rid": "FBP",
+      "mid": "f6p_c",
+      "source": "rxn:FBP",
+      "target": "met:f6p_c",
+      "points": [
+        [
+          5,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          21
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FBP",
+      "mid": "fdp_c",
+      "source": "met:fdp_c",
+      "target": "rxn:FBP",
+      "points": [
+        [
+          1,
+          19
+        ],
+        [
+          4.7,
+          19
+        ],
+        [
+          4.7,
+          5
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FORt",
+      "mid": "for_c",
+      "source": "met:for_c",
+      "target": "rxn:FORt",
+      "points": [
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          7
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "FORt",
+      "mid": "for_e",
+      "source": "rxn:FORt",
+      "target": "met:for_e",
+      "points": [
+        [
+          7,
+          7
+        ],
+        [
+          11,
+          7
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "FORt2",
+      "mid": "for_c",
+      "source": "rxn:FORt2",
+      "target": "met:for_c",
+      "points": [
+        [
+          10,
+          4
+        ],
+        [
+          10,
+          7.15
+        ],
+        [
+          5,
+          7.15
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FORt2",
+      "mid": "for_e",
+      "source": "met:for_e",
+      "target": "rxn:FORt2",
+      "points": [
+        [
+          11,
+          7
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          4
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FRD7",
+      "mid": "fum_c",
+      "source": "met:fum_c",
+      "target": "rxn:FRD7",
+      "points": [
+        [
+          4,
+          1
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          6,
+          18
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FRD7",
+      "mid": "q8_c",
+      "source": "rxn:FRD7",
+      "target": "copy:FRD7:q8_c",
+      "points": [
+        [
+          6,
+          18
+        ],
+        [
+          6.449827493308394,
+          18
+        ],
+        [
+          6.449827493308394,
+          18.000172506691605
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FRD7",
+      "mid": "q8h2_c",
+      "source": "copy:FRD7:q8h2_c",
+      "target": "rxn:FRD7",
+      "points": [
+        [
+          5.550172506691606,
+          17.999827493308395
+        ],
+        [
+          6,
+          17.999827493308395
+        ],
+        [
+          6,
+          18
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FRD7",
+      "mid": "succ_c",
+      "source": "rxn:FRD7",
+      "target": "met:succ_c",
+      "points": [
+        [
+          6,
+          18
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FRUpts2",
+      "mid": "f6p_c",
+      "source": "rxn:FRUpts2",
+      "target": "met:f6p_c",
+      "points": [
+        [
+          2,
+          21
+        ],
+        [
+          1,
+          21
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "FRUpts2",
+      "mid": "fru_e",
+      "source": "met:fru_e",
+      "target": "rxn:FRUpts2",
+      "points": [
+        [
+          2,
+          22
+        ],
+        [
+          2,
+          21
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "FRUpts2",
+      "mid": "pep_c",
+      "source": "met:pep_c",
+      "target": "rxn:FRUpts2",
+      "points": [
+        [
+          1,
+          7
+        ],
+        [
+          1.15,
+          7
+        ],
+        [
+          1.15,
+          21
+        ],
+        [
+          2,
+          21
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FRUpts2",
+      "mid": "pyr_c",
+      "source": "rxn:FRUpts2",
+      "target": "met:pyr_c",
+      "points": [
+        [
+          2,
+          21
+        ],
+        [
+          1,
+          21
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "FUM",
+      "mid": "fum_c",
+      "source": "met:fum_c",
+      "target": "rxn:FUM",
+      "points": [
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "FUM",
+      "mid": "mal__L_c",
+      "source": "rxn:FUM",
+      "target": "met:mal__L_c",
+      "points": [
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "FUMt2_2",
+      "mid": "fum_c",
+      "source": "rxn:FUMt2_2",
+      "target": "met:fum_c",
+      "points": [
+        [
+          3,
+          2
+        ],
+        [
+          3.3,
+          2
+        ],
+        [
+          3.3,
+          1
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "FUMt2_2",
+      "mid": "fum_e",
+      "source": "met:fum_e",
+      "target": "rxn:FUMt2_2",
+      "points": [
+        [
+          3,
+          1
+        ],
+        [
+          3.3,
+          1
+        ],
+        [
+          3.3,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "G6PDH2r",
+      "mid": "6pgl_c",
+      "source": "rxn:G6PDH2r",
+      "target": "met:6pgl_c",
+      "points": [
+        [
+          6,
+          25
+        ],
+        [
+          9.85,
+          25
+        ],
+        [
+          9.85,
+          5
+        ],
+        [
+          10,
+          5
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "G6PDH2r",
+      "mid": "g6p_c",
+      "source": "met:g6p_c",
+      "target": "rxn:G6PDH2r",
+      "points": [
+        [
+          1,
+          23
+        ],
+        [
+          1,
+          23.3
+        ],
+        [
+          6,
+          23.3
+        ],
+        [
+          6,
+          25
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "G6PDH2r",
+      "mid": "nadp_c",
+      "source": "copy:G6PDH2r:nadp_c",
+      "target": "rxn:G6PDH2r",
+      "points": [
+        [
+          6.449827493308394,
+          25.000172506691605
+        ],
+        [
+          6.449827493308394,
+          25
+        ],
+        [
+          6,
+          25
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "G6PDH2r",
+      "mid": "nadph_c",
+      "source": "rxn:G6PDH2r",
+      "target": "copy:G6PDH2r:nadph_c",
+      "points": [
+        [
+          6,
+          25
+        ],
+        [
+          5.550172506691606,
+          25
+        ],
+        [
+          5.550172506691606,
+          24.999827493308395
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GAPD",
+      "mid": "13dpg_c",
+      "source": "rxn:GAPD",
+      "target": "met:13dpg_c",
+      "points": [
+        [
+          1,
+          14
+        ],
+        [
+          1,
+          13
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "GAPD",
+      "mid": "g3p_c",
+      "source": "met:g3p_c",
+      "target": "rxn:GAPD",
+      "points": [
+        [
+          1,
+          15
+        ],
+        [
+          1,
+          14
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "GAPD",
+      "mid": "nad_c",
+      "source": "copy:GAPD:nad_c",
+      "target": "rxn:GAPD",
+      "points": [
+        [
+          1.4498274933083939,
+          14.000172506691607
+        ],
+        [
+          1,
+          14.000172506691607
+        ],
+        [
+          1,
+          14
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "GAPD",
+      "mid": "nadh_c",
+      "source": "rxn:GAPD",
+      "target": "copy:GAPD:nadh_c",
+      "points": [
+        [
+          1,
+          14
+        ],
+        [
+          0.5501725066916061,
+          14
+        ],
+        [
+          0.5501725066916061,
+          13.999827493308393
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "GLCpts",
+      "mid": "g6p_c",
+      "source": "rxn:GLCpts",
+      "target": "met:g6p_c",
+      "points": [
+        [
+          1,
+          24
+        ],
+        [
+          -1,
+          24
+        ],
+        [
+          -1,
+          23
+        ],
+        [
+          1,
+          23
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "GLCpts",
+      "mid": "glc__D_e",
+      "source": "met:glc__D_e",
+      "target": "rxn:GLCpts",
+      "points": [
+        [
+          1,
+          25
+        ],
+        [
+          1,
+          24
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "GLCpts",
+      "mid": "pep_c",
+      "source": "met:pep_c",
+      "target": "rxn:GLCpts",
+      "points": [
+        [
+          1,
+          7
+        ],
+        [
+          -1,
+          7
+        ],
+        [
+          -1,
+          24
+        ],
+        [
+          1,
+          24
+        ]
+      ],
+      "priority": 2,
+      "backbone": false,
+      "routing_locked": true
+    },
+    {
+      "rid": "GLCpts",
+      "mid": "pyr_c",
+      "source": "rxn:GLCpts",
+      "target": "met:pyr_c",
+      "points": [
+        [
+          1,
+          24
+        ],
+        [
+          -1,
+          24
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "priority": 2,
+      "backbone": false,
+      "routing_locked": true
+    },
+    {
+      "rid": "GLNS",
+      "mid": "adp_c",
+      "source": "rxn:GLNS",
+      "target": "copy:GLNS:adp_c",
+      "points": [
+        [
+          9,
+          16
+        ],
+        [
+          9.449827493308394,
+          16
+        ],
+        [
+          9.449827493308394,
+          16.000172506691605
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLNS",
+      "mid": "atp_c",
+      "source": "copy:GLNS:atp_c",
+      "target": "rxn:GLNS",
+      "points": [
+        [
+          8.550172506691606,
+          15.999827493308393
+        ],
+        [
+          9,
+          15.999827493308393
+        ],
+        [
+          9,
+          16
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLNS",
+      "mid": "gln__L_c",
+      "source": "rxn:GLNS",
+      "target": "met:gln__L_c",
+      "points": [
+        [
+          9,
+          16
+        ],
+        [
+          10,
+          16
+        ],
+        [
+          10,
+          12
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLNS",
+      "mid": "glu__L_c",
+      "source": "met:glu__L_c",
+      "target": "rxn:GLNS",
+      "points": [
+        [
+          10,
+          14
+        ],
+        [
+          9,
+          14
+        ],
+        [
+          9,
+          16
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLNabc",
+      "mid": "adp_c",
+      "source": "rxn:GLNabc",
+      "target": "copy:GLNabc:adp_c",
+      "points": [
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12.000172506691607
+        ],
+        [
+          11.449827493308394,
+          12.000172506691607
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLNabc",
+      "mid": "atp_c",
+      "source": "copy:GLNabc:atp_c",
+      "target": "rxn:GLNabc",
+      "points": [
+        [
+          10.550172506691606,
+          11.999827493308393
+        ],
+        [
+          10.550172506691606,
+          12
+        ],
+        [
+          11,
+          12
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLNabc",
+      "mid": "gln__L_c",
+      "source": "rxn:GLNabc",
+      "target": "met:gln__L_c",
+      "points": [
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          12
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "GLNabc",
+      "mid": "gln__L_e",
+      "source": "met:gln__L_e",
+      "target": "rxn:GLNabc",
+      "points": [
+        [
+          11,
+          13
+        ],
+        [
+          11,
+          12
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "GLUDy",
+      "mid": "akg_c",
+      "source": "rxn:GLUDy",
+      "target": "met:akg_c",
+      "points": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3.15
+        ],
+        [
+          8.85,
+          3.15
+        ],
+        [
+          8.85,
+          3
+        ],
+        [
+          9,
+          3
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUDy",
+      "mid": "glu__L_c",
+      "source": "met:glu__L_c",
+      "target": "rxn:GLUDy",
+      "points": [
+        [
+          10,
+          14
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUDy",
+      "mid": "nadp_c",
+      "source": "copy:GLUDy:nadp_c",
+      "target": "rxn:GLUDy",
+      "points": [
+        [
+          1.4498274933083939,
+          3.000172506691606
+        ],
+        [
+          1,
+          3.000172506691606
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUDy",
+      "mid": "nadph_c",
+      "source": "rxn:GLUDy",
+      "target": "copy:GLUDy:nadph_c",
+      "points": [
+        [
+          1,
+          3
+        ],
+        [
+          0.5501725066916061,
+          3
+        ],
+        [
+          0.5501725066916061,
+          2.999827493308394
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUN",
+      "mid": "gln__L_c",
+      "source": "met:gln__L_c",
+      "target": "rxn:GLUN",
+      "points": [
+        [
+          10,
+          12
+        ],
+        [
+          10,
+          12.15
+        ],
+        [
+          7,
+          12.15
+        ],
+        [
+          7,
+          13
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUN",
+      "mid": "glu__L_c",
+      "source": "rxn:GLUN",
+      "target": "met:glu__L_c",
+      "points": [
+        [
+          7,
+          13
+        ],
+        [
+          7,
+          14.15
+        ],
+        [
+          10,
+          14.15
+        ],
+        [
+          10,
+          14
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUSy",
+      "mid": "akg_c",
+      "source": "met:akg_c",
+      "target": "rxn:GLUSy",
+      "points": [
+        [
+          9,
+          3
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          2
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUSy",
+      "mid": "gln__L_c",
+      "source": "met:gln__L_c",
+      "target": "rxn:GLUSy",
+      "points": [
+        [
+          10,
+          12
+        ],
+        [
+          10,
+          2
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUSy",
+      "mid": "glu__L_c",
+      "source": "rxn:GLUSy",
+      "target": "met:glu__L_c",
+      "points": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          14
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUSy",
+      "mid": "nadp_c",
+      "source": "rxn:GLUSy",
+      "target": "copy:GLUSy:nadp_c",
+      "points": [
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          2.000172506691606
+        ],
+        [
+          10.449827493308394,
+          2.000172506691606
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUSy",
+      "mid": "nadph_c",
+      "source": "copy:GLUSy:nadph_c",
+      "target": "rxn:GLUSy",
+      "points": [
+        [
+          9.550172506691606,
+          1.999827493308394
+        ],
+        [
+          10,
+          1.999827493308394
+        ],
+        [
+          10,
+          2
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GLUt2r",
+      "mid": "glu__L_c",
+      "source": "rxn:GLUt2r",
+      "target": "met:glu__L_c",
+      "points": [
+        [
+          10,
+          13
+        ],
+        [
+          10.3,
+          13
+        ],
+        [
+          10.3,
+          14
+        ],
+        [
+          10,
+          14
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "GLUt2r",
+      "mid": "glu__L_e",
+      "source": "met:glu__L_e",
+      "target": "rxn:GLUt2r",
+      "points": [
+        [
+          11,
+          11
+        ],
+        [
+          10.3,
+          11
+        ],
+        [
+          10.3,
+          13
+        ],
+        [
+          10,
+          13
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "GND",
+      "mid": "6pgc_c",
+      "source": "met:6pgc_c",
+      "target": "rxn:GND",
+      "points": [
+        [
+          2,
+          17
+        ],
+        [
+          6,
+          17
+        ],
+        [
+          6,
+          12
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GND",
+      "mid": "nadp_c",
+      "source": "copy:GND:nadp_c",
+      "target": "rxn:GND",
+      "points": [
+        [
+          6.449827493308394,
+          12.000172506691607
+        ],
+        [
+          6,
+          12.000172506691607
+        ],
+        [
+          6,
+          12
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GND",
+      "mid": "nadph_c",
+      "source": "rxn:GND",
+      "target": "copy:GND:nadph_c",
+      "points": [
+        [
+          6,
+          12
+        ],
+        [
+          5.550172506691606,
+          12
+        ],
+        [
+          5.550172506691606,
+          11.999827493308393
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "GND",
+      "mid": "ru5p__D_c",
+      "source": "rxn:GND",
+      "target": "met:ru5p__D_c",
+      "points": [
+        [
+          6,
+          12
+        ],
+        [
+          6.15,
+          12
+        ],
+        [
+          6.15,
+          23
+        ],
+        [
+          11,
+          23
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ICDHyr",
+      "mid": "akg_c",
+      "source": "rxn:ICDHyr",
+      "target": "met:akg_c",
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          9,
+          3
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "ICDHyr",
+      "mid": "icit_c",
+      "source": "met:icit_c",
+      "target": "rxn:ICDHyr",
+      "points": [
+        [
+          9,
+          5
+        ],
+        [
+          9,
+          4
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "ICDHyr",
+      "mid": "nadp_c",
+      "source": "copy:ICDHyr:nadp_c",
+      "target": "rxn:ICDHyr",
+      "points": [
+        [
+          9.449827493308394,
+          4.000172506691606
+        ],
+        [
+          9,
+          4.000172506691606
+        ],
+        [
+          9,
+          4
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "ICDHyr",
+      "mid": "nadph_c",
+      "source": "rxn:ICDHyr",
+      "target": "copy:ICDHyr:nadph_c",
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          9,
+          3.999827493308394
+        ],
+        [
+          8.550172506691606,
+          3.999827493308394
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "ICL",
+      "mid": "glx_c",
+      "source": "rxn:ICL",
+      "target": "met:glx_c",
+      "points": [
+        [
+          5,
+          21
+        ],
+        [
+          11,
+          21
+        ],
+        [
+          11,
+          17
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ICL",
+      "mid": "icit_c",
+      "source": "met:icit_c",
+      "target": "rxn:ICL",
+      "points": [
+        [
+          9,
+          5
+        ],
+        [
+          8.85,
+          5
+        ],
+        [
+          8.85,
+          21
+        ],
+        [
+          5,
+          21
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ICL",
+      "mid": "succ_c",
+      "source": "rxn:ICL",
+      "target": "met:succ_c",
+      "points": [
+        [
+          5,
+          21
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "LDH_D",
+      "mid": "lac__D_c",
+      "source": "met:lac__D_c",
+      "target": "rxn:LDH_D",
+      "points": [
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          6
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "LDH_D",
+      "mid": "nad_c",
+      "source": "copy:LDH_D:nad_c",
+      "target": "rxn:LDH_D",
+      "points": [
+        [
+          2.4498274933083937,
+          6.000172506691606
+        ],
+        [
+          2,
+          6.000172506691606
+        ],
+        [
+          2,
+          6
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "LDH_D",
+      "mid": "nadh_c",
+      "source": "rxn:LDH_D",
+      "target": "copy:LDH_D:nadh_c",
+      "points": [
+        [
+          2,
+          6
+        ],
+        [
+          1.5501725066916061,
+          6
+        ],
+        [
+          1.5501725066916061,
+          5.999827493308394
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "LDH_D",
+      "mid": "pyr_c",
+      "source": "rxn:LDH_D",
+      "target": "met:pyr_c",
+      "points": [
+        [
+          2,
+          6
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          5.92
+        ],
+        [
+          1.3,
+          5.92
+        ],
+        [
+          1.3,
+          5.08
+        ],
+        [
+          1,
+          5.08
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "MALS",
+      "mid": "accoa_c",
+      "source": "met:accoa_c",
+      "target": "rxn:MALS",
+      "points": [
+        [
+          3,
+          5
+        ],
+        [
+          4.749827493308394,
+          5
+        ],
+        [
+          4.749827493308394,
+          15
+        ],
+        [
+          5,
+          15
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "MALS",
+      "mid": "coa_c",
+      "source": "rxn:MALS",
+      "target": "copy:MALS:coa_c",
+      "points": [
+        [
+          5,
+          15
+        ],
+        [
+          5.449827493308394,
+          15
+        ],
+        [
+          5.449827493308394,
+          15.000172506691607
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "MALS",
+      "mid": "glx_c",
+      "source": "met:glx_c",
+      "target": "rxn:MALS",
+      "points": [
+        [
+          11,
+          17
+        ],
+        [
+          5.3,
+          17
+        ],
+        [
+          5.3,
+          15
+        ],
+        [
+          5,
+          15
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "MALS",
+      "mid": "mal__L_c",
+      "source": "rxn:MALS",
+      "target": "met:mal__L_c",
+      "points": [
+        [
+          5,
+          15
+        ],
+        [
+          3.85,
+          15
+        ],
+        [
+          3.85,
+          3
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "MALt2_2",
+      "mid": "mal__L_c",
+      "source": "rxn:MALt2_2",
+      "target": "met:mal__L_c",
+      "points": [
+        [
+          7,
+          3
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "MALt2_2",
+      "mid": "mal__L_e",
+      "source": "met:mal__L_e",
+      "target": "rxn:MALt2_2",
+      "points": [
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          3.2998274933083938
+        ],
+        [
+          7,
+          3.2998274933083938
+        ],
+        [
+          7,
+          3
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "MDH",
+      "mid": "mal__L_c",
+      "source": "met:mal__L_c",
+      "target": "rxn:MDH",
+      "points": [
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "MDH",
+      "mid": "nad_c",
+      "source": "copy:MDH:nad_c",
+      "target": "rxn:MDH",
+      "points": [
+        [
+          4.449827493308394,
+          4.000172506691606
+        ],
+        [
+          4.449827493308394,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "MDH",
+      "mid": "nadh_c",
+      "source": "rxn:MDH",
+      "target": "copy:MDH:nadh_c",
+      "points": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          3.999827493308394
+        ],
+        [
+          3.550172506691606,
+          3.999827493308394
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "MDH",
+      "mid": "oaa_c",
+      "source": "rxn:MDH",
+      "target": "met:oaa_c",
+      "points": [
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          5,
+          5.85
+        ],
+        [
+          4,
+          5.85
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "ME1",
+      "mid": "mal__L_c",
+      "source": "met:mal__L_c",
+      "target": "rxn:ME1",
+      "points": [
+        [
+          4,
+          3
+        ],
+        [
+          2.15,
+          3
+        ],
+        [
+          2.15,
+          18
+        ],
+        [
+          2,
+          18
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ME1",
+      "mid": "nad_c",
+      "source": "copy:ME1:nad_c",
+      "target": "rxn:ME1",
+      "points": [
+        [
+          2.4498274933083937,
+          18.000172506691605
+        ],
+        [
+          2.4498274933083937,
+          18
+        ],
+        [
+          2,
+          18
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ME1",
+      "mid": "nadh_c",
+      "source": "rxn:ME1",
+      "target": "copy:ME1:nadh_c",
+      "points": [
+        [
+          2,
+          18
+        ],
+        [
+          1.5501725066916061,
+          18
+        ],
+        [
+          1.5501725066916061,
+          17.999827493308395
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ME1",
+      "mid": "pyr_c",
+      "source": "rxn:ME1",
+      "target": "met:pyr_c",
+      "points": [
+        [
+          2,
+          18
+        ],
+        [
+          1,
+          18
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ME2",
+      "mid": "mal__L_c",
+      "source": "met:mal__L_c",
+      "target": "rxn:ME2",
+      "points": [
+        [
+          4,
+          3
+        ],
+        [
+          3.5,
+          3
+        ],
+        [
+          3.5,
+          23
+        ],
+        [
+          3,
+          23
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ME2",
+      "mid": "nadp_c",
+      "source": "copy:ME2:nadp_c",
+      "target": "rxn:ME2",
+      "points": [
+        [
+          3.4498274933083937,
+          23.000172506691605
+        ],
+        [
+          3.4498274933083937,
+          23
+        ],
+        [
+          3,
+          23
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ME2",
+      "mid": "nadph_c",
+      "source": "rxn:ME2",
+      "target": "copy:ME2:nadph_c",
+      "points": [
+        [
+          3,
+          23
+        ],
+        [
+          2.550172506691606,
+          23
+        ],
+        [
+          2.550172506691606,
+          22.999827493308395
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "ME2",
+      "mid": "pyr_c",
+      "source": "rxn:ME2",
+      "target": "met:pyr_c",
+      "points": [
+        [
+          3,
+          23
+        ],
+        [
+          1,
+          23
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "NADH16",
+      "mid": "nad_c",
+      "source": "rxn:NADH16",
+      "target": "copy:NADH16:nad_c",
+      "points": [
+        [
+          11,
+          19
+        ],
+        [
+          11.449827493308394,
+          19
+        ],
+        [
+          11.449827493308394,
+          19.000172506691605
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "NADH16",
+      "mid": "nadh_c",
+      "source": "copy:NADH16:nadh_c",
+      "target": "rxn:NADH16",
+      "points": [
+        [
+          10.999827493308393,
+          19.449827493308394
+        ],
+        [
+          10.999827493308393,
+          19
+        ],
+        [
+          11,
+          19
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "NADH16",
+      "mid": "q8_c",
+      "source": "copy:NADH16:q8_c",
+      "target": "rxn:NADH16",
+      "points": [
+        [
+          10.550172506691606,
+          18.999827493308395
+        ],
+        [
+          11,
+          18.999827493308395
+        ],
+        [
+          11,
+          19
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "NADH16",
+      "mid": "q8h2_c",
+      "source": "rxn:NADH16",
+      "target": "copy:NADH16:q8h2_c",
+      "points": [
+        [
+          11,
+          19
+        ],
+        [
+          11.000172506691607,
+          19
+        ],
+        [
+          11.000172506691607,
+          18.550172506691606
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "NADTRHD",
+      "mid": "nad_c",
+      "source": "copy:NADTRHD:nad_c",
+      "target": "rxn:NADTRHD",
+      "points": [
+        [
+          11.449827493308394,
+          25.000172506691605
+        ],
+        [
+          11,
+          25.000172506691605
+        ],
+        [
+          11,
+          25
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "NADTRHD",
+      "mid": "nadh_c",
+      "source": "rxn:NADTRHD",
+      "target": "copy:NADTRHD:nadh_c",
+      "points": [
+        [
+          11,
+          25
+        ],
+        [
+          10.999827493308393,
+          25
+        ],
+        [
+          10.999827493308393,
+          25.449827493308394
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "NADTRHD",
+      "mid": "nadp_c",
+      "source": "rxn:NADTRHD",
+      "target": "copy:NADTRHD:nadp_c",
+      "points": [
+        [
+          11,
+          25
+        ],
+        [
+          10.550172506691606,
+          25
+        ],
+        [
+          10.550172506691606,
+          24.999827493308395
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "NADTRHD",
+      "mid": "nadph_c",
+      "source": "copy:NADTRHD:nadph_c",
+      "target": "rxn:NADTRHD",
+      "points": [
+        [
+          11.000172506691607,
+          24.550172506691606
+        ],
+        [
+          11,
+          24.550172506691606
+        ],
+        [
+          11,
+          25
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PDH",
+      "mid": "accoa_c",
+      "source": "rxn:PDH",
+      "target": "met:accoa_c",
+      "points": [
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PDH",
+      "mid": "coa_c",
+      "source": "copy:PDH:coa_c",
+      "target": "rxn:PDH",
+      "points": [
+        [
+          2.4498274933083937,
+          5.000172506691606
+        ],
+        [
+          2,
+          5.000172506691606
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "PDH",
+      "mid": "nad_c",
+      "source": "copy:PDH:nad_c",
+      "target": "rxn:PDH",
+      "points": [
+        [
+          1.8353193965216104,
+          5.2853193965216105
+        ],
+        [
+          2,
+          5.2853193965216105
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "PDH",
+      "mid": "nadh_c",
+      "source": "rxn:PDH",
+      "target": "copy:PDH:nadh_c",
+      "points": [
+        [
+          2,
+          5
+        ],
+        [
+          1.8351344588266256,
+          5
+        ],
+        [
+          1.8351344588266256,
+          4.714865541173374
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "PDH",
+      "mid": "pyr_c",
+      "source": "met:pyr_c",
+      "target": "rxn:PDH",
+      "points": [
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PFK",
+      "mid": "adp_c",
+      "source": "rxn:PFK",
+      "target": "copy:PFK:adp_c",
+      "points": [
+        [
+          1,
+          20
+        ],
+        [
+          1,
+          20.000172506691605
+        ],
+        [
+          1.4498274933083939,
+          20.000172506691605
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "PFK",
+      "mid": "atp_c",
+      "source": "copy:PFK:atp_c",
+      "target": "rxn:PFK",
+      "points": [
+        [
+          0.5501725066916061,
+          19.999827493308395
+        ],
+        [
+          1,
+          19.999827493308395
+        ],
+        [
+          1,
+          20
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "PFK",
+      "mid": "f6p_c",
+      "source": "met:f6p_c",
+      "target": "rxn:PFK",
+      "points": [
+        [
+          1,
+          21
+        ],
+        [
+          1,
+          20
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PFK",
+      "mid": "fdp_c",
+      "source": "rxn:PFK",
+      "target": "met:fdp_c",
+      "points": [
+        [
+          1,
+          20
+        ],
+        [
+          1,
+          19
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PFL",
+      "mid": "accoa_c",
+      "source": "rxn:PFL",
+      "target": "met:accoa_c",
+      "points": [
+        [
+          4,
+          5
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "PFL",
+      "mid": "coa_c",
+      "source": "copy:PFL:coa_c",
+      "target": "rxn:PFL",
+      "points": [
+        [
+          4.449827493308394,
+          5.000172506691606
+        ],
+        [
+          4,
+          5.000172506691606
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PFL",
+      "mid": "for_c",
+      "source": "rxn:PFL",
+      "target": "met:for_c",
+      "points": [
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          5.08
+        ],
+        [
+          5.1499999999999995,
+          5.08
+        ],
+        [
+          5.1499999999999995,
+          6.92
+        ],
+        [
+          5,
+          6.92
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "PFL",
+      "mid": "pyr_c",
+      "source": "met:pyr_c",
+      "target": "rxn:PFL",
+      "points": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          4.85
+        ],
+        [
+          4,
+          4.85
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PGI",
+      "mid": "f6p_c",
+      "source": "rxn:PGI",
+      "target": "met:f6p_c",
+      "points": [
+        [
+          1,
+          22
+        ],
+        [
+          1,
+          21
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PGI",
+      "mid": "g6p_c",
+      "source": "met:g6p_c",
+      "target": "rxn:PGI",
+      "points": [
+        [
+          1,
+          23
+        ],
+        [
+          1,
+          22
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PGK",
+      "mid": "13dpg_c",
+      "source": "rxn:PGK",
+      "target": "met:13dpg_c",
+      "points": [
+        [
+          1,
+          12
+        ],
+        [
+          1,
+          13
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PGK",
+      "mid": "3pg_c",
+      "source": "met:3pg_c",
+      "target": "rxn:PGK",
+      "points": [
+        [
+          1,
+          11
+        ],
+        [
+          1,
+          12
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PGK",
+      "mid": "adp_c",
+      "source": "rxn:PGK",
+      "target": "copy:PGK:adp_c",
+      "points": [
+        [
+          1,
+          12
+        ],
+        [
+          1,
+          12.000172506691607
+        ],
+        [
+          1.4498274933083939,
+          12.000172506691607
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "PGK",
+      "mid": "atp_c",
+      "source": "copy:PGK:atp_c",
+      "target": "rxn:PGK",
+      "points": [
+        [
+          0.5501725066916061,
+          11.999827493308393
+        ],
+        [
+          1,
+          11.999827493308393
+        ],
+        [
+          1,
+          12
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "PGL",
+      "mid": "6pgc_c",
+      "source": "rxn:PGL",
+      "target": "met:6pgc_c",
+      "points": [
+        [
+          4,
+          22
+        ],
+        [
+          4,
+          17
+        ],
+        [
+          2,
+          17
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PGL",
+      "mid": "6pgl_c",
+      "source": "met:6pgl_c",
+      "target": "rxn:PGL",
+      "points": [
+        [
+          10,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          22
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PGM",
+      "mid": "2pg_c",
+      "source": "met:2pg_c",
+      "target": "rxn:PGM",
+      "points": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          10
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PGM",
+      "mid": "3pg_c",
+      "source": "rxn:PGM",
+      "target": "met:3pg_c",
+      "points": [
+        [
+          1,
+          10
+        ],
+        [
+          1,
+          11
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PPC",
+      "mid": "oaa_c",
+      "source": "rxn:PPC",
+      "target": "met:oaa_c",
+      "points": [
+        [
+          9,
+          17
+        ],
+        [
+          4.15,
+          17
+        ],
+        [
+          4.15,
+          6
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PPC",
+      "mid": "pep_c",
+      "source": "met:pep_c",
+      "target": "rxn:PPC",
+      "points": [
+        [
+          1,
+          7
+        ],
+        [
+          1.15,
+          7
+        ],
+        [
+          1.15,
+          17
+        ],
+        [
+          9,
+          17
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PPCK",
+      "mid": "adp_c",
+      "source": "rxn:PPCK",
+      "target": "copy:PPCK:adp_c",
+      "points": [
+        [
+          2,
+          23
+        ],
+        [
+          2,
+          23.000172506691605
+        ],
+        [
+          2.4498274933083937,
+          23.000172506691605
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PPCK",
+      "mid": "atp_c",
+      "source": "copy:PPCK:atp_c",
+      "target": "rxn:PPCK",
+      "points": [
+        [
+          1.5501725066916061,
+          22.999827493308395
+        ],
+        [
+          2,
+          22.999827493308395
+        ],
+        [
+          2,
+          23
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PPCK",
+      "mid": "oaa_c",
+      "source": "met:oaa_c",
+      "target": "rxn:PPCK",
+      "points": [
+        [
+          4,
+          6
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          2,
+          23
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PPCK",
+      "mid": "pep_c",
+      "source": "rxn:PPCK",
+      "target": "met:pep_c",
+      "points": [
+        [
+          2,
+          23
+        ],
+        [
+          1.15,
+          23
+        ],
+        [
+          1.15,
+          7
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PPS",
+      "mid": "amp_c",
+      "source": "rxn:PPS",
+      "target": "copy:PPS:amp_c",
+      "points": [
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          7.22
+        ],
+        [
+          10.449827493308394,
+          7.22
+        ],
+        [
+          10.449827493308394,
+          8.000172506691607
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PPS",
+      "mid": "atp_c",
+      "source": "copy:PPS:atp_c",
+      "target": "rxn:PPS",
+      "points": [
+        [
+          9.550172506691606,
+          7.999827493308394
+        ],
+        [
+          10,
+          7.999827493308394
+        ],
+        [
+          10,
+          8
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PPS",
+      "mid": "pep_c",
+      "source": "rxn:PPS",
+      "target": "met:pep_c",
+      "points": [
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          7.22
+        ],
+        [
+          1,
+          7.22
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PPS",
+      "mid": "pyr_c",
+      "source": "met:pyr_c",
+      "target": "rxn:PPS",
+      "points": [
+        [
+          1,
+          5
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          8
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PTAr",
+      "mid": "accoa_c",
+      "source": "met:accoa_c",
+      "target": "rxn:PTAr",
+      "points": [
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          5.08
+        ],
+        [
+          2.5500000000000003,
+          5.08
+        ],
+        [
+          2.5500000000000003,
+          7.92
+        ],
+        [
+          3,
+          7.92
+        ],
+        [
+          3,
+          8
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "PTAr",
+      "mid": "actp_c",
+      "source": "rxn:PTAr",
+      "target": "met:actp_c",
+      "points": [
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "PTAr",
+      "mid": "coa_c",
+      "source": "rxn:PTAr",
+      "target": "copy:PTAr:coa_c",
+      "points": [
+        [
+          3,
+          8
+        ],
+        [
+          3.4498274933083937,
+          8
+        ],
+        [
+          3.4498274933083937,
+          8.000172506691607
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "PYK",
+      "mid": "adp_c",
+      "source": "copy:PYK:adp_c",
+      "target": "rxn:PYK",
+      "points": [
+        [
+          1.4498274933083939,
+          6.000172506691606
+        ],
+        [
+          1,
+          6.000172506691606
+        ],
+        [
+          1,
+          6
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "PYK",
+      "mid": "atp_c",
+      "source": "rxn:PYK",
+      "target": "copy:PYK:atp_c",
+      "points": [
+        [
+          1,
+          6
+        ],
+        [
+          0.5501725066916061,
+          6
+        ],
+        [
+          0.5501725066916061,
+          5.999827493308394
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "PYK",
+      "mid": "pep_c",
+      "source": "met:pep_c",
+      "target": "rxn:PYK",
+      "points": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          6
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PYK",
+      "mid": "pyr_c",
+      "source": "rxn:PYK",
+      "target": "met:pyr_c",
+      "points": [
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "PYRt2",
+      "mid": "pyr_c",
+      "source": "rxn:PYRt2",
+      "target": "met:pyr_c",
+      "points": [
+        [
+          2,
+          8
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          7.92
+        ],
+        [
+          0.7,
+          7.92
+        ],
+        [
+          0.7,
+          5.08
+        ],
+        [
+          1,
+          5.08
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "PYRt2",
+      "mid": "pyr_e",
+      "source": "met:pyr_e",
+      "target": "rxn:PYRt2",
+      "points": [
+        [
+          2,
+          9
+        ],
+        [
+          2,
+          8
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "RPE",
+      "mid": "ru5p__D_c",
+      "source": "met:ru5p__D_c",
+      "target": "rxn:RPE",
+      "points": [
+        [
+          11,
+          23
+        ],
+        [
+          10.7,
+          23
+        ],
+        [
+          10.7,
+          10
+        ],
+        [
+          7,
+          10
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "RPE",
+      "mid": "xu5p__D_c",
+      "source": "rxn:RPE",
+      "target": "met:xu5p__D_c",
+      "points": [
+        [
+          7,
+          10
+        ],
+        [
+          7,
+          9.985319396521609
+        ],
+        [
+          1,
+          9.985319396521609
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "RPI",
+      "mid": "r5p_c",
+      "source": "met:r5p_c",
+      "target": "rxn:RPI",
+      "points": [
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          3,
+          13
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "RPI",
+      "mid": "ru5p__D_c",
+      "source": "rxn:RPI",
+      "target": "met:ru5p__D_c",
+      "points": [
+        [
+          3,
+          13
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          11,
+          23
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "SUCCt2_2",
+      "mid": "succ_c",
+      "source": "rxn:SUCCt2_2",
+      "target": "met:succ_c",
+      "points": [
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "SUCCt2_2",
+      "mid": "succ_e",
+      "source": "met:succ_e",
+      "target": "rxn:SUCCt2_2",
+      "points": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          1.7
+        ],
+        [
+          5,
+          1.7
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "priority": 1,
+      "backbone": false
+    },
+    {
+      "rid": "SUCCt3",
+      "mid": "succ_c",
+      "source": "met:succ_c",
+      "target": "rxn:SUCCt3",
+      "points": [
+        [
+          6,
+          1
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          7
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "SUCCt3",
+      "mid": "succ_e",
+      "source": "rxn:SUCCt3",
+      "target": "met:succ_e",
+      "points": [
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          6.699827493308394
+        ],
+        [
+          2,
+          6.699827493308394
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "SUCDi",
+      "mid": "fum_c",
+      "source": "rxn:SUCDi",
+      "target": "met:fum_c",
+      "points": [
+        [
+          5,
+          1
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "SUCDi",
+      "mid": "q8_c",
+      "source": "copy:SUCDi:q8_c",
+      "target": "rxn:SUCDi",
+      "points": [
+        [
+          5.449827493308394,
+          1.0001725066916063
+        ],
+        [
+          5.449827493308394,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "SUCDi",
+      "mid": "q8h2_c",
+      "source": "rxn:SUCDi",
+      "target": "copy:SUCDi:q8h2_c",
+      "points": [
+        [
+          5,
+          1
+        ],
+        [
+          4.550172506691606,
+          1
+        ],
+        [
+          4.550172506691606,
+          0.9998274933083939
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "SUCDi",
+      "mid": "succ_c",
+      "source": "met:succ_c",
+      "target": "rxn:SUCDi",
+      "points": [
+        [
+          6,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "SUCOAS",
+      "mid": "adp_c",
+      "source": "rxn:SUCOAS",
+      "target": "copy:SUCOAS:adp_c",
+      "points": [
+        [
+          7,
+          1
+        ],
+        [
+          7.449827493308394,
+          1
+        ],
+        [
+          7.449827493308394,
+          1.0001725066916063
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "SUCOAS",
+      "mid": "atp_c",
+      "source": "copy:SUCOAS:atp_c",
+      "target": "rxn:SUCOAS",
+      "points": [
+        [
+          6.83531939652161,
+          1.2853193965216103
+        ],
+        [
+          7,
+          1.2853193965216103
+        ],
+        [
+          7,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "SUCOAS",
+      "mid": "coa_c",
+      "source": "copy:SUCOAS:coa_c",
+      "target": "rxn:SUCOAS",
+      "points": [
+        [
+          6.835134458826626,
+          0.7148655411733744
+        ],
+        [
+          7,
+          0.7148655411733744
+        ],
+        [
+          7,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": false
+    },
+    {
+      "rid": "SUCOAS",
+      "mid": "succ_c",
+      "source": "met:succ_c",
+      "target": "rxn:SUCOAS",
+      "points": [
+        [
+          6,
+          1
+        ],
+        [
+          7,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "SUCOAS",
+      "mid": "succoa_c",
+      "source": "rxn:SUCOAS",
+      "target": "met:succoa_c",
+      "points": [
+        [
+          7,
+          1
+        ],
+        [
+          8,
+          1
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "TALA",
+      "mid": "e4p_c",
+      "source": "rxn:TALA",
+      "target": "met:e4p_c",
+      "points": [
+        [
+          2,
+          13
+        ],
+        [
+          2,
+          16
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TALA",
+      "mid": "f6p_c",
+      "source": "rxn:TALA",
+      "target": "met:f6p_c",
+      "points": [
+        [
+          2,
+          13
+        ],
+        [
+          0.8501725066916062,
+          13
+        ],
+        [
+          0.8501725066916062,
+          21
+        ],
+        [
+          1,
+          21
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TALA",
+      "mid": "g3p_c",
+      "source": "met:g3p_c",
+      "target": "rxn:TALA",
+      "points": [
+        [
+          1,
+          15
+        ],
+        [
+          2,
+          15
+        ],
+        [
+          2,
+          13
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TALA",
+      "mid": "s7p_c",
+      "source": "met:s7p_c",
+      "target": "rxn:TALA",
+      "points": [
+        [
+          10,
+          9
+        ],
+        [
+          6.0,
+          9
+        ],
+        [
+          6.0,
+          13
+        ],
+        [
+          2,
+          13
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "THD2",
+      "mid": "nad_c",
+      "source": "rxn:THD2",
+      "target": "copy:THD2:nad_c",
+      "points": [
+        [
+          6,
+          10
+        ],
+        [
+          6.449827493308394,
+          10
+        ],
+        [
+          6.449827493308394,
+          10.000172506691607
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "THD2",
+      "mid": "nadh_c",
+      "source": "copy:THD2:nadh_c",
+      "target": "rxn:THD2",
+      "points": [
+        [
+          5.999827493308394,
+          10.449827493308394
+        ],
+        [
+          5.999827493308394,
+          10
+        ],
+        [
+          6,
+          10
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "THD2",
+      "mid": "nadp_c",
+      "source": "copy:THD2:nadp_c",
+      "target": "rxn:THD2",
+      "points": [
+        [
+          5.550172506691606,
+          9.999827493308393
+        ],
+        [
+          6,
+          9.999827493308393
+        ],
+        [
+          6,
+          10
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "THD2",
+      "mid": "nadph_c",
+      "source": "rxn:THD2",
+      "target": "copy:THD2:nadph_c",
+      "points": [
+        [
+          6,
+          10
+        ],
+        [
+          6.000172506691606,
+          10
+        ],
+        [
+          6.000172506691606,
+          9.550172506691606
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TKT1",
+      "mid": "g3p_c",
+      "source": "rxn:TKT1",
+      "target": "met:g3p_c",
+      "points": [
+        [
+          5,
+          16
+        ],
+        [
+          1.15,
+          16
+        ],
+        [
+          1.15,
+          15
+        ],
+        [
+          1,
+          15
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TKT1",
+      "mid": "r5p_c",
+      "source": "met:r5p_c",
+      "target": "rxn:TKT1",
+      "points": [
+        [
+          8,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          5,
+          16
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TKT1",
+      "mid": "s7p_c",
+      "source": "rxn:TKT1",
+      "target": "met:s7p_c",
+      "points": [
+        [
+          5,
+          16
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          10,
+          9
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TKT1",
+      "mid": "xu5p__D_c",
+      "source": "met:xu5p__D_c",
+      "target": "rxn:TKT1",
+      "points": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          16
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TKT2",
+      "mid": "e4p_c",
+      "source": "met:e4p_c",
+      "target": "rxn:TKT2",
+      "points": [
+        [
+          2,
+          16
+        ],
+        [
+          4,
+          16
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TKT2",
+      "mid": "f6p_c",
+      "source": "rxn:TKT2",
+      "target": "met:f6p_c",
+      "points": [
+        [
+          4,
+          16
+        ],
+        [
+          1,
+          16
+        ],
+        [
+          1,
+          21
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TKT2",
+      "mid": "g3p_c",
+      "source": "rxn:TKT2",
+      "target": "met:g3p_c",
+      "points": [
+        [
+          4,
+          16
+        ],
+        [
+          1,
+          16
+        ],
+        [
+          1,
+          15
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TKT2",
+      "mid": "xu5p__D_c",
+      "source": "met:xu5p__D_c",
+      "target": "rxn:TKT2",
+      "points": [
+        [
+          1,
+          2
+        ],
+        [
+          3.7,
+          2
+        ],
+        [
+          3.7,
+          16
+        ],
+        [
+          4,
+          16
+        ]
+      ],
+      "priority": 0,
+      "backbone": false
+    },
+    {
+      "rid": "TPI",
+      "mid": "dhap_c",
+      "source": "met:dhap_c",
+      "target": "rxn:TPI",
+      "points": [
+        [
+          1,
+          17
+        ],
+        [
+          1,
+          16
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    },
+    {
+      "rid": "TPI",
+      "mid": "g3p_c",
+      "source": "rxn:TPI",
+      "target": "met:g3p_c",
+      "points": [
+        [
+          1,
+          16
+        ],
+        [
+          1,
+          15
+        ]
+      ],
+      "priority": 2,
+      "backbone": true,
+      "routing_locked": true
+    }
+  ],
+  "optimization": {
+    "objective": "crossings-first",
+    "crossing_weight": 10.0,
+    "bend_weight": 1.0,
+    "before": {
+      "crossings": 1130,
+      "bends": 250,
+      "crossings_plus_bends": 1380,
+      "total_length": 967.4388976743352,
+      "coincident_intervals": 330
+    },
+    "after": {
+      "crossings": 1044,
+      "bends": 260,
+      "crossings_plus_bends": 1304,
+      "total_length": 961.6929334282855,
+      "coincident_intervals": 267
+    },
+    "nonworsening_verified": true,
+    "global_optimality_proven": false,
+    "method": "time-bounded alternating route and grid-node local search",
+    "elapsed_seconds": 10.01372422798886,
+    "time_limit_seconds": 10.0,
+    "timed_out": true,
+    "accepted_route_changes": 35,
+    "accepted_node_moves": 1,
+    "moved_node_ids": [
+      "copy:FRD7:q8_c",
+      "copy:FRD7:q8h2_c",
+      "rxn:FRD7"
+    ],
+    "evaluated_candidates": 5494,
+    "passes": 3,
+    "initial_node_hits": 438,
+    "remaining_node_hit_count": 394,
+    "remaining_node_hits": [
+      {
+        "route": [
+          "ACALD",
+          "met:acald_c",
+          "rxn:ACALD",
+          "acald_c"
+        ],
+        "nodes": [
+          "copy:ACALD:nad_c",
+          "copy:ADK1:amp_c",
+          "copy:ADK1:atp_c"
+        ]
+      },
+      {
+        "route": [
+          "AKGt2r",
+          "rxn:AKGt2r",
+          "met:akg_c",
+          "akg_c"
+        ],
+        "nodes": [
+          "copy:AKGDH:coa_c",
+          "copy:GLUSy:nadph_c"
+        ]
+      },
+      {
+        "route": [
+          "ALCD2x",
+          "met:etoh_c",
+          "rxn:ALCD2x",
+          "etoh_c"
+        ],
+        "nodes": [
+          "copy:ALCD2x:nad_c"
+        ]
+      },
+      {
+        "route": [
+          "ALCD2x",
+          "rxn:ALCD2x",
+          "copy:ALCD2x:nadh_c",
+          "nadh_c"
+        ],
+        "nodes": [
+          "copy:MALS:coa_c"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:3pg_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "3pg_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:coa_c"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:accoa_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "accoa_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+          "copy:PFL:coa_c",
+          "met:6pgl_c",
+          "met:icit_c",
+          "met:s7p_c",
+          "rxn:FBP",
+          "rxn:PFL",
+          "rxn:PPS"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "met:akg_c",
+          "akg_c"
+        ],
+        "nodes": [
+          "met:icit_c",
+          "rxn:ACONTb",
+          "rxn:ICDHyr"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:e4p_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "e4p_c"
+        ],
+        "nodes": [
+          "copy:ATPM:adp_c",
+          "copy:ATPM:atp_c",
+          "copy:BIOMASS_Ecoli_core_w_GAM:coa_c",
+          "copy:GLNS:adp_c",
+          "copy:GLNS:atp_c",
+          "met:gln__L_c",
+          "met:glu__L_c",
+          "rxn:ATPM",
+          "rxn:GLNS",
+          "rxn:GLUt2r",
+          "rxn:TKT1",
+          "rxn:TKT2"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:f6p_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "f6p_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:coa_c",
+          "met:gln__L_c",
+          "met:glu__L_c",
+          "rxn:FRUpts2",
+          "rxn:GLUt2r",
+          "rxn:ICL"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:g3p_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "g3p_c"
+        ],
+        "nodes": [
+          "copy:ALCD2x:nad_c",
+          "copy:ALCD2x:nadh_c",
+          "copy:BIOMASS_Ecoli_core_w_GAM:coa_c",
+          "copy:MALS:coa_c",
+          "met:acald_e",
+          "met:etoh_c",
+          "met:gln__L_c",
+          "met:glu__L_c",
+          "rxn:ACALDt",
+          "rxn:ALCD2x",
+          "rxn:GLUt2r",
+          "rxn:MALS"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:g6p_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "g6p_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:coa_c",
+          "copy:ME2:nadp_c",
+          "copy:ME2:nadph_c",
+          "copy:PPCK:adp_c",
+          "copy:PPCK:atp_c",
+          "met:gln__L_c",
+          "met:glu__L_c",
+          "rxn:GLUt2r",
+          "rxn:ME2",
+          "rxn:PPCK"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:gln__L_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "gln__L_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:nad_c"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:glu__L_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "glu__L_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:nad_c"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:oaa_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "oaa_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+          "copy:CS:coa_c",
+          "met:acon_C_c",
+          "met:cit_c",
+          "met:s7p_c",
+          "rxn:ACONTa",
+          "rxn:ACONTb",
+          "rxn:CS",
+          "rxn:PPS"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:pep_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "pep_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+          "copy:CYTBD:q8_c",
+          "copy:CYTBD:q8h2_c",
+          "met:for_c",
+          "met:lac__D_c",
+          "met:s7p_c",
+          "rxn:CYTBD",
+          "rxn:FORt",
+          "rxn:PPS",
+          "rxn:SUCCt3"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:pyr_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "pyr_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+          "copy:PDH:coa_c",
+          "copy:PFL:coa_c",
+          "met:6pgl_c",
+          "met:accoa_c",
+          "met:icit_c",
+          "met:s7p_c",
+          "rxn:FBP",
+          "rxn:PDH",
+          "rxn:PFL",
+          "rxn:PPS"
+        ]
+      },
+      {
+        "route": [
+          "BIOMASS_Ecoli_core_w_GAM",
+          "met:r5p_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "r5p_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+          "copy:PPS:atp_c",
+          "met:s7p_c",
+          "rxn:PPS"
+        ]
+      },
+      {
+        "route": [
+          "CS",
+          "met:accoa_c",
+          "rxn:CS",
+          "accoa_c"
+        ],
+        "nodes": [
+          "copy:CYTBD:q8_c",
+          "copy:CYTBD:q8h2_c",
+          "rxn:CYTBD",
+          "rxn:FBP"
+        ]
+      },
+      {
+        "route": [
+          "CS",
+          "rxn:CS",
+          "met:cit_c",
+          "cit_c"
+        ],
+        "nodes": [
+          "copy:CS:coa_c"
+        ]
+      },
+      {
+        "route": [
+          "CS",
+          "met:oaa_c",
+          "rxn:CS",
+          "oaa_c"
+        ],
+        "nodes": [
+          "copy:CYTBD:q8_c",
+          "rxn:CYTBD"
+        ]
+      },
+      {
+        "route": [
+          "ETOHt2r",
+          "met:etoh_e",
+          "rxn:ETOHt2r",
+          "etoh_e"
+        ],
+        "nodes": [
+          "met:glx_c"
+        ]
+      },
+      {
+        "route": [
+          "EX_ac_e",
+          "met:ac_e",
+          "rxn:EX_ac_e",
+          "ac_e"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadph_c"
+        ]
+      },
+      {
+        "route": [
+          "EX_succ_e",
+          "met:succ_e",
+          "rxn:EX_succ_e",
+          "succ_e"
+        ],
+        "nodes": [
+          "met:xu5p__D_c"
+        ]
+      },
+      {
+        "route": [
+          "FBA",
+          "rxn:FBA",
+          "met:dhap_c",
+          "dhap_c"
+        ],
+        "nodes": [
+          "copy:ME1:nadh_c",
+          "rxn:ME1"
+        ]
+      },
+      {
+        "route": [
+          "FBA",
+          "rxn:FBA",
+          "met:g3p_c",
+          "g3p_c"
+        ],
+        "nodes": [
+          "copy:ME1:nadh_c",
+          "met:6pgc_c",
+          "met:e4p_c",
+          "rxn:ME1"
+        ]
+      },
+      {
+        "route": [
+          "FBP",
+          "rxn:FBP",
+          "met:f6p_c",
+          "f6p_c"
+        ],
+        "nodes": [
+          "copy:PDH:coa_c",
+          "copy:PFL:coa_c",
+          "met:13dpg_c",
+          "met:2pg_c",
+          "met:3pg_c",
+          "met:accoa_c",
+          "met:dhap_c",
+          "met:fdp_c",
+          "met:g3p_c",
+          "met:pep_c",
+          "met:pyr_c",
+          "rxn:ENO",
+          "rxn:FBA",
+          "rxn:GAPD",
+          "rxn:PDH",
+          "rxn:PFK",
+          "rxn:PFL",
+          "rxn:PGK",
+          "rxn:PGM",
+          "rxn:PYK",
+          "rxn:TPI"
+        ]
+      },
+      {
+        "route": [
+          "FORt",
+          "rxn:FORt",
+          "met:for_e",
+          "for_e"
+        ],
+        "nodes": [
+          "rxn:SUCCt3"
+        ]
+      },
+      {
+        "route": [
+          "FORt2",
+          "rxn:FORt2",
+          "met:for_c",
+          "for_c"
+        ],
+        "nodes": [
+          "met:6pgl_c"
+        ]
+      },
+      {
+        "route": [
+          "FORt2",
+          "met:for_e",
+          "rxn:FORt2",
+          "for_e"
+        ],
+        "nodes": [
+          "met:6pgl_c"
+        ]
+      },
+      {
+        "route": [
+          "FRD7",
+          "met:fum_c",
+          "rxn:FRD7",
+          "fum_c"
+        ],
+        "nodes": [
+          "copy:SUCDi:q8_c",
+          "copy:SUCDi:q8h2_c",
+          "copy:THD2:nadh_c",
+          "copy:THD2:nadph_c",
+          "met:cit_c",
+          "met:succ_c",
+          "rxn:ALCD2x",
+          "rxn:GND",
+          "rxn:SUCDi",
+          "rxn:THD2"
+        ]
+      },
+      {
+        "route": [
+          "FRD7",
+          "rxn:FRD7",
+          "met:succ_c",
+          "succ_c"
+        ],
+        "nodes": [
+          "copy:THD2:nadh_c",
+          "copy:THD2:nadph_c",
+          "met:cit_c",
+          "rxn:ALCD2x",
+          "rxn:GND",
+          "rxn:THD2"
+        ]
+      },
+      {
+        "route": [
+          "FRUpts2",
+          "rxn:FRUpts2",
+          "met:pyr_c",
+          "pyr_c"
+        ],
+        "nodes": [
+          "met:13dpg_c",
+          "met:2pg_c",
+          "met:3pg_c",
+          "met:dhap_c",
+          "met:f6p_c",
+          "met:fdp_c",
+          "met:g3p_c",
+          "met:pep_c",
+          "rxn:ENO",
+          "rxn:FBA",
+          "rxn:GAPD",
+          "rxn:PFK",
+          "rxn:PGK",
+          "rxn:PGM",
+          "rxn:PYK",
+          "rxn:TPI"
+        ]
+      },
+      {
+        "route": [
+          "G6PDH2r",
+          "rxn:G6PDH2r",
+          "met:6pgl_c",
+          "6pgl_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:coa_c",
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+          "copy:G6PDH2r:nadp_c"
+        ]
+      },
+      {
+        "route": [
+          "GLNS",
+          "rxn:GLNS",
+          "met:gln__L_c",
+          "gln__L_c"
+        ],
+        "nodes": [
+          "copy:GLNS:adp_c",
+          "met:glu__L_c",
+          "rxn:GLUt2r"
+        ]
+      },
+      {
+        "route": [
+          "GLNS",
+          "met:glu__L_c",
+          "rxn:GLNS",
+          "glu__L_c"
+        ],
+        "nodes": [
+          "met:etoh_c"
+        ]
+      },
+      {
+        "route": [
+          "GLNabc",
+          "rxn:GLNabc",
+          "met:gln__L_c",
+          "gln__L_c"
+        ],
+        "nodes": [
+          "copy:GLNabc:atp_c"
+        ]
+      },
+      {
+        "route": [
+          "GLUDy",
+          "met:glu__L_c",
+          "rxn:GLUDy",
+          "glu__L_c"
+        ],
+        "nodes": [
+          "copy:GAPD:nad_c",
+          "met:13dpg_c",
+          "met:2pg_c",
+          "met:3pg_c",
+          "met:acald_c",
+          "met:pep_c",
+          "met:pyr_c",
+          "rxn:ENO",
+          "rxn:GAPD",
+          "rxn:PGK",
+          "rxn:PGM",
+          "rxn:PYK"
+        ]
+      },
+      {
+        "route": [
+          "GLUSy",
+          "met:akg_c",
+          "rxn:GLUSy",
+          "akg_c"
+        ],
+        "nodes": [
+          "met:mal__L_e"
+        ]
+      },
+      {
+        "route": [
+          "GLUSy",
+          "met:gln__L_c",
+          "rxn:GLUSy",
+          "gln__L_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:coa_c",
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+          "met:6pgl_c",
+          "met:mal__L_e",
+          "met:s7p_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "rxn:FORt2",
+          "rxn:PPS"
+        ]
+      },
+      {
+        "route": [
+          "GLUSy",
+          "rxn:GLUSy",
+          "met:glu__L_c",
+          "glu__L_c"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:coa_c",
+          "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c",
+          "met:6pgl_c",
+          "met:gln__L_c",
+          "met:mal__L_e",
+          "met:s7p_c",
+          "rxn:BIOMASS_Ecoli_core_w_GAM",
+          "rxn:FORt2",
+          "rxn:GLUt2r",
+          "rxn:PPS"
+        ]
+      },
+      {
+        "route": [
+          "GLUt2r",
+          "met:glu__L_e",
+          "rxn:GLUt2r",
+          "glu__L_e"
+        ],
+        "nodes": [
+          "copy:BIOMASS_Ecoli_core_w_GAM:adp_c",
+          "copy:BIOMASS_Ecoli_core_w_GAM:atp_c"
+        ]
+      },
+      {
+        "route": [
+          "GND",
+          "met:6pgc_c",
+          "rxn:GND",
+          "6pgc_c"
+        ],
+        "nodes": [
+          "rxn:ALCD2x"
+        ]
+      },
+      {
+        "route": [
+          "ICL",
+          "rxn:ICL",
+          "met:glx_c",
+          "glx_c"
+        ],
+        "nodes": [
+          "copy:NADH16:nadh_c",
+          "copy:NADH16:q8h2_c",
+          "met:etoh_e",
+          "rxn:NADH16"
+        ]
+      },
+      {
+        "route": [
+          "ICL",
+          "rxn:ICL",
+          "met:succ_c",
+          "succ_c"
+        ],
+        "nodes": [
+          "copy:THD2:nadh_c",
+          "copy:THD2:nadph_c",
+          "met:cit_c",
+          "rxn:ALCD2x",
+          "rxn:FRD7",
+          "rxn:GND",
+          "rxn:THD2"
+        ]
+      },
+      {
+        "route": [
+          "LDH_D",
+          "rxn:LDH_D",
+          "copy:LDH_D:nadh_c",
+          "nadh_c"
+        ],
+        "nodes": [
+          "copy:PYK:adp_c"
+        ]
+      },
+      {
+        "route": [
+          "LDH_D",
+          "rxn:LDH_D",
+          "met:pyr_c",
+          "pyr_c"
+        ],
+        "nodes": [
+          "copy:LDH_D:nadh_c",
+          "copy:PYK:adp_c",
+          "rxn:PYK"
+        ]
+      },
+      {
+        "route": [
+          "MALS",
+          "met:accoa_c",
+          "rxn:MALS",
+          "accoa_c"
+        ],
+        "nodes": [
+          "copy:PFL:coa_c",
+          "rxn:PFL"
+        ]
+      },
+      {
+        "route": [
+          "MALS",
+          "rxn:MALS",
+          "copy:MALS:coa_c",
+          "coa_c"
+        ],
+        "nodes": [
+          "copy:ALCD2x:nadh_c"
+        ]
+      },
+      {
+        "route": [
+          "MALS",
+          "met:glx_c",
+          "rxn:MALS",
+          "glx_c"
+        ],
+        "nodes": [
+          "rxn:PPC"
+        ]
+      },
+      {
+        "route": [
+          "MDH",
+          "rxn:MDH",
+          "met:oaa_c",
+          "oaa_c"
+        ],
+        "nodes": [
+          "copy:MDH:nad_c",
+          "rxn:FBP"
+        ]
+      },
+      {
+        "route": [
+          "ME1",
+          "rxn:ME1",
+          "met:pyr_c",
+          "pyr_c"
+        ],
+        "nodes": [
+          "copy:ME1:nadh_c",
+          "met:13dpg_c",
+          "met:2pg_c",
+          "met:3pg_c",
+          "met:dhap_c",
+          "met:g3p_c",
+          "met:pep_c",
+          "rxn:ENO",
+          "rxn:FBA",
+          "rxn:GAPD",
+          "rxn:PGK",
+          "rxn:PGM",
+          "rxn:PYK",
+          "rxn:TPI"
+        ]
+      },
+      {
+        "route": [
+          "ME2",
+          "met:mal__L_c",
+          "rxn:ME2",
+          "mal__L_c"
+        ],
+        "nodes": [
+          "copy:ACALD:coa_c",
+          "copy:ACKr:atp_c",
+          "copy:ADK1:adp_c",
+          "copy:ATPM:adp_c",
+          "copy:CYTBD:q8h2_c",
+          "copy:MDH:nadh_c",
+          "copy:ME2:nadp_c",
+          "copy:PTAr:coa_c"
+        ]
+      },
+      {
+        "route": [
+          "ME2",
+          "rxn:ME2",
+          "copy:ME2:nadph_c",
+          "nadph_c"
+        ],
+        "nodes": [
+          "copy:PPCK:adp_c"
+        ]
+      },
+      {
+        "route": [
+          "ME2",
+          "rxn:ME2",
+          "met:pyr_c",
+          "pyr_c"
+        ],
+        "nodes": [
+          "copy:ME2:nadph_c",
+          "copy:PPCK:adp_c",
+          "copy:PPCK:atp_c",
+          "met:13dpg_c",
+          "met:2pg_c",
+          "met:3pg_c",
+          "met:dhap_c",
+          "met:f6p_c",
+          "met:fdp_c",
+          "met:g3p_c",
+          "met:g6p_c",
+          "met:pep_c",
+          "rxn:ENO",
+          "rxn:FBA",
+          "rxn:GAPD",
+          "rxn:PFK",
+          "rxn:PGI",
+          "rxn:PGK",
+          "rxn:PGM",
+          "rxn:PPCK",
+          "rxn:PYK",
+          "rxn:TPI"
+        ]
+      },
+      {
+        "route": [
+          "PDH",
+          "rxn:PDH",
+          "met:accoa_c",
+          "accoa_c"
+        ],
+        "nodes": [
+          "copy:PDH:coa_c"
+        ]
+      },
+      {
+        "route": [
+          "PFL",
+          "rxn:PFL",
+          "met:for_c",
+          "for_c"
+        ],
+        "nodes": [
+          "copy:PFL:coa_c",
+          "rxn:FBP"
+        ]
+      },
+      {
+        "route": [
+          "PGL",
+          "met:6pgl_c",
+          "rxn:PGL",
+          "6pgl_c"
+        ],
+        "nodes": [
+          "copy:PFL:coa_c",
+          "met:ac_c",
+          "met:actp_c",
+          "met:icit_c",
+          "met:oaa_c",
+          "rxn:ACKr",
+          "rxn:ACt2r",
+          "rxn:CYTBD",
+          "rxn:FBP",
+          "rxn:PFL",
+          "rxn:TKT2"
+        ]
+      },
+      {
+        "route": [
+          "PPC",
+          "met:pep_c",
+          "rxn:PPC",
+          "pep_c"
+        ],
+        "nodes": [
+          "met:6pgc_c"
+        ]
+      },
+      {
+        "route": [
+          "PPCK",
+          "rxn:PPCK",
+          "copy:PPCK:adp_c",
+          "adp_c"
+        ],
+        "nodes": [
+          "copy:ME2:nadph_c"
+        ]
+      },
+      {
+        "route": [
+          "PPCK",
+          "met:oaa_c",
+          "rxn:PPCK",
+          "oaa_c"
+        ],
+        "nodes": [
+          "copy:ACALD:coa_c",
+          "copy:LDH_D:nad_c",
+          "met:6pgc_c",
+          "met:acald_e",
+          "met:e4p_c",
+          "met:fru_e",
+          "met:lac__D_c",
+          "met:pyr_e",
+          "rxn:ACALD",
+          "rxn:FRUpts2",
+          "rxn:LDH_D",
+          "rxn:ME1",
+          "rxn:PYRt2",
+          "rxn:TALA"
+        ]
+      },
+      {
+        "route": [
+          "PPCK",
+          "rxn:PPCK",
+          "met:pep_c",
+          "pep_c"
+        ],
+        "nodes": [
+          "copy:PPCK:atp_c"
+        ]
+      },
+      {
+        "route": [
+          "PPS",
+          "met:pyr_c",
+          "rxn:PPS",
+          "pyr_c"
+        ],
+        "nodes": [
+          "copy:PDH:coa_c",
+          "copy:PFL:coa_c",
+          "met:6pgl_c",
+          "met:accoa_c",
+          "met:icit_c",
+          "rxn:FBP",
+          "rxn:PDH",
+          "rxn:PFL"
+        ]
+      },
+      {
+        "route": [
+          "PTAr",
+          "met:accoa_c",
+          "rxn:PTAr",
+          "accoa_c"
+        ],
+        "nodes": [
+          "copy:LDH_D:nad_c"
+        ]
+      },
+      {
+        "route": [
+          "PTAr",
+          "rxn:PTAr",
+          "met:actp_c",
+          "actp_c"
+        ],
+        "nodes": [
+          "copy:PTAr:coa_c"
+        ]
+      },
+      {
+        "route": [
+          "PYK",
+          "copy:PYK:adp_c",
+          "rxn:PYK",
+          "adp_c"
+        ],
+        "nodes": [
+          "copy:LDH_D:nadh_c"
+        ]
+      },
+      {
+        "route": [
+          "PYRt2",
+          "rxn:PYRt2",
+          "met:pyr_c",
+          "pyr_c"
+        ],
+        "nodes": [
+          "rxn:ENO"
+        ]
+      },
+      {
+        "route": [
+          "RPE",
+          "rxn:RPE",
+          "met:xu5p__D_c",
+          "xu5p__D_c"
+        ],
+        "nodes": [
+          "copy:ADK1:adp_c",
+          "copy:THD2:nad_c",
+          "copy:THD2:nadp_c",
+          "met:2pg_c",
+          "met:ac_c",
+          "met:pep_c",
+          "met:pyr_c",
+          "rxn:ADK1",
+          "rxn:ENO",
+          "rxn:GLUDy",
+          "rxn:PGM",
+          "rxn:PYK",
+          "rxn:THD2"
+        ]
+      },
+      {
+        "route": [
+          "RPI",
+          "met:r5p_c",
+          "rxn:RPI",
+          "r5p_c"
+        ],
+        "nodes": [
+          "rxn:GLUN"
+        ]
+      },
+      {
+        "route": [
+          "RPI",
+          "rxn:RPI",
+          "met:ru5p__D_c",
+          "ru5p__D_c"
+        ],
+        "nodes": [
+          "copy:NADH16:nadh_c",
+          "copy:NADH16:q8h2_c",
+          "met:etoh_e",
+          "met:gln__L_e",
+          "met:glx_c",
+          "rxn:ETOHt2r",
+          "rxn:GLUN",
+          "rxn:GLUt2r",
+          "rxn:NADH16"
+        ]
+      },
+      {
+        "route": [
+          "SUCCt3",
+          "met:succ_c",
+          "rxn:SUCCt3",
+          "succ_c"
+        ],
+        "nodes": [
+          "copy:SUCOAS:adp_c",
+          "met:acon_C_c",
+          "met:succoa_c",
+          "rxn:SUCOAS"
+        ]
+      },
+      {
+        "route": [
+          "SUCCt3",
+          "rxn:SUCCt3",
+          "met:succ_e",
+          "succ_e"
+        ],
+        "nodes": [
+          "rxn:ATPS4r",
+          "rxn:LDH_D",
+          "rxn:PDH"
+        ]
+      },
+      {
+        "route": [
+          "SUCDi",
+          "rxn:SUCDi",
+          "met:fum_c",
+          "fum_c"
+        ],
+        "nodes": [
+          "copy:SUCDi:q8h2_c"
+        ]
+      },
+      {
+        "route": [
+          "SUCDi",
+          "met:succ_c",
+          "rxn:SUCDi",
+          "succ_c"
+        ],
+        "nodes": [
+          "copy:SUCDi:q8_c"
+        ]
+      },
+      {
+        "route": [
+          "SUCOAS",
+          "rxn:SUCOAS",
+          "met:succoa_c",
+          "succoa_c"
+        ],
+        "nodes": [
+          "copy:SUCOAS:adp_c"
+        ]
+      },
+      {
+        "route": [
+          "TALA",
+          "rxn:TALA",
+          "met:e4p_c",
+          "e4p_c"
+        ],
+        "nodes": [
+          "met:acald_e"
+        ]
+      },
+      {
+        "route": [
+          "TALA",
+          "rxn:TALA",
+          "met:f6p_c",
+          "f6p_c"
+        ],
+        "nodes": [
+          "met:13dpg_c"
+        ]
+      },
+      {
+        "route": [
+          "TALA",
+          "met:g3p_c",
+          "rxn:TALA",
+          "g3p_c"
+        ],
+        "nodes": [
+          "met:acald_e"
+        ]
+      },
+      {
+        "route": [
+          "TALA",
+          "met:s7p_c",
+          "rxn:TALA",
+          "s7p_c"
+        ],
+        "nodes": [
+          "copy:THD2:nadh_c",
+          "copy:THD2:nadph_c",
+          "rxn:GND",
+          "rxn:RPI",
+          "rxn:THD2"
+        ]
+      },
+      {
+        "route": [
+          "TKT1",
+          "rxn:TKT1",
+          "met:g3p_c",
+          "g3p_c"
+        ],
+        "nodes": [
+          "copy:ATPM:adp_c",
+          "copy:ATPM:atp_c",
+          "met:e4p_c",
+          "rxn:ATPM",
+          "rxn:TKT2"
+        ]
+      },
+      {
+        "route": [
+          "TKT1",
+          "met:r5p_c",
+          "rxn:TKT1",
+          "r5p_c"
+        ],
+        "nodes": [
+          "rxn:MALS"
+        ]
+      },
+      {
+        "route": [
+          "TKT1",
+          "rxn:TKT1",
+          "met:s7p_c",
+          "s7p_c"
+        ],
+        "nodes": [
+          "rxn:MALS"
+        ]
+      },
+      {
+        "route": [
+          "TKT1",
+          "met:xu5p__D_c",
+          "rxn:TKT1",
+          "xu5p__D_c"
+        ],
+        "nodes": [
+          "met:for_c",
+          "met:succ_e",
+          "rxn:CS",
+          "rxn:FBP",
+          "rxn:FUM",
+          "rxn:FUMt2_2",
+          "rxn:MALS",
+          "rxn:SUCCt2_2"
+        ]
+      },
+      {
+        "route": [
+          "TKT2",
+          "met:e4p_c",
+          "rxn:TKT2",
+          "e4p_c"
+        ],
+        "nodes": [
+          "copy:ATPM:adp_c",
+          "copy:ATPM:atp_c",
+          "rxn:ATPM"
+        ]
+      },
+      {
+        "route": [
+          "TKT2",
+          "rxn:TKT2",
+          "met:f6p_c",
+          "f6p_c"
+        ],
+        "nodes": [
+          "copy:ATPM:adp_c",
+          "copy:ATPM:atp_c",
+          "met:dhap_c",
+          "met:e4p_c",
+          "met:fdp_c",
+          "rxn:ATPM",
+          "rxn:FBA",
+          "rxn:PFK",
+          "rxn:TPI"
+        ]
+      },
+      {
+        "route": [
+          "TKT2",
+          "rxn:TKT2",
+          "met:g3p_c",
+          "g3p_c"
+        ],
+        "nodes": [
+          "copy:ATPM:adp_c",
+          "copy:ATPM:atp_c",
+          "met:e4p_c",
+          "rxn:ATPM",
+          "rxn:TPI"
+        ]
+      },
+      {
+        "route": [
+          "TKT2",
+          "met:xu5p__D_c",
+          "rxn:TKT2",
+          "xu5p__D_c"
+        ],
+        "nodes": [
+          "met:succ_e",
+          "rxn:FUMt2_2"
+        ]
+      }
+    ],
+    "remaining_coincident_intervals": 267,
+    "constraints_satisfied": false,
+    "metric_definition": "All colors; unique reaction-pair intersections; common biological endpoints excluded; same-reaction shared corners counted once",
+    "limitation": "Finite candidates and fixed backbone/EX constraints; existing node hits or overlaps may remain and are reported"
+  }
+}
