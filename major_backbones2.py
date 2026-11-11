@@ -123,6 +123,15 @@ def validate_backbones(plan, xy, rows):
             axis = 0 if route['shape'] == 'vertical' else 1
             if max(p[axis] for p in points) - min(p[axis] for p in points) > 1e-7:
                 raise RuntimeError('Major pathway is not straight: ' + route['id'])
+        if points and route['shape'] == 'circle':
+            from tca_geometry import absolute_region,on_perimeter
+            region=absolute_region(plan['tca_geometry'],rows)
+            if any(not on_perimeter(point,region) for point in points):
+                raise RuntimeError('TCA node is not on its circle perimeter')
+            ordered=list(route['node_offsets'].values())
+            area2=sum(a[0]*b[1]-b[0]*a[1] for a,b in zip(ordered,ordered[1:]+ordered[:1]))
+            if len(ordered)>=3 and area2>=0:
+                raise RuntimeError('TCA pathway order must be clockwise')
         if points and route['shape'] == 'square':
             square = plan['square']; left = square['left']; top = rows - 1 + square['top_offset']; side = square['side_length']
             if any(not (left <= x <= left + side and top - side <= y <= top and

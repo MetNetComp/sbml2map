@@ -1,0 +1,279 @@
+{
+  "status": "optimal",
+  "method": "FBA (linear programming)",
+  "solver": "SciPy linprog / HiGHS",
+  "scipy_version": "1.18.1",
+  "objective": {
+    "BIOMASS_Ecoli_core_w_GAM": 1.0
+  },
+  "objective_sense": "maximize",
+  "objective_value": 0.8739215069684304,
+  "flux_units": "mmol/gDW/h",
+  "metabolites": 72,
+  "reactions": 95,
+  "mass_balance_max_abs": 5.684341886080802e-14,
+  "bound_violation_max": 0.0,
+  "verification_tolerance": 1e-07,
+  "bounds_modified": false,
+  "active_reactions": 48,
+  "limitation": "One optimal FBA solution; alternative optima may have different fluxes. Not pFBA.",
+  "source_sbml": "models/e_coli_core.xml",
+  "source_sha256": "b4db506aeed0e434c1f5f1fdd35feda0dfe5d82badcfda0e9d1342335ab31116",
+  "map_id": "c8c73315395ab7d1a78bceee",
+  "display_zero_tolerance": 1e-07,
+  "source_model_used_for_fba": true,
+  "coordinates_changed": false,
+  "complete_layout_validation": {
+    "all_reactions_preserved": true,
+    "stoichiometry_preserved": true,
+    "directions_verified": true,
+    "bipartite": true,
+    "currency_copies_degree_one": true,
+    "reactions": 95,
+    "incidence_edges": 360,
+    "tca_interior": {
+      "enabled": true,
+      "shape": "square",
+      "region": {
+        "shape": "square",
+        "node_ids": [
+          "met:oaa_c",
+          "rxn:CS",
+          "met:cit_c",
+          "rxn:ACONTa",
+          "met:acon_C_c",
+          "rxn:ACONTb",
+          "met:icit_c",
+          "rxn:ICDHyr",
+          "met:akg_c",
+          "rxn:AKGDH",
+          "met:succoa_c",
+          "rxn:SUCOAS",
+          "met:succ_c",
+          "rxn:SUCDi",
+          "met:fum_c",
+          "rxn:FUM",
+          "met:mal__L_c",
+          "rxn:MDH"
+        ],
+        "clearance_grid": 0.16,
+        "orientation": "clockwise",
+        "closed": true,
+        "left": 4,
+        "top_offset": -20,
+        "side_length": 5,
+        "top": 6
+      },
+      "interior_node_count": 0,
+      "interior_node_ids": [],
+      "clearance_violation_count": 0,
+      "clearance_violation_node_ids": [],
+      "misplaced_tca_node_ids": [],
+      "checked_nodes": 338,
+      "applies_to": "all metabolites, reactions and reaction-local cofactor copies",
+      "verified": true
+    },
+    "exchange_alignment": {
+      "verified": true,
+      "checked_triplets": 12,
+      "aligned_triplets": [
+        {
+          "reaction_id": "EX_ac_e",
+          "exchange": "rxn:EX_ac_e",
+          "external": "met:ac_e",
+          "internal": "met:ac_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "right"
+        },
+        {
+          "reaction_id": "EX_acald_e",
+          "exchange": "rxn:EX_acald_e",
+          "external": "met:acald_e",
+          "internal": "met:acald_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "right"
+        },
+        {
+          "reaction_id": "EX_akg_e",
+          "exchange": "rxn:EX_akg_e",
+          "external": "met:akg_e",
+          "internal": "met:akg_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "top"
+        },
+        {
+          "reaction_id": "EX_etoh_e",
+          "exchange": "rxn:EX_etoh_e",
+          "external": "met:etoh_e",
+          "internal": "met:etoh_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "right"
+        },
+        {
+          "reaction_id": "EX_for_e",
+          "exchange": "rxn:EX_for_e",
+          "external": "met:for_e",
+          "internal": "met:for_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "right"
+        },
+        {
+          "reaction_id": "EX_fum_e",
+          "exchange": "rxn:EX_fum_e",
+          "external": "met:fum_e",
+          "internal": "met:fum_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "top"
+        },
+        {
+          "reaction_id": "EX_gln__L_e",
+          "exchange": "rxn:EX_gln__L_e",
+          "external": "met:gln__L_e",
+          "internal": "met:gln__L_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "right"
+        },
+        {
+          "reaction_id": "EX_glu__L_e",
+          "exchange": "rxn:EX_glu__L_e",
+          "external": "met:glu__L_e",
+          "internal": "met:glu__L_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "right"
+        },
+        {
+          "reaction_id": "EX_lac__D_e",
+          "exchange": "rxn:EX_lac__D_e",
+          "external": "met:lac__D_e",
+          "internal": "met:lac__D_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "right"
+        },
+        {
+          "reaction_id": "EX_mal__L_e",
+          "exchange": "rxn:EX_mal__L_e",
+          "external": "met:mal__L_e",
+          "internal": "met:mal__L_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "left"
+        },
+        {
+          "reaction_id": "EX_pyr_e",
+          "exchange": "rxn:EX_pyr_e",
+          "external": "met:pyr_e",
+          "internal": "met:pyr_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "right"
+        },
+        {
+          "reaction_id": "EX_succ_e",
+          "exchange": "rxn:EX_succ_e",
+          "external": "met:succ_e",
+          "internal": "met:succ_c",
+          "evidence": "Exact chemical identity annotation",
+          "face": "top"
+        }
+      ],
+      "ordering": "EX -> extracellular -> cytosolic, from outer boundary inward",
+      "skipped": [
+        {
+          "reaction_id": "EX_co2_e",
+          "reason": "No unique displayed extracellular participant"
+        },
+        {
+          "reaction_id": "EX_fru_e",
+          "external_metabolite_id": "fru_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        },
+        {
+          "reaction_id": "EX_glc__D_e",
+          "external_metabolite_id": "glc__D_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        },
+        {
+          "reaction_id": "EX_h2o_e",
+          "reason": "No unique displayed extracellular participant"
+        },
+        {
+          "reaction_id": "EX_h_e",
+          "reason": "No unique displayed extracellular participant"
+        },
+        {
+          "reaction_id": "EX_nh4_e",
+          "reason": "No unique displayed extracellular participant"
+        },
+        {
+          "reaction_id": "EX_o2_e",
+          "reason": "No unique displayed extracellular participant"
+        },
+        {
+          "reaction_id": "EX_pi_e",
+          "reason": "No unique displayed extracellular participant"
+        }
+      ]
+    },
+    "existing_nodes_preserved": 220,
+    "added_nodes": 118,
+    "existing_coordinates_changed": false,
+    "all_participants_drawn": true,
+    "grid_cols": 14,
+    "grid_rows": 27
+  },
+  "all_participants_drawn": true,
+  "displayed_connections": 360,
+  "pathway_highlighting": false,
+  "displayed_reactions": 95,
+  "map_validation": {
+    "schema_valid": true,
+    "metadata_embedded": true,
+    "reaction_ids_preserved": true,
+    "stoichiometry_preserved": true,
+    "coordinate_transform_verified": true,
+    "segment_endpoints_verified": true,
+    "nodes": 601,
+    "source_nodes": 338,
+    "routing_nodes": 263,
+    "orthogonal_segments_verified": true,
+    "reactions": 95,
+    "segments": 623,
+    "primary_metabolites": 50,
+    "secondary_metabolites": 193,
+    "currency_copy_counts": {
+      "adp_c": 12,
+      "atp_c": 13,
+      "h_c": 35,
+      "coa_c": 9,
+      "h2o_c": 18,
+      "nad_c": 12,
+      "nadh_c": 12,
+      "h_e": 17,
+      "pi_c": 12,
+      "pi_e": 2,
+      "co2_c": 9,
+      "amp_c": 2,
+      "nadp_c": 9,
+      "nadph_c": 9,
+      "co2_e": 2,
+      "o2_c": 2,
+      "q8_c": 4,
+      "q8h2_c": 4,
+      "h2o_e": 2,
+      "nh4_e": 2,
+      "o2_e": 2,
+      "nh4_c": 4
+    },
+    "reverse_only_reactions": [
+      "FORt"
+    ],
+    "blocked_reactions": [],
+    "missing_gene_rule_count": 0
+  },
+  "undisplayed_reactions": [],
+  "undisplayed_active_reactions": {},
+  "display_sign_multipliers": {
+    "FORt": -1
+  },
+  "browser_validation": "not run"
+}

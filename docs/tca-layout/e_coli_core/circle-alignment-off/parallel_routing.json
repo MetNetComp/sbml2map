@@ -1,0 +1,937 @@
+{
+  "trunk_grouping": "positive_length_overlap",
+  "clearance_grid": 0.3,
+  "min_parallel_length_grid": 1.0,
+  "shifted_segments": 11,
+  "unresolved": [],
+  "max_offset_grid": 0.3000000000000007,
+  "fixed_endpoints": true,
+  "shared_same_reaction_trunks": true,
+  "node_detours": {
+    "trunk_grouping": "positive_length_overlap",
+    "route_offset_grid": 0.3,
+    "enabled": true,
+    "shifted_segments": 4,
+    "unresolved": [
+      {
+        "reaction_id": "MDH",
+        "reason": "preallocated red lane requires protected-node review"
+      },
+      {
+        "reaction_id": "EX_for_e",
+        "axis": 0,
+        "level": 9.0,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            0.0,
+            9.0
+          ],
+          [
+            1.0,
+            9.0
+          ],
+          [
+            2.0,
+            9.0
+          ],
+          [
+            3.0,
+            9.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "EX_for_e",
+        "axis": 1,
+        "level": 0.0,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            0.0,
+            9.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "EX_lac__D_e",
+        "axis": 0,
+        "level": 7.0,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            1.0,
+            7.0
+          ],
+          [
+            2.0,
+            7.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "LDH_D",
+        "axis": 0,
+        "level": 6.92,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            1.0,
+            7.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "LDH_D",
+        "axis": 0,
+        "level": 7.0,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            1.0,
+            7.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "LDH_D",
+        "axis": 1,
+        "level": 1.0,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            1.0,
+            7.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "LDH_D",
+        "axis": 1,
+        "level": 1.08,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            1.0,
+            7.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "PTAr",
+        "axis": 0,
+        "level": 3.92,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            2.0,
+            4.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "PTAr",
+        "axis": 0,
+        "level": 4.0,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            2.0,
+            4.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "PTAr",
+        "axis": 1,
+        "level": 2.0,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            2.0,
+            4.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "PYRt2",
+        "axis": 0,
+        "level": 8.92,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            1.0,
+            9.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "PYRt2",
+        "axis": 0,
+        "level": 9.0,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            1.0,
+            9.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "PYRt2",
+        "axis": 1,
+        "level": 1.0,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            1.0,
+            9.0
+          ]
+        ]
+      },
+      {
+        "reaction_id": "PYRt2",
+        "axis": 1,
+        "level": 1.08,
+        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
+        "nodes": [
+          [
+            1.0,
+            9.0
+          ]
+        ]
+      }
+    ],
+    "shape": "rectangle with optional endpoint steps",
+    "endpoint_step_grid": 0.15,
+    "endpoint_step_fallback_segments": 0,
+    "detours": [
+      {
+        "reaction_id": "EX_fru_e",
+        "axis": 0,
+        "offset_grid": -0.3,
+        "inset_start": false,
+        "inset_end": false,
+        "segments": 1,
+        "existing_endpoint_stem_overlaps": 0
+      },
+      {
+        "reaction_id": "EX_fum_e",
+        "axis": 1,
+        "offset_grid": -0.3,
+        "inset_start": false,
+        "inset_end": false,
+        "segments": 1,
+        "existing_endpoint_stem_overlaps": 0
+      },
+      {
+        "reaction_id": "EX_glu__L_e",
+        "axis": 0,
+        "offset_grid": 0.3,
+        "inset_start": false,
+        "inset_end": false,
+        "segments": 1,
+        "existing_endpoint_stem_overlaps": 0
+      },
+      {
+        "reaction_id": "EX_pyr_e",
+        "axis": 0,
+        "offset_grid": 0.3,
+        "inset_start": false,
+        "inset_end": false,
+        "segments": 1,
+        "existing_endpoint_stem_overlaps": 0
+      }
+    ],
+    "fixed_endpoints": true,
+    "shared_same_reaction_trunks": true,
+    "backbone_shifted_segments": 0,
+    "max_offset_grid": 0.3,
+    "backbone_max_offset_grid": 0
+  },
+  "routing_preference": "important_bends_then_length_gray_yields",
+  "important_simplification": {
+    "policy": "important_bends_then_length_gray_yields",
+    "changed_paths": 10,
+    "removed_bends": 5,
+    "details": [
+      {
+        "reaction_id": "MDH",
+        "bends_before": 1,
+        "bends_after": 1
+      },
+      {
+        "reaction_id": "PGK",
+        "bends_before": 1,
+        "bends_after": 1
+      },
+      {
+        "reaction_id": "PYK",
+        "bends_before": 1,
+        "bends_after": 2
+      },
+      {
+        "reaction_id": "ACt2r",
+        "bends_before": 4,
+        "bends_after": 2
+      },
+      {
+        "reaction_id": "AKGt2r",
+        "bends_before": 1,
+        "bends_after": 1
+      },
+      {
+        "reaction_id": "D_LACt2",
+        "bends_before": 4,
+        "bends_after": 3
+      },
+      {
+        "reaction_id": "EX_lac__D_e",
+        "bends_before": 0,
+        "bends_after": 3
+      },
+      {
+        "reaction_id": "EX_mal__L_e",
+        "bends_before": 4,
+        "bends_after": 2
+      },
+      {
+        "reaction_id": "PTAr",
+        "bends_before": 5,
+        "bends_after": 2
+      },
+      {
+        "reaction_id": "PYRt2",
+        "bends_before": 4,
+        "bends_after": 3
+      }
+    ],
+    "unresolved": [
+      {
+        "reaction_id": "EX_for_e",
+        "reason": "No simpler feasible important route"
+      },
+      {
+        "reaction_id": "LDH_D",
+        "reason": "No simpler feasible important route"
+      },
+      {
+        "reaction_id": "PYRt2",
+        "reason": "No simpler feasible important route"
+      }
+    ]
+  },
+  "gray_yield": {
+    "changed_paths": 7,
+    "details": [
+      {
+        "reaction_id": "FRUpts2",
+        "bends_before": 1,
+        "bends_after": 2
+      },
+      {
+        "reaction_id": "GLUDy",
+        "bends_before": 1,
+        "bends_after": 2
+      },
+      {
+        "reaction_id": "GLUSy",
+        "bends_before": 1,
+        "bends_after": 1
+      },
+      {
+        "reaction_id": "ME2",
+        "bends_before": 1,
+        "bends_after": 2
+      },
+      {
+        "reaction_id": "PFL",
+        "bends_before": 0,
+        "bends_after": 2
+      },
+      {
+        "reaction_id": "RPI",
+        "bends_before": 1,
+        "bends_after": 1
+      },
+      {
+        "reaction_id": "SUCCt3",
+        "bends_before": 1,
+        "bends_after": 2
+      }
+    ],
+    "unresolved": [
+      {
+        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "FBP",
+        "reason": "No free gray route found"
+      },
+      {
+        "reaction_id": "FORt2",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "FRD7",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "FRUpts2",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "GLUN",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "GLUSy",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "ICL",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "MALS",
+        "reason": "No free gray route found"
+      },
+      {
+        "reaction_id": "MALS",
+        "reason": "No free gray route found"
+      },
+      {
+        "reaction_id": "ME1",
+        "reason": "No free gray route found"
+      },
+      {
+        "reaction_id": "ME1",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "ME2",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "PPC",
+        "reason": "No free gray route found"
+      },
+      {
+        "reaction_id": "PPCK",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "PPCK",
+        "reason": "No free gray route found"
+      },
+      {
+        "reaction_id": "PPS",
+        "reason": "No free gray route found"
+      },
+      {
+        "reaction_id": "PPS",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "TALA",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "TALA",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "TKT1",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "TKT2",
+        "reason": "Shared gray trunk retained"
+      },
+      {
+        "reaction_id": "TKT2",
+        "reason": "Shared gray trunk retained"
+      }
+    ]
+  },
+  "red_parallel_layout": {
+    "enabled": true,
+    "requested_spacing_grid": 1.0,
+    "min_parallel_length_grid": 1,
+    "stage": "grid layout routing-channel allocation",
+    "obstacle_node_ids": [
+      "met:13dpg_c",
+      "met:2pg_c",
+      "met:3pg_c",
+      "met:ac_c",
+      "met:ac_e",
+      "met:acald_c",
+      "met:acald_e",
+      "met:accoa_c",
+      "met:acon_C_c",
+      "met:actp_c",
+      "met:akg_c",
+      "met:akg_e",
+      "met:cit_c",
+      "met:dhap_c",
+      "met:etoh_c",
+      "met:etoh_e",
+      "met:f6p_c",
+      "met:fdp_c",
+      "met:for_c",
+      "met:for_e",
+      "met:fru_e",
+      "met:fum_c",
+      "met:fum_e",
+      "met:g3p_c",
+      "met:g6p_c",
+      "met:glc__D_e",
+      "met:gln__L_c",
+      "met:gln__L_e",
+      "met:glu__L_c",
+      "met:glu__L_e",
+      "met:icit_c",
+      "met:lac__D_c",
+      "met:lac__D_e",
+      "met:mal__L_c",
+      "met:mal__L_e",
+      "met:oaa_c",
+      "met:pep_c",
+      "met:pyr_c",
+      "met:pyr_e",
+      "met:succ_c",
+      "met:succ_e",
+      "met:succoa_c",
+      "rxn:ACALD",
+      "rxn:ACALDt",
+      "rxn:ACKr",
+      "rxn:ACONTa",
+      "rxn:ACONTb",
+      "rxn:ACt2r",
+      "rxn:AKGDH",
+      "rxn:AKGt2r",
+      "rxn:ALCD2x",
+      "rxn:BIOMASS_Ecoli_core_w_GAM",
+      "rxn:CS",
+      "rxn:D_LACt2",
+      "rxn:ENO",
+      "rxn:ETOHt2r",
+      "rxn:EX_ac_e",
+      "rxn:EX_acald_e",
+      "rxn:EX_akg_e",
+      "rxn:EX_etoh_e",
+      "rxn:EX_for_e",
+      "rxn:EX_fru_e",
+      "rxn:EX_fum_e",
+      "rxn:EX_glc__D_e",
+      "rxn:EX_gln__L_e",
+      "rxn:EX_glu__L_e",
+      "rxn:EX_lac__D_e",
+      "rxn:EX_mal__L_e",
+      "rxn:EX_pyr_e",
+      "rxn:EX_succ_e",
+      "rxn:FBA",
+      "rxn:FORt",
+      "rxn:FRUpts2",
+      "rxn:FUM",
+      "rxn:FUMt2_2",
+      "rxn:GAPD",
+      "rxn:GLCpts",
+      "rxn:GLNabc",
+      "rxn:GLUt2r",
+      "rxn:ICDHyr",
+      "rxn:LDH_D",
+      "rxn:MALt2_2",
+      "rxn:MDH",
+      "rxn:PDH",
+      "rxn:PFK",
+      "rxn:PFL",
+      "rxn:PGI",
+      "rxn:PGK",
+      "rxn:PGM",
+      "rxn:PTAr",
+      "rxn:PYK",
+      "rxn:PYRt2",
+      "rxn:SUCCt2_2",
+      "rxn:SUCDi",
+      "rxn:SUCOAS",
+      "rxn:TPI"
+    ],
+    "unresolved": [],
+    "nodes_moved": false,
+    "global_optimality_proven": false,
+    "minimum_parallel_gap_grid": 1.0,
+    "parallel_pairs": 55,
+    "violations": [],
+    "verified": true,
+    "method": "Constraint-checked greedy routing channels",
+    "elapsed_seconds": 0.6938119459955487,
+    "signature": "e47e1c9a181aefeb369ee722",
+    "routing_envelope": {
+      "x_min": -1.0,
+      "x_max": 9.694307645173176,
+      "y_min": 1.305692354826828,
+      "y_max": 27.0
+    }
+  },
+  "red_parallel_spacing": {
+    "requested_spacing_grid": 1.0,
+    "min_parallel_length_grid": 1,
+    "minimum_parallel_gap_grid": 1.0,
+    "parallel_pairs": 55,
+    "violations": [],
+    "verified": true
+  },
+  "node_obstacle_policy": "red_orange_structural_nodes",
+  "obstacle_node_ids": [
+    "met:13dpg_c",
+    "met:2pg_c",
+    "met:3pg_c",
+    "met:ac_c",
+    "met:ac_e",
+    "met:acald_c",
+    "met:acald_e",
+    "met:accoa_c",
+    "met:acon_C_c",
+    "met:actp_c",
+    "met:akg_c",
+    "met:akg_e",
+    "met:cit_c",
+    "met:dhap_c",
+    "met:etoh_c",
+    "met:etoh_e",
+    "met:f6p_c",
+    "met:fdp_c",
+    "met:for_c",
+    "met:for_e",
+    "met:fru_e",
+    "met:fum_c",
+    "met:fum_e",
+    "met:g3p_c",
+    "met:g6p_c",
+    "met:glc__D_e",
+    "met:gln__L_c",
+    "met:gln__L_e",
+    "met:glu__L_c",
+    "met:glu__L_e",
+    "met:icit_c",
+    "met:lac__D_c",
+    "met:lac__D_e",
+    "met:mal__L_c",
+    "met:mal__L_e",
+    "met:oaa_c",
+    "met:pep_c",
+    "met:pyr_c",
+    "met:pyr_e",
+    "met:succ_c",
+    "met:succ_e",
+    "met:succoa_c",
+    "rxn:ACALD",
+    "rxn:ACALDt",
+    "rxn:ACKr",
+    "rxn:ACONTa",
+    "rxn:ACONTb",
+    "rxn:ACt2r",
+    "rxn:AKGDH",
+    "rxn:AKGt2r",
+    "rxn:ALCD2x",
+    "rxn:BIOMASS_Ecoli_core_w_GAM",
+    "rxn:CS",
+    "rxn:D_LACt2",
+    "rxn:ENO",
+    "rxn:ETOHt2r",
+    "rxn:EX_ac_e",
+    "rxn:EX_acald_e",
+    "rxn:EX_akg_e",
+    "rxn:EX_etoh_e",
+    "rxn:EX_for_e",
+    "rxn:EX_fru_e",
+    "rxn:EX_fum_e",
+    "rxn:EX_glc__D_e",
+    "rxn:EX_gln__L_e",
+    "rxn:EX_glu__L_e",
+    "rxn:EX_lac__D_e",
+    "rxn:EX_mal__L_e",
+    "rxn:EX_pyr_e",
+    "rxn:EX_succ_e",
+    "rxn:FBA",
+    "rxn:FORt",
+    "rxn:FRUpts2",
+    "rxn:FUM",
+    "rxn:FUMt2_2",
+    "rxn:GAPD",
+    "rxn:GLCpts",
+    "rxn:GLNabc",
+    "rxn:GLUt2r",
+    "rxn:ICDHyr",
+    "rxn:LDH_D",
+    "rxn:MALt2_2",
+    "rxn:MDH",
+    "rxn:PDH",
+    "rxn:PFK",
+    "rxn:PFL",
+    "rxn:PGI",
+    "rxn:PGK",
+    "rxn:PGM",
+    "rxn:PTAr",
+    "rxn:PYK",
+    "rxn:PYRt2",
+    "rxn:SUCCt2_2",
+    "rxn:SUCDi",
+    "rxn:SUCOAS",
+    "rxn:TPI"
+  ],
+  "structural_node_priorities": {
+    "met:glc__D_e": 2,
+    "met:gln__L_c": 1,
+    "met:gln__L_e": 1,
+    "met:glu__L_c": 1,
+    "met:glu__L_e": 1,
+    "met:glx_c": 0,
+    "met:icit_c": 2,
+    "met:lac__D_c": 1,
+    "met:lac__D_e": 1,
+    "met:mal__L_c": 2,
+    "met:mal__L_e": 1,
+    "met:13dpg_c": 2,
+    "met:2pg_c": 2,
+    "met:3pg_c": 2,
+    "met:oaa_c": 2,
+    "met:pep_c": 2,
+    "met:6pgc_c": 0,
+    "met:6pgl_c": 0,
+    "met:ac_c": 1,
+    "met:pyr_c": 2,
+    "met:pyr_e": 1,
+    "met:r5p_c": 0,
+    "met:ru5p__D_c": 0,
+    "met:ac_e": 1,
+    "met:acald_c": 1,
+    "met:s7p_c": 0,
+    "met:acald_e": 1,
+    "met:accoa_c": 2,
+    "met:succ_c": 2,
+    "met:succ_e": 1,
+    "met:succoa_c": 2,
+    "met:acon_C_c": 2,
+    "met:xu5p__D_c": 0,
+    "met:actp_c": 1,
+    "met:akg_c": 2,
+    "met:akg_e": 1,
+    "met:cit_c": 2,
+    "met:dhap_c": 2,
+    "met:e4p_c": 0,
+    "met:etoh_c": 1,
+    "met:etoh_e": 1,
+    "met:f6p_c": 2,
+    "met:fdp_c": 2,
+    "met:for_c": 1,
+    "met:for_e": 1,
+    "met:fru_e": 1,
+    "met:fum_c": 2,
+    "met:fum_e": 1,
+    "met:g3p_c": 2,
+    "met:g6p_c": 2,
+    "rxn:PFK": 2,
+    "copy:PFK:adp_c": 0,
+    "copy:PFK:atp_c": 0,
+    "rxn:PFL": 1,
+    "copy:PFL:coa_c": 0,
+    "rxn:PGI": 2,
+    "rxn:PGK": 2,
+    "copy:PGK:adp_c": 0,
+    "copy:PGK:atp_c": 0,
+    "rxn:PGL": 0,
+    "rxn:ACALD": 1,
+    "copy:ACALD:coa_c": 0,
+    "copy:ACALD:nad_c": 0,
+    "copy:ACALD:nadh_c": 0,
+    "rxn:AKGt2r": 1,
+    "rxn:PGM": 2,
+    "rxn:ALCD2x": 1,
+    "copy:ALCD2x:nad_c": 0,
+    "copy:ALCD2x:nadh_c": 0,
+    "rxn:ACALDt": 1,
+    "rxn:ACKr": 1,
+    "copy:ACKr:adp_c": 0,
+    "copy:ACKr:atp_c": 0,
+    "rxn:PPC": 0,
+    "rxn:ACONTa": 2,
+    "rxn:ACONTb": 2,
+    "rxn:ATPM": 0,
+    "copy:ATPM:adp_c": 0,
+    "copy:ATPM:atp_c": 0,
+    "rxn:PPCK": 0,
+    "copy:PPCK:adp_c": 0,
+    "copy:PPCK:atp_c": 0,
+    "rxn:ACt2r": 1,
+    "rxn:PPS": 0,
+    "copy:PPS:amp_c": 0,
+    "copy:PPS:atp_c": 0,
+    "rxn:ADK1": 0,
+    "copy:ADK1:adp_c": 0,
+    "copy:ADK1:amp_c": 0,
+    "copy:ADK1:atp_c": 0,
+    "rxn:AKGDH": 2,
+    "copy:AKGDH:coa_c": 0,
+    "copy:AKGDH:nad_c": 0,
+    "copy:AKGDH:nadh_c": 0,
+    "rxn:ATPS4r": 0,
+    "copy:ATPS4r:adp_c": 0,
+    "copy:ATPS4r:atp_c": 0,
+    "rxn:PTAr": 1,
+    "copy:PTAr:coa_c": 0,
+    "rxn:PYK": 2,
+    "copy:PYK:adp_c": 0,
+    "copy:PYK:atp_c": 0,
+    "rxn:BIOMASS_Ecoli_core_w_GAM": 1,
+    "copy:BIOMASS_Ecoli_core_w_GAM:adp_c": 0,
+    "copy:BIOMASS_Ecoli_core_w_GAM:atp_c": 0,
+    "copy:BIOMASS_Ecoli_core_w_GAM:coa_c": 0,
+    "copy:BIOMASS_Ecoli_core_w_GAM:nad_c": 0,
+    "copy:BIOMASS_Ecoli_core_w_GAM:nadh_c": 0,
+    "copy:BIOMASS_Ecoli_core_w_GAM:nadp_c": 0,
+    "copy:BIOMASS_Ecoli_core_w_GAM:nadph_c": 0,
+    "rxn:PYRt2": 1,
+    "rxn:RPE": 0,
+    "rxn:CS": 2,
+    "copy:CS:coa_c": 0,
+    "rxn:RPI": 0,
+    "rxn:SUCCt2_2": 1,
+    "rxn:CYTBD": 0,
+    "copy:CYTBD:q8_c": 0,
+    "copy:CYTBD:q8h2_c": 0,
+    "rxn:D_LACt2": 1,
+    "rxn:ENO": 2,
+    "rxn:SUCCt3": 0,
+    "rxn:ETOHt2r": 1,
+    "rxn:SUCDi": 2,
+    "copy:SUCDi:q8_c": 0,
+    "copy:SUCDi:q8h2_c": 0,
+    "rxn:SUCOAS": 2,
+    "copy:SUCOAS:adp_c": 0,
+    "copy:SUCOAS:atp_c": 0,
+    "copy:SUCOAS:coa_c": 0,
+    "rxn:TALA": 0,
+    "rxn:THD2": 0,
+    "copy:THD2:nad_c": 0,
+    "copy:THD2:nadh_c": 0,
+    "copy:THD2:nadp_c": 0,
+    "copy:THD2:nadph_c": 0,
+    "rxn:TKT1": 0,
+    "rxn:TKT2": 0,
+    "rxn:TPI": 2,
+    "rxn:EX_ac_e": 1,
+    "rxn:EX_acald_e": 1,
+    "rxn:EX_akg_e": 1,
+    "rxn:EX_etoh_e": 1,
+    "rxn:EX_for_e": 1,
+    "rxn:EX_fru_e": 1,
+    "rxn:EX_fum_e": 1,
+    "rxn:EX_glc__D_e": 2,
+    "rxn:EX_gln__L_e": 1,
+    "rxn:EX_glu__L_e": 1,
+    "rxn:EX_lac__D_e": 1,
+    "rxn:EX_mal__L_e": 1,
+    "rxn:EX_pyr_e": 1,
+    "rxn:EX_succ_e": 1,
+    "rxn:FBA": 2,
+    "rxn:FBP": 0,
+    "rxn:FORt2": 0,
+    "rxn:FORt": 1,
+    "rxn:FRD7": 0,
+    "copy:FRD7:q8_c": 0,
+    "copy:FRD7:q8h2_c": 0,
+    "rxn:FRUpts2": 1,
+    "rxn:FUM": 2,
+    "rxn:FUMt2_2": 1,
+    "rxn:G6PDH2r": 0,
+    "copy:G6PDH2r:nadp_c": 0,
+    "copy:G6PDH2r:nadph_c": 0,
+    "rxn:GAPD": 2,
+    "copy:GAPD:nad_c": 0,
+    "copy:GAPD:nadh_c": 0,
+    "rxn:GLCpts": 2,
+    "rxn:GLNS": 0,
+    "copy:GLNS:adp_c": 0,
+    "copy:GLNS:atp_c": 0,
+    "rxn:GLNabc": 1,
+    "copy:GLNabc:adp_c": 0,
+    "copy:GLNabc:atp_c": 0,
+    "rxn:GLUDy": 0,
+    "copy:GLUDy:nadp_c": 0,
+    "copy:GLUDy:nadph_c": 0,
+    "rxn:GLUN": 0,
+    "rxn:GLUSy": 0,
+    "copy:GLUSy:nadp_c": 0,
+    "copy:GLUSy:nadph_c": 0,
+    "rxn:GLUt2r": 1,
+    "rxn:GND": 0,
+    "copy:GND:nadp_c": 0,
+    "copy:GND:nadph_c": 0,
+    "rxn:ICDHyr": 2,
+    "copy:ICDHyr:nadp_c": 0,
+    "copy:ICDHyr:nadph_c": 0,
+    "rxn:ICL": 0,
+    "rxn:LDH_D": 1,
+    "copy:LDH_D:nad_c": 0,
+    "copy:LDH_D:nadh_c": 0,
+    "rxn:MALS": 0,
+    "copy:MALS:coa_c": 0,
+    "rxn:MALt2_2": 1,
+    "rxn:MDH": 2,
+    "copy:MDH:nad_c": 0,
+    "copy:MDH:nadh_c": 0,
+    "rxn:ME1": 0,
+    "copy:ME1:nad_c": 0,
+    "copy:ME1:nadh_c": 0,
+    "rxn:ME2": 0,
+    "copy:ME2:nadp_c": 0,
+    "copy:ME2:nadph_c": 0,
+    "rxn:NADH16": 0,
+    "copy:NADH16:nad_c": 0,
+    "copy:NADH16:nadh_c": 0,
+    "copy:NADH16:q8_c": 0,
+    "copy:NADH16:q8h2_c": 0,
+    "rxn:NADTRHD": 0,
+    "copy:NADTRHD:nad_c": 0,
+    "copy:NADTRHD:nadh_c": 0,
+    "copy:NADTRHD:nadp_c": 0,
+    "copy:NADTRHD:nadph_c": 0,
+    "rxn:PDH": 2,
+    "copy:PDH:coa_c": 0,
+    "copy:PDH:nad_c": 0,
+    "copy:PDH:nadh_c": 0
+  },
+  "original_route_length": 789.9026740338874,
+  "display_route_length": 825.5026740338874
+}

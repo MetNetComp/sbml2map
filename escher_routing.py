@@ -28,7 +28,7 @@ def _simplify(points):
     return out
 
 
-def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True,route_offset=None,route_geometry=None,routing_report=None):
+def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True,route_offset=None):
     """Use small deterministic lanes, red before orange before gray.
 
     A reaction's same-color shared trunks stay bundled. Short terminal stubs
@@ -148,19 +148,6 @@ def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True,ro
         route_offset=route_offset,red_spacing=requested_red_spacing) if enabled else None
     gray_report=yield_gray(routes,grid=meta['coordinate_transform']['scale'],obstacles=obstacles,
         route_offset=route_offset) if enabled else None
-    if route_geometry is not None:
-        from routing_geometry import transformed_paths
-        import copy
-        prepared = {(p['rid'], frozenset((p['source'], p['target']))): p
-                    for p in transformed_paths(route_geometry, meta['coordinate_transform'])}
-        for route in routes:
-            path = prepared[(route['rid'], frozenset(route['pair']))]
-            points = list(path['points'])
-            if path['source'] != sources[route['marker']]:
-                points.reverse()
-            route['points'] = points
-        meta['shared_routing'] = copy.deepcopy((routing_report or {}).get('optimization', {}))
-        meta['shared_routing']['coordinate_system'] = 'grid'
     red_check=spacing_report(routes,red_plan['requested_spacing_grid'],meta['coordinate_transform']['scale']) if red_plan else None
     if red_plan and red_plan.get('enabled') and red_plan.get('verified') and not red_check['verified']:
         raise RuntimeError('Preallocated red spacing changed during Escher rendering')
@@ -193,11 +180,7 @@ def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True,ro
                                 primary_backbone_nodes_fixed=True,
                                 primary_backbone_max_offset=max(max((abs(l['offset']) for l in legs if l['route']['backbone']),default=0),
                                     (node_report or {}).get('backbone_max_offset_grid',0)*meta['coordinate_transform']['scale']))
-    if route_geometry is not None:
-        meta['overlap_routing']['routing_preference'] = (routing_report or {}).get('routing_preference', 'crossings-first')
-        meta['overlap_routing']['shared_geometry'] = True
-        meta['overlap_routing']['optimization'] = (routing_report or {}).get('optimization')
-    if enabled or route_geometry is not None:
+    if enabled:
         signature=[base_id,[(r['rid'],r['mid'],r['priority'],r['points']) for r in routes]]
         header['map_id']=hashlib.sha256(json.dumps(signature,sort_keys=True).encode()).hexdigest()[:24]
         canvas=body['canvas'];padding=meta['coordinate_transform']['padding']

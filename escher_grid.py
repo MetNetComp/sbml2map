@@ -10,11 +10,11 @@ import re
 
 import numpy as np
 
-from routing_simplification import POLICY
+from routing_simplification import POLICY,simplify_important,yield_gray
 
 from red_route_layout import validate_red_spacing,plan_red_routes,spacing_report
 
-from parallel_routing import validate_route_offset, structural_node_priorities
+from parallel_routing import separate_parallel, avoid_nodes, validate_route_offset, structural_node_priorities
 
 from highlighting import HIGHLIGHT_COLOR, read_selection, grid_elements, catalog, inject_controls
 
@@ -167,13 +167,13 @@ def select_structural_reactions(model, classification, coverage, major_reactions
                                   count_rule='ceil(coverage / 100 * eligible_count); 0 gives empty map')
 
 
-def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None):
+def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None, forbidden_region=None):
     groups = {}
     for key, node in nodes.items():
         if node['kind'] == 'currency':
             groups.setdefault(node['parent_id'], []).append(key)
     for parent, keys in sorted(groups.items()):
-        if grid_shape is None:
+        if grid_shape is None and forbidden_region is None:
             angles = 2 * math.pi * (np.arange(len(keys)) + .25) / len(keys)
         else:
             angles = 2 * math.pi * (np.arange(4096) + .25) / 4096
@@ -187,11 +187,28 @@ def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None):
             if len(valid) < len(keys):
                 raise ValueError('Grid cannot contain off-grid coenzyme copies; use at least 2 rows and columns')
             candidates = valid[np.arange(len(keys)) * len(valid) // len(keys)]
+        if forbidden_region is not None:
+            from tca_geometry import allowed_points
+            valid = candidates[allowed_points(candidates, forbidden_region)]
+            if len(valid) < len(keys):
+                # Recompute all outward candidates; keep the fixed L1 cofactor radius.
+                angles = 2*math.pi*(np.arange(4096)+.25)/4096
+                vectors = np.column_stack([np.cos(angles),np.sin(angles)])
+                vectors *= radius/np.abs(vectors).sum(axis=1,keepdims=True)
+                valid = np.asarray(xy[parent])+vectors
+                mask = allowed_points(valid,forbidden_region)
+                if grid_shape is not None:
+                    cols,rows=grid_shape
+                    mask &= (valid[:,0]>=0)&(valid[:,0]<=cols-1)&(valid[:,1]>=0)&(valid[:,1]<=rows-1)
+                valid = valid[mask]
+            if len(valid) < len(keys):
+                raise ValueError('No cofactor position outside TCA; enlarge the grid')
+            candidates = valid[np.arange(len(keys))*len(valid)//len(keys)]
         for key, position in zip(sorted(keys), candidates):
             xy[key] = position.tolist()
 
 
-def render(output, nodes, edges, xy, records, selection, model_id, backbones=None, program_name='sbml2map', sampling_report=None, highlights=None, source_model=None, route_offset=.3, label_options=None, route_geometry=None, routing_report=None):
+def render(output, nodes, edges, xy, records, selection, model_id, backbones=None, program_name='sbml2map', sampling_report=None, highlights=None, source_model=None, route_offset=.3, label_options=None):
     highlights = highlights or dict(metabolites=[], reactions=[])
     label_options={key:bool((label_options or {}).get(key,default)) for key,default in
         [('show_metabolites',True),('show_reactions',True),('allow_overlap',False)]}
@@ -244,15 +261,40 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         for step in route.get('steps', []):
             for mid in (step['source'],step['target']):
                 backbone_pairs.add(frozenset(('rxn:'+step['reaction_id'],'met:'+mid)))
-    if route_geometry is None:
-        from routing_geometry import build_routes
-        display_paths, parallel_report = build_routes(nodes, edges, xy, records, selection, backbones, route_offset)
-    else:
-        from routing_geometry import orient_for_edges
-        import copy
-        display_paths = orient_for_edges(route_geometry, edges, xy)
-        parallel_report = copy.deepcopy(routing_report or {})
-    parallel_report['routing_preference'] = (routing_report or {}).get('routing_preference', POLICY)
+    display_paths=[]
+    for j, edge in enumerate(edges):
+        rid=edge['reaction_id']
+        a,b=tuple(xy[edge['source']]),tuple(xy[edge['target']])
+        reverse=edge['direction']=='reverse' if structural else stats[rid]['median']<0
+        if reverse:a,b=b,a
+        elbow=(b[0],a[1])
+        points=[a]+([elbow] if elbow!=a and elbow!=b else [])+[b]
+        display_paths.append(dict(rid=rid,points=points,
+            priority=2 if stats[rid].get('is_major_pathway',False) else 1 if j in orange_edges else 0,
+            backbone=frozenset((edge['source'],edge['target'])) in backbone_pairs))
+    original_route_length=sum(sum(abs(a[k]-b[k]) for k in (0,1)) for p in display_paths for a,b in zip(p['points'],p['points'][1:]))
+    red_plan=(backbones or {}).get('red_parallel_layout')
+    if red_plan and red_plan.get('enabled') and red_plan.get('verified'):
+        planned={(r['rid'],r['mid']):r for r in red_plan['routes']}
+        for edge,path in zip(edges,display_paths):
+            route=planned.get((edge['reaction_id'],edge['metabolite_id']))
+            if route:
+                points=[tuple(p) for p in route['points']]
+                if path['points'][0]!=points[0]:points.reverse()
+                path.update(points=points,routing_locked=True)
+    parallel_report=separate_parallel(display_paths,obstacles=obstacles)
+    parallel_report['node_detours']=avoid_nodes(display_paths,obstacles=obstacles,route_offset=route_offset)
+    parallel_report['routing_preference']=POLICY
+    requested_red_spacing=red_plan['requested_spacing_grid'] if red_plan and red_plan.get('enabled') else .3
+    parallel_report['important_simplification']=simplify_important(display_paths,obstacles=obstacles,
+        route_offset=route_offset,red_spacing=requested_red_spacing)
+    parallel_report['gray_yield']=yield_gray(display_paths,obstacles=obstacles,route_offset=route_offset)
+
+    if red_plan:
+        parallel_report['red_parallel_layout']={k:v for k,v in red_plan.items() if k not in ('routes','allocations')}
+        parallel_report['red_parallel_spacing']=spacing_report(display_paths,red_plan['requested_spacing_grid'])
+        if red_plan.get('enabled') and red_plan.get('verified') and not parallel_report['red_parallel_spacing']['verified']:
+            raise RuntimeError('Preallocated red spacing changed during SVG rendering')
     route_points=[p for path in display_paths for p in path['points']]
     if route_points:
         ax.set_xticks(np.arange(math.floor(min(p[0] for p in route_points)),math.ceil(max(p[0] for p in route_points))+1))
@@ -260,7 +302,7 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     parallel_report['node_obstacle_policy']='red_orange_structural_nodes'
     parallel_report['obstacle_node_ids']=obstacle_keys
     parallel_report['structural_node_priorities']=node_priorities
-    parallel_report.setdefault('original_route_length', sum(sum(abs(a[k]-b[k]) for k in (0,1)) for edge in edges for a,b in [(xy[edge['source']],xy[edge['target']])]))
+    parallel_report['original_route_length']=original_route_length
     parallel_report['display_route_length']=sum(sum(abs(a[k]-b[k]) for k in (0,1)) for p in display_paths for a,b in zip(p['points'],p['points'][1:]))
     dump(output/'parallel_routing.json',parallel_report)
     for j, edge in enumerate(edges):
@@ -429,16 +471,13 @@ document.getElementById('coverage').oninput=update;document.getElementById('coen
                             'The layout minimizes length with a low-flux penalty, counting shared branches once.')
     page = page.replace('sbml2map', html.escape(program_name)).replace('__MODEL__', html.escape(model_id)).replace('__MAX__', str(selection['coverage_percent'])).replace('__SVG__', svg).replace('__REGISTRY__', json.dumps(registry)).replace('__ELIGIBLE__', str(selection['eligible_reactions']))
     page=page.replace('</html>','<script>window.gridLabelOptions='+json.dumps(label_options)+';</script><script>'+BASE.joinpath('grid_labels.js').read_text()+'</script></html>')
-    optimization = (routing_report or {}).get('optimization')
-    if optimization:
-        description = {'crossings-first': 'Crossings first, then bends, then route length',
-                       'sum': 'Crossings + bends, then route length',
-                       'weighted': f"Weighted crossings ({optimization['crossing_weight']:g}) and bends ({optimization['bend_weight']:g}), then route length"}[optimization['objective']]
-        before, after = optimization['before'], optimization['after']
-        notice = (f'<p id="routing-objective">{description}. '
-                  f"Crossings: {before['crossings']} → {after['crossings']}; bends: {before['bends']} → {after['bends']}. "
-                  'Counts include all saved routes before viewer filters. The search does not establish a global minimum.</p>')
-        page = page.replace('</header>', notice+'</header>', 1)
+    exclusion=(backbones or {}).get('tca_exclusion',{})
+    alignment=(backbones or {}).get('exchange_alignment',{})
+    if exclusion.get('enabled'):
+        description=f"TCA shape: {exclusion['shape']}. No nodes are placed inside the TCA perimeter."
+        if alignment.get('mode')=='collinear':
+            description+=f" {alignment['checked_triplets']} matched EX / extracellular / cytosolic triplets are collinear, ordered from outside inward."
+        page=page.replace('</header>','<p id="tca-layout-policy">'+description+'</p></header>',1)
     page = inject_controls(page, source_model, elements, highlights, records)
     (output / 'index.html').write_text(page)
 
@@ -505,8 +544,6 @@ def run(args):
     validate_sampling_options(args)
     route_offset=validate_route_offset(getattr(args,'route_offset',.3))
     red_spacing=validate_red_spacing(getattr(args,'red_parallel_spacing',1.0))
-    from routing_metrics import validate_options
-    validate_options(getattr(args,'routing_objective','crossings-first'),getattr(args,'crossing_weight',10.),getattr(args,'bend_weight',1.),getattr(args,'routing_time_limit',20.))
     output = args.output_dir
     output.mkdir(parents=True, exist_ok=True)
     model = load_model(args.model)
@@ -577,7 +614,16 @@ def run(args):
     exchange_nodes = strategy.exchanges(grid_ids) if strategy else {key for key in grid_ids if nodes[key]['kind'] == 'reaction' and nodes[key]['original_id'].startswith('EX_')}
     fixed_offsets, backbones = strategy.plan(routes, grid_ids) if strategy else backbone_plan(routes, grid_ids)
     backbones['skipped_routes'] = skipped_routes
+    from tca_geometry import configure_plan
+    fixed_offsets, backbones = configure_plan(fixed_offsets,backbones,getattr(args,'tca_shape','circle'))
+    for route in routes:
+        if route['id']=='tca':route['shape']=getattr(args,'tca_shape','circle')
     grid_options = strategy.grid_options(nodes, backbones) if strategy else {}
+    grid_options['reserved_region'] = backbones.get('tca_geometry')
+    from exchange_alignment import discover_alignment
+    alignment_mode = getattr(args,'exchange_alignment','collinear')
+    alignment_groups, alignment_skipped = discover_alignment(model,nodes,exchange_nodes) if alignment_mode == 'collinear' else ([],[])
+    grid_options['alignment_groups'] = alignment_groups
     flux_costs = orange_flux_costs(nodes, edges, major_reactions, records,
                                     0 if no_sampling else getattr(args, 'orange_flux_weight', 1))
     flux_costs['requested_flux_weight'] = getattr(args, 'orange_flux_weight', 1)
@@ -652,50 +698,15 @@ def run(args):
         backbones['red_parallel_layout']=red_plan
         placement['red_parallel_layout']={k:v for k,v in red_plan.items() if k not in ('routes','allocations')}
     cols, rows = placement['grid_cols'], placement['grid_rows']
-    attach_coenzymes(nodes, xy, grid_shape=(cols, rows))
-    from routing_geometry import build_routes
-    from routing_optimizer import optimize as optimize_routing
-    from routing_metrics import validate_options
-    routing_mode = getattr(args, 'routing_objective', 'crossings-first')
-    crossing_weight = getattr(args, 'crossing_weight', 10.)
-    bend_weight = getattr(args, 'bend_weight', 1.)
-    routing_seconds = getattr(args, 'routing_time_limit', 20.)
-    validate_options(routing_mode, crossing_weight, bend_weight, routing_seconds)
-    route_geometry, routing_report = build_routes(nodes, edges, xy, records, selection, backbones, route_offset)
-    # Existing fixed backbone/EX positions and all structural red/orange nodes
-    # remain fixed; move only unconstrained grid nodes and their local copies.
-    ranks = routing_report['structural_node_priorities']
-    movable = set(grid_ids)-set(fixed_offsets)-set(exchange_nodes)
-    movable = {k for k in movable if ranks[k] == 0 and k != glucose_node}
-    margins = grid_options.get('node_top_margins', {})
-    def valid_routing_position(key, position):
-        x, y = position
-        if strategy and (x in (0, cols-1) or y in (0, rows-1)):
-            return False
-        return y <= rows-1-margins.get(key, 0)
-    route_geometry, xy, routing_optimization = optimize_routing(
-        route_geometry, xy, nodes, movable, cols, rows, valid_routing_position,
-        mode=routing_mode, crossing_weight=crossing_weight, bend_weight=bend_weight,
-        time_limit=routing_seconds, route_offset=route_offset, red_spacing=red_spacing,
-        node_moves=not getattr(args, 'no_routing_node_moves', False))
-    routing_report['optimization'] = routing_optimization
-    routing_report['routing_preference'] = routing_mode
-    routing_report['shared_geometry'] = True
-    if red_plan:
-        routing_report['red_parallel_spacing'] = spacing_report(route_geometry, red_spacing)
-    if routing_optimization['moved_node_ids']:
-        placement['initial_length_objective'] = placement['objective']
-        placement['optimality_proven'] = False
-        placement.pop('global_lower_bound', None)
-        placement.pop('relative_gap', None)
-        if connectors:
-            connectors.update(total_length=connector_length(connectors, edges, xy), total_cost=connector_cost(connectors, edges, xy))
-            placement['objective'] = connectors['total_cost']
-        else:
-            placement['objective'] = sum(sum(abs(xy[a][k]-xy[b][k]) for k in (0,1))*
-                (objective_weights[i] if objective_weights is not None else 1)
-                for i,(a,b) in enumerate(objective_pairs))
-    placement['routing_optimization'] = routing_optimization
+    from tca_geometry import absolute_region,validate_exclusion
+    tca_region = absolute_region(backbones.get('tca_geometry'),rows)
+    attach_coenzymes(nodes, xy, grid_shape=(cols, rows),forbidden_region=tca_region)
+    tca_exclusion = validate_exclusion(nodes,xy,tca_region)
+    backbones['tca_exclusion'] = tca_exclusion
+    from exchange_alignment import validate_alignment
+    exchange_alignment = validate_alignment(alignment_groups,xy,cols,rows)
+    exchange_alignment.update(mode=alignment_mode,skipped=alignment_skipped)
+    backbones['exchange_alignment'] = exchange_alignment
     backbone_validation = validate_backbones(backbones, xy, rows)
     backbones['validation'] = backbone_validation
     if glucose_node and xy[glucose_node] != placement['position_constraints']['top_left_position']:
@@ -707,8 +718,9 @@ def run(args):
     if any(not (0 <= p[0] <= cols - 1 and 0 <= p[1] <= rows - 1) for p in xy.values()):
         raise RuntimeError('A displayed node lies outside the grid rectangle')
     network = validate_network(projected, nodes, edges, xy)
+    fractional_allowed = set((tca_region or {}).get('node_ids',())) | {g[k] for g in alignment_groups for k in ('exchange','external','internal')}
     for key in grid_ids:
-        if not np.allclose(xy[key], np.rint(xy[key]), atol=1e-9, rtol=0):
+        if key not in fractional_allowed and not np.allclose(xy[key], np.rint(xy[key]), atol=1e-9, rtol=0):
             raise RuntimeError('A non-coenzyme node is off-grid')
     if len({tuple(xy[k]) for k in grid_ids}) != len(grid_ids):
         raise RuntimeError('Grid nodes overlap')
@@ -737,7 +749,7 @@ def run(args):
                                       'Flux median ranked display projection. Inorganic participants hidden. Sampling uses the full original model.')
         orange_pairs = ({frozenset((edges[i]['source'],edges[i]['target']))
                          for i in connectors['edge_indices']} if connectors else None)
-        separate_routes(data,major_reactions,orange_pairs,route_offset=route_offset,route_geometry=route_geometry,routing_report=routing_report)
+        separate_routes(data,major_reactions,orange_pairs,route_offset=route_offset)
         escher_check = validate_map(data, projected, nodes, xy)
         reaction_data = None if no_sampling else {r['reaction_id']: r['median'] * data[0]['metadata']['reactions'][r['reaction_id']]['coefficient_multiplier']
                          for r in records if r['selected']}
@@ -774,7 +786,7 @@ def run(args):
     with (output / 'coordinates.csv').open('w', newline='') as stream:
         writer = csv.writer(stream); writer.writerow(['id', 'kind', 'original_id', 'x', 'y', 'on_grid'])
         for key, node in nodes.items():
-            writer.writerow([key, node['kind'], node['original_id'], *xy[key], node['kind'] != 'currency'])
+            writer.writerow([key, node['kind'], node['original_id'], *xy[key], bool(np.allclose(xy[key],np.rint(xy[key]),atol=1e-9,rtol=0))])
     with (output / 'edges.csv').open('w', newline='') as stream:
         writer = csv.DictWriter(stream, fieldnames=['source', 'target', 'reaction_id', 'metabolite_id', 'coefficient', 'direction'])
         writer.writeheader(); writer.writerows(edges)
@@ -787,13 +799,14 @@ def run(args):
                   exchange_reaction_ids=sorted(nodes[k]['original_id'] for k in exchange_nodes),
                   total_orthogonal_edge_length=length, coenzyme_edge_length=.45 * coenzyme_count,
                   inorganic_metabolites=[m for m, c in classification.items() if c['kind'] == 'inorganic'],
-                  validation=dict(all_noncoenzyme_nodes_on_distinct_grid_points=True, no_inorganic_nodes=True,
+                  validation=dict(all_noncoenzyme_nodes_on_distinct_grid_points=all(np.allclose(xy[k],np.rint(xy[k]),atol=1e-9,rtol=0) for k in grid_ids),
+                                  all_non_tca_nonaligned_nodes_on_grid=True,tca_interior=tca_exclusion,exchange_alignment=exchange_alignment,no_inorganic_nodes=True,
                                   glucose_top_left_verified=True, exchange_reactions_on_perimeter=True,
                                   all_nodes_within_grid_rectangle=True, major_backbones=backbone_validation,
                                   no_zero_median_reactions=True, visible_stoichiometry_preserved=True,
                                   full_model_used_for_sampling=True, network=network, escher=escher_check),
                   limitations=['Global length optimality is reported, not assumed.',
-                               'Routing uses bounded local search; global crossing/bend optimality is not proven. Existing constraint violations are reported.',
+                               'Crossings, coincident edge paths, and label overlap are not minimized.',
                                'Display model omits inorganic participants and is not suitable for FBA.',
                                'Escher uses orthogonal segments with routing nodes; original node coordinates and reaction chemistry are preserved.',
                                'Sampling uses original bounds without a growth floor or loopless constraints; internal cycles may dominate.'])
@@ -811,8 +824,9 @@ def run(args):
     report['red_parallel_spacing_grid'] = red_spacing
     report['route_offset_grid'] = route_offset
     report['program_name'] = program_name
-    report['routing_optimization'] = routing_optimization
-    dump(output/'routing_geometry.json', dict(schema_version=1, coordinate_system='grid', routes=route_geometry, optimization=routing_optimization))
+    report['tca_shape'] = getattr(args,'tca_shape','circle')
+    report['tca_exclusion'] = tca_exclusion
+    report['exchange_alignment'] = exchange_alignment
     if strategy:
         report['extraction_status'] = strategy.extraction['status']
         report['validation']['glucose_is_top_left_compound'] = True
@@ -835,7 +849,7 @@ def run(args):
     data[0].setdefault('metadata', {})['highlights'] = highlights
     dump(output / 'escher_map.json', data)
     dump(output / 'report.json', report)
-    render(output, nodes, edges, xy, records, selection, model['id'], backbones, program_name, sampling_report, highlights, model, route_offset=route_offset,label_options=data[0].get('metadata',{}).get('label_display'),route_geometry=route_geometry,routing_report=routing_report)
+    render(output, nodes, edges, xy, records, selection, model['id'], backbones, program_name, sampling_report, highlights, model, route_offset=route_offset,label_options=data[0].get('metadata',{}).get('label_display'))
     if getattr(args,'export_sbml_layout',False):
         from export_sbml_layout import export_sbml_layout
         layout_report=export_sbml_layout(args.model,output,layout_id=getattr(args,'sbml_layout_id','sbml2map_layout'))
@@ -872,12 +886,9 @@ def parser():
     p.add_argument('--model', type=Path, default=BASE / 'e_coli_core.xml')
     p.add_argument('--output-dir', type=Path, default=BASE / 'e_coli_core_sbml2map_output')
     p.add_argument('--coverage', type=float, default=100, help='Top percentage of eligible reactions (0..100); --no-sampling uses pathway membership and IDs')
+    p.add_argument('--tca-shape',choices=('circle','square'),default='circle',help='TCA node perimeter shape (default: circle); its interior excludes every node')
+    p.add_argument('--exchange-alignment',choices=('collinear','off'),default='collinear',help='Align EX, extracellular and matching cytosolic nodes from outside inward (default: collinear)')
     p.add_argument('--red-parallel-spacing',type=validate_red_spacing_arg,default=1.0,help='Minimum red/red channel spacing for parallel runs of at least one grid unit (default: 1; 0 disables layout channel allocation)')
-    p.add_argument('--routing-objective', choices=('crossings-first', 'sum', 'weighted'), default='crossings-first', help='Default: minimize crossings, then bends, then length; sum minimizes crossings+bends; weighted uses the weights below')
-    p.add_argument('--crossing-weight', type=float, default=10., help='Crossing weight in weighted routing mode (default: 10)')
-    p.add_argument('--bend-weight', type=float, default=1., help='Bend weight in weighted routing mode (default: 1)')
-    p.add_argument('--routing-time-limit', type=float, default=20., help='Local routing search seconds (default: 20; 0 keeps the incumbent geometry)')
-    p.add_argument('--no-routing-node-moves', action='store_true', help='Optimize routes with all node coordinates fixed')
     p.add_argument('--route-offset', type=validate_route_offset_arg, default=.3, help='Whole-segment U-shaped node avoidance offset in grid units (default: 0.3; 0 disables node avoidance)')
     p.add_argument('--zero-tolerance', type=float, default=1e-7)
     p.add_argument('--orange-flux-weight', type=float, default=1, help='Penalty for low-flux orange routes (default: 1; 0: length only; larger values favor higher-flux reactions more; ignored without sampling)')

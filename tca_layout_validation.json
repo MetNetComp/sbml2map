@@ -1,0 +1,140 @@
+{
+  "default_tca_shape": "circle",
+  "default_exchange_alignment": "collinear",
+  "cases": [
+    {
+      "case": "ecore-circle",
+      "shape": "circle",
+      "alignment": "collinear",
+      "interior_node_count": 0,
+      "clearance_violation_count": 0,
+      "aligned_triplets": 12,
+      "skipped_exchanges": [
+        {
+          "reaction_id": "EX_fru_e",
+          "external_metabolite_id": "fru_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        },
+        {
+          "reaction_id": "EX_glc__D_e",
+          "external_metabolite_id": "glc__D_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        }
+      ],
+      "svg_escher_coordinates_verified": true,
+      "grid_cols": 14,
+      "grid_rows": 28,
+      "source_model_sha256": "deb260e7fc6459b5636d095dc2f20668add20e6e6cfd4a01d432cac94838a0e9",
+      "fba": {
+        "reactions": 95,
+        "objective_value": 0.8739215069684304,
+        "interior_node_count": 0,
+        "exchange_triplets": 12,
+        "existing_coordinates_preserved": true
+      }
+    },
+    {
+      "case": "ecore-square",
+      "shape": "square",
+      "alignment": "collinear",
+      "interior_node_count": 0,
+      "clearance_violation_count": 0,
+      "aligned_triplets": 12,
+      "skipped_exchanges": [
+        {
+          "reaction_id": "EX_fru_e",
+          "external_metabolite_id": "fru_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        },
+        {
+          "reaction_id": "EX_glc__D_e",
+          "external_metabolite_id": "glc__D_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        }
+      ],
+      "svg_escher_coordinates_verified": true,
+      "grid_cols": 14,
+      "grid_rows": 27,
+      "source_model_sha256": "deb260e7fc6459b5636d095dc2f20668add20e6e6cfd4a01d432cac94838a0e9",
+      "fba": {
+        "reactions": 95,
+        "objective_value": 0.8739215069684304,
+        "interior_node_count": 0,
+        "exchange_triplets": 12,
+        "existing_coordinates_preserved": true
+      }
+    },
+    {
+      "case": "ich360-circle",
+      "shape": "circle",
+      "alignment": "collinear",
+      "interior_node_count": 0,
+      "clearance_violation_count": 0,
+      "aligned_triplets": 17,
+      "skipped_exchanges": [
+        {
+          "reaction_id": "EX_fru_e",
+          "external_metabolite_id": "fru_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        },
+        {
+          "reaction_id": "EX_glc__D_e",
+          "external_metabolite_id": "glc__D_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        }
+      ],
+      "svg_escher_coordinates_verified": true,
+      "grid_cols": 28,
+      "grid_rows": 30,
+      "source_model_sha256": "8f526442e3e9ca0e1b184be60c6d032c76d338e8d8b8065b0b3246e4ac8c5112",
+      "fba": null
+    },
+    {
+      "case": "ich360-square",
+      "shape": "square",
+      "alignment": "collinear",
+      "interior_node_count": 0,
+      "clearance_violation_count": 0,
+      "aligned_triplets": 17,
+      "skipped_exchanges": [
+        {
+          "reaction_id": "EX_fru_e",
+          "external_metabolite_id": "fru_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        },
+        {
+          "reaction_id": "EX_glc__D_e",
+          "external_metabolite_id": "glc__D_e",
+          "reason": "No unique displayed cytosolic chemical match",
+          "candidates": []
+        }
+      ],
+      "svg_escher_coordinates_verified": true,
+      "grid_cols": 28,
+      "grid_rows": 29,
+      "source_model_sha256": "8f526442e3e9ca0e1b184be60c6d032c76d338e8d8b8065b0b3246e4ac8c5112",
+      "fba": null
+    },
+    {
+      "case": "alignment-off",
+      "shape": "circle",
+      "alignment": "off",
+      "interior_node_count": 0,
+      "clearance_violation_count": 0,
+      "aligned_triplets": 0,
+      "skipped_exchanges": [],
+      "svg_escher_coordinates_verified": true,
+      "grid_cols": 14,
+      "grid_rows": 28,
+      "source_model_sha256": "deb260e7fc6459b5636d095dc2f20668add20e6e6cfd4a01d432cac94838a0e9",
+      "fba": null
+    }
+  ]
+}

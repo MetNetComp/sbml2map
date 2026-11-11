@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sbml2map — TCA shape and straight exchange layouts</title>
+<style>body{font:16px/1.6 system-ui,sans-serif;max-width:1150px;margin:36px auto;padding:0 20px;color:#203744}table{border-collapse:collapse;width:100%}th,td{padding:12px;text-align:left;border-bottom:1px solid #ccd}a{color:#155d9c}code{background:#eef2f5;padding:2px 5px}</style>
+<h1>sbml2map — TCA shape and straight exchange layouts</h1>
+<p>These are separate examples. The <a href="../">original published results</a> remain unchanged.</p>
+<p>The default is <code>--tca-shape circle --exchange-alignment collinear</code>.
+Choose <code>--tca-shape square</code> for a square TCA perimeter, or <code>--exchange-alignment off</code> to disable only exchange-triplet alignment.</p>
+<p>TCA compounds and reactions follow their source order clockwise around the selected perimeter.
+Every other compound, reaction and cofactor copy stays outside, with clearance.
+Matched exchange triplets are ordered EX → extracellular → cytosolic from the outer boundary inward.
+Missing or ambiguous chemical matches are reported rather than guessed.</p>
+<table><thead><tr><th>Model</th><th>TCA shape</th><th>Nodes inside TCA</th><th>Aligned EX triplets</th><th>New drawings</th></tr></thead><tbody><tr><th>E. coli core</th><td>circle</td><td>0</td><td>12</td><td><a href="e_coli_core/circle/">SVG viewer</a> · <a href="e_coli_core/circle/escher_preview.html">Escher viewer</a> · <a href="e_coli_core/circle/layout.png">PNG</a> · <a href="e_coli_core/circle/escher_fba.html">Full FBA</a></td></tr><tr><th>E. coli core</th><td>square</td><td>0</td><td>12</td><td><a href="e_coli_core/square/">SVG viewer</a> · <a href="e_coli_core/square/escher_preview.html">Escher viewer</a> · <a href="e_coli_core/square/layout.png">PNG</a> · <a href="e_coli_core/square/escher_fba.html">Full FBA</a></td></tr><tr><th>iCH360</th><td>circle</td><td>0</td><td>17</td><td><a href="eco_ich_360/circle/">SVG viewer</a> · <a href="eco_ich_360/circle/escher_preview.html">Escher viewer</a> · <a href="eco_ich_360/circle/layout.png">PNG</a></td></tr><tr><th>iCH360</th><td>square</td><td>0</td><td>17</td><td><a href="eco_ich_360/square/">SVG viewer</a> · <a href="eco_ich_360/square/escher_preview.html">Escher viewer</a> · <a href="eco_ich_360/square/layout.png">PNG</a></td></tr></tbody></table>
+<p>Alignment disabled: <a href="e_coli_core/circle-alignment-off/">E. coli core circular TCA, free exchange alignment</a> · <a href="e_coli_core/circle-alignment-off/escher_preview.html">Escher viewer</a>. The TCA interior remains empty.</p>
+<p>The circular TCA anchors and their aligned partners may use fractional coordinates; other ordinary nodes stay on a grid.
+Connection lines retain the original orthogonal routing policy. The crossing-first experiment has been reverted.</p>
+<p>Full FBA examples retain all 95 source reactions and existing node coordinates, with no nodes inside the TCA and the same straight exchange triplets.
+<a href="e_coli_core/circle/layout.sbml">Circular E. coli core with SBML Layout</a> · <a href="e_coli_core/circle/sbml_layout_report.json">SBML validation</a>.</p>
+<p><a href="tca_layout_validation.json">Coordinate and constraint validation (JSON)</a></p></html>

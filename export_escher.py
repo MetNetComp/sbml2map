@@ -480,7 +480,7 @@ document.getElementById('save').onclick=()=>{const data=window.builder.map.map_f
 def write_pathway_preview(path, data, major_reactions=(), connector_pairs=None,
                           model=None, elements=(), initial_highlights=None, records=()):
     """Start with pathway structure; disable fixed colors when reaction data loads."""
-    if data[0]['metadata'].get('routing')=='orthogonal' and not data[0]['metadata'].get('overlap_routing',{}).get('shared_geometry') and (not data[0]['metadata'].get('overlap_routing',{}).get('enabled') or
+    if data[0]['metadata'].get('routing')=='orthogonal' and (not data[0]['metadata'].get('overlap_routing',{}).get('enabled') or
             data[0]['metadata'].get('overlap_routing',{}).get('node_obstacle_policy')!='red_orange_structural_nodes' or
             data[0]['metadata'].get('overlap_routing',{}).get('trunk_grouping')!='positive_length_overlap' or
             data[0]['metadata'].get('overlap_routing',{}).get('red_layout_signature')!=(plan_from_metadata(data[0]['metadata']) or {}).get('signature') or

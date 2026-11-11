@@ -646,60 +646,47 @@ scaling to distinguish low and moderate absolute fluxes. Widths range from 3 to
 8; zero flux stays gray at width 1. Legend ticks and signed labels retain actual
 flux units. Numerical FBA results and branch visibility are unchanged.
 
-## Crossing and bend optimization
+## TCA shape and straight exchange triplets
 
-Routing defaults to `--routing-objective crossings-first`: minimize crossings
-first, then bends, then total route length. A reduction in bends never justifies
-an additional crossing in this mode. All three structural colors and local
-cofactor branches are included in the counts.
+The default is `--tca-shape circle --exchange-alignment collinear`.
+TCA compound and reaction nodes follow the source cycle in clockwise order on
+an exact circular perimeter. Other ordinary nodes remain on a grid. TCA
+anchors and their aligned exchange partners may use fractional coordinates.
 
 ```bash
 python sbml2map.py --model models/e_coli_core.xml --no-sampling \
-  --routing-objective crossings-first --routing-time-limit 20 \
-  --output-dir results/runs/e_coli_core_crossings
-```
+  --tca-shape circle --exchange-alignment collinear \
+  --output-dir results/runs/e_coli_core_circle
 
-Alternative objectives:
-
-```bash
-# Equal cost for a crossing and a bend, with route length breaking ties.
-python sbml2map.py --model models/e_coli_core.xml --no-sampling --routing-objective sum
-
-# A crossing costs ten times as much as a bend.
 python sbml2map.py --model models/e_coli_core.xml --no-sampling \
-  --routing-objective weighted --crossing-weight 10 --bend-weight 1
+  --tca-shape square --output-dir results/runs/e_coli_core_square
+
+# Disable only the three-point exchange alignment.
+python sbml2map.py --model models/e_coli_core.xml --no-sampling \
+  --exchange-alignment off --output-dir results/runs/e_coli_core_unaligned
 ```
 
-`--crossing-weight` and `--bend-weight` apply only to `weighted` mode. Weights
-must be finite and nonnegative, with at least one positive weight.
-`--routing-time-limit` sets the local search budget (default 20 seconds).
-`--no-routing-node-moves` keeps all node coordinates fixed while optimizing
-routes. A zero budget retains the initial routing; `--route-offset 0` also
-skips the search. Measurement and output validation still take time beyond the
-search budget.
+For both shapes the TCA interior is forbidden to every compound, reaction and
+reaction-local cofactor copy. Non-TCA nodes also keep a 0.16-grid clearance from
+the perimeter. TCA nodes themselves stay on that perimeter. The forbidden
+region applies during initialization, heuristic moves, finite-cell MILP and
+FBA completion. The grid expands automatically when its size is unspecified;
+an insufficient explicit grid fails without dropping constraints.
 
-The search alternates route candidates with legal grid-node moves/swaps.
-Backbone, EX and structural red/orange nodes remain fixed. Reaction-local
-cofactor copies move with a moved reaction. Source reaction chemistry, bounds,
-flux values, pathway membership and orange connector selection are preserved.
-No new unrelated line overlaps or node passages are accepted. Existing overlap
-and node-passage violations can remain; they are reported explicitly, rather
-than hidden in the objective. A finite, time-bounded local search does not
-establish a global minimum.
+Straight alignment orders each confidently matched triplet from outside inward:
+EX reaction, extracellular compound, cytosolic compound. The EX node is on an
+outer edge; the other two nodes share its row or column. Compartment-normalized
+source IDs or exact chemical identity annotations establish matches. Missing or
+ambiguous matches are listed in the report and are not guessed. Matching the
+three points does not change chemistry or invent a transport reaction.
 
-Crossings are unique reaction-pair intersection coordinates, including contacts
-at bends and unrelated endpoints. Shared biological endpoints and connections
-within the same reaction are excluded. Same-reaction collinear trunks are
-merged, and shared corners count once. Route length is the length of the
-same-reaction geometric union. These definitions are independent of renderer
-segment splitting.
-
-`routing_geometry.json` stores canonical grid-coordinate polylines. SVG, PNG,
-Escher JSON/HTML and optional SBML Layout use the same geometry. Full-model FBA
-retains matching structural incidences and optimizes added branches separately,
-without moving nodes or changing numerical fluxes.
-
-`report.json` and `parallel_routing.json` record before/after crossings, bends,
-sum and length, accepted moves, time budget, remaining constraint violations,
-and the lack of a global optimality proof. See `routing_benchmarks.json` for
-verified E. coli core and iCH360 comparisons.
+The original weighted Manhattan-length objective and routing policy are retained.
+The crossing-first experiment has been reverted. Existing published examples
+are unchanged; new shape/alignment examples are under `docs/tca-layout/`.
+`report.json` records `tca_shape`, `tca_exclusion` and `exchange_alignment`,
+including matched/skipped triplets and verified empty-interior counts. The CSV
+`on_grid` field describes actual integer coordinates. Full FBA completion
+preserves saved coordinates and applies the same exclusion/alignment rules to
+added nodes; an insufficient saved frame requires regenerating a larger layout.
+Incomplete source cycles retain their supported components and angular gaps.
+No missing cycle reaction or closing connection is synthesized.

@@ -191,7 +191,7 @@ def heuristic_layout(n, edges, cols, rows, seed=0, allowed=None, initial_points=
 def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, seed=0, progress=print,
                   *, top_left_node=None, boundary_nodes=(), fixed_offsets=None, top_left_margin=0, node_top_margins=None, max_milp_nodes=None,
                   exclusive_boundary=False, initial_positions=None, edge_weights=None,
-                  red_edges=(), red_parallel_spacing=1.0, red_obstacle_node_ids=()):
+                  red_edges=(), red_parallel_spacing=1.0, red_obstacle_node_ids=(), reserved_region=None, alignment_groups=()):
     from red_route_layout import plan_red_routes,validate_red_spacing
     validate_red_spacing(red_parallel_spacing)
     def finish(positions,report):
@@ -200,6 +200,12 @@ def optimize_grid(node_ids, edge_pairs, cols=None, rows=None, time_limit=60, see
                 red_obstacle_node_ids,time_limit=min(3,max(.05,time_limit)),
                 use_milp='MILP' in report.get('method','') and report.get('selected_solution')!='validated heuristic incumbent')
         return positions,report
+    if reserved_region is not None or alignment_groups:
+        from reserved_grid import optimize_reserved_grid
+        positions, report = optimize_reserved_grid(node_ids,edge_pairs,cols,rows,time_limit,seed,progress,
+            top_left_node,boundary_nodes,fixed_offsets,top_left_margin,node_top_margins,max_milp_nodes,
+            exclusive_boundary,initial_positions,edge_weights,reserved_region,alignment_groups)
+        return finish(positions,report)
     auto_cols, auto_rows = cols is None, rows is None
     n = len(node_ids)
     if len(set(node_ids)) != n:
