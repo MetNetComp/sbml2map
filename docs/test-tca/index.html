@@ -26,7 +26,7 @@
 <h3>iCH360</h3>
 <p><a href="?model=eco_ich_360&amp;shape=circle">Show iCH360 circle</a> · <a href="?model=eco_ich_360&amp;shape=square">Show iCH360 square</a> · <a href="validation-eco_ich_360.json">iCH360 validation</a> · <a href="eco_ich_360/circle/red_optimization.json">Circle red-route report</a> · <a href="eco_ich_360/square/red_optimization.json">Square red-route report</a></p>
 <h3>Node and line rules</h3>
-<p>Nodes of the same type use the same size, including pyr_c and accoa_c. All nodes except TCA nodes and cofactors sit on integer grid intersections. Cofactors are placed near their reactions and may be off the grid.</p>
+<p>All nodes except TCA nodes and cofactors sit on integer grid intersections. Cofactors are placed near their reactions and may be off the grid.</p>
 <p>Branches at a common node may overlap within 0.5 grid units of its center. Lines of any color cannot run in parallel less than one grid unit apart for two or more grid units. Short branches are allowed without a fixed limit on their number.</p>
 <p>The TCA cycle keeps its clockwise reaction order in both shapes. The circular TCA has 18 nodes, a diameter of about 8.49 grid units, and curved cycle connections. Other nodes may be inside the cycle. Unrelated lines stay at least one grid unit from its outline. Connections to the cycle may use short outward branches near their TCA node.</p>
 <p>Red and orange lines may cross at a point if avoiding the crossing would at least double the length, add four grid units, or leave no valid route. The reason is recorded. Required straight exchange routes are placed before free routes.</p>
