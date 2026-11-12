@@ -22,8 +22,6 @@
 <p>The layout compares red routes first, including detours and curved TCA connections. It keeps the best valid red layout while adding the other nodes and routes. In all four examples, the chosen red nodes and routes remain unchanged.</p>
 <p>If the fixed red layout cannot meet all rules, the program first tries changes with the same red length. It tries longer red routes only when needed and records the reason. The search checks a limited set of candidates, so it does not prove a global minimum.</p>
 <h3>E. coli core</h3>
-<table><thead><tr><th>TCA shape</th><th>Previous red length</th><th>Current red length</th><th>Red nodes moved</th><th>Red routes changed</th><th>Long close parallel runs</th><th>Label overlaps</th></tr></thead><tbody><tr><td>Circle</td><td>181.53</td><td>151.53</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Square</td><td>124.00</td><td>90.50</td><td>0</td><td>0</td><td>0</td><td>0</td></tr></tbody></table>
-<p>Each view has 84 reactions and 220 labels. Lengths are in grid units. Shared connection segments count once per biological connection.</p>
 <p><a href="e_coli_core/circle/red_optimization.json">Circle red-route report</a> · <a href="e_coli_core/square/red_optimization.json">Square red-route report</a></p>
 <h3>iCH360</h3>
 <p>Each view shows 326 of the source model's 349 reactions, with 921 nodes and 1,073 connections.</p>
