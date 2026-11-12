@@ -5,9 +5,8 @@
 <style>
 :root{color-scheme:light;font-family:system-ui,-apple-system,sans-serif;color:#193747;background:#f4f7f8}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:1400px;margin:auto;padding:22px 28px}header{padding-top:36px}small{letter-spacing:.14em;color:#53717c}h1{font-size:clamp(25px,4vw,38px);margin:8px 0 12px}p{line-height:1.8;margin:8px 0}.toolbar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:white;border:1px solid #d1dfe3;border-radius:12px;padding:16px}label{display:flex;align-items:center;gap:9px;font-size:14px}select,button,.link{font:inherit;background:white;border:1px solid #bdcfd5;border-radius:6px;padding:9px 12px;color:#193747}button,.link{cursor:pointer}.link{text-decoration:none;display:inline-block}button:hover,.link:hover{background:#eaf4f3}.links{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.legend{font-size:14px;color:#4a626f}.red{color:#df292e}.orange{color:#d16a08}.viewport{height:72vh;min-height:400px;overflow:auto;border:1px solid #cad8dd;border-radius:10px;background:white;padding:16px}.viewport img{display:block;max-width:none;height:auto;margin:0 auto}footer{font-size:13px;color:#4a626f;padding-bottom:36px}#status{font-size:14px}a{color:#165b69}@media(max-width:600px){header,main,footer{padding:18px}.viewport{height:65vh}.toolbar{gap:12px}input[type=range]{width:110px}}
 </style>
-<header><small>SBML2MAP / LAYOUT COMPARISON</small><h1>Metabolic maps with circular or square TCA cycles</h1>
-<p>Compare E. coli core and iCH360. Only the TCA cycle follows clockwise order. Other pathways follow their own layout rules.</p>
-<p>The TCA cycle can be a circle or a square. Choose a TCA shape below. In the CLI, use <code>--tca-shape circle</code> (default) or <code>--tca-shape square</code>.</p></header>
+<header><small>SBML2MAP / LAYOUT COMPARISON</small><h1>Metabolic maps produced by sbml2map</h1>
+</header>
 <main>
 <div class="toolbar">
 <label>Model <select id="model" aria-label="Model"><option value="e_coli_core">E. coli core</option><option value="eco_ich_360">iCH360</option></select></label>
