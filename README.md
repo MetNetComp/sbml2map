@@ -1,5 +1,7 @@
 # sbml2map
 
+[配置・描画ルールの優先順位（日本語）](docs/layout-rules-ja.md)
+
 sbml2map draws metabolic maps from SBML models. It can export Escher maps,
 SVG images, and SBML files with compound and reaction positions and connecting lines.
 To export SBML with positions, use `--export-sbml-layout`.
