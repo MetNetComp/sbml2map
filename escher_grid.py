@@ -573,8 +573,6 @@ document.getElementById('coverage').oninput=update;document.getElementById('coen
             missing = len(connectors.get('disconnected_exchange_node_ids', []))
             page=page.replace('</h1>', f'</h1><p>EX reactions with no connection to main pathways: {missing}. These stay gray. No connections are added.</p>',1)
     if connectors and connectors.get('flux_costs', {}).get('flux_weight', 0):
-        page = page.replace('共有枝を1回だけ数えた長さの総和を最小化します。',
-                            '共有枝は1回だけ数え、長さに低フラックスのペナルティを付けたコストを最小化します。')
         page = page.replace('The layout minimizes total path length, counting shared branches once.',
                             'The layout minimizes length with a low-flux penalty, counting shared branches once.')
     if (backbones or {}).get('orange_reposition',{}).get('enabled'):
@@ -1111,7 +1109,7 @@ def parser():
     p.add_argument('--no-compact-boundary',dest='compact_boundary',action='store_false',help='Keep the initial lower and right exchange boundaries')
     p.add_argument('--boundary-margin',type=float,default=1.,help='Minimum clearance around frozen red geometry during boundary compaction (default: 1 grid unit)')
     p.add_argument('--tca-interior',choices=('allow','forbid'),default='allow',help='Allow ordinary nodes and cofactor copies inside the fixed TCA perimeter (default: allow)')
-    p.add_argument('--tca-shape',choices=('circle','square'),default='circle',help='TCA perimeter: grid-intersection circle with curved cycle connections (default), or orthogonal square')
+    p.add_argument('--tca-shape',choices=('circle','square'),default='circle',help='TCA shape: circle (default) or square; only the TCA cycle follows clockwise order')
     p.add_argument('--exchange-alignment',choices=('collinear','off'),default='collinear',help='Align EX, extracellular and matching cytosolic nodes from outside inward (default: collinear)')
     p.add_argument('--red-parallel-spacing',type=validate_red_spacing_arg,default=1.0,help='Minimum red/red channel spacing for parallel runs of at least one grid unit (default: 1; 0 disables layout channel allocation)')
     p.add_argument('--route-offset', type=validate_route_offset_arg, default=.3, help='Whole-segment U-shaped node avoidance offset in grid units (default: 0.3; 0 disables node avoidance)')

@@ -1,6 +1,6 @@
 # sbml2map
 
-[配置・描画ルールの優先順位（日本語）](docs/layout-rules-ja.md)
+[Layout rules and priorities](docs/layout-rules.md)
 
 sbml2map draws metabolic maps from SBML models. It can export Escher maps,
 SVG images, and SBML files with compound and reaction positions and connecting lines.
@@ -11,7 +11,12 @@ and free cofactor placement. Branches may overlap within 0.5 grid units of a com
 Parallel lines of any color with spacing below one grid unit cannot run together for two
 or more grid units. Right and bottom exchange tails and label margins are compacted
 after validation. See the [latest published layouts](https://metnetcomp.github.io/sbml2map/test-tca/)
-and [drawing rules](docs/layout-rules-ja.md). Earlier FBA examples use separate coordinates.
+and [drawing rules](docs/layout-rules.md). Earlier FBA examples use separate coordinates.
+
+The TCA cycle can be a circle (default) or a square. Use `--tca-shape square`
+for the square option, or switch **TCA shape** on the comparison page.
+Only the TCA cycle follows clockwise order, in both shapes. Other pathways
+follow their own layout rules.
 
 `sbml2map.py` draws metabolic networks with nodes on a grid.
 Cofactors may also be placed off the grid. Inorganic species are ignored.
@@ -691,46 +696,51 @@ Incomplete source cycles retain their supported components and angular gaps.
 No missing cycle reaction or closing connection is synthesized.
 
 
-## 赤線の長さを先に最小化し、配置を保持する
+## Optimize red routes first and keep them fixed
 
-`adaptive-grid`では、初期配置の目的を赤の非円弧接続のL1長にし、オレンジの配置より先に
-赤だけの配置・配線候補を比較します。TCAの相対移動をMILPで提案し、既存の経路テンプレートを
-保った候補と赤全体の等長な平行移動を実際に配線します。評価には迂回とTCAの三次Bezier円弧の
-実長を含めます。短い共有接続口も、生物学的な接続ごとに1回ずつ数えます。
+With `adaptive-grid`, the initial placement minimizes the Manhattan length of
+red connections other than TCA arcs. The program compares red layouts before
+placing orange routes. A mixed-integer linear program (MILP) suggests TCA shifts.
+The program then routes each candidate and compares its actual length, including
+detours and cubic Bezier TCA arcs. Shared segments count once per biological connection.
 
-赤へ直接つながる交換反応の通路が成立するかを先に検証し、最良の赤の座標・経路を保存して固定します。
-後段は非赤ノードの移動・再配線・外周拡張を先に試します。灰色でも直線配置が必須の通路は、
-自由なオレンジ経路より先に確保します。円形TCAの補酵素は、許容される接続口を経由する短い局所接続を使います。
+After checking exchange routes that connect directly to red nodes, the program
+saves and fixes the best red layout. It first tries to place other nodes and routes
+around it. Required straight exchange routes are reserved before free orange routes.
 
-固定した赤で全体配置が成立しない場合だけ、同じ座標での等長再配線、等長の赤ノード移動、
-赤の延長量が小さい候補の順に緩めます。優先順位は、必須条件、赤の総延長、基準の赤からの変更量、
-オレンジの長さ、余白です。最終の余白調整後とEscher保存データでも、赤の長さと保持状態を検証します。
+If this fails, it tries equal-length red rerouting, then equal-length red node moves,
+then candidates with the smallest increase in red length. The priorities are:
+required rules, red length, changes to the saved red layout, orange length, and margins.
+The saved Escher data and the layout after margin trimming are checked again.
 
-`red_optimization.json`と`report.json`に、基準・最終の赤の実長、移動ノード数、変更経路数、
-緩和段階・理由、成立しなかった配置候補を保存します。最適性の証明有無も記録します。
-MILPの補助目的が最適でも、有限個の配置・配線候補全体の大域最適性は保証しません。
-`--red-time-limit`（既定10秒、成立候補を得るまで超過する場合あり）と
-`--red-candidates`（既定10配置）で、赤の候補探索を調整できます。
+`red_optimization.json` and `report.json` record the initial and final red lengths,
+moved nodes, changed routes, fallback reasons, and failed candidates.
+The search checks a limited set of layouts and routes; it does not prove a global minimum.
+Use `--red-time-limit` (default: 10 seconds) and `--red-candidates` (default: 10)
+to control the search. The time limit may be exceeded until a valid candidate is found.
 
+## iCH360 and multi-step transport
 
-## iCH360と複数段の膜輸送
+The layout supports transport chains such as extracellular → periplasm → cytosol.
+It uses only species and reactions in the source model. Intermediate species and
+transport reactions follow a straight line from the outer boundary inward.
+It does not add missing reactions or replace a chain with an invented direct reaction.
 
-細胞外→ペリプラズム→細胞内のような、同一化合物の複数段輸送にも対応します。
-元モデルの実在する化学種・反応だけで連鎖を探索し、中間の化学種と輸送反応も外側から内側へ直線配置します。
-不足する中間反応を追加したり、細胞外から細胞内への架空の一段輸送に置き換えたりしません。
+Short shared branches near a node are allowed. For all line colors, parallel runs
+less than one grid unit apart cannot continue for two or more grid units.
+There is no fixed two-line limit for short auxiliary branches; their count is recorded.
+Short outward branches are allowed near a connected TCA node. Unrelated lines must
+stay clear of the TCA outline and cannot cross through the cycle.
 
-ノード付近の短い共有枝を許可し、線の色にかかわらず間隔1グリッド未満で
-2グリッド以上続く近接平行線を禁止します。旧来の補助通路の一律2本上限は使いません。
-短い分岐の本数は診断値として記録します。TCAへ接続する枝は、そのノード付近だけ
-短い外向きの分岐を許可し、無関係な輪郭への接近や回路横断は許可しません。
-
-実行例（構造表示、サンプリングなし）:
+Run a structural layout without sampling:
 
 ```bash
 python sbml2map.py --model data/e_coli_iCH360.sbml --no-sampling \
   --tca-shape circle --output-dir results/local/red-priority-ich360-circle
 ```
 
-四角形は `--tca-shape square` を指定します。iCH360は元モデル349反応中326反応を描画し、
-17組の複数段輸送と2組の単純な交換接続、計87区間を直線配置として検証しています。
-入力SBMLやモデルJSONの公開は行わず、必要な解析用ファイルはローカルに保存します。
+Use `--tca-shape square` for a square TCA cycle. In both shapes, only the TCA
+cycle follows clockwise order; this rule does not apply to other pathways.
+iCH360 shows 326 of 349 source reactions. Validation covers 17 multi-step transport
+chains and two simple exchange pairs, with 87 straight segments in total.
+Input SBML and model JSON files are kept locally and are not published.

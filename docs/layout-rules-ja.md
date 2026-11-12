@@ -1,50 +1,68 @@
-# 配置・描画ルール
+# Layout rules and priorities
 
-[最新の円形・四角形](test-tca/) · [検証結果](test-tca/validation.json)
+[Latest circle and square views](test-tca/) · [Validation results](test-tca/validation.json)
 
-1. 元モデルの代謝物・反応・化学量論・方向を保ちます。
-2. `pyr_c`・`accoa_c`も他の同種ノードと同じ大きさにします。接続数で拡大しません。
-3. 共通ノードへ接続する枝は、中心から0.5グリッド以内で重ねられます。
-4. TCA回路上のノードと補酵素を除き、すべてのノード中心を整数グリッド交点に置きます。補酵素は対応する反応の近くへ自由配置します。
-5. 全色を対象に、間隔が1グリッド未満で2グリッド以上続く平行線・重複線を禁止します。細い補助通路も例外にしません。
-6. TCAの順序と形状を保ちます。円周上の18ノードを維持し、TCA内部配置は許可します。無関係な線は輪郭から1グリッド以上離します。実際の接続部は例外とし、四角形では接続ノード付近の短い外向き分岐も許可します。
-7. 赤の主要経路を先に確保します。赤とオレンジの点交差は、交差なしでは2倍以上の長さになる、4グリッド以上余計に迂回する、または交差なしの候補がない場合だけ、理由と候補長を記録して許可します。
-8. 元モデルで対応が確かな交換反応・細胞外種・細胞内種を、主輸送反応も含めて外側から内側へ直線配置します。
-9. 右・下の交換反応の末端を内側へ詰め、成立した内部配線を保ちながら余白を減らします。保存する全経路を再検証します。
-10. 静止画のラベルをずらして重なりを避け、文字・矢印も含めて表示枠を合わせます。SVG・PNG・Escherは同じ配線を使います。`render_validation.json`に静止画の検証結果を保存します。
+The TCA cycle can be a circle or a square. Use `--tca-shape circle` (default)
+or `--tca-shape square`, or choose **TCA shape** on the comparison page.
+Only the TCA cycle follows clockwise order. Other pathways follow their own layout rules.
 
-## 赤の最適化と保持の優先順位
+1. Keep the source metabolites, reactions, stoichiometry, and allowed directions.
+2. Use the same size for nodes of the same type, including `pyr_c` and `accoa_c`.
+3. Allow branches at a common node to overlap within 0.5 grid units of its center.
+4. Place every node except TCA nodes and cofactors on integer grid intersections. Place cofactors near their reactions; they may be off the grid.
+5. For all colors, forbid parallel or overlapping runs less than one grid unit apart that last for two or more grid units. Short auxiliary branches have no fixed count limit.
+6. Keep the TCA cycle's order and chosen shape. The circular TCA has 18 nodes. Other nodes may be inside. Unrelated lines stay at least one grid unit from the outline. Real TCA connections may use short outward branches near their TCA node.
+7. Place red main pathways first. Allow a red/orange point crossing only if avoiding it would at least double the length, add four grid units, or leave no valid route. Record the reason and candidate lengths.
+8. Place confirmed exchange and transport chains in a straight line from outside inward, using real source species and reactions, including intermediate compartments.
+9. Shorten right and bottom exchange tails where possible. Keep valid internal routes and recheck all saved routes.
+10. Move static labels to avoid overlap. Fit margins around labels and arrows. SVG, PNG, and Escher use the same routes. Save static drawing checks in `render_validation.json`.
 
-必須条件の成立、赤の総延長、基準の赤からの変更量、オレンジの長さ、余白の順に評価します。
-初期配置を赤の非円弧接続のL1長で評価し、TCAの相対移動をMILPで提案します。赤全体の等長移動も含む候補を実際に配線し、迂回とBezier円弧の実長で比較します。
+## Red-route priorities
 
-赤に直接つながる交換通路が成立することを検査してから赤を保存・固定します。後段では非赤ノードの移動・再配線・外周拡張を先に試します。灰色でも直線配置が必須の通路は自由経路より先に確保します。
-固定した赤で全体が成立しない場合だけ、同じ座標での等長再配線、等長の赤ノード移動、延長量の小さい候補の順に緩めます。
-`red_optimization.json`には基準・最終の赤線長、移動ノード、変更経路、緩和理由、成立しなかった候補を保存します。余白調整後とEscher保存データでも保持状態を検証します。MILPの補助目的が最適でも、有限探索全体の大域最適性は保証しません。
+Compare required rules first, then red length, changes to the saved red layout,
+orange length, and margins. Initial placement uses Manhattan length for red
+connections other than arcs. A MILP suggests TCA shifts. Route candidates,
+including whole-red-layout shifts, and compare actual lengths with detours and Bezier arcs.
 
-| 形状 | 前版の赤線長 | 今回の赤線長 | 最適化後の赤ノード移動 | 赤経路変更 | 最適化後の延長 |
-| --- | --- | --- | --- | --- | --- |
-| 円形 | 181.53 | 151.53 | 0 | 0 | 0 |
-| 四角形 | 124.00 | 90.50 | 0 | 0 | 0 |
+Check direct red-to-exchange routes, then save and fix the best red layout.
+Try moving and rerouting other nodes, or expanding the boundary, first.
+Reserve required straight routes before free routes. Only if that fails,
+try equal-length red rerouting, equal-length red node moves, then longer red candidates.
 
-## 検証結果
+`red_optimization.json` records initial and final lengths, moved nodes, changed
+routes, fallback reasons, and failed candidates. Check red preservation after
+margin trimming and in saved Escher data. The finite search does not prove a global minimum.
 
-| 形状 | 反応数 | 禁止する近接平行線 | 静止画ラベル重なり | 外周 `[左,右,下,上]` |
-| --- | --- | --- | --- | --- |
-| 円形 | 84 | 0 | 0 | `[0, 33, 0, 46]` |
-| 四角形 | 84 | 0 | 0 | `[0, 30, 3, 46]` |
+## E. coli core results
 
-両形状とも、TCA以外・補酵素以外の116ノードが整数グリッド交点上にあることを確認しました。ラベルは各220件です。保存済みEscherの経路とSVGのノードサイズを確認し、関連テスト89件が通過しました。
+| TCA shape | Previous red length | Current red length | Red nodes moved | Red routes changed | Red length added after selection |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Circle | 181.53 | 151.53 | 0 | 0 | 0 |
+| Square | 124.00 | 90.50 | 0 | 0 | 0 |
 
-既定は `--crossing-policy adaptive-grid` です。配置の一部にMILP、配線にA*探索とヒューリスティックを使います。有限探索のため最短配線や最小面積の大域最適性は保証しません。過去のFBA・SBML Layout例は別の配置結果です。
+| TCA shape | Reactions | Long close parallel runs | Label overlaps | Boundary `[left,right,bottom,top]` |
+| --- | ---: | ---: | ---: | --- |
+| Circle | 84 | 0 | 0 | `[0, 33, 0, 46]` |
+| Square | 84 | 0 | 0 | `[0, 30, 3, 46]` |
 
+Each view has 220 labels. All 116 ordinary nodes outside the TCA and cofactor
+groups are on integer grid intersections. Saved Escher routes and SVG node sizes
+were checked. The 89 related tests passed.
 
-## iCH360の適用結果（2026年11月13日）
+The default is `--crossing-policy adaptive-grid`. Placement uses a MILP for some
+steps; routing uses A* search and heuristics. The search does not prove the
+shortest total routes or smallest area. Earlier FBA and SBML Layout examples
+use separate layouts.
 
-[円形・四角形の比較](test-tca/?model=eco_ich_360) · [検証結果](test-tca/validation-eco_ich_360.json)
+## iCH360 results (2026-11-13)
 
-349反応中326反応、921ノード・1,073接続を描画しました。赤線総延長は円形100.03、四角形96.50グリッドです。両形状とも最適化後の赤ノード移動・赤経路変更は0件、禁止する近接平行線とラベル重なりも0件です。
+[Circle and square comparison](test-tca/?model=eco_ich_360) · [Validation results](test-tca/validation-eco_ich_360.json)
 
-細胞外→ペリプラズム→細胞内の実在する化学種・反応の連鎖に対応し、17組の多段輸送と2組の単純交換、計87区間を直線配置として検証しました。中間反応は追加せず、入力モデルを変更しません。
+Each view shows 326 of 349 reactions, with 921 nodes and 1,073 connections.
+Red length is 100.03 grid units for the circle and 96.50 for the square.
+Both keep the selected red nodes and routes unchanged, with no long close
+parallel runs and no label overlaps.
 
-ノード近傍の短い共有枝を認め、間隔1グリッド未満で2グリッド以上続く近接平行線は禁止します。短い補助通路を一律2本までにする旧制約は使いません。TCA接続ノード付近の短い外向き分岐を許可し、無関係な輪郭への接近や回路横断は禁止します。
+The layout uses real extracellular → periplasm → cytosol chains: 17 multi-step
+transport groups and two simple exchange pairs, with 87 straight segments.
+No intermediate reactions are added, and the input model is unchanged.
