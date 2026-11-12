@@ -167,13 +167,13 @@ def select_structural_reactions(model, classification, coverage, major_reactions
                                   count_rule='ceil(coverage / 100 * eligible_count); 0 gives empty map')
 
 
-def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None, forbidden_region=None):
+def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None, forbidden_region=None, boundary=None):
     groups = {}
     for key, node in nodes.items():
         if node['kind'] == 'currency':
             groups.setdefault(node['parent_id'], []).append(key)
     for parent, keys in sorted(groups.items()):
-        if grid_shape is None and forbidden_region is None:
+        if grid_shape is None and forbidden_region is None and boundary is None:
             angles = 2 * math.pi * (np.arange(len(keys)) + .25) / len(keys)
         else:
             angles = 2 * math.pi * (np.arange(4096) + .25) / 4096
@@ -187,6 +187,13 @@ def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None, forbidden_region=No
             if len(valid) < len(keys):
                 raise ValueError('Grid cannot contain off-grid coenzyme copies; use at least 2 rows and columns')
             candidates = valid[np.arange(len(keys)) * len(valid) // len(keys)]
+        if boundary is not None:
+            xmin,xmax,ymin,ymax=boundary
+            candidates=np.asarray(xy[parent])+vectors
+            mask=(candidates[:,0]>=xmin)&(candidates[:,0]<=xmax)&(candidates[:,1]>=ymin)&(candidates[:,1]<=ymax)
+            if grid_shape is not None:mask &= (candidates[:,0]>=0)&(candidates[:,0]<=cols-1)&(candidates[:,1]>=0)&(candidates[:,1]<=rows-1)
+            candidates=candidates[mask]
+            if forbidden_region is None and len(candidates)>=len(keys):candidates=candidates[np.arange(len(keys))*len(candidates)//len(keys)]
         if forbidden_region is not None:
             from tca_geometry import allowed_points
             valid = candidates[allowed_points(candidates, forbidden_region)]
@@ -200,12 +207,36 @@ def attach_coenzymes(nodes, xy, radius=.45, grid_shape=None, forbidden_region=No
                 if grid_shape is not None:
                     cols,rows=grid_shape
                     mask &= (valid[:,0]>=0)&(valid[:,0]<=cols-1)&(valid[:,1]>=0)&(valid[:,1]<=rows-1)
+                if boundary is not None:
+                    mask &= (valid[:,0]>=xmin)&(valid[:,0]<=xmax)&(valid[:,1]>=ymin)&(valid[:,1]<=ymax)
                 valid = valid[mask]
             if len(valid) < len(keys):
                 raise ValueError('No cofactor position outside TCA; enlarge the grid')
             candidates = valid[np.arange(len(keys))*len(valid)//len(keys)]
+        if len(candidates)<len(keys):raise ValueError('No cofactor space inside exchange boundary')
         for key, position in zip(sorted(keys), candidates):
             xy[key] = position.tolist()
+
+
+def separate_static_labels(ax, renderer):
+    """Pack labels in screen coordinates without moving scientific nodes."""
+    from matplotlib.transforms import Bbox
+    labels=sorted([a for a in ax.texts if (a.get_gid() or '').startswith('label-')],key=lambda a:-a.get_zorder())
+    occupied=[];moved=0
+    for text in labels:
+        if not hasattr(text,'_preferred_label_offset'):text._preferred_label_offset=text.get_position()
+        preferred=text._preferred_label_offset
+        candidates=[preferred]
+        for distance in range(8,97,8):
+            candidates.extend([(distance,5),(-distance,5),(4,distance),(4,-distance),
+                               (distance,distance),(-distance,distance),(distance,-distance),(-distance,-distance)])
+        for offset in candidates:
+            text.set_position(offset);box=text.get_window_extent(renderer)
+            padded=Bbox.from_extents(box.x0-1,box.y0-1,box.x1+1,box.y1+1)
+            if not any(padded.overlaps(other) for other in occupied):break
+        occupied.append(padded);moved+=offset!=preferred
+    overlaps=int(sum(a.overlaps(b) for i,a in enumerate(occupied) for b in occupied[i+1:]))
+    return dict(labels=len(labels),moved=moved,overlaps=overlaps)
 
 
 def render(output, nodes, edges, xy, records, selection, model_id, backbones=None, program_name='sbml2map', sampling_report=None, highlights=None, source_model=None, route_offset=.3, label_options=None):
@@ -245,6 +276,8 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     norm = LogNorm(vmin=max(vmin, 1e-12), vmax=vmax)
     cmap = plt.get_cmap('viridis')
     span = np.ptp(np.array(list(xy.values())), axis=0) if xy else np.array([8, 8])
+    frame=(backbones or {}).get('render_frame')
+    if frame:span=np.array([frame[1]-frame[0],frame[3]-frame[2]])
     size = (max(10, min(22, .8 * span[0] + 3)), max(10, min(30, .8 * span[1] + 3)))
     fig, ax = plt.subplots(figsize=size)
     ax.set_aspect('equal')
@@ -256,6 +289,20 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     # Defer autoscaling until all artists exist; scatter otherwise rescans
     # previous collections for every added node on genome-scale maps.
     ax.set_autoscale_on(False)
+    from tca_curves import curved_pairs, arc_controls, sample_curve
+    tca_pairs=curved_pairs(backbones)
+    tca_center=((backbones or {}).get('tca_exclusion',{}).get('region') or {}).get('center')
+    region=((backbones or {}).get('tca_exclusion',{}).get('region') or {})
+    if region.get('shape')=='circle' and region.get('node_grid_step',1)<1:
+        # Show the declared half-step lattice locally, keeping other regions clear.
+        step=region['node_grid_step'];cx,cy=region['center'];radius=region['radius']
+        low=[math.floor((v-radius)/step)*step for v in (cx,cy)]
+        high=[math.ceil((v+radius)/step)*step for v in (cx,cy)]
+        xs=[v for v in np.arange(low[0],high[0]+step/2,step) if abs(v-round(v))>1e-8]
+        ys=[v for v in np.arange(low[1],high[1]+step/2,step) if abs(v-round(v))>1e-8]
+        ax.vlines(xs,low[1],high[1],color='#e6ebef',linewidth=.4,zorder=0)
+        ax.hlines(ys,low[0],high[0],color='#e6ebef',linewidth=.4,zorder=0)
+
     backbone_pairs=set()
     for route in (backbones or {}).get('routes', []):
         for step in route.get('steps', []):
@@ -273,7 +320,8 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
             priority=2 if stats[rid].get('is_major_pathway',False) else 1 if j in orange_edges else 0,
             backbone=frozenset((edge['source'],edge['target'])) in backbone_pairs))
     original_route_length=sum(sum(abs(a[k]-b[k]) for k in (0,1)) for p in display_paths for a,b in zip(p['points'],p['points'][1:]))
-    red_plan=(backbones or {}).get('red_parallel_layout')
+    canonical=(backbones or {}).get('crossing_routing')
+    red_plan=None if canonical else (backbones or {}).get('red_parallel_layout')
     if red_plan and red_plan.get('enabled') and red_plan.get('verified'):
         planned={(r['rid'],r['mid']):r for r in red_plan['routes']}
         for edge,path in zip(edges,display_paths):
@@ -282,19 +330,35 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
                 points=[tuple(p) for p in route['points']]
                 if path['points'][0]!=points[0]:points.reverse()
                 path.update(points=points,routing_locked=True)
-    parallel_report=separate_parallel(display_paths,obstacles=obstacles)
-    parallel_report['node_detours']=avoid_nodes(display_paths,obstacles=obstacles,route_offset=route_offset)
+    straight_paths=[] if canonical else [p for edge,p in zip(edges,display_paths) if frozenset((edge['source'],edge['target'])) not in tca_pairs]
+    parallel_report=separate_parallel(straight_paths,obstacles=obstacles)
+    parallel_report['node_detours']=avoid_nodes(straight_paths,obstacles=obstacles,route_offset=route_offset)
     parallel_report['routing_preference']=POLICY
     requested_red_spacing=red_plan['requested_spacing_grid'] if red_plan and red_plan.get('enabled') else .3
-    parallel_report['important_simplification']=simplify_important(display_paths,obstacles=obstacles,
+    parallel_report['important_simplification']=simplify_important(straight_paths,obstacles=obstacles,
         route_offset=route_offset,red_spacing=requested_red_spacing)
-    parallel_report['gray_yield']=yield_gray(display_paths,obstacles=obstacles,route_offset=route_offset)
+    parallel_report['gray_yield']=yield_gray(straight_paths,obstacles=obstacles,route_offset=route_offset)
 
     if red_plan:
         parallel_report['red_parallel_layout']={k:v for k,v in red_plan.items() if k not in ('routes','allocations')}
-        parallel_report['red_parallel_spacing']=spacing_report(display_paths,red_plan['requested_spacing_grid'])
+        parallel_report['red_parallel_spacing']=spacing_report(straight_paths,red_plan['requested_spacing_grid'])
         if red_plan.get('enabled') and red_plan.get('verified') and not parallel_report['red_parallel_spacing']['verified']:
             raise RuntimeError('Preallocated red spacing changed during SVG rendering')
+    if canonical:
+        saved={(p['rid'],p['mid']):p for p in canonical['routes']}
+        for edge,path in zip(edges,display_paths):
+            record=saved[edge['reaction_id'],edge['metabolite_id']]
+            points=list(record['points'])
+            if math.dist(points[0],path['points'][0])>1e-7:points.reverse()
+            path['points']=points
+        parallel_report['crossing_constraints']=canonical['report']
+    for edge,path in zip(edges,display_paths):
+        if frozenset((edge['source'],edge['target'])) in tca_pairs:
+            a,b=path['points'][0],path['points'][-1]
+            path['curve_controls']=arc_controls(a,b,tca_center)
+            path['points']=sample_curve(a,path['curve_controls'],b)
+    parallel_report['tca_curves']=dict(style='circular_bezier',curved_incidences=sum('curve_controls' in p for p in display_paths),
+                                      scope='supported TCA cycle incidences only')
     route_points=[p for path in display_paths for p in path['points']]
     if route_points:
         ax.set_xticks(np.arange(math.floor(min(p[0] for p in route_points)),math.ceil(max(p[0] for p in route_points))+1))
@@ -303,7 +367,7 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     parallel_report['obstacle_node_ids']=obstacle_keys
     parallel_report['structural_node_priorities']=node_priorities
     parallel_report['original_route_length']=original_route_length
-    parallel_report['display_route_length']=sum(sum(abs(a[k]-b[k]) for k in (0,1)) for p in display_paths for a,b in zip(p['points'],p['points'][1:]))
+    parallel_report['display_route_length']=sum(math.dist(a,b) for p in display_paths for a,b in zip(p['points'],p['points'][1:]))
     dump(output/'parallel_routing.json',parallel_report)
     for j, edge in enumerate(edges):
         rid = edge['reaction_id']
@@ -313,13 +377,23 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
             a, b = b, a
         major = stats[rid].get('is_major_pathway', False)
         orange = j in orange_edges
+        if (backbones or {}).get('adaptive_layout'):
+            major=canonical['routes'][j]['priority']==2
+            orange=canonical['routes'][j]['priority']==1
         color = RED if major else ORANGE if orange else '#cbd3d8' if connectors or structural else cmap(norm(stats[rid]['priority']))
         coenzyme = nodes[edge['source']]['kind'] == 'currency' or nodes[edge['target']]['kind'] == 'currency'
         points=np.array(display_paths[j]['points'])
-        path, = ax.plot(points[:,0], points[:,1],
-                        color=color, lw=.7 if coenzyme else 2.3 if major or orange else 1.0,
-                        alpha=.95 if major or orange else .35 if connectors else .65 if coenzyme else .55,
-                        zorder=2 if major or orange else 1)
+        style=dict(color=color, lw=.7 if coenzyme else 2.3 if major or orange else 1.0,
+                   alpha=.95 if major or orange else .35 if connectors else .65 if coenzyme else .55,
+                   zorder=2 if major or orange else 1)
+        if 'curve_controls' in display_paths[j]:
+            from matplotlib.path import Path as PlotPath
+            from matplotlib.patches import PathPatch
+            vertices=[points[0],*display_paths[j]['curve_controls'],points[-1]]
+            path=PathPatch(PlotPath(vertices,[PlotPath.MOVETO,*([PlotPath.CURVE4]*3)]),fill=False,**style)
+            ax.add_patch(path)
+        else:
+            path, = ax.plot(points[:,0], points[:,1],**style)
         path.set_gid(f'edge-{j}')
         direction = points[-1]-points[-2]
         length = np.linalg.norm(direction)
@@ -342,8 +416,15 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
         is_reaction = node['kind'] == 'reaction'; coenzyme = node['kind'] == 'currency'
         major = stats[rid].get('is_major_pathway', False) if is_reaction else node['original_id'] in major_mids
         color = RED if node_priorities[key]==2 else ORANGE if node_priorities[key]==1 else '#83949d' if connectors or structural else cmap(norm(stats[rid]['priority'])) if is_reaction else '#83949d' if coenzyme else '#173c53'
-        artist = ax.scatter(*p, marker='s' if is_reaction else 'o', s=25 if is_reaction else 9 if coenzyme else 32,
-                            c=[color], zorder=3, edgecolor='white', linewidth=.4)
+        port_spec=((backbones or {}).get('crossing_routing') or {}).get('report',{})
+        if key in port_spec.get('node_port_nodes',[]) and not port_spec.get('uniform_node_sizes'):
+            from matplotlib.patches import Circle,Rectangle
+            radius=port_spec['node_port_glyph_radius_grid']
+            artist=Rectangle((p[0]-radius,p[1]-radius),2*radius,2*radius,facecolor=color,edgecolor='white',linewidth=.4,zorder=3) if is_reaction else Circle(p,radius,facecolor=color,edgecolor='white',linewidth=.4,zorder=3)
+            ax.add_patch(artist)
+        else:
+            artist = ax.scatter(*p, marker='s' if is_reaction else 'o', s=25 if is_reaction else 9 if coenzyme else 32,
+                                c=[color], zorder=3, edgecolor='white', linewidth=.4)
         artist.set_gid(f'node-{j}')
         label = node['original_id']
         if is_reaction and not structural:
@@ -367,7 +448,30 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     if not nodes:
         ax.text(.5, .5, 'No reactions selected', transform=ax.transAxes, ha='center')
     ax.set_autoscale_on(True)
+    if frame:
+        ax.update_datalim([(frame[0],frame[2]),(frame[1],frame[3])])
+        ax.set_xticks(np.arange(math.floor(frame[0]),math.ceil(frame[1])+1))
+        ax.set_yticks(np.arange(math.floor(frame[2]),math.ceil(frame[3])+1))
     ax.margins(.08)
+    if (backbones or {}).get('adaptive_layout') and xy:
+        # Measure actual node, arrow and label extents after the final aspect
+        # ratio is applied. Shrink right/bottom independently of routing bounds.
+        points=[p for route in display_paths for p in route['points']]+list(xy.values())
+        xmin=min(p[0] for p in points);xmax=max(p[0] for p in points)
+        ymin=min(p[1] for p in points);ymax=max(p[1] for p in points)
+        ax.set_xlim(xmin-.5,xmax+.5);ax.set_ylim(ymin-.5,ymax+.5)
+        for _ in range(3):
+            fig.canvas.draw();renderer=fig.canvas.get_renderer();inverse=ax.transData.inverted()
+            label_report=separate_static_labels(ax,renderer)
+            boxes=[artist.get_window_extent(renderer) for artist in ax.get_children()
+                   if (artist.get_gid() or '').startswith(('label-','node-','arrow-','reverse-arrow-'))]
+            bounds=[inverse.transform(box.get_points()) for box in boxes if np.isfinite(box.get_points()).all()]
+            right=max([xmax]+[b[1,0] for b in bounds]);bottom=min([ymin]+[b[0,1] for b in bounds])
+            ax.set_xlim(xmin-.5,right+.25);ax.set_ylim(bottom-.25,ymax+.5)
+        backbones['render_content_frame']=[xmin-.5,right+.25,bottom-.25,ymax+.5]
+        fig.canvas.draw()
+        label_report=separate_static_labels(ax,fig.canvas.get_renderer())
+        dump(output/'render_validation.json',dict(frame=backbones['render_content_frame'],labels=label_report,uniform_node_sizes=True))
     oxidation_label='pyruvate oxidation' if program_name in ('sbml2map', 'sbml2escher') else 'PDH'
     connector_label = (f'Orange: shared undirected EX connectors; unique orange L1 length = {connectors["total_length"]:g}.\n' if connectors else '')
     if connectors and connectors.get('flux_costs', {}).get('flux_weight', 0):
@@ -469,12 +573,22 @@ document.getElementById('coverage').oninput=update;document.getElementById('coen
                             '共有枝は1回だけ数え、長さに低フラックスのペナルティを付けたコストを最小化します。')
         page = page.replace('The layout minimizes total path length, counting shared branches once.',
                             'The layout minimizes length with a low-flux penalty, counting shared branches once.')
+    if (backbones or {}).get('orange_reposition',{}).get('enabled'):
+        page=page.replace('The layout minimizes total path length, counting shared branches once.', 'Local relocation reduces overlapping orange lines from different reactions, then compares total length; shared branches within one reaction count once. Point crossings are allowed.')
     page = page.replace('sbml2map', html.escape(program_name)).replace('__MODEL__', html.escape(model_id)).replace('__MAX__', str(selection['coverage_percent'])).replace('__SVG__', svg).replace('__REGISTRY__', json.dumps(registry)).replace('__ELIGIBLE__', str(selection['eligible_reactions']))
     page=page.replace('</html>','<script>window.gridLabelOptions='+json.dumps(label_options)+';</script><script>'+BASE.joinpath('grid_labels.js').read_text()+'</script></html>')
     exclusion=(backbones or {}).get('tca_exclusion',{})
     alignment=(backbones or {}).get('exchange_alignment',{})
     if exclusion.get('enabled'):
-        description=f"TCA shape: {exclusion['shape']}. No nodes are placed inside the TCA perimeter."
+        interior_text='Interior node placement is allowed; the TCA perimeter remains fixed.' if exclusion.get('interior_placement_allowed') else 'No nodes are placed inside the TCA perimeter.'
+        description=f"TCA shape: {exclusion['shape']}. {interior_text}"
+        if exclusion['shape']=='circle':
+            region=exclusion['region']
+            if region.get('anchor_mode')=='grid_line_intersection':
+                description+=' TCA nodes lie at circle/grid-line intersections; each has at least one integer coordinate. TCA cycle arcs remain curved.'
+            else:
+                description+=f" Circle through {region.get('lattice_point_count',0)} grid intersections; TCA nodes use a {region.get('node_grid_step') or 1:g}-step auxiliary grid and cycle connections use curved Beziers."
+
         if alignment.get('mode')=='collinear':
             description+=f" {alignment['checked_triplets']} matched EX / extracellular / cytosolic triplets are collinear, ordered from outside inward."
         page=page.replace('</header>','<p id="tca-layout-policy">'+description+'</p></header>',1)
@@ -615,11 +729,22 @@ def run(args):
     fixed_offsets, backbones = strategy.plan(routes, grid_ids) if strategy else backbone_plan(routes, grid_ids)
     backbones['skipped_routes'] = skipped_routes
     from tca_geometry import configure_plan
-    fixed_offsets, backbones = configure_plan(fixed_offsets,backbones,getattr(args,'tca_shape','circle'))
+    fixed_offsets, backbones = configure_plan(fixed_offsets,backbones,getattr(args,'tca_shape','circle'),getattr(args,'tca_interior','allow'))
+    adaptive=getattr(args,'crossing_policy','legacy')=='adaptive-grid'
+    if adaptive:
+        from adaptive_geometry import compact_tca
+        preview_connectors=connector_plan(nodes,edges,roots,exchange_nodes,major_reactions,allow_disconnected=no_sampling) if strategy and selected else {}
+        degrees={}
+        for index in preview_connectors.get('edge_indices',[]):
+            for key in (edges[index]['source'],edges[index]['target']):degrees[key]=degrees.get(key,0)+1
+        required_ports={key for key,degree in degrees.items() if degree>1}
+        fixed_offsets,backbones=compact_tca(fixed_offsets,backbones,grid_point_keys=required_ports)
     for route in routes:
         if route['id']=='tca':route['shape']=getattr(args,'tca_shape','circle')
     grid_options = strategy.grid_options(nodes, backbones) if strategy else {}
-    grid_options['reserved_region'] = backbones.get('tca_geometry')
+    # Seed a feasible exterior embedding before testing inward relocations.
+    seed_region=backbones.get('tca_geometry')
+    grid_options['reserved_region'] = dict(seed_region,interior_policy='forbid') if seed_region else None
     from exchange_alignment import discover_alignment
     alignment_mode = getattr(args,'exchange_alignment','collinear')
     alignment_groups, alignment_skipped = discover_alignment(model,nodes,exchange_nodes) if alignment_mode == 'collinear' else ([],[])
@@ -633,10 +758,14 @@ def run(args):
     backbone_pairs={frozenset(('rxn:'+step['reaction_id'],'met:'+mid))
         for route in backbones.get('routes',[]) for step in route.get('steps',[])
         for mid in (step['source'],step['target'])}
+    from tca_curves import curved_pairs
+    tca_pairs=curved_pairs(backbones)
     red_edges=[dict(rid=e['reaction_id'],mid=e['metabolite_id'],source=e['source'],target=e['target'],
         reverse=(e['direction']=='reverse' if no_sampling else record_map[e['reaction_id']]['median']<0),
         backbone=frozenset((e['source'],e['target'])) in backbone_pairs)
-        for e in edges if e['reaction_id'] in major_reactions and e['source'] in grid_ids and e['target'] in grid_ids]
+        for e in edges if e['reaction_id'] in major_reactions and e['source'] in grid_ids and e['target'] in grid_ids
+        and frozenset((e['source'],e['target'])) not in tca_pairs]
+    if adaptive:red_edges=[]
     major_mids={mid for route in routes for mid in route['metabolite_ids']}
     def routing_obstacles(plan):
         orange_pairs={frozenset((edges[i]['source'],edges[i]['target'])) for i in (plan or {}).get('edge_indices',[])}
@@ -699,26 +828,91 @@ def run(args):
         placement['red_parallel_layout']={k:v for k,v in red_plan.items() if k not in ('routes','allocations')}
     cols, rows = placement['grid_cols'], placement['grid_rows']
     from tca_geometry import absolute_region,validate_exclusion
-    tca_region = absolute_region(backbones.get('tca_geometry'),rows)
+    requested_tca_region = absolute_region(backbones.get('tca_geometry'),rows)
+    tca_region = dict(requested_tca_region,interior_policy='forbid') if requested_tca_region else None
+    if args.grid_cols is not None and args.grid_rows is not None:
+        backbones['render_frame']=[0,cols-1,0,rows-1]
+    if getattr(args,'crossing_policy','legacy')=='red-hard' and alignment_mode=='collinear':
+        from exchange_corridors import place_corridors
+        from crossing_routing import initial_paths,route as route_red_first
+        attach_coenzymes(nodes,xy,grid_shape=(cols,rows),forbidden_region=tca_region)
+        backbones['tca_exclusion']={'region':tca_region}
+        red_paths=[p for p in initial_paths(nodes,edges,xy,backbones,major_reactions) if p['priority']==2]
+        red_report=route_red_first(red_paths,xy,boundary=[0,cols-1,0,rows-1],attempts=0)
+        if not red_report['verified']:raise ValueError('Red-first routing failed: '+str(red_report))
+        backbones['red_first']={'routes':red_paths,'report':red_report}
+        backbones['_placement_region']=tca_region
+        specification=place_corridors(model,nodes,xy,backbones,exchange_nodes,alignment_groups,cols,rows)
+        backbones.pop('_placement_region',None)
+        backbones['exchange_corridors']=specification
+        backbones['exchange_boundary_adjustments']=[]
+        placement['objective_before_straight_exchange_adjustment']=placement['objective']
+        if connectors:placement['objective']=connector_cost(connectors,edges,xy)
+        placement['global_optimality_proven']=False
+        placement.pop('relative_gap',None)
     attach_coenzymes(nodes, xy, grid_shape=(cols, rows),forbidden_region=tca_region)
+    if getattr(args,'crossing_policy','legacy')=='red-hard' and not backbones.get('exchange_corridors'):
+        from exchange_alignment import anchor_exchange_boundary
+        adjustments=anchor_exchange_boundary(alignment_groups,exchange_nodes,xy,cols,rows,tca_region)
+        backbones['exchange_boundary_adjustments']=adjustments
+        if adjustments:
+            placement['objective_before_exchange_boundary_adjustment']=placement['objective']
+            if connectors:placement['objective']=connector_cost(connectors,edges,xy)
+            placement['global_optimality_proven']=False
+            placement.pop('relative_gap',None)
+    if (getattr(args,'compact_boundary',True) and getattr(args,'crossing_policy','legacy')=='red-hard'
+            and backbones.get('exchange_corridors')):
+        from boundary_compaction import compact_boundary
+        compact_boundary(model,nodes,edges,xy,backbones,exchange_nodes,alignment_groups,cols,rows,
+            major_reactions,attach_coenzymes,attempts=getattr(args,'crossing_attempts',12),margin=getattr(args,'boundary_margin',1.))
+        if backbones['boundary_compaction']['accepted']:
+            placement['objective_before_boundary_compaction']=placement['objective']
+            if connectors:placement['objective']=connector_cost(connectors,edges,xy)
+            placement['global_optimality_proven']=False
+            placement.pop('relative_gap',None)
+    tca_region=requested_tca_region
+    backbones['tca_exclusion']={'region':tca_region}
+    backbones.setdefault('routing_boundary',[0,cols-1,0,rows-1])
+    if not adaptive and tca_region and tca_region.get('interior_policy')=='allow':
+        from orange_reposition import place_gray_inside_tca
+        backbones['tca_interior_placement']=place_gray_inside_tca(nodes,edges,xy,backbones)
+    if (getattr(args,'reposition_orange',True) and getattr(args,'crossing_policy','legacy')=='red-hard'
+            and backbones.get('exchange_corridors')):
+        from orange_reposition import reposition_orange
+        reposition_orange(nodes,edges,xy,backbones,major_reactions,alignment_groups,cols,rows,
+            attempts=getattr(args,'crossing_attempts',12))
+        if backbones['orange_reposition']['accepted_moves']:
+            placement['objective_before_orange_reposition']=placement['objective']
+            if connectors:placement['objective']=connector_cost(connectors,edges,xy)
+            placement['global_optimality_proven']=False
+            placement.pop('relative_gap',None)
+    if adaptive:
+        from adaptive_routing import adaptive_layout
+        adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,alignment_groups,cols,rows,major_reactions)
+        tca_region=backbones['tca_exclusion']['region']
+        if glucose_node:placement['position_constraints']['top_left_position']=list(xy[glucose_node])
+        if connectors:placement['objective']=connector_cost(connectors,edges,xy)
+        placement['global_optimality_proven']=False
+    routing_boundary=backbones.get('routing_boundary',[0,cols-1,0,rows-1])
+    xmin,xmax,ymin,ymax=routing_boundary
     tca_exclusion = validate_exclusion(nodes,xy,tca_region)
     backbones['tca_exclusion'] = tca_exclusion
     from exchange_alignment import validate_alignment
-    exchange_alignment = validate_alignment(alignment_groups,xy,cols,rows)
+    exchange_alignment = validate_alignment(alignment_groups,xy,cols,rows,routing_boundary)
     exchange_alignment.update(mode=alignment_mode,skipped=alignment_skipped)
     backbones['exchange_alignment'] = exchange_alignment
     backbone_validation = validate_backbones(backbones, xy, rows)
     backbones['validation'] = backbone_validation
     if glucose_node and xy[glucose_node] != placement['position_constraints']['top_left_position']:
         raise RuntimeError('Glucose is not at its required top-left position')
-    if any(xy[key][0] not in (0, cols - 1) and xy[key][1] not in (0, rows - 1) for key in exchange_nodes):
+    if any(xy[key][0] not in (xmin, xmax) and xy[key][1] not in (ymin, ymax) for key in exchange_nodes):
         raise RuntimeError('An EX reaction is not on the grid perimeter')
-    if strategy and any(xy[key][0] in (0, cols - 1) or xy[key][1] in (0, rows - 1) for key in set(grid_ids)-exchange_nodes):
+    if strategy and any(xy[key][0] in (xmin, xmax) or xy[key][1] in (ymin, ymax) for key in set(grid_ids)-exchange_nodes):
         raise RuntimeError('A non-EX grid node occupies the perimeter')
-    if any(not (0 <= p[0] <= cols - 1 and 0 <= p[1] <= rows - 1) for p in xy.values()):
+    if any(not (xmin <= p[0] <= xmax and ymin <= p[1] <= ymax) for p in xy.values()):
         raise RuntimeError('A displayed node lies outside the grid rectangle')
     network = validate_network(projected, nodes, edges, xy)
-    fractional_allowed = set((tca_region or {}).get('node_ids',())) | {g[k] for g in alignment_groups for k in ('exchange','external','internal')}
+    fractional_allowed = set(backbones.get('exchange_corridors',{}).get('straight_node_ids',())) | set((tca_region or {}).get('node_ids',())) | {g[k] for g in alignment_groups for k in ('exchange','external','internal')}
     for key in grid_ids:
         if key not in fractional_allowed and not np.allclose(xy[key], np.rint(xy[key]), atol=1e-9, rtol=0):
             raise RuntimeError('A non-coenzyme node is off-grid')
@@ -729,7 +923,7 @@ def run(args):
     length = float(sum(np.abs(np.array(xy[e['source']]) - xy[e['target']]).sum() for e in edges))
     coenzyme_count = sum(n['kind'] == 'currency' for n in nodes.values())
     grid_length = sum(sum(abs(a-b) for a,b in zip(xy[a_key],xy[b_key])) for a_key,b_key in grid_pairs)
-    if not math.isclose(length, grid_length + .45 * coenzyme_count, abs_tol=1e-7):
+    if not adaptive and not math.isclose(length, grid_length + .45 * coenzyme_count, abs_tol=1e-7):
         raise RuntimeError('Edge-length objective differs from drawn orthogonal geometry')
     if connectors and not math.isclose(connector_cost(connectors,edges,xy),placement['objective'],abs_tol=1e-7):
         raise RuntimeError('Orange objective differs from drawn orthogonal geometry')
@@ -738,6 +932,12 @@ def run(args):
         expected = {m: c for m, c in original[reaction['id']]['metabolites'].items() if not hidden_metabolite(classification[m])}
         if reaction['metabolites'] != expected:
             raise RuntimeError('Visible stoichiometry differs from source')
+    if getattr(args,'crossing_policy','legacy')=='red-hard':
+        backbones.setdefault('routing_boundary',[0,cols-1,0,rows-1])
+        from crossing_routing import plan_routes
+        if 'crossing_routing' not in backbones:
+            backbones['crossing_routing']=plan_routes(nodes,edges,xy,backbones,major_reactions,
+                attempts=getattr(args,'crossing_attempts',24))
     metadata = dict(source_model_sha256=digest, coverage=selection, sampling=sampling_report, major_backbones=backbones,
                     original_reactions={r['id']: r for r in model['reactions']}, classification=classification,
                     note='Display projection only: inorganic participants omitted; source_model.json retains the original source model.')
@@ -806,9 +1006,9 @@ def run(args):
                                   no_zero_median_reactions=True, visible_stoichiometry_preserved=True,
                                   full_model_used_for_sampling=True, network=network, escher=escher_check),
                   limitations=['Global length optimality is reported, not assumed.',
-                               'Crossings, coincident edge paths, and label overlap are not minimized.',
+                               ('Orange overlaps outside node glyphs are forbidden. Red/orange point crossings are allowed only for audited long detours; thin orange corridors allow at most two incidences.' if backbones.get('adaptive_layout') else 'Red crossings are forbidden; orange length is minimized over a bounded candidate search. Orange crossings are permitted.' if backbones.get('crossing_routing') else 'Crossings, coincident edge paths, and label overlap are not minimized.'),
                                'Display model omits inorganic participants and is not suitable for FBA.',
-                               'Escher uses orthogonal segments with routing nodes; original node coordinates and reaction chemistry are preserved.',
+                               'TCA cycle connections may use circular Beziers; other connections use orthogonal routing. Biological coordinates and reaction chemistry are preserved.',
                                'Sampling uses original bounds without a growth floor or loopless constraints; internal cycles may dominate.'])
     if no_sampling:
         report['validation'].pop('no_zero_median_reactions')
@@ -824,6 +1024,11 @@ def run(args):
     report['red_parallel_spacing_grid'] = red_spacing
     report['route_offset_grid'] = route_offset
     report['program_name'] = program_name
+    report['routing_boundary']=routing_boundary
+    if backbones.get('boundary_compaction'):report['boundary_compaction']=backbones['boundary_compaction']
+    if backbones.get('orange_reposition'):report['orange_reposition']=backbones['orange_reposition']
+    if backbones.get('adaptive_layout'):report['adaptive_layout']=backbones['adaptive_layout']
+    if backbones.get('tca_interior_placement'):report['tca_interior_placement']=backbones['tca_interior_placement']
     report['tca_shape'] = getattr(args,'tca_shape','circle')
     report['tca_exclusion'] = tca_exclusion
     report['exchange_alignment'] = exchange_alignment
@@ -886,7 +1091,13 @@ def parser():
     p.add_argument('--model', type=Path, default=BASE / 'e_coli_core.xml')
     p.add_argument('--output-dir', type=Path, default=BASE / 'e_coli_core_sbml2map_output')
     p.add_argument('--coverage', type=float, default=100, help='Top percentage of eligible reactions (0..100); --no-sampling uses pathway membership and IDs')
-    p.add_argument('--tca-shape',choices=('circle','square'),default='circle',help='TCA node perimeter shape (default: circle); its interior excludes every node')
+    p.add_argument('--crossing-policy',choices=('adaptive-grid','red-hard','legacy'),default='legacy',help='Forbid red/red and red/orange crossings; minimize orange length')
+    p.add_argument('--routing-attempts','--crossing-attempts',dest='crossing_attempts',type=int,default=12,help='Orange length ordering candidates (default: 12)')
+    p.add_argument('--no-reposition-orange',dest='reposition_orange',action='store_false',help='Disable local node relocation to reduce orange line overlap')
+    p.add_argument('--no-compact-boundary',dest='compact_boundary',action='store_false',help='Keep the initial lower and right exchange boundaries')
+    p.add_argument('--boundary-margin',type=float,default=1.,help='Minimum clearance around frozen red geometry during boundary compaction (default: 1 grid unit)')
+    p.add_argument('--tca-interior',choices=('allow','forbid'),default='allow',help='Allow ordinary nodes and cofactor copies inside the fixed TCA perimeter (default: allow)')
+    p.add_argument('--tca-shape',choices=('circle','square'),default='circle',help='TCA perimeter: grid-intersection circle with curved cycle connections (default), or orthogonal square')
     p.add_argument('--exchange-alignment',choices=('collinear','off'),default='collinear',help='Align EX, extracellular and matching cytosolic nodes from outside inward (default: collinear)')
     p.add_argument('--red-parallel-spacing',type=validate_red_spacing_arg,default=1.0,help='Minimum red/red channel spacing for parallel runs of at least one grid unit (default: 1; 0 disables layout channel allocation)')
     p.add_argument('--route-offset', type=validate_route_offset_arg, default=.3, help='Whole-segment U-shaped node avoidance offset in grid units (default: 0.3; 0 disables node avoidance)')

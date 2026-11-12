@@ -96,7 +96,7 @@ def parser():
     p=engine.parser()
     p.description=__doc__
     p.prog='sbml2map.py'
-    p.set_defaults(output_dir=Path(__file__).parent/'e_coli_core_sbml2map_output',program_name='sbml2map')
+    p.set_defaults(crossing_policy='adaptive-grid',output_dir=Path(__file__).parent/'e_coli_core_sbml2map_output',program_name='sbml2map')
     p.add_argument('--reference',type=Path,default=REFERENCE,help='Versioned BiGG/KEGG compound-role reference JSON')
     p.add_argument('--identity-map',type=Path,help='JSON mapping model-local metabolite IDs to reference chemical roles')
     p.add_argument('--mnxref-dir',type=Path,help='Local MNXref release directory containing chem_xref.tsv and chem_depr.tsv; no automatic downloads')
@@ -122,6 +122,8 @@ def run(args):
         raise ValueError('zero-tolerance must be positive and finite')
     if any(v is not None and v<1 for v in (args.grid_cols,args.grid_rows)):
         raise ValueError('Grid dimensions must be positive')
+    if getattr(args,'crossing_attempts',24)<0:raise ValueError('crossing-attempts must be nonnegative')
+    if not math.isfinite(getattr(args,'boundary_margin',1.)) or getattr(args,'boundary_margin',1.)<0:raise ValueError('boundary-margin must be finite and nonnegative')
     engine.validate_sampling_options(args)
     model=load_model(args.model)
     identity=json.loads(args.identity_map.read_text()) if args.identity_map else None

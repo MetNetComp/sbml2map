@@ -2,600 +2,185 @@
   "trunk_grouping": "positive_length_overlap",
   "clearance_grid": 0.3,
   "min_parallel_length_grid": 1.0,
-  "shifted_segments": 6,
+  "shifted_segments": 0,
   "unresolved": [],
-  "max_offset_grid": 0.3000000000000007,
+  "max_offset_grid": 0,
   "fixed_endpoints": true,
   "shared_same_reaction_trunks": true,
   "node_detours": {
     "trunk_grouping": "positive_length_overlap",
     "route_offset_grid": 0.3,
     "enabled": true,
-    "shifted_segments": 3,
-    "unresolved": [
-      {
-        "reaction_id": "ACALD",
-        "axis": 0,
-        "level": 6.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            6.0,
-            6.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "ACALD",
-        "axis": 1,
-        "level": 5.92,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            6.0,
-            6.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "ACALD",
-        "axis": 1,
-        "level": 6.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            6.0,
-            6.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "EX_glu__L_e",
-        "axis": 0,
-        "level": 9.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            0.0,
-            9.0
-          ],
-          [
-            1.0,
-            9.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "EX_glu__L_e",
-        "axis": 1,
-        "level": 0.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            0.0,
-            9.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "LDH_D",
-        "axis": 0,
-        "level": 5.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            5.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "LDH_D",
-        "axis": 0,
-        "level": 6.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            3.0,
-            6.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "LDH_D",
-        "axis": 1,
-        "level": 1.92,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            5.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "LDH_D",
-        "axis": 1,
-        "level": 2.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            5.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "LDH_D",
-        "axis": 1,
-        "level": 3.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            3.0,
-            6.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "SUCCt2_2",
-        "axis": 0,
-        "level": 1.92,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            6.0,
-            2.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "SUCCt2_2",
-        "axis": 0,
-        "level": 2.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            6.0,
-            2.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "SUCCt2_2",
-        "axis": 1,
-        "level": 6.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            6.0,
-            2.0
-          ]
-        ]
-      }
-    ],
+    "shifted_segments": 0,
+    "unresolved": [],
     "shape": "rectangle with optional endpoint steps",
     "endpoint_step_grid": 0.15,
-    "endpoint_step_fallback_segments": 1,
-    "detours": [
-      {
-        "reaction_id": "EX_ac_e",
-        "axis": 0,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "EX_for_e",
-        "axis": 1,
-        "offset_grid": -0.3,
-        "inset_start": true,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 1
-      },
-      {
-        "reaction_id": "PFL",
-        "axis": 0,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      }
-    ],
+    "endpoint_step_fallback_segments": 0,
+    "detours": [],
     "fixed_endpoints": true,
     "shared_same_reaction_trunks": true,
     "backbone_shifted_segments": 0,
-    "max_offset_grid": 0.3,
+    "max_offset_grid": 0,
     "backbone_max_offset_grid": 0
   },
   "routing_preference": "important_bends_then_length_gray_yields",
   "important_simplification": {
     "policy": "important_bends_then_length_gray_yields",
-    "changed_paths": 6,
-    "removed_bends": 7,
-    "details": [
+    "changed_paths": 0,
+    "removed_bends": 0,
+    "details": [],
+    "unresolved": []
+  },
+  "gray_yield": {
+    "changed_paths": 0,
+    "details": [],
+    "unresolved": []
+  },
+  "crossing_constraints": {
+    "policy": "adaptive_grid_disjoint_orange_conditional_red_crossings",
+    "verified": true,
+    "metrics": {
+      "red_red": 0,
+      "red_orange": 11,
+      "orange_orange": 87,
+      "hard_verified": true,
+      "strict_red_crossings_absent": false,
+      "raw_red_orange": 12
+    },
+    "orange_overlap_grid": 0.0,
+    "raw_orange_overlap_grid": 0.25,
+    "node_port_nodes": [
+      "met:accoa_c",
+      "met:pyr_c"
+    ],
+    "node_port_half_width_grid": 0.5,
+    "node_port_contacts": 2,
+    "uniform_node_sizes": true,
+    "parallel_spacing_grid": 1.0,
+    "parallel_length_grid": 2.0,
+    "parallel_conflict_count": 0,
+    "grid_lines_verified": false,
+    "primary_or_auxiliary_grid_verified": true,
+    "thin_lanes_used": 71,
+    "tca_clearance_grid": 1.0,
+    "tca_clearance_verified": true,
+    "boundary_validation": {
+      "boundary": [
+        0,
+        38,
+        -10,
+        46
+      ],
+      "outside_path_count": 0,
+      "outside_paths": [],
+      "all_colors_checked": true,
+      "cubic_extrema_checked": true,
+      "verified": true,
+      "route_extents": [
+        0.0,
+        38.0,
+        -10.0,
+        46.0
+      ]
+    },
+    "conditional_crossings": [
       {
-        "reaction_id": "PFK",
-        "bends_before": 1,
-        "bends_after": 1
+        "reaction_id": "MALt2_2",
+        "metabolite_id": "mal__L_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 10.876894375,
+        "no_uncrossed_path": true
       },
       {
-        "reaction_id": "ACt2r",
-        "bends_before": 5,
-        "bends_after": 2
+        "reaction_id": "FUMt2_2",
+        "metabolite_id": "fum_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 11.258342614,
+        "no_uncrossed_path": true
       },
       {
-        "reaction_id": "EX_glu__L_e",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "EX_lac__D_e",
-        "bends_before": 4,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "LDH_D",
-        "bends_before": 1,
-        "bends_after": 1
+        "reaction_id": "AKGt2r",
+        "metabolite_id": "akg_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 37.258342614,
+        "no_uncrossed_path": true
       },
       {
         "reaction_id": "SUCCt2_2",
-        "bends_before": 5,
-        "bends_after": 2
-      }
-    ],
-    "unresolved": [
-      {
-        "reaction_id": "ACALD",
-        "reason": "No simpler feasible important route"
+        "metabolite_id": "succ_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 55.258342614,
+        "no_uncrossed_path": true
       },
       {
-        "reaction_id": "LDH_D",
-        "reason": "No simpler feasible important route"
-      }
-    ]
-  },
-  "gray_yield": {
-    "changed_paths": 15,
-    "details": [
-      {
-        "reaction_id": "FBP",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "GLUDy",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "GLUN",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "MALS",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ME1",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ME2",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PGL",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "PPCK",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PPS",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "RPI",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "TALA",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "TKT1",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "TKT1",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "TKT1",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "TKT2",
-        "bends_before": 1,
-        "bends_after": 2
-      }
-    ],
-    "unresolved": [
-      {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
+        "reaction_id": "EX_fru_e",
+        "metabolite_id": "fru_e",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 4.0,
+        "no_uncrossed_path": true
       },
       {
         "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
+        "metabolite_id": "oaa_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 28.258342617,
+        "no_uncrossed_path": true
       },
       {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "FRD7",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "FRD7",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "G6PDH2r",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUSy",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUSy",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GND",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GND",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GND",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ICL",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ICL",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "ICL",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "MALS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ME1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ME2",
-        "reason": "Shared gray trunk retained"
+        "reaction_id": "PTAr",
+        "metabolite_id": "accoa_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 21.000000002,
+        "no_uncrossed_path": true
       },
       {
         "reaction_id": "PFL",
-        "reason": "Shared gray trunk retained"
+        "metabolite_id": "accoa_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 27.000000002,
+        "no_uncrossed_path": true
       },
       {
-        "reaction_id": "PPC",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "PPCK",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PPS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "RPE",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "RPE",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SUCCt3",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "SUCCt3",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "TKT1",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "TKT2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "TKT2",
-        "reason": "Shared gray trunk retained"
+        "reaction_id": "ACALD",
+        "metabolite_id": "accoa_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 30.000000002,
+        "no_uncrossed_path": true
       }
-    ]
-  },
-  "red_parallel_layout": {
-    "enabled": true,
-    "requested_spacing_grid": 1,
-    "min_parallel_length_grid": 1,
-    "stage": "grid layout routing-channel allocation",
-    "obstacle_node_ids": [
-      "met:13dpg_c",
-      "met:2pg_c",
-      "met:3pg_c",
-      "met:ac_c",
-      "met:ac_e",
-      "met:acald_c",
-      "met:acald_e",
-      "met:accoa_c",
-      "met:acon_C_c",
-      "met:actp_c",
-      "met:akg_c",
-      "met:akg_e",
-      "met:cit_c",
-      "met:dhap_c",
-      "met:etoh_c",
-      "met:etoh_e",
-      "met:f6p_c",
-      "met:fdp_c",
-      "met:for_c",
-      "met:for_e",
-      "met:fum_c",
-      "met:g3p_c",
-      "met:g6p_c",
-      "met:glc__D_e",
-      "met:glu__L_c",
-      "met:glu__L_e",
-      "met:icit_c",
-      "met:lac__D_c",
-      "met:lac__D_e",
-      "met:mal__L_c",
-      "met:oaa_c",
-      "met:pep_c",
-      "met:pyr_c",
-      "met:pyr_e",
-      "met:succ_c",
-      "met:succ_e",
-      "met:succoa_c",
-      "rxn:ACALD",
-      "rxn:ACALDt",
-      "rxn:ACKr",
-      "rxn:ACONTa",
-      "rxn:ACONTb",
-      "rxn:ACt2r",
-      "rxn:AKGDH",
-      "rxn:AKGt2r",
-      "rxn:ALCD2x",
-      "rxn:BIOMASS_Ecoli_core_w_GAM",
-      "rxn:CS",
-      "rxn:D_LACt2",
-      "rxn:ENO",
-      "rxn:ETOHt2r",
-      "rxn:EX_ac_e",
-      "rxn:EX_acald_e",
-      "rxn:EX_akg_e",
-      "rxn:EX_etoh_e",
-      "rxn:EX_for_e",
-      "rxn:EX_glc__D_e",
-      "rxn:EX_glu__L_e",
-      "rxn:EX_lac__D_e",
-      "rxn:EX_pyr_e",
-      "rxn:EX_succ_e",
-      "rxn:FBA",
-      "rxn:FORt",
-      "rxn:FUM",
-      "rxn:GAPD",
-      "rxn:GLCpts",
-      "rxn:GLUt2r",
-      "rxn:ICDHyr",
-      "rxn:LDH_D",
-      "rxn:MDH",
-      "rxn:PDH",
-      "rxn:PFK",
-      "rxn:PFL",
-      "rxn:PGI",
-      "rxn:PGK",
-      "rxn:PGM",
-      "rxn:PTAr",
-      "rxn:PYK",
-      "rxn:PYRt2",
-      "rxn:SUCCt2_2",
-      "rxn:SUCDi",
-      "rxn:SUCOAS",
-      "rxn:TPI"
     ],
-    "unresolved": [],
-    "nodes_moved": false,
+    "orange_length_grid": 575.4102648272865,
+    "orange_crossings_optimized": false,
+    "red_first": true,
+    "objective_order": [
+      "no orange overlaps outside node glyphs",
+      "TCA clearance",
+      "short routes with audited red crossings",
+      "bends"
+    ],
+    "thin_lane_limit": 2,
+    "maximum_thin_corridor_load": 2,
     "global_optimality_proven": false,
-    "minimum_parallel_gap_grid": 1.0,
-    "parallel_pairs": 62,
-    "violations": [],
-    "verified": true,
-    "method": "Constraint-checked greedy routing channels",
-    "elapsed_seconds": 0.3480150350078475,
-    "signature": "35f6293f0bbba6043e7472fd",
-    "routing_envelope": {
-      "x_min": -1.0,
-      "x_max": 9.0,
-      "y_min": 1.0,
-      "y_max": 26.0
-    }
+    "node_grid": {
+      "verified": true,
+      "exceptions": [
+        "TCA perimeter",
+        "reaction-local cofactors"
+      ],
+      "checked_nodes": 116
+    },
+    "straight_exchange_validation": {
+      "verified": true,
+      "groups": 14,
+      "triplets": 12,
+      "pairs": 2,
+      "straight_incidences": 38
+    },
+    "red_routes_preserved": true
   },
-  "red_parallel_spacing": {
-    "requested_spacing_grid": 1,
-    "min_parallel_length_grid": 1,
-    "minimum_parallel_gap_grid": 1.0,
-    "parallel_pairs": 62,
-    "violations": [],
-    "verified": true
+  "tca_curves": {
+    "style": "circular_bezier",
+    "curved_incidences": 18,
+    "scope": "supported TCA cycle incidences only"
   },
   "node_obstacle_policy": "red_orange_structural_nodes",
   "obstacle_node_ids": [
@@ -619,16 +204,21 @@
     "met:fdp_c",
     "met:for_c",
     "met:for_e",
+    "met:fru_e",
     "met:fum_c",
+    "met:fum_e",
     "met:g3p_c",
     "met:g6p_c",
     "met:glc__D_e",
+    "met:gln__L_c",
+    "met:gln__L_e",
     "met:glu__L_c",
     "met:glu__L_e",
     "met:icit_c",
     "met:lac__D_c",
     "met:lac__D_e",
     "met:mal__L_c",
+    "met:mal__L_e",
     "met:oaa_c",
     "met:pep_c",
     "met:pyr_c",
@@ -655,19 +245,27 @@
     "rxn:EX_akg_e",
     "rxn:EX_etoh_e",
     "rxn:EX_for_e",
+    "rxn:EX_fru_e",
+    "rxn:EX_fum_e",
     "rxn:EX_glc__D_e",
+    "rxn:EX_gln__L_e",
     "rxn:EX_glu__L_e",
     "rxn:EX_lac__D_e",
+    "rxn:EX_mal__L_e",
     "rxn:EX_pyr_e",
     "rxn:EX_succ_e",
     "rxn:FBA",
     "rxn:FORt",
+    "rxn:FRUpts2",
     "rxn:FUM",
+    "rxn:FUMt2_2",
     "rxn:GAPD",
     "rxn:GLCpts",
+    "rxn:GLNabc",
     "rxn:GLUt2r",
     "rxn:ICDHyr",
     "rxn:LDH_D",
+    "rxn:MALt2_2",
     "rxn:MDH",
     "rxn:PDH",
     "rxn:PFK",
@@ -685,7 +283,8 @@
   ],
   "structural_node_priorities": {
     "met:glc__D_e": 2,
-    "met:gln__L_c": 0,
+    "met:gln__L_c": 1,
+    "met:gln__L_e": 1,
     "met:glu__L_c": 1,
     "met:glu__L_e": 1,
     "met:glx_c": 0,
@@ -693,6 +292,7 @@
     "met:lac__D_c": 1,
     "met:lac__D_e": 1,
     "met:mal__L_c": 2,
+    "met:mal__L_e": 1,
     "met:13dpg_c": 2,
     "met:2pg_c": 2,
     "met:3pg_c": 2,
@@ -727,7 +327,9 @@
     "met:fdp_c": 2,
     "met:for_c": 1,
     "met:for_e": 1,
+    "met:fru_e": 1,
     "met:fum_c": 2,
+    "met:fum_e": 1,
     "met:g3p_c": 2,
     "met:g6p_c": 2,
     "rxn:PFK": 2,
@@ -824,9 +426,13 @@
     "rxn:EX_akg_e": 1,
     "rxn:EX_etoh_e": 1,
     "rxn:EX_for_e": 1,
+    "rxn:EX_fru_e": 1,
+    "rxn:EX_fum_e": 1,
     "rxn:EX_glc__D_e": 2,
+    "rxn:EX_gln__L_e": 1,
     "rxn:EX_glu__L_e": 1,
     "rxn:EX_lac__D_e": 1,
+    "rxn:EX_mal__L_e": 1,
     "rxn:EX_pyr_e": 1,
     "rxn:EX_succ_e": 1,
     "rxn:FBA": 2,
@@ -836,7 +442,9 @@
     "rxn:FRD7": 0,
     "copy:FRD7:q8_c": 0,
     "copy:FRD7:q8h2_c": 0,
+    "rxn:FRUpts2": 1,
     "rxn:FUM": 2,
+    "rxn:FUMt2_2": 1,
     "rxn:G6PDH2r": 0,
     "copy:G6PDH2r:nadp_c": 0,
     "copy:G6PDH2r:nadph_c": 0,
@@ -847,6 +455,9 @@
     "rxn:GLNS": 0,
     "copy:GLNS:adp_c": 0,
     "copy:GLNS:atp_c": 0,
+    "rxn:GLNabc": 1,
+    "copy:GLNabc:adp_c": 0,
+    "copy:GLNabc:atp_c": 0,
     "rxn:GLUDy": 0,
     "copy:GLUDy:nadp_c": 0,
     "copy:GLUDy:nadph_c": 0,
@@ -867,6 +478,7 @@
     "copy:LDH_D:nadh_c": 0,
     "rxn:MALS": 0,
     "copy:MALS:coa_c": 0,
+    "rxn:MALt2_2": 1,
     "rxn:MDH": 2,
     "copy:MDH:nad_c": 0,
     "copy:MDH:nadh_c": 0,
@@ -891,6 +503,6 @@
     "copy:PDH:nad_c": 0,
     "copy:PDH:nadh_c": 0
   },
-  "original_route_length": 982.8,
-  "display_route_length": 1007.3
+  "original_route_length": 2531.187536880163,
+  "display_route_length": 2692.7463475004934
 }

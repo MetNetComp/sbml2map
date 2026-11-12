@@ -1,0 +1,14 @@
+{
+  "frame": [
+    -0.5,
+    39.369167869167875,
+    -10.25,
+    46.5
+  ],
+  "labels": {
+    "labels": 220,
+    "moved": 61,
+    "overlaps": 0
+  },
+  "uniform_node_sizes": true
+}

@@ -169,7 +169,7 @@ def export_sbml_layout(model_path,layout_dir,output=None,layout_id='sbml2map_lay
     layout.setName('sbml2map saved diagram (displayed subset)')
     body=data[1];metadata=data[0].get('metadata',{});canvas=body['canvas'];margin=20.0
     offset=(margin-canvas['x'],margin-canvas['y']);width=canvas['width']+2*margin;height=canvas['height']+2*margin
-    glyph_ids={};coordinates={};reaction_glyphs={};curve_coordinates={};text_count=0;line_count=0;reference_count=0
+    glyph_ids={};coordinates={};reaction_glyphs={};curve_coordinates={};text_count=0;line_count=0;bezier_count=0;reference_count=0
     def position(node):return node['x']+offset[0],node['y']+offset[1]
     def box(glyph,x,y,w,h):
         nonlocal width,height
@@ -208,13 +208,28 @@ def export_sbml_layout(model_path,layout_dir,output=None,layout_id='sbml2map_lay
             references=reaction.getListOfReactants() if coefficient<0 else reaction.getListOfProducts()
             matches=[ref for ref in references if ref.getSpecies()==species_ids[mid]]
             if len(matches)==1 and matches[0].isSetId():glyph.setSpeciesReferenceId(matches[0].getId())
-            points=[position(body['nodes'][n]) for n in path]
-            if coefficient<0:points.reverse()
-            curve_coordinates[glyph.getId()]=points
-            for a,b in zip(points,points[1:]):
-                if not (math.isclose(a[0],b[0],abs_tol=1e-6,rel_tol=0) or math.isclose(a[1],b[1],abs_tol=1e-6,rel_tol=0)):
-                    raise ValueError('SBML Layout export requires orthogonal saved connections')
-                segment=glyph.createLineSegment();segment.setStart(a[0],a[1],0);segment.setEnd(b[0],b[1],0);line_count+=1
+            if coefficient<0:path=list(reversed(path))
+            saved_reaction=next(r for r in body['reactions'].values() if r['bigg_id']==rid)
+            saved_segments={frozenset((s['from_node_id'],s['to_node_id'])):s for s in saved_reaction['segments'].values()}
+            expected=[]
+            for first,last in zip(path,path[1:]):
+                a,b=position(body['nodes'][first]),position(body['nodes'][last])
+                saved=saved_segments[frozenset((first,last))]
+                controls=[saved.get('b1'),saved.get('b2')]
+                if all(c is not None for c in controls):
+                    if first!=saved['from_node_id']:controls.reverse()
+                    c,d=[position(c) for c in controls]
+                    segment=glyph.createCubicBezier()
+                    segment.setBasePoint1(c[0],c[1],0);segment.setBasePoint2(d[0],d[1],0)
+                    bezier_count+=1
+                else:
+                    c=d=None
+                    if not (math.isclose(a[0],b[0],abs_tol=1e-6,rel_tol=0) or math.isclose(a[1],b[1],abs_tol=1e-6,rel_tol=0)):
+                        raise ValueError('SBML Layout export requires orthogonal lines or saved TCA Beziers')
+                    segment=glyph.createLineSegment();line_count+=1
+                segment.setStart(a[0],a[1],0);segment.setEnd(b[0],b[1],0)
+                expected.append((a,b,c,d))
+            curve_coordinates[glyph.getId()]=expected
             reference_count+=1
     dimensions=layout.getDimensions();dimensions.setWidth(width);dimensions.setHeight(height);dimensions.setDepth(0)
     # Transfer only the new Layout XML into the original DOM. This avoids
@@ -255,15 +270,19 @@ def export_sbml_layout(model_path,layout_dir,output=None,layout_id='sbml2map_lay
     for reaction in loaded.getListOfReactionGlyphs():
         for reference in reaction.getListOfSpeciesReferenceGlyphs():
             expected=curve_coordinates[reference.getId()];curve=reference.getCurve()
-            if curve.getNumCurveSegments()!=len(expected)-1:raise RuntimeError('Curve segments lost during SBML round trip')
+            if curve.getNumCurveSegments()!=len(expected):raise RuntimeError('Curve segments lost during SBML round trip')
             for i in range(curve.getNumCurveSegments()):
                 segment=curve.getCurveSegment(i)
-                for actual,point in ((segment.getStart(),expected[i]),(segment.getEnd(),expected[i+1])):
+                a,b,c,d=expected[i]
+                if isinstance(segment,lib.CubicBezier)!=(c is not None):raise RuntimeError('Curve type changed during SBML round trip')
+                checks=[(segment.getStart(),a),(segment.getEnd(),b)]
+                if c is not None:checks.extend([(segment.getBasePoint1(),c),(segment.getBasePoint2(),d)])
+                for actual,point in checks:
                     if not (math.isclose(actual.getXOffset(),point[0],abs_tol=1e-6,rel_tol=0) and
                             math.isclose(actual.getYOffset(),point[1],abs_tol=1e-6,rel_tol=0)):
                         raise RuntimeError('Curve coordinates changed during SBML round trip')
                 reloaded_segments+=1
-    if reloaded_segments!=line_count or loaded.getNumTextGlyphs()!=text_count:
+    if reloaded_segments!=line_count+bezier_count or loaded.getNumTextGlyphs()!=text_count:
         raise RuntimeError('Layout geometry or text lost during SBML round trip')
     output.parent.mkdir(parents=True,exist_ok=True)
     temporary=None
@@ -292,13 +311,13 @@ def export_sbml_layout(model_path,layout_dir,output=None,layout_id='sbml2map_lay
                 layout_id=layout_id,existing_layouts_preserved=existing_layouts,
                 source_reactions=len(reaction_ids),source_species=len(species_ids),
                 species_glyphs=len(glyph_ids),reaction_glyphs=len(reaction_glyphs),text_glyphs=text_count,
-                species_reference_glyphs=reference_count,line_segments=line_count,
+                species_reference_glyphs=reference_count,line_segments=line_count,cubic_beziers=bezier_count,
                 undisplayed_reaction_ids=sorted(set(reaction_ids)-set(reaction_glyphs)),
                 undisplayed_species_ids=sorted(set(species_ids)-displayed_species),
                 coordinate_offset=list(offset),layout_dimensions=[width,height],
                 validation=dict(original_xml_semantics_preserved=True,source_model_preserved=True,
                                 sbml_consistency_errors=0,glyph_references_and_coordinates_verified=True,
-                                curves_horizontal_or_vertical=True),
+                                curves_horizontal_or_vertical=bezier_count==0,tca_bezier_controls_verified=True),
                 warning_count=len(warnings),source_warning_count=len(original_warnings),
                 additional_warning_count=max(0,len(warnings)-len(original_warnings)),warnings=warnings[:20],fba_verification=fba,
                 limitation='Layout stores geometry only. Colors and arrow styling require Render support in a consuming application.')

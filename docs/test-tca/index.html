@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sbml2map | TCA配置テスト</title>
+<style>
+:root{color-scheme:light;font-family:system-ui,-apple-system,sans-serif;color:#193747;background:#f4f7f8}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:1400px;margin:auto;padding:22px 28px}header{padding-top:36px}small{letter-spacing:.14em;color:#53717c}h1{font-size:clamp(25px,4vw,38px);margin:8px 0 12px}p{line-height:1.8;margin:8px 0}.toolbar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:white;border:1px solid #d1dfe3;border-radius:12px;padding:16px}label{display:flex;align-items:center;gap:9px;font-size:14px}select,button,.link{font:inherit;background:white;border:1px solid #bdcfd5;border-radius:6px;padding:9px 12px;color:#193747}button,.link{cursor:pointer}.link{text-decoration:none;display:inline-block}button:hover,.link:hover{background:#eaf4f3}.links{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.legend{font-size:14px;color:#4a626f}.red{color:#df292e}.orange{color:#d16a08}.viewport{height:72vh;min-height:400px;overflow:auto;border:1px solid #cad8dd;border-radius:10px;background:white;padding:16px}.viewport img{display:block;max-width:none;height:auto;margin:0 auto}footer{font-size:13px;color:#4a626f;padding-bottom:36px}#status{font-size:14px}a{color:#165b69}@media(max-width:600px){header,main,footer{padding:18px}.viewport{height:65vh}.toolbar{gap:12px}input[type=range]{width:110px}}
+</style>
+<header><small>SBML2MAP / TEST PAGE</small><h1>TCA回路の円形配置 — テスト閲覧ページ</h1><p>代謝物と反応を、経路の順序に沿って円周上へ時計回りに配置した描画結果です。e_coli_coreの円形・四角形を切り替えて比較できます。</p></header>
+<main><section aria-label="新配線ルール"><h2>ノードサイズ・グリッド配置・平行線・余白を更新</h2>
+<p>pyr_c・accoa_cも他の代謝物と同じ大きさに統一しました。共通ノードへ接続する枝は中心から0.5グリッド以内で重ねられます。</p>
+<p>TCA回路上のノードと補酵素を除き、反応・代謝物・交換反応のノード中心は整数グリッド交点に配置します。補酵素は反応の近くへ自由配置します。</p>
+<p>線の色にかかわらず、間隔が1グリッド未満で2グリッド以上続く平行線・重複線を禁止します。遠くに残った右・下の交換反応を内側へ詰め、全条件を再検証します。ラベルをずらして重なりを避け、文字・矢印も含めて表示枠を合わせています。</p>
+<table><thead><tr><th>形状</th><th>反応数</th><th>禁止する近接平行線</th><th>ラベル重なり</th><th>整数配置の検証ノード数</th><th>外周 [左,右,下,上]</th></tr></thead><tbody><tr><td>円形</td><td>84</td><td>0</td><td>0</td><td>116</td><td>[0, 38, -10, 46]</td></tr><tr><td>四角形</td><td>84</td><td>0</td><td>0</td><td>116</td><td>[0, 29, 3, 46]</td></tr></tbody></table>
+<p>円形・四角形とも保存済みのSVG・Escherを検証し、関連テスト69件が通過しました。<a href="validation.json">検証結果</a> · <a href="../layout-rules-ja.md">配置ルール</a></p>
+<p>主要経路を先に配線し、赤とオレンジの点交差は、交差なしでは2倍以上の長さになる、4グリッド以上余計に迂回する、または交差なしの経路がない場合に接続ごとに記録して許可します。有限探索のため、最小面積や最短配線の大域最適は保証しません。</p>
+<p>TCAの円周上の18ノードと円弧の接続を維持します。四角形の接続部では、短い外向きの枝分かれを許可します。元モデルの反応・化学量論・方向は変更しません。</p></section>
+
+<div class="toolbar">
+<label>モデル <select id="model" aria-label="描画モデル"><option value="e_coli_core">E. coli core</option></select></label>
+<label>配置 <select id="shape"><option value="circle">円形</option><option value="square">四角形</option></select></label>
+<label>拡大率 <input id="zoom" type="range" min="50" max="300" value="100" step="10"><output id="zoomValue">100%</output></label>
+<button id="fit" type="button">幅に合わせる</button>
+</div>
+<p id="status" aria-live="polite"></p>
+<div class="links"><a class="link" id="interactive" href="e_coli_core/circle/">操作付きビューアー</a><a class="link" id="escher" href="e_coli_core/circle/escher_preview.html">Escherで開く</a><a class="link" id="png" href="e_coli_core/circle/layout.png" download>PNGを保存</a><a class="link" id="svg" href="e_coli_core/circle/layout.svg" download>SVGを保存</a></div>
+<p class="legend"><span class="red">● 赤：主要経路</span>　<span class="orange">● オレンジ：交換反応への接続経路</span>　● 灰：その他の分岐</p>
+<div class="viewport" id="viewport"><img id="drawing" src="e_coli_core/circle/layout.svg" alt="TCA回路を含む代謝ネットワークの描画結果"></div>
+<p>円形TCAの直径は約8.49グリッドです。18ノードは円とグリッド線の交点にあり、TCAの接続には円弧を使います。補酵素を除く通常ノードは整数グリッド交点に配置します。補助通路も長い近接平行線の禁止対象です。</p>
+<noscript><p>表示の切替にはJavaScriptが必要です。<a href="../tca-layout/">配置比較一覧</a>から各描画を開くこともできます。</p></noscript></main>
+<footer><p><a href="../">通常の閲覧ページ</a> · <a href="../tca-layout/">配置比較一覧</a> · <a href="https://github.com/MetNetComp/sbml2map">GitHubリポジトリ</a></p>描画データ：2026年11月12日更新。ノードサイズ・整数配置・平行線・ラベル・外周を検証済み。<a href="validation.json">検証結果（JSON）</a></footer>
+<script>
+const model=document.querySelector('#model'),shape=document.querySelector('#shape'),zoom=document.querySelector('#zoom'),drawing=document.querySelector('#drawing'),viewport=document.querySelector('#viewport');
+function resize(){drawing.style.width=Math.max(280,(viewport.clientWidth-34)*Number(zoom.value)/100)+'px';document.querySelector('#zoomValue').value=zoom.value+'%'}
+function update(){const base=model.value+'/'+shape.value+'/';drawing.src=base+'layout.svg';drawing.alt=model.options[model.selectedIndex].text+'・TCA'+shape.options[shape.selectedIndex].text+'配置';for(const [id,file] of Object.entries({interactive:'index.html',escher:'escher_preview.html',png:'layout.png',svg:'layout.svg'}))document.getElementById(id).href=base+file;document.querySelector('#status').textContent=model.options[model.selectedIndex].text+' / '+shape.options[shape.selectedIndex].text+'配置 / 交換反応の直線配置あり';resize();viewport.scrollTop=0;viewport.scrollLeft=0}
+model.addEventListener('change',update);shape.addEventListener('change',update);zoom.addEventListener('input',resize);document.querySelector('#fit').addEventListener('click',()=>{zoom.value=100;resize();viewport.scrollTop=0;viewport.scrollLeft=0});window.addEventListener('resize',resize);drawing.addEventListener('error',()=>document.querySelector('#status').textContent='画像を読み込めませんでした。PNGまたは操作付きビューアーを開いてください。');update();
+</script>
+</html>

@@ -158,7 +158,7 @@ def optimize_reserved_grid(node_ids, edge_pairs, cols=None, rows=None, time_limi
             if auto_cols and (not auto_rows or cols<=rows):cols+=1
             else:rows+=1
     else:raise ValueError('Could not fit TCA/exchange constraints after automatic grid expansion')
-    progress(f'Grid: {n} nodes on {cols} x {rows}; TCA interior excluded; {len(alignment_groups)} straight exchange triplets',flush=True)
+    progress(f'Grid: {n} nodes on {cols} x {rows}; TCA interior {(region or {}).get('interior_policy','forbid')}; {len(alignment_groups)} straight exchange triplets',flush=True)
     initial=value(xy)
     pinned=set(fixed)|aligned
     movable=[k for k in ids if k not in pinned]
@@ -197,7 +197,7 @@ def optimize_reserved_grid(node_ids, edge_pairs, cols=None, rows=None, time_limi
                 position_constraints=dict(top_left_node=top_left_node,top_left_position=list(fixed[top_left_node]) if top_left_node else None,
                     top_left_verified=True,boundary_nodes_verified=True,boundary_node_ids=sorted(boundary),exclusive_boundary=exclusive_boundary,
                     fixed_backbone_positions={k:list(v) for k,v in fixed.items()},fixed_backbone_positions_verified=True,
-                    tca_interior_excluded=bool(region),exchange_alignment=validate_alignment(alignment_groups,xy,cols,rows)))
+                    tca_interior_excluded=bool(region) and region.get('interior_policy')!='allow',exchange_alignment=validate_alignment(alignment_groups,xy,cols,rows)))
     # Each allowed position is an explicit binary choice. The same masks enforce
     # the exclusion region in both the heuristic and MILP, including on timeout.
     variables=[(k,point) for k in ids if k not in fixed for point in choices[k]]

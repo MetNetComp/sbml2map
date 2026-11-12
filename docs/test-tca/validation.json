@@ -1,0 +1,56 @@
+[
+  {
+    "shape": "circle",
+    "reactions": 84,
+    "grid": {
+      "verified": true,
+      "exceptions": [
+        "TCA perimeter",
+        "reaction-local cofactors"
+      ],
+      "checked_nodes": 116
+    },
+    "parallel_conflicts": 0,
+    "node_sizes_verified": true,
+    "labels": {
+      "labels": 220,
+      "moved": 61,
+      "overlaps": 0
+    },
+    "boundary": [
+      0,
+      38,
+      -10,
+      46
+    ],
+    "compacted": true,
+    "saved_escher_geometry_verified": true
+  },
+  {
+    "shape": "square",
+    "reactions": 84,
+    "grid": {
+      "verified": true,
+      "exceptions": [
+        "TCA perimeter",
+        "reaction-local cofactors"
+      ],
+      "checked_nodes": 116
+    },
+    "parallel_conflicts": 0,
+    "node_sizes_verified": true,
+    "labels": {
+      "labels": 220,
+      "moved": 43,
+      "overlaps": 0
+    },
+    "boundary": [
+      0,
+      29,
+      3,
+      46
+    ],
+    "compacted": true,
+    "saved_escher_geometry_verified": true
+  }
+]

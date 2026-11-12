@@ -36,6 +36,11 @@ def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True,ro
     for simulation views, with no structural priority.
     """
     header,body=data;meta=header['metadata']
+    from tca_curves import backbone_from_metadata
+    canonical=backbone_from_metadata(meta).get('crossing_routing')
+    if enabled and canonical:
+        from crossing_routing import apply_to_escher
+        return apply_to_escher(data,canonical)
     route_offset=meta.get('route_offset_grid',.3) if route_offset is None else route_offset
     validate_route_offset(route_offset)
     meta['route_offset_grid']=route_offset
@@ -59,6 +64,7 @@ def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True,ro
     obstacle_keys=sorted(key for key,rank in node_priorities.items() if rank>0)
     obstacles=[(old_nodes[nid]['x'],old_nodes[nid]['y']) for nid,key in sources.items() if key in obstacle_keys]
     meta['structural_node_priorities']=node_priorities
+    from tca_curves import escher_curve_controls
     routes=[]
     for rid,reaction in body['reactions'].items():
         marker=meta['reactions'][reaction['bigg_id']]['marker_node_id']
@@ -74,12 +80,14 @@ def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True,ro
             if abs(a[0]-b[0])>1e-9 and abs(a[1]-b[1])>1e-9:
                 points.append((a[0],b[1]) if coefficient*details['coefficient_multiplier']<0 else (b[0],a[1]))
             points.append(b)
-            routes.append(dict(reaction=rid,rid=reaction['bigg_id'],mid=mid,marker=marker,target=target,
+            controls=escher_curve_controls(meta,pair,a,b) if enabled else None
+            routes.append(dict(curve_controls=controls,reaction=rid,rid=reaction['bigg_id'],mid=mid,marker=marker,target=target,
                                pair=pair,priority=priority if enabled else 0,backbone=frozenset(pair) in backbone,
                                points=points,legs=[]))
     step=max(10.0,meta['coordinate_transform']['scale']*.06)
     legs=[]
     for route in routes:
+        if route['curve_controls'] is not None:continue
         for a,b in zip(route['points'],route['points'][1:]):
             axis=0 if abs(a[1]-b[1])<1e-8 else 1
             leg=dict(route=route,axis=axis,level=a[1-axis],lo=min(a[axis],b[axis]),hi=max(a[axis],b[axis]),offset=0.0)
@@ -137,37 +145,43 @@ def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True,ro
                          scale*(transform['y_max']-y)+transform['padding']) for x,y in reserved['points']]
                 if reserved['source']!=sources[route['marker']]:points.reverse()
                 route.update(points=points,routing_locked=True)
+    straight_routes=[r for r in routes if r['curve_controls'] is None]
     parallel_report = separate_parallel(
-        routes, grid=meta['coordinate_transform']['scale'],
+        straight_routes, grid=meta['coordinate_transform']['scale'],
         obstacles=obstacles) if enabled else None
-    node_report = avoid_nodes(routes, grid=meta['coordinate_transform']['scale'],
+    node_report = avoid_nodes(straight_routes, grid=meta['coordinate_transform']['scale'],
         obstacles=obstacles,
         route_offset=route_offset) if enabled else None
     requested_red_spacing=red_plan['requested_spacing_grid'] if red_plan and red_plan.get('enabled') else .3
-    simplify_report=simplify_important(routes,grid=meta['coordinate_transform']['scale'],obstacles=obstacles,
+    simplify_report=simplify_important(straight_routes,grid=meta['coordinate_transform']['scale'],obstacles=obstacles,
         route_offset=route_offset,red_spacing=requested_red_spacing) if enabled else None
-    gray_report=yield_gray(routes,grid=meta['coordinate_transform']['scale'],obstacles=obstacles,
+    gray_report=yield_gray(straight_routes,grid=meta['coordinate_transform']['scale'],obstacles=obstacles,
         route_offset=route_offset) if enabled else None
-    red_check=spacing_report(routes,red_plan['requested_spacing_grid'],meta['coordinate_transform']['scale']) if red_plan else None
+    red_check=spacing_report(straight_routes,red_plan['requested_spacing_grid'],meta['coordinate_transform']['scale']) if red_plan else None
     if red_plan and red_plan.get('enabled') and red_plan.get('verified') and not red_check['verified']:
         raise RuntimeError('Preallocated red spacing changed during Escher rendering')
     map_nodes={key:old_nodes[key] for key in sources}
     node_number=max(map(int,sources))+1
     segment_number=max(map(int,body['reactions']))+1
-    source_edges={};priorities={};routing=[]
+    source_edges={};priorities={};routing=[];curved_segment_ids=[]
     for reaction in body['reactions'].values():reaction['segments']={}
     for route in sorted(routes,key=lambda r:(int(r['reaction']),r['mid'])):
         path=[route['marker']]
-        for point in route['points'][1:-1]:
+        for point in ([] if route['curve_controls'] is not None else route['points'][1:-1]):
             key=str(node_number);node_number+=1
             map_nodes[key]=dict(node_type='multimarker',x=point[0],y=point[1]);routing.append(key);path.append(key)
         path.append(route['target'])
         for a,b in zip(path,path[1:]):
             sid=str(segment_number);segment_number+=1
-            body['reactions'][route['reaction']]['segments'][sid]=dict(from_node_id=a,to_node_id=b,b1=None,b2=None)
+            controls=route['curve_controls']
+            if controls is not None:curved_segment_ids.append(sid)
+            body['reactions'][route['reaction']]['segments'][sid]=dict(from_node_id=a,to_node_id=b,
+                b1=dict(zip(('x','y'),controls[0])) if controls else None,
+                b2=dict(zip(('x','y'),controls[1])) if controls else None)
             source_edges[sid]=route['pair'];priorities[sid]=route['priority']
     body['nodes']=map_nodes
-    meta.update(routing_node_ids=routing,segment_source_edges=source_edges,segment_priorities=priorities)
+    meta.update(routing_node_ids=routing,segment_source_edges=source_edges,segment_priorities=priorities,
+                tca_curves=dict(style='circular_bezier',segment_ids=curved_segment_ids,curved_incidences=len(curved_segment_ids)))
     meta['overlap_routing']=dict(routing_preference=POLICY,important_simplification=simplify_report,gray_yield=gray_report,
                                 red_layout_signature=(red_plan or {}).get('signature'),red_parallel_spacing=red_check,
                                 trunk_grouping='positive_length_overlap',
@@ -181,7 +195,7 @@ def separate_routes(data,major_reactions=(),connector_pairs=None,enabled=True,ro
                                 primary_backbone_max_offset=max(max((abs(l['offset']) for l in legs if l['route']['backbone']),default=0),
                                     (node_report or {}).get('backbone_max_offset_grid',0)*meta['coordinate_transform']['scale']))
     if enabled:
-        signature=[base_id,[(r['rid'],r['mid'],r['priority'],r['points']) for r in routes]]
+        signature=[base_id,[(r['rid'],r['mid'],r['priority'],r['points'],r['curve_controls']) for r in routes]]
         header['map_id']=hashlib.sha256(json.dumps(signature,sort_keys=True).encode()).hexdigest()[:24]
         canvas=body['canvas'];padding=meta['coordinate_transform']['padding']
         x1=min(canvas['x'],min(n['x'] for n in map_nodes.values())-padding)

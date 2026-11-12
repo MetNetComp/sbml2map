@@ -6,15 +6,12 @@ sbml2map draws metabolic maps from SBML models. It can export Escher maps,
 SVG images, and SBML files with compound and reaction positions and connecting lines.
 To export SBML with positions, use `--export-sbml-layout`.
 
-The structural Escher view paints red above orange above gray and offsets coincident routes of different reactions.
-Biological nodes stay fixed; same-reaction trunks remain bundled. Primary backbone
-centerlines stay fixed during parallel-lane separation, but may detour around unrelated red/orange nodes.
-Parallel red/orange segments from different reactions that run together for at
-least one grid unit are separated by approximately 0.3 grid units using rectangular
-detours in both SVG and Escher structural views. Node collisions are avoided;
-unresolved routes are recorded in `parallel_routing.json` (SVG) and map metadata
-(Escher). Display detours add length without changing the original layout objective.
-FBA uses a dedicated complete map with neutral orthogonal routes, retaining the saved pathway coordinates.
+The current structural view uses uniform node sizes, grid intersections for ordinary nodes,
+and free cofactor placement. Branches may overlap within 0.5 grid units of a common node.
+Parallel lines of any color with spacing below one grid unit cannot run together for two
+or more grid units. Right and bottom exchange tails and label margins are compacted
+after validation. See the [latest published layouts](https://metnetcomp.github.io/sbml2map/test-tca/)
+and [drawing rules](docs/layout-rules-ja.md). Earlier FBA examples use separate coordinates.
 
 `sbml2map.py` draws metabolic networks with nodes on a grid.
 Cofactors may also be placed off the grid. Inorganic species are ignored.

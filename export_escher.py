@@ -212,6 +212,8 @@ def validate_map_geometry(data, model, source_nodes, source_xy, source_metadata=
         if node['node_type'] != 'multimarker' or not all(math.isfinite(node[k]) for k in ('x','y')):
             raise ValueError('Invalid routing node')
     transform = metadata['coordinate_transform']
+    from tca_curves import escher_curve_controls
+    curved_count=0
     counts = Counter()
     for node_id, source_id in source_ids.items():
         node, source = map_nodes[node_id], source_nodes[source_id]
@@ -269,7 +271,16 @@ def validate_map_geometry(data, model, source_nodes, source_xy, source_metadata=
                                    math.isclose(c[axis],pa[axis],abs_tol=1e-6,rel_tol=0) for c in controls)
                                for axis in ('x','y'))
                 if not straight:
-                    raise ValueError('Segment is not horizontal or vertical')
+                    pair=metadata.get('segment_source_edges',{}).get(sid,[])
+                    expected=escher_curve_controls(metadata,pair,[pa['x'],pa['y']],[pb['x'],pb['y']])
+                    if (expected is None or a not in source_ids or b not in source_ids or
+                            frozenset(pair)!=frozenset((source_ids[a],source_ids[b])) or
+                            any(segment[k] is None or any(not math.isfinite(segment[k][axis]) or
+                                not math.isclose(segment[k][axis],value,abs_tol=1e-5,rel_tol=0)
+                                for axis,value in zip(('x','y'),point))
+                                for k,point in zip(('b1','b2'),expected))):
+                        raise ValueError('Segment is not horizontal or vertical, or a valid TCA circular Bezier')
+                    curved_count+=1
             graph.setdefault(a,[]).append((b,sid))
             graph.setdefault(b,[]).append((a,sid))
             for endpoint in (a,b):
@@ -323,11 +334,16 @@ def validate_map_geometry(data, model, source_nodes, source_xy, source_metadata=
     for key, node in source_nodes.items():
         if node['kind'] == 'currency' and counts[key] != 1:
             raise ValueError('Currency copy must have one segment')
-    return dict(schema_valid=None, metadata_embedded='metadata' in header,
+    crossing_check=None
+    if metadata.get('crossing_routing',{}).get('verified'):
+        from crossing_routing import validate_saved_geometry
+        crossing_check=validate_saved_geometry(data,metadata)
+    return dict(crossing_constraints=crossing_check,schema_valid=None, metadata_embedded='metadata' in header,
                 reaction_ids_preserved=True, stoichiometry_preserved=True,
                 coordinate_transform_verified=True, segment_endpoints_verified=True,
                 nodes=len(map_nodes), source_nodes=len(source_nodes), routing_nodes=len(routing_ids),
-                orthogonal_segments_verified=orthogonal, reactions=len(reactions), segments=len(segment_ids),
+                orthogonal_segments_verified=orthogonal and curved_count==0,
+                non_tca_orthogonal_segments_verified=orthogonal,tca_curved_segments=curved_count, reactions=len(reactions), segments=len(segment_ids),
                 primary_metabolites=sum(n['node_type'] == 'metabolite' and n['node_is_primary'] for n in map_nodes.values()),
                 secondary_metabolites=sum(n['node_type'] == 'metabolite' and not n['node_is_primary'] for n in map_nodes.values()),
                 currency_copy_counts=dict(Counter(n['original_id'] for n in source_nodes.values() if n['kind'] == 'currency')),
@@ -424,6 +440,13 @@ window.builder.callback_manager.set('update_data.pathway_colors',syncEscherDispl
 const m=window.builder.map;document.getElementById('status').textContent=Object.keys(m.reactions).length+' reactions, '+Object.keys(m.nodes).length+' nodes';},100);
 document.getElementById('save').onclick=()=>{const data=window.builder.map.map_for_export();data[0].metadata=mapData[0].metadata;const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='escher_map.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 </script></html>'''
+    from tca_curves import backbone_from_metadata
+    routing=backbone_from_metadata(data[0].get('metadata',{})).get('crossing_routing',{}).get('report',{})
+    port_keys=set(routing.get('node_port_nodes',[]))
+    if port_keys and not routing.get('uniform_node_sizes'):
+        radius=routing['node_port_glyph_radius_grid']*data[0]['metadata']['coordinate_transform']['scale']
+        css=''.join('#n'+str(nid)+' circle{r:'+str(radius)+'px!important;}' for nid,key in data[0]['metadata']['source_node_ids'].items() if key in port_keys)
+        page=page.replace('</style>',css+'</style>',1)
     if reaction_data is not None:
         if set(reaction_data) != {r['bigg_id'] for r in data[1]['reactions'].values()}:
             raise ValueError('Flux IDs must match all map reactions')
