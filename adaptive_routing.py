@@ -101,6 +101,21 @@ def incident_exempt(a,b,path,xy,region):
     for key in (path['source'],path['target']):
         if key not in ring:continue
         p=xy[key]
+        if region['shape']=='circle':
+            axis=0 if abs(a[1]-b[1])<EPS else 1
+            if abs(a[1-axis]-b[1-axis])<EPS:
+                center=region['center'];radius=region['radius'];perpendicular=a[1-axis]-center[1-axis]
+                lo,hi=sorted((a[axis],b[axis]));closest=max(lo,min(hi,center[axis]))
+                minimum=math.hypot(closest-center[axis],perpendicular)
+                if minimum>=radius-EPS and abs(perpendicular)<=radius+1:
+                    extent=math.sqrt(max(0.,(radius+1)**2-perpendicular**2))
+                    left=max(lo,center[axis]-extent);right=min(hi,center[axis]+extent)
+                    near=[]
+                    for value in (left,right):
+                        q=list(a);q[axis]=value;near.append(q)
+                    tangent=list(a);tangent[axis]=closest
+                    touches_elsewhere=minimum<=radius+EPS and math.dist(tangent,p)>EPS
+                    if left<=right+EPS and not touches_elsewhere and max(math.dist(p,q) for q in near)<=1.5+EPS:return True
         if region['shape']=='square':
             l,t,side=region['left'],region['top'],region['side_length']
             # Several incidences need independent ports at a square-side
@@ -214,7 +229,7 @@ def attach_grid_cofactors(nodes,xy,region,boundary,reserved_paths=()):
 
 class Grid:
     def __init__(self,xy,boundary,region,auxiliary=False):
-        self.xy=xy;self.region=region;self.boundary=boundary;self.auxiliary=auxiliary;self.reserved=[];self.channel_intervals=defaultdict(list);self.parallel_intervals=defaultdict(list)
+        self.xy=xy;self.region=region;self.boundary=boundary;self.auxiliary=auxiliary;self.reserved=[];self.parallel_intervals=defaultdict(list)
         xmin,xmax,ymin,ymax=boundary
         xs=set(float(x) for x in range(math.ceil(xmin),math.floor(xmax)+1));ys=set(float(y) for y in range(math.ceil(ymin),math.floor(ymax)+1))
         if auxiliary:
@@ -246,10 +261,6 @@ class Grid:
             if hi-lo>=PARALLEL_LENGTH-EPS:
                 for bucket in range(math.floor(level)-1,math.floor(level)+2):
                     self.parallel_intervals[axis,bucket].append((level,lo,hi,p))
-        if p['priority']==1:
-            for a,b in zip(p['points'],p['points'][1:]):
-                axis=0 if abs(a[1]-b[1])<EPS else 1
-                self.channel_intervals[axis,math.floor(a[1-axis]+EPS)].append((min(a[axis],b[axis]),max(a[axis],b[axis]),(p['rid'],p['mid'])))
         edges=self.red_edges if p['priority']==2 else self.orange_edges if p['priority']==1 or p.get('straight_locked') else None
         if edges is None:return
         for a,b in zip(p['points'],p['points'][1:]):
@@ -290,10 +301,6 @@ class Grid:
                 if w not in (start,end) and (b[0] in (self.boundary[0],self.boundary[1]) or b[1] in (self.boundary[2],self.boundary[3])):continue
                 # Positive-length orange overlap is forbidden even within a reaction.
                 if p['priority'] in (1,2) and any(not in_common_port(a,b,p,q,self.xy) for q in self.orange_edges[key]):continue
-                if self.auxiliary and p['priority']==1:
-                    along=0 if direction==1 else 1;low,high=sorted((a[along],b[along]))
-                    users={pid for l,h,pid in self.channel_intervals[along,math.floor(a[1-along]+EPS)] if min(h,high)-max(l,low)>EPS}
-                    if len(users)>=2:continue
                 red=self.red_edges[key]
                 if p['priority'] in (1,2) and any(not in_common_port(a,b,p,q,self.xy) for q in red):continue
                 if key not in self.clearance:self.clearance[key]=segment_clearance(a,b,self.region)
@@ -355,22 +362,40 @@ def route_paths(paths,xy,boundary,region,progress=lambda *a,**k:None,*,red_order
     return exceptions
 
 
-def auxiliary_channel_load(paths):
+def auxiliary_channel_load(paths,xy=None):
     channels=defaultdict(list)
     for p in paths:
         if p['priority']!=1:continue
         for a,b in zip(p['points'],p['points'][1:]):
             axis=0 if abs(a[1]-b[1])<EPS else 1
             level=a[1-axis];low,high=sorted((a[axis],b[axis]))
-            channels[axis,math.floor(level+EPS)].append((low,high,(p['rid'],p['mid']),not integer(level)))
+            channels[axis,math.floor(level+EPS)].append((low,high,(p['rid'],p['mid']),not integer(level),p,level,axis))
     peak=0
     for segments in channels.values():
-        if not any(aux for low,high,pid,aux in segments):continue
-        levels=sorted({v for low,high,pid,aux in segments for v in (low,high)})
+        if not any(entry[3] for entry in segments):continue
+        events={v for low,high,*_ in segments for v in (low,high)}
+        if xy:
+            for low,high,pid,aux,p,level,axis in segments:
+                for key in (p['source'],p['target']):
+                    center=xy[key];distance=abs(level-center[1-axis])
+                    if distance>PORT_RADIUS:continue
+                    extent=math.sqrt(max(0.,PORT_RADIUS**2-distance**2))
+                    events.update(max(low,min(high,center[axis]+sign*extent)) for sign in (-1,1))
+        levels=sorted(events)
         for low,high in zip(levels,levels[1:]):
             if high-low<EPS:continue
             mid=(low+high)/2
-            users={pid for a,b,pid,aux in segments if a+EPS<mid<b-EPS}
+            active=[entry for entry in segments if entry[0]+EPS<mid<entry[1]-EPS]
+            users=set()
+            for a,b,pid,aux,p,level,axis in active:
+                point=[mid,level] if axis==0 else [level,mid]
+                local=False
+                if xy:
+                    for _,_,qid,_,q,qlevel,_ in active:
+                        if qid==pid:continue
+                        other=[mid,qlevel] if axis==0 else [qlevel,mid]
+                        if in_common_port(point,other,p,q,xy):local=True;break
+                if not local:users.add(pid)
             peak=max(peak,len(users))
     return peak
 
@@ -415,13 +440,13 @@ def validate_paths(paths,xy,boundary,region,exceptions):
             if p['priority']==q['priority']==1:
                 visible+=sum(math.dist(a,b) for a,b in outside)
     if visible>EPS:raise ValueError('Visible orange overlap remains: '+str(visible))
-    lane_load=auxiliary_channel_load(paths)
-    if lane_load>2:raise ValueError('Three or more orange lines in a thin corridor require layout expansion')
+    lane_load=auxiliary_channel_load(paths,xy)
     conflicts=parallel_conflicts(paths)
     if conflicts:raise ValueError('Long close parallel lines remain: '+str(conflicts[:3]))
     for p in paths:
         if p.get('curve_controls'):continue
         for a,b in zip(p['points'],p['points'][1:]):
+            if abs(a[0]-b[0])>EPS and abs(a[1]-b[1])>EPS:raise ValueError('Non-orthogonal line: '+p['rid'])
             if abs(a[1]-b[1])<EPS:valid=integer(a[1])
             elif abs(a[0]-b[0])<EPS:valid=integer(a[0])
             else:valid=False
@@ -452,7 +477,8 @@ def validate_paths(paths,xy,boundary,region,exceptions):
                 boundary_validation=validate_boundary(paths,boundary),conditional_crossings=exceptions,
                 orange_length_grid=orange_length(paths),orange_crossings_optimized=False,red_first=True,
                 objective_order=['no overlaps outside common node neighborhoods','no long close parallel runs','TCA clearance','short routes with audited red crossings','bends'],
-                thin_lane_limit=2,maximum_thin_corridor_load=lane_load,global_optimality_proven=False)
+                thin_lane_limit=None,thin_lane_policy='Short fan-out allowed; close parallel runs of two grids or more forbidden',
+                maximum_thin_corridor_load=lane_load,global_optimality_proven=False)
 
 
 def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,rows,major,progress=print,*,red_time_limit=10.,red_candidates=10):
@@ -470,11 +496,11 @@ def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,ro
     access_groups=[g for g in groups if g.get('internal') in red_keys or g['exchange'] in red_keys]
     access_exchanges={g['exchange'] for g in access_groups}
     access_keys=set(red_keys)
-    for g in access_groups:
+    from exchange_corridors import discover_corridors
+    access_records=discover_corridors(model,nodes,access_exchanges,access_groups) if access_exchanges else []
+    for g in access_records:
         access_keys.update(g[k] for k in ('exchange','external','internal') if k in g)
-        for reaction in model['reactions']:
-            if reaction['metabolites'].get(g['external'][4:],0)*reaction['metabolites'].get(g.get('internal','met:')[4:],0)<0:
-                access_keys.add('rxn:'+reaction['id'])
+        for path in g.get('transport_paths',[]):access_keys.update(path)
     access_keys &= set(nodes)
     def check_exchange_access(positions,trial,red):
         if not access_exchanges:return
@@ -600,7 +626,7 @@ def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,ro
             signature=hashlib.sha256(json.dumps(paths,sort_keys=True).encode()).hexdigest()[:24]
             trial['crossing_routing']=dict(routes=paths,report=report,signature=signature)
             trial['adaptive_layout']=dict(policy=POLICY,expansion_steps=expansion,before_boundary=[0,cols-1,0,rows-1],after_boundary=boundary,
-                tca_translation=shift,rejected_layouts=failures,congestion_rule='At most two thin auxiliary lanes; three or more require layout expansion',thin_lanes_used=report['thin_lanes_used'])
+                tca_translation=shift,rejected_layouts=failures,congestion_rule='Short fan-out allowed; close parallel runs of two grids or more forbidden',thin_lanes_used=report['thin_lanes_used'])
         except (ValueError,RuntimeError) as error:
             failures.append(dict(attempt=attempt,expansion_steps=expansion,red_length_grid=core['length'],relaxation_level=relaxation(core),boundary=boundary,reason=str(error)[:400]))
             progress(f'Adaptive grid expansion {attempt}: {error}',flush=True);continue
@@ -704,8 +730,11 @@ def compact_terminal_corridors(nodes,xy,backbones,progress=print):
             for g in trial['exchange_corridors']['groups']:
                 if g['face'] not in ('right','bottom'):continue
                 axis,edge,sign=(0,boundary[1],-1) if g['face']=='right' else (1,boundary[2],1)
-                chain=[g['exchange'],g['external']]
-                if g['primary_transport']:chain.append('rxn:'+g['primary_transport'])
+                chain=g.get('chain_node_ids',[])[:]
+                if chain and g.get('internal'):chain=chain[:-1]
+                if not chain:
+                    chain=[g['exchange'],g['external']]
+                    if g['primary_transport']:chain.append('rxn:'+g['primary_transport'])
                 for offset,key in enumerate(chain):positions[key][axis]=edge+sign*offset
                 target=g.get('internal',g['external'])
                 g['corridor']=[list(positions[g['exchange']]),list(positions[target])]
@@ -729,7 +758,8 @@ def compact_terminal_corridors(nodes,xy,backbones,progress=print):
                         index=next((i for i,(u,v) in enumerate(zip(points,points[1:])) if _on(q,u,v)),None)
                         if index is None:
                             if len(points)<3:raise ValueError('Exchange tail has another incidence: '+p['rid']+'/'+p['mid'])
-                            elbow=[points[1][a]+q[a]-points[0][a] for a in (0,1)]
+                            elbow=([points[1][0],q[1]] if abs(points[0][1]-points[1][1])<EPS
+                                   else [q[0],points[1][1]])
                             points=clean([q,elbow,*points[2:]])
                         else:points=clean([q,*points[index+1:]])
                         p['points']=list(reversed(points)) if reverse else points

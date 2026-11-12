@@ -44,6 +44,12 @@ class AdaptiveRoutingTests(unittest.TestCase):
         p=path('O','a','b',(1,.15),(4,.15),1)
         with self.assertRaisesRegex(ValueError,'Non-grid'):validate_paths([p],{'a':(1,.15),'b':(4,.15)},[0,6,0,6],None,[])
 
+    def test_auxiliary_and_cofactor_flags_cannot_hide_diagonal_segments(self):
+        for flag in ('auxiliary_lane','local_cofactor'):
+            p=path('R','a','b',(.25,1),(2,3),0);p[flag]=True
+            with self.assertRaisesRegex(ValueError,'Non-orthogonal'):
+                validate_paths([p],{'a':(.25,1),'b':(2,3)},[0,6,0,6],None,[])
+
     def test_short_uncrossed_route_keeps_red_crossing_forbidden(self):
         paths=[path('R','a','b',(2,2),(3,2),2),path('O','c','d',(1,1),(4,3),1)]
         xy={k:p for route in paths for k,p in [(route['source'],route['points'][0]),(route['target'],route['points'][-1])]}
@@ -66,6 +72,13 @@ class AdaptiveRoutingTests(unittest.TestCase):
         self.assertTrue(incident_exempt((8,2),(5.25,2),route,xy,region))
         self.assertFalse(incident_exempt((8,0),(5.25,0),route,xy,region))
 
+    def test_circle_fanout_is_local_and_cannot_cross_the_cycle(self):
+        region=dict(shape='circle',center=[0,0],radius=4,node_ids=['ring'])
+        route=path('R','other','ring',(8,1),(4,0),1);xy={'ring':(4,0),'other':(8,1)}
+        self.assertTrue(incident_exempt((4.25,.5),(7,.5),route,xy,region))
+        self.assertFalse(incident_exempt((4.25,2),(7,2),route,xy,region))
+        self.assertFalse(incident_exempt((3.75,.5),(7,.5),route,xy,region))
+
     def test_locked_corridor_detour_is_not_a_feasible_uncrossed_candidate(self):
         red=path('RED','a','b',(1.75,2),(2.25,2),2);red['red_fixed']=True
         orange=path('EX','c','d',(2,0),(2,4),1);orange['straight_locked']=True
@@ -83,12 +96,30 @@ class AdaptiveRoutingTests(unittest.TestCase):
         self.assertEqual(gray['points'],[(5.,2.),(1.,2.)])
         self.assertFalse(parallel_conflicts([gray,orange]))
 
-    def test_thin_corridor_allows_two_but_rejects_three_lines(self):
+    def test_shared_node_ports_do_not_consume_thin_corridor_capacity(self):
+        endpoints={'a':(4,2),'b':(4,3),'c':(4,1),'d':(4,4)};xy=dict(endpoints,r=(2,2))
+        points=[[(2,2),(4,2)],[(2,2),(2.25,2),(2.25,3),(4,3)],
+                [(2,2),(2.25,2),(2.25,1),(4,1)],
+                [(2,2),(2.25,2),(2.25,2.25),(2.75,2.25),(2.75,4),(4,4)]]
+        paths=[]
+        for key,vertices in zip(endpoints,points):
+            p=path(key,'r',key,vertices[0],vertices[-1],1);p['points']=vertices
+            if key!='a':p['auxiliary_lane']=True
+            paths.append(p)
+        report=validate_paths(paths,xy,[0,6,0,6],None,[])
+        self.assertLessEqual(report['maximum_thin_corridor_load'],2)
+        self.assertEqual(report['orange_overlap_grid'],0)
+
+    def test_short_thin_corridor_allows_multiple_lines_below_two_grids(self):
         paths=[path(str(i),'a'+str(i),'b'+str(i),(x,1),(x,2.5),1) for i,x in enumerate([2.,2.25,2.75])]
         for p in paths[1:]:p['auxiliary_lane']=True
         xy={k:p for route in paths for k,p in [(route['source'],route['points'][0]),(route['target'],route['points'][-1])]}
         self.assertEqual(validate_paths(paths[:2],xy,[0,6,0,6],None,[])['maximum_thin_corridor_load'],2)
-        with self.assertRaisesRegex(ValueError,'Three or more'):validate_paths(paths,xy,[0,6,0,6],None,[])
+        report=validate_paths(paths,xy,[0,6,0,6],None,[])
+        self.assertEqual(report['maximum_thin_corridor_load'],3)
+        self.assertIsNone(report['thin_lane_limit'])
+        for p in paths:p['points'][-1]=(p['points'][-1][0],3.)
+        with self.assertRaisesRegex(ValueError,'Long close parallel'):validate_paths(paths,xy,[0,6,0,6],None,[])
 
     def test_parallel_limit_includes_two_grids_and_all_colors(self):
         for priority in (0,1,2):

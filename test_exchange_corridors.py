@@ -51,6 +51,33 @@ class StraightExchangeTests(unittest.TestCase):
         for point in xy.values():
             self.assertTrue(all(abs(v-round(v))<1e-7 for v in point))
 
+    def test_periplasm_transport_chain_keeps_real_species_and_incidences(self):
+        model,nodes,edges,xy,b,groups=self.fixture()
+        model['metabolites'].append(dict(id='a_p',name='a_p',compartment='p'))
+        model['reactions'][1]['metabolites']={'a_p':-1,'a_c':1}
+        model['reactions'].append(dict(id='OUT',name='OUT',metabolites={'a_e':-1,'a_p':1},lower_bound=-10,upper_bound=10))
+        before=copy.deepcopy(model);nodes,edges=build_network(model,[])
+        xy={'rxn:EX_a':[0,8],'met:a_e':[1,8],'rxn:OUT':[2,8],'met:a_p':[3,8],'rxn:T':[4,8],'met:a_c':[6,8]}
+        b.update(adaptive_grid=True,fixed_node_offsets={'met:a_c':[6,8]})
+        specification=place_corridors(model,nodes,xy,b,{'rxn:EX_a'},groups,13,13)
+        group=specification['groups'][0]
+        self.assertEqual(group['transport_path'],['met:a_e','rxn:OUT','met:a_p','rxn:T','met:a_c'])
+        paths=initial_paths(nodes,edges,xy,b,set());locked=lock_corridor_paths(paths,specification)
+        self.assertEqual(len(locked),5)
+        report=validate_corridors(paths,specification)
+        self.assertEqual(report['multistep_groups'],1)
+        self.assertEqual(report['straight_incidences'],5)
+        self.assertEqual(model,before)
+        self.assertTrue(all(abs(v-round(v))<1e-7 for point in xy.values() for v in point))
+
+    def test_transport_chain_cannot_invent_a_missing_intermediate_reaction(self):
+        model,nodes,edges,xy,b,groups=self.fixture()
+        model['metabolites'].append(dict(id='a_p',name='a_p',compartment='p'))
+        model['reactions'][1]['metabolites']={'a_p':-1,'a_c':1}
+        nodes,edges=build_network(model,[])
+        with self.assertRaisesRegex(ValueError,'No displayed source transport path'):
+            discover_corridors(model,nodes,{'rxn:EX_a'},groups)
+
     def test_missing_cytosolic_species_uses_two_points_without_invention(self):
         model,nodes,edges,xy,b,groups=self.fixture(triplet=False);before=copy.deepcopy(model)
         spec=place_corridors(model,nodes,xy,b,{'rxn:EX_a'},groups,9,9)

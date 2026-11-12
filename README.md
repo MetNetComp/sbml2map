@@ -50,9 +50,9 @@ The ready-to-publish [`docs/`](docs/README.md) directory contains the E. coli co
 views. After updating results, run `python3 prepare_github_pages.py` and commit/push
 `docs/`. An enabled Pages site can use branch `main`, directory `/docs`.
 
-The iCH360 structural drawing is also available in the [live SVG viewer](https://metnetcomp.github.io/sbml2escher/eco_ich_360/)
-and [live Escher viewer](https://metnetcomp.github.io/sbml2escher/eco_ich_360/escher_preview.html).
-It shows 326 of 349 reactions without flux sampling; no new model files are included.
+The iCH360 structural drawing is also available in the [live SVG viewer](https://metnetcomp.github.io/sbml2map/eco_ich_360/)
+and [live Escher viewer](https://metnetcomp.github.io/sbml2map/eco_ich_360/escher_preview.html).
+It shows 326 of 349 reactions without flux sampling. The [circular/square comparison](https://metnetcomp.github.io/sbml2map/test-tca/?model=eco_ich_360) includes validated red-core preservation and real periplasm transport chains; no source model downloads are included.
 
 Run the packaged checks with `python -m unittest discover`.
 
@@ -711,3 +711,26 @@ No missing cycle reaction or closing connection is synthesized.
 MILPの補助目的が最適でも、有限個の配置・配線候補全体の大域最適性は保証しません。
 `--red-time-limit`（既定10秒、成立候補を得るまで超過する場合あり）と
 `--red-candidates`（既定10配置）で、赤の候補探索を調整できます。
+
+
+## iCH360と複数段の膜輸送
+
+細胞外→ペリプラズム→細胞内のような、同一化合物の複数段輸送にも対応します。
+元モデルの実在する化学種・反応だけで連鎖を探索し、中間の化学種と輸送反応も外側から内側へ直線配置します。
+不足する中間反応を追加したり、細胞外から細胞内への架空の一段輸送に置き換えたりしません。
+
+ノード付近の短い共有枝を許可し、線の色にかかわらず間隔1グリッド未満で
+2グリッド以上続く近接平行線を禁止します。旧来の補助通路の一律2本上限は使いません。
+短い分岐の本数は診断値として記録します。TCAへ接続する枝は、そのノード付近だけ
+短い外向きの分岐を許可し、無関係な輪郭への接近や回路横断は許可しません。
+
+実行例（構造表示、サンプリングなし）:
+
+```bash
+python sbml2map.py --model data/e_coli_iCH360.sbml --no-sampling \
+  --tca-shape circle --output-dir results/local/red-priority-ich360-circle
+```
+
+四角形は `--tca-shape square` を指定します。iCH360は元モデル349反応中326反応を描画し、
+17組の複数段輸送と2組の単純な交換接続、計87区間を直線配置として検証しています。
+入力SBMLやモデルJSONの公開は行わず、必要な解析用ファイルはローカルに保存します。

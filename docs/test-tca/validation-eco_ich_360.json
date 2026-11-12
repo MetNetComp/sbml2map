@@ -1,0 +1,100 @@
+[
+  {
+    "shape": "circle",
+    "source_reactions": 349,
+    "drawn_reactions": 326,
+    "nodes": 921,
+    "connections": 1073,
+    "source_model_unchanged": true,
+    "grid": {
+      "verified": true,
+      "exceptions": [
+        "TCA perimeter",
+        "reaction-local cofactors"
+      ],
+      "checked_nodes": 558
+    },
+    "parallel_conflicts": 0,
+    "labels": {
+      "labels": 921,
+      "moved": 247,
+      "overlaps": 0
+    },
+    "red_preservation": {
+      "initial_length_grid": 100.03419507672675,
+      "final_length_grid": 100.03419507672676,
+      "length_increase_grid": 1.4210854715202004e-14,
+      "moved_node_count": 0,
+      "moved_node_ids": [],
+      "changed_route_count": 0,
+      "changed_routes": [],
+      "exactly_preserved": true,
+      "reference_signature": "573edeac53d3c9dbd336b2bf"
+    },
+    "transport": {
+      "verified": true,
+      "groups": 19,
+      "triplets": 17,
+      "pairs": 2,
+      "multistep_groups": 17,
+      "straight_incidences": 87
+    },
+    "boundary": [
+      0,
+      41,
+      -17,
+      35
+    ],
+    "svg_escher_verified": true,
+    "model": "eco_ich_360"
+  },
+  {
+    "shape": "square",
+    "source_reactions": 349,
+    "drawn_reactions": 326,
+    "nodes": 921,
+    "connections": 1073,
+    "source_model_unchanged": true,
+    "grid": {
+      "verified": true,
+      "exceptions": [
+        "TCA perimeter",
+        "reaction-local cofactors"
+      ],
+      "checked_nodes": 558
+    },
+    "parallel_conflicts": 0,
+    "labels": {
+      "labels": 921,
+      "moved": 151,
+      "overlaps": 0
+    },
+    "red_preservation": {
+      "initial_length_grid": 96.5,
+      "final_length_grid": 96.5,
+      "length_increase_grid": 0.0,
+      "moved_node_count": 0,
+      "moved_node_ids": [],
+      "changed_route_count": 0,
+      "changed_routes": [],
+      "exactly_preserved": true,
+      "reference_signature": "f90843849b66ec053cddfc12"
+    },
+    "transport": {
+      "verified": true,
+      "groups": 19,
+      "triplets": 17,
+      "pairs": 2,
+      "multistep_groups": 17,
+      "straight_incidences": 87
+    },
+    "boundary": [
+      0,
+      51,
+      -28,
+      28
+    ],
+    "svg_escher_verified": true,
+    "model": "eco_ich_360"
+  }
+]

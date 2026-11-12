@@ -42,5 +42,27 @@ class CompactRenderingTests(unittest.TestCase):
         self.assertEqual(backbones['routing_boundary'][1],7)
         self.assertTrue(backbones['crossing_routing']['report']['verified'])
 
+    def test_moving_endpoint_along_a_short_first_leg_keeps_orthogonal_elbow(self):
+        ids=('rxn:EX_e','met:e','rxn:T','met:c','met:other','met:right')
+        nodes={k:dict(kind='reaction' if k.startswith('rxn:') else 'metabolite') for k in ids}
+        xy={'rxn:EX_e':[20,4],'met:e':[19,4],'rxn:T':[18,4],'met:c':[4,4],'met:other':[2,2],'met:right':[18,8]}
+        paths=[path('EX_e','rxn:EX_e','met:e',xy['rxn:EX_e'],xy['met:e'],1),
+               path('T','rxn:T','met:e',xy['rxn:T'],xy['met:e'],1),
+               path('T','rxn:T','met:c',xy['rxn:T'],xy['met:c'],1)]
+        for p in paths:p['mid']=p['target'][4:];p['straight_locked']=True
+        branch=path('T','rxn:T','met:other',xy['rxn:T'],xy['met:other'],0)
+        branch.update(mid='other',points=[(18,4),(17.75,4),(17.75,2),(2,2)],auxiliary_lane=True)
+        paths.append(branch)
+        group=dict(reaction_id='EX_e',exchange='rxn:EX_e',external='met:e',internal='met:c',
+                   primary_transport='T',face='right',node_ids=['rxn:EX_e','met:e','rxn:T','met:c'],corridor=[[20,4],[4,4]])
+        b=dict(routing_boundary=[0,20,0,10],fixed_node_offsets={'met:c':[4,4]},adaptive_layout={},
+               exchange_corridors=dict(groups=[group]),
+               crossing_routing=dict(routes=paths,signature='initial',report=dict(conditional_crossings=[])))
+        self.assertTrue(compact_terminal_corridors(nodes,xy,b,lambda *a,**k:None))
+        branch=next(p for p in b['crossing_routing']['routes'] if p['mid']=='other')
+        self.assertEqual(branch['points'][0],(17.,4.))
+        self.assertEqual(branch['points'][1],(17.75,4))
+        self.assertTrue(all(a[0]==c[0] or a[1]==c[1] for a,c in zip(branch['points'],branch['points'][1:])))
+
 
 if __name__=='__main__':unittest.main()

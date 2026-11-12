@@ -2,2508 +2,264 @@
   "trunk_grouping": "positive_length_overlap",
   "clearance_grid": 0.3,
   "min_parallel_length_grid": 1.0,
-  "shifted_segments": 20,
+  "shifted_segments": 0,
   "unresolved": [],
-  "max_offset_grid": 0.44999999999999996,
+  "max_offset_grid": 0,
   "fixed_endpoints": true,
   "shared_same_reaction_trunks": true,
   "node_detours": {
     "trunk_grouping": "positive_length_overlap",
     "route_offset_grid": 0.3,
     "enabled": true,
-    "shifted_segments": 21,
-    "unresolved": [
-      {
-        "reaction_id": "AKGt2rpp",
-        "axis": 0,
-        "level": 3.92,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            9.0,
-            4.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "AKGt2rpp",
-        "axis": 0,
-        "level": 4.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            9.0,
-            4.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "AKGt2rpp",
-        "axis": 1,
-        "level": 9.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            9.0,
-            4.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "Biomass",
-        "axis": 0,
-        "level": 18.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            11.0,
-            18.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "Biomass",
-        "axis": 1,
-        "level": 11.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            11.0,
-            18.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "FRUpts2pp",
-        "axis": 0,
-        "level": 19.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            1.0,
-            19.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "FRUpts2pp",
-        "axis": 0,
-        "level": 19.08,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            1.0,
-            19.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "FRUpts2pp",
-        "axis": 1,
-        "level": 1.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            1.0,
-            19.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "FRUtex",
-        "axis": 0,
-        "level": 18.92,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            19.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "FRUtex",
-        "axis": 0,
-        "level": 19.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            19.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "FRUtex",
-        "axis": 1,
-        "level": 2.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            19.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "GLYCK2",
-        "axis": 0,
-        "level": 8.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            1.0,
-            8.0
-          ],
-          [
-            2.0,
-            8.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "GLYCK2",
-        "axis": 0,
-        "level": 8.08,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            1.0,
-            8.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "GLYCK2",
-        "axis": 1,
-        "level": 1.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            1.0,
-            8.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "GNK",
-        "axis": 0,
-        "level": 23.92,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            11.0,
-            24.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "GNK",
-        "axis": 0,
-        "level": 24.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            11.0,
-            24.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "GNK",
-        "axis": 1,
-        "level": 11.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            11.0,
-            24.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "RIBtex",
-        "axis": 0,
-        "level": 7.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            7.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "RIBtex",
-        "axis": 1,
-        "level": 2.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            7.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "SUCCt1pp",
-        "axis": 0,
-        "level": 1.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            7.0,
-            1.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "SUCCt1pp",
-        "axis": 1,
-        "level": 6.92,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            7.0,
-            1.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "SUCCt1pp",
-        "axis": 1,
-        "level": 7.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            7.0,
-            1.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "TKT1",
-        "axis": 0,
-        "level": 10.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            10.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "TKT1",
-        "axis": 0,
-        "level": 11.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            1.0,
-            11.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "TKT1",
-        "axis": 0,
-        "level": 11.08,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            1.0,
-            11.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "TKT1",
-        "axis": 1,
-        "level": 1.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            1.0,
-            11.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "TKT1",
-        "axis": 1,
-        "level": 2.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            10.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "TKT1",
-        "axis": 1,
-        "level": 2.08,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            2.0,
-            10.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "XYLtex",
-        "axis": 0,
-        "level": 1.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            9.0,
-            1.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "XYLtex",
-        "axis": 1,
-        "level": 9.0,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            9.0,
-            1.0
-          ]
-        ]
-      },
-      {
-        "reaction_id": "XYLtex",
-        "axis": 1,
-        "level": 9.08,
-        "reason": "requested U-shaped lanes and endpoint-step fallbacks are obstructed",
-        "nodes": [
-          [
-            9.0,
-            1.0
-          ]
-        ]
-      }
-    ],
+    "shifted_segments": 0,
+    "unresolved": [],
     "shape": "rectangle with optional endpoint steps",
     "endpoint_step_grid": 0.15,
-    "endpoint_step_fallback_segments": 6,
-    "detours": [
-      {
-        "reaction_id": "ACALD",
-        "axis": 1,
-        "offset_grid": -0.3,
-        "inset_start": false,
-        "inset_end": true,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "ACALD",
-        "axis": 1,
-        "offset_grid": -0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "ACALDtpp",
-        "axis": 0,
-        "offset_grid": -0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "ACALDtpp",
-        "axis": 1,
-        "offset_grid": -0.3,
-        "inset_start": true,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 1
-      },
-      {
-        "reaction_id": "AKGtex",
-        "axis": 0,
-        "offset_grid": -0.3,
-        "inset_start": false,
-        "inset_end": true,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "Biomass",
-        "axis": 0,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "Biomass",
-        "axis": 1,
-        "offset_grid": 0.3,
-        "inset_start": true,
-        "inset_end": false,
-        "segments": 2,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "EX_akg_e",
-        "axis": 1,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "EX_for_e",
-        "axis": 0,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "EX_fru_e",
-        "axis": 0,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "EX_gln__L_e",
-        "axis": 0,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "EX_glu__L_e",
-        "axis": 1,
-        "offset_grid": -0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "EX_glyc__R_e",
-        "axis": 1,
-        "offset_grid": -0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "EX_lac__D_e",
-        "axis": 1,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "GLYCAt2rpp",
-        "axis": 1,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "LDH_D",
-        "axis": 0,
-        "offset_grid": -0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "MALt2_2pp",
-        "axis": 0,
-        "offset_grid": -0.3,
-        "inset_start": false,
-        "inset_end": true,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "MALtex",
-        "axis": 0,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "SUCCt1pp",
-        "axis": 0,
-        "offset_grid": -0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      },
-      {
-        "reaction_id": "XYLt2pp",
-        "axis": 1,
-        "offset_grid": 0.3,
-        "inset_start": false,
-        "inset_end": false,
-        "segments": 1,
-        "existing_endpoint_stem_overlaps": 0
-      }
-    ],
+    "endpoint_step_fallback_segments": 0,
+    "detours": [],
     "fixed_endpoints": true,
     "shared_same_reaction_trunks": true,
     "backbone_shifted_segments": 0,
-    "max_offset_grid": 0.3,
+    "max_offset_grid": 0,
     "backbone_max_offset_grid": 0
   },
   "routing_preference": "important_bends_then_length_gray_yields",
   "important_simplification": {
     "policy": "important_bends_then_length_gray_yields",
-    "changed_paths": 28,
-    "removed_bends": 51,
-    "details": [
+    "changed_paths": 0,
+    "removed_bends": 0,
+    "details": [],
+    "unresolved": []
+  },
+  "gray_yield": {
+    "changed_paths": 0,
+    "details": [],
+    "unresolved": []
+  },
+  "crossing_constraints": {
+    "policy": "adaptive_grid_disjoint_orange_conditional_red_crossings",
+    "verified": true,
+    "metrics": {
+      "red_red": 0,
+      "red_orange": 33,
+      "orange_orange": 307,
+      "hard_verified": true,
+      "raw_red_red": 1,
+      "strict_red_crossings_absent": false,
+      "raw_red_orange": 36
+    },
+    "orange_overlap_grid": 0.0,
+    "raw_orange_overlap_grid": 3.508342613226059,
+    "node_port_nodes": [
+      "met:2pg_c",
+      "met:acald_c",
+      "met:accoa_c",
+      "met:akg_c",
+      "met:etoh_c",
+      "met:f6p_c",
+      "met:fru_p",
+      "met:pyr_c",
+      "met:rib__D_c",
+      "met:ru5p__D_c",
+      "rxn:ALCD2x",
+      "rxn:Biomass",
+      "rxn:GNK",
+      "rxn:LDH_D",
+      "rxn:RBK",
+      "rxn:RPI",
+      "rxn:SUCCt2_2pp"
+    ],
+    "node_port_half_width_grid": 0.5,
+    "node_port_contacts": 19,
+    "uniform_node_sizes": true,
+    "parallel_spacing_grid": 1.0,
+    "parallel_length_grid": 2.0,
+    "parallel_conflict_count": 0,
+    "grid_lines_verified": false,
+    "primary_or_auxiliary_grid_verified": true,
+    "thin_lanes_used": 594,
+    "tca_clearance_grid": 1.0,
+    "tca_clearance_verified": true,
+    "boundary_validation": {
+      "boundary": [
+        0,
+        41,
+        -17,
+        35
+      ],
+      "outside_path_count": 0,
+      "outside_paths": [],
+      "all_colors_checked": true,
+      "cubic_extrema_checked": true,
+      "verified": true,
+      "route_extents": [
+        0.0,
+        41.0,
+        -17.0,
+        35.0
+      ]
+    },
+    "conditional_crossings": [
       {
-        "reaction_id": "MDH",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "PGK",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "SUCOAS",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "AKGt2rpp",
-        "bends_before": 5,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "D_LACtex",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "EX_akg_e",
-        "bends_before": 2,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "EX_lac__D_e",
-        "bends_before": 2,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "EX_rib__D_e",
-        "bends_before": 4,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "FORt2pp",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "FRUpts2pp",
-        "bends_before": 5,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "FRUtex",
-        "bends_before": 5,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "FRUtex",
-        "bends_before": 5,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "FUMt2_2pp",
-        "bends_before": 4,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "G3PT",
-        "bends_before": 0,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "GLCNtex",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "GLUt2rpp",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "GLUtex",
-        "bends_before": 5,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "GLYCtex",
-        "bends_before": 4,
-        "bends_after": 0
+        "reaction_id": "GLYCK2",
+        "metabolite_id": "2pg_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 7.000000001,
+        "no_uncrossed_path": true
       },
       {
         "reaction_id": "GND",
-        "bends_before": 4,
-        "bends_after": 2
+        "metabolite_id": "ru5p__D_c",
+        "uncrossed_length_grid": 50.000000006,
+        "crossed_length_grid": 12.000000002,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "GNK",
-        "bends_before": 5,
-        "bends_after": 2
+        "reaction_id": "FRUpts2pp",
+        "metabolite_id": "f6p_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 12.000000001,
+        "no_uncrossed_path": true
       },
       {
-        "reaction_id": "MALt2_2pp",
-        "bends_before": 4,
-        "bends_after": 2
+        "reaction_id": "Biomass",
+        "metabolite_id": "dhap_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 15.000000001,
+        "no_uncrossed_path": true
       },
       {
-        "reaction_id": "MALtex",
-        "bends_before": 3,
-        "bends_after": 2
+        "reaction_id": "GND",
+        "metabolite_id": "6pgc_c",
+        "uncrossed_length_grid": 50.000000006,
+        "crossed_length_grid": 14.000000002,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "RBK",
-        "bends_before": 4,
-        "bends_after": 0
+        "reaction_id": "Biomass",
+        "metabolite_id": "ru5p__D_c",
+        "uncrossed_length_grid": 44.000000006,
+        "crossed_length_grid": 19.000000002,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "SUCCtex",
-        "bends_before": 4,
-        "bends_after": 0
+        "reaction_id": "ACALD",
+        "metabolite_id": "acald_c",
+        "uncrossed_length_grid": 27.500000004,
+        "crossed_length_grid": 21.500000004,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "TKT1",
-        "bends_before": 5,
-        "bends_after": 2
+        "reaction_id": "Biomass",
+        "metabolite_id": "gln__L_c",
+        "uncrossed_length_grid": 37.500000006,
+        "crossed_length_grid": 17.500000002,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "TKT1",
-        "bends_before": 5,
-        "bends_after": 2
+        "reaction_id": "Biomass",
+        "metabolite_id": "ac_c",
+        "uncrossed_length_grid": 34.500000005,
+        "crossed_length_grid": 22.000000003,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "XYLtex",
-        "bends_before": 5,
-        "bends_after": 2
+        "reaction_id": "Biomass",
+        "metabolite_id": "for_c",
+        "uncrossed_length_grid": 36.500000005,
+        "crossed_length_grid": 27.500000003,
+        "no_uncrossed_path": false
       },
-      {
-        "reaction_id": "XYLtex",
-        "bends_before": 4,
-        "bends_after": 0
-      }
-    ],
-    "unresolved": [
       {
         "reaction_id": "GLYCK2",
-        "reason": "No simpler feasible important route"
-      }
-    ]
-  },
-  "gray_yield": {
-    "changed_paths": 127,
-    "details": [
-      {
-        "reaction_id": "3HAD100",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "3HAD120",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD120",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD121",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD140",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "3HAD141",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD141",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD160",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "3HAD180",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD180",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD181",
-        "bends_before": 0,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD181",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "3HAD40",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "3HAD60",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD60",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3HAD80",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAR121",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "3OAR161",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAR180",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAR181",
-        "bends_before": 0,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAR181",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAR40",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAR60",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAR60",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAS100",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAS140",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "3OAS141",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ACGK",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "ACKr",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "ACOATA",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "ADSL1r",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "ADSL2r",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "AGPR",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "AGPR",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "AICART",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "AICART",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "AIRC2",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "AIRC2",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "AIRC3",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "ARGSL",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ARGSL",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ARGSS",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ASAD",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "ASPTA",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ASPTA",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ATPS4rpp",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "BPNT",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "DAPDC",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "DDPA",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "DHAD2",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "DHORD5",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "DHORTS",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "DHQS",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "DUTPDP",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "DUTPDP",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "EAR100x",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "EAR121x",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "EAR121y",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "EAR140x",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "EAR140y",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "EAR161x",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "EAR161x",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "EAR60x",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "FORtppi",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "FRUpts2pp",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "G5SADs",
-        "bends_before": 0,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "GARFT",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "GARFT",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "GHMT2r",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "GLNS",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "GLU5K",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "GLUDy",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "GLUSy",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "GLYK",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "GRXR",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "HISTD",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "HISTD",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "HSK",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ILETA",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ILETA",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "IMPC",
-        "bends_before": 0,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "IPPMIa",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "IPPMIb",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "IPPS",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "MCOATA",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "MCOATA",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "ME2",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "METS",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "MTHFD",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "NDPK5",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "NDPK6",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "NDPK8",
-        "bends_before": 0,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "OCBT",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "OMPDC",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "ORPT",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PAPSR",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "PGL",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PHETA1",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PHETA1",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PPC",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PPCK",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "PPS",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PRAIi",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "PRAMPC",
-        "bends_before": 0,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PRASCSi",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PRATPP",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PRATPP",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PRMICI",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PSCVT",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "PSP_L",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "PTAr",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "RNDR3",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "RNDR4",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "RPE",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "SERAT",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "SHKK",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "SUCCt2_2pp",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "T2DECAI",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "TALA",
-        "bends_before": 0,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "THRD_L",
-        "bends_before": 1,
-        "bends_after": 1
-      },
-      {
-        "reaction_id": "THRS",
-        "bends_before": 1,
-        "bends_after": 2
-      },
-      {
-        "reaction_id": "TKT1",
-        "bends_before": 1,
-        "bends_after": 2
+        "metabolite_id": "glyc__R_c",
+        "uncrossed_length_grid": 44.500000006,
+        "crossed_length_grid": 23.500000002,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "TKT2",
-        "bends_before": 1,
-        "bends_after": 2
+        "reaction_id": "LDH_D",
+        "metabolite_id": "pyr_c",
+        "uncrossed_length_grid": 61.000000007,
+        "crossed_length_grid": 31.500000001,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "TRDR",
-        "bends_before": 1,
-        "bends_after": 1
+        "reaction_id": "Biomass",
+        "metabolite_id": "glyc3p_c",
+        "uncrossed_length_grid": 51.500000006,
+        "crossed_length_grid": 31.500000002,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "TRPS2",
-        "bends_before": 1,
-        "bends_after": 2
+        "reaction_id": "XYLK",
+        "metabolite_id": "xylu__D_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 32.000000001,
+        "no_uncrossed_path": true
       },
       {
-        "reaction_id": "TRPS3",
-        "bends_before": 1,
-        "bends_after": 2
+        "reaction_id": "XYLK",
+        "metabolite_id": "xu5p__D_c",
+        "uncrossed_length_grid": 64.500000007,
+        "crossed_length_grid": 37.500000001,
+        "no_uncrossed_path": false
       },
       {
-        "reaction_id": "VALTA",
-        "bends_before": 1,
-        "bends_after": 2
+        "reaction_id": "XYLI1",
+        "metabolite_id": "xylu__D_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 43.000000003,
+        "no_uncrossed_path": true
       }
     ],
-    "unresolved": [
-      {
-        "reaction_id": "3HAD160",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "3HAD80",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "3OAR100",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAR120",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "3OAR121",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "3OAR140",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAR140",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAR140",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS100",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS100",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS120",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "3OAS121",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS121",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS121",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS121",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS140",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS140",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS141",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "3OAS141",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS141",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS160",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS160",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS160",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS160",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS161",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "3OAS161",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS180",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS180",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS181",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS181",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS181",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS60",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS80",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "3OAS80",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACCOAC",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACGS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACGS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACHBS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACLS",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "ACOATA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACOATA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACODA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACOTA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACOTA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACOTA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ACOTA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ADSL1r",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "ADSL2r",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "ADSS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ALATA_L",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ALATA_L",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ALATA_L",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ALATA_L",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ANS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ANS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ARGSS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ASAD",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ASNS1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ASNS1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ASNS1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ASNS2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ASPK",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ASPTA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ATPPRT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "Biomass",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "CBPS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "CTPS2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "CTPS2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "CYSS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "CYSTL",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "DDPA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "DHAD2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "DHDPS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "DTMPK",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "EAR120x",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "EAR120y",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "EAR141x",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "EAR141y",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "EAR160x",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "EAR160y",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "EAR180y",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "EAR181x",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "EAR60y",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "EAR80x",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "EAR80x",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "EAR80y",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "FBP",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "FBP",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "FORtppi",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "FRD2",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "FRD2",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "FRD2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "FRD2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "FRUpts2pp",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "G3PD2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "G3PD2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "G3PD2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "G3PD2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "G6PDH2r",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GARFT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLNS",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "GLNS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLU5K",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUDy",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUN",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUN",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUPRT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUPRT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUPRT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUSy",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUSy",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLUSy",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GLYK",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GMPS2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "GTHOr",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "HSDy",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "HSST",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "HSST",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "HSST",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "HSTPT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "HSTPT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ICL",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "IG3PS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "IG3PS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "IG3PS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "IGPDH",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ILETA",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "IPMD",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "IPPS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "IPPS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "KARA1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "KAS14",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "KAS14",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "KAS14",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "KAS14",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "KAS15",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "KAS15",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "KAS15",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "LEUTAi",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "LEUTAi",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "LEUTAi",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "MALS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "MALS",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "ME1",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "ME1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ME2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "MTHFC",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "NDPK5",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "NDPK6",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "NDPK7",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "NDPK8",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "ORPT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "P5CR",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "P5CR",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PFL",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PFL",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PFL",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "PGCD",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "PGL",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "PHETA1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PPC",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PPCK",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "PPND",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PPS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PRAGSr",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PRAGSr",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "PRAGSr",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PRAIS",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "PRAMPC",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PRFGS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PRFGS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PRMICI",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "PRPPS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PSCVT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PSCVT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PSERT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PSERT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PSERT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PSP_L",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "PTAr",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "RNDR1",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "RNDR1b",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "RPE",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "RPI",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SDPDS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SDPTA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SDPTA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SERAT",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SHK3Dr",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SHK3Dr",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SHSL1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SHSL1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SHSL1",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "SUCCt2_2pp",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "TALA",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "TALA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "THDPS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "THRS",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "TKT2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "TKT2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "TMDS",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "TRPS2",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "TRPS3",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "TRPS3",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "TYRTA",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "TYRTA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "VALTA",
-        "reason": "No free gray route found"
-      },
-      {
-        "reaction_id": "VALTA",
-        "reason": "Shared gray trunk retained"
-      },
-      {
-        "reaction_id": "VPAMTr",
-        "reason": "Shared gray trunk retained"
-      }
-    ]
-  },
-  "red_parallel_layout": {
-    "enabled": true,
-    "requested_spacing_grid": 1,
-    "min_parallel_length_grid": 1,
-    "stage": "grid layout routing-channel allocation",
-    "obstacle_node_ids": [
-      "met:13dpg_c",
-      "met:2pg_c",
-      "met:3pg_c",
-      "met:6pgc_c",
-      "met:ac_c",
-      "met:ac_e",
-      "met:ac_p",
-      "met:acald_c",
-      "met:acald_e",
-      "met:acald_p",
-      "met:accoa_c",
-      "met:acon_C_c",
-      "met:akg_c",
-      "met:akg_e",
-      "met:akg_p",
-      "met:cit_c",
-      "met:dhap_c",
-      "met:etoh_c",
-      "met:etoh_e",
-      "met:etoh_p",
-      "met:f6p_c",
-      "met:fdp_c",
-      "met:for_c",
-      "met:for_e",
-      "met:for_p",
-      "met:fru_e",
-      "met:fru_p",
-      "met:fum_c",
-      "met:fum_e",
-      "met:fum_p",
-      "met:g3p_c",
-      "met:g6p_c",
-      "met:glc__D_e",
-      "met:glc__D_p",
-      "met:glcn_c",
-      "met:glcn_e",
-      "met:glcn_p",
-      "met:gln__L_c",
-      "met:gln__L_e",
-      "met:gln__L_p",
-      "met:glu__L_c",
-      "met:glu__L_e",
-      "met:glu__L_p",
-      "met:glyc3p_c",
-      "met:glyc__R_c",
-      "met:glyc__R_e",
-      "met:glyc__R_p",
-      "met:glyc_c",
-      "met:glyc_e",
-      "met:glyc_p",
-      "met:icit_c",
-      "met:lac__D_c",
-      "met:lac__D_e",
-      "met:lac__D_p",
-      "met:mal__L_c",
-      "met:mal__L_e",
-      "met:mal__L_p",
-      "met:oaa_c",
-      "met:pep_c",
-      "met:pyr_c",
-      "met:pyr_e",
-      "met:pyr_p",
-      "met:r5p_c",
-      "met:rib__D_c",
-      "met:rib__D_e",
-      "met:rib__D_p",
-      "met:ru5p__D_c",
-      "met:succ_c",
-      "met:succ_e",
-      "met:succ_p",
-      "met:succoa_c",
-      "met:xu5p__D_c",
-      "met:xyl__D_c",
-      "met:xyl__D_e",
-      "met:xyl__D_p",
-      "met:xylu__D_c",
-      "rxn:ACALD",
-      "rxn:ACALDtex",
-      "rxn:ACALDtpp",
-      "rxn:ACONTa",
-      "rxn:ACONTb",
-      "rxn:ACt2rpp",
-      "rxn:ACtex",
-      "rxn:AKGDH",
-      "rxn:AKGt2rpp",
-      "rxn:AKGtex",
-      "rxn:ALCD2x",
-      "rxn:Biomass",
-      "rxn:CS",
-      "rxn:D_LACt2pp",
-      "rxn:D_LACtex",
-      "rxn:ENO",
-      "rxn:ETOHtex",
-      "rxn:ETOHtrpp",
-      "rxn:EX_ac_e",
-      "rxn:EX_acald_e",
-      "rxn:EX_akg_e",
-      "rxn:EX_etoh_e",
-      "rxn:EX_for_e",
-      "rxn:EX_fru_e",
-      "rxn:EX_fum_e",
-      "rxn:EX_glc__D_e",
-      "rxn:EX_glcn_e",
-      "rxn:EX_gln__L_e",
-      "rxn:EX_glu__L_e",
-      "rxn:EX_glyc__R_e",
-      "rxn:EX_glyc_e",
-      "rxn:EX_lac__D_e",
-      "rxn:EX_mal__L_e",
-      "rxn:EX_pyr_e",
-      "rxn:EX_rib__D_e",
-      "rxn:EX_succ_e",
-      "rxn:EX_xyl__D_e",
-      "rxn:FBA",
-      "rxn:FORt2pp",
-      "rxn:FORtex",
-      "rxn:FRUpts2pp",
-      "rxn:FRUtex",
-      "rxn:FUM",
-      "rxn:FUMt2_2pp",
-      "rxn:FUMtex",
-      "rxn:G3PT",
-      "rxn:GAPD",
-      "rxn:GLCNt2rpp",
-      "rxn:GLCNtex",
-      "rxn:GLCptspp",
-      "rxn:GLCtex_copy1",
-      "rxn:GLNabcpp",
-      "rxn:GLNtex",
-      "rxn:GLUt2rpp",
-      "rxn:GLUtex",
-      "rxn:GLYCAt2rpp",
-      "rxn:GLYCAtex",
-      "rxn:GLYCK2",
-      "rxn:GLYCtex",
-      "rxn:GLYCtpp",
-      "rxn:GND",
-      "rxn:GNK",
-      "rxn:ICDHyr",
-      "rxn:LDH_D",
-      "rxn:MALt2_2pp",
-      "rxn:MALtex",
-      "rxn:MDH",
-      "rxn:PDH",
-      "rxn:PFK",
-      "rxn:PGI",
-      "rxn:PGK",
-      "rxn:PGM",
-      "rxn:PYK",
-      "rxn:PYRt2rpp",
-      "rxn:PYRtex",
-      "rxn:RBK",
-      "rxn:RIBabcpp",
-      "rxn:RIBtex",
-      "rxn:SUCCt1pp",
-      "rxn:SUCCtex",
-      "rxn:SUCDi",
-      "rxn:SUCOAS",
-      "rxn:TKT1",
-      "rxn:TPI",
-      "rxn:XYLI1",
-      "rxn:XYLK",
-      "rxn:XYLt2pp",
-      "rxn:XYLtex"
+    "orange_length_grid": 1241.9102648272867,
+    "orange_crossings_optimized": false,
+    "red_first": true,
+    "objective_order": [
+      "no overlaps outside common node neighborhoods",
+      "no long close parallel runs",
+      "TCA clearance",
+      "short routes with audited red crossings",
+      "bends"
     ],
-    "unresolved": [],
-    "nodes_moved": false,
+    "thin_lane_limit": null,
+    "thin_lane_policy": "Short fan-out allowed; close parallel runs of two grids or more forbidden",
+    "maximum_thin_corridor_load": 3,
     "global_optimality_proven": false,
-    "minimum_parallel_gap_grid": 1.0,
-    "parallel_pairs": 78,
-    "violations": [],
-    "verified": true,
-    "method": "Constraint-checked greedy routing channels",
-    "elapsed_seconds": 0.8084027849836275,
-    "signature": "043e4a609cc73f46c8578385",
-    "routing_envelope": {
-      "x_min": -1.0,
-      "x_max": 11.0,
-      "y_min": 1.0,
-      "y_max": 28.0
+    "node_grid": {
+      "verified": true,
+      "exceptions": [
+        "TCA perimeter",
+        "reaction-local cofactors"
+      ],
+      "checked_nodes": 558
+    },
+    "straight_exchange_validation": {
+      "verified": true,
+      "groups": 19,
+      "triplets": 17,
+      "pairs": 2,
+      "multistep_groups": 17,
+      "straight_incidences": 87
+    },
+    "red_routes_preserved": true,
+    "red_preservation": {
+      "initial_length_grid": 100.03419507672675,
+      "final_length_grid": 100.03419507672675,
+      "length_increase_grid": 0.0,
+      "moved_node_count": 0,
+      "moved_node_ids": [],
+      "changed_route_count": 0,
+      "changed_routes": [],
+      "exactly_preserved": true,
+      "reference_signature": "573edeac53d3c9dbd336b2bf"
     }
   },
-  "red_parallel_spacing": {
-    "requested_spacing_grid": 1,
-    "min_parallel_length_grid": 1,
-    "minimum_parallel_gap_grid": 1.0,
-    "parallel_pairs": 78,
-    "violations": [],
-    "verified": true
+  "tca_curves": {
+    "style": "circular_bezier",
+    "curved_incidences": 18,
+    "scope": "supported TCA cycle incidences only"
   },
   "node_obstacle_policy": "red_orange_structural_nodes",
   "obstacle_node_ids": [
@@ -2646,6 +402,7 @@
     "rxn:GND",
     "rxn:GNK",
     "rxn:ICDHyr",
+    "rxn:ILETA",
     "rxn:LDH_D",
     "rxn:MALt2_2pp",
     "rxn:MALtex",
@@ -2661,11 +418,12 @@
     "rxn:RBK",
     "rxn:RIBabcpp",
     "rxn:RIBtex",
-    "rxn:SUCCt1pp",
+    "rxn:RPE",
+    "rxn:RPI",
+    "rxn:SUCCt2_2pp",
     "rxn:SUCCtex",
     "rxn:SUCDi",
     "rxn:SUCOAS",
-    "rxn:TKT1",
     "rxn:TPI",
     "rxn:XYLI1",
     "rxn:XYLK",
@@ -2974,7 +732,7 @@
     "rxn:GTHOr": 0,
     "copy:GTHOr:nadp_c": 0,
     "copy:GTHOr:nadph_c": 0,
-    "rxn:ILETA": 0,
+    "rxn:ILETA": 1,
     "rxn:DHORD5": 0,
     "copy:DHORD5:mql8_c": 0,
     "copy:DHORD5:mqn8_c": 0,
@@ -3026,7 +784,7 @@
     "copy:PGK:adp_c": 0,
     "copy:PGK:atp_c": 0,
     "rxn:PGL": 0,
-    "rxn:RPE": 0,
+    "rxn:RPE": 1,
     "rxn:DHQTi": 0,
     "rxn:IPMD": 0,
     "copy:IPMD:nad_c": 0,
@@ -3034,7 +792,7 @@
     "rxn:AIRC3": 0,
     "rxn:TALA": 0,
     "rxn:ADSL2r": 0,
-    "rxn:TKT1": 1,
+    "rxn:TKT1": 0,
     "rxn:RNDR1": 0,
     "copy:RNDR1:adp_c": 0,
     "rxn:ALCD2x": 1,
@@ -3259,7 +1017,7 @@
     "rxn:ADSK": 0,
     "copy:ADSK:adp_c": 0,
     "copy:ADSK:atp_c": 0,
-    "rxn:SUCCt2_2pp": 0,
+    "rxn:SUCCt2_2pp": 1,
     "rxn:HSDy": 0,
     "copy:HSDy:nadp_c": 0,
     "copy:HSDy:nadph_c": 0,
@@ -3451,7 +1209,7 @@
     "copy:EAR181y:nadp_c": 0,
     "copy:EAR181y:nadph_c": 0,
     "rxn:TPI": 2,
-    "rxn:RPI": 0,
+    "rxn:RPI": 1,
     "rxn:3OAR120": 0,
     "copy:3OAR120:nadp_c": 0,
     "copy:3OAR120:nadph_c": 0,
@@ -3578,7 +1336,7 @@
     "copy:NADH17pp:nadh_c": 0,
     "rxn:ETOHtrpp": 1,
     "rxn:VPAMTr": 0,
-    "rxn:SUCCt1pp": 1,
+    "rxn:SUCCt1pp": 0,
     "rxn:Biomass": 1,
     "copy:Biomass:adp_c": 0,
     "copy:Biomass:amp_c": 0,
@@ -3595,6 +1353,6 @@
     "copy:Biomass:ump_c": 0,
     "copy:Biomass:utp_c": 0
   },
-  "original_route_length": 9616.25,
-  "display_route_length": 9656.95
+  "original_route_length": 15046.056809370386,
+  "display_route_length": 15544.2419606741
 }

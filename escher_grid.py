@@ -1019,7 +1019,7 @@ def run(args):
                                   no_zero_median_reactions=True, visible_stoichiometry_preserved=True,
                                   full_model_used_for_sampling=True, network=network, escher=escher_check),
                   limitations=['Global length optimality is reported, not assumed.',
-                               ('Orange overlaps outside node glyphs are forbidden. Red/orange point crossings are allowed only for audited long detours; thin orange corridors allow at most two incidences.' if backbones.get('adaptive_layout') else 'Red crossings are forbidden; orange length is minimized over a bounded candidate search. Orange crossings are permitted.' if backbones.get('crossing_routing') else 'Crossings, coincident edge paths, and label overlap are not minimized.'),
+                               ('Orange overlaps outside common node ports and close parallel runs of at least two grids are forbidden. Red/orange point crossings require an audited reason.' if backbones.get('adaptive_layout') else 'Red crossings are forbidden; orange length is minimized over a bounded candidate search. Orange crossings are permitted.' if backbones.get('crossing_routing') else 'Crossings, coincident edge paths, and label overlap are not minimized.'),
                                'Display model omits inorganic participants and is not suitable for FBA.',
                                'TCA cycle connections may use circular Beziers; other connections use orthogonal routing. Biological coordinates and reaction chemistry are preserved.',
                                'Sampling uses original bounds without a growth floor or loopless constraints; internal cycles may dominate.'])
