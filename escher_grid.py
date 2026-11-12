@@ -477,8 +477,12 @@ def render(output, nodes, edges, xy, records, selection, model_id, backbones=Non
     if connectors and connectors.get('flux_costs', {}).get('flux_weight', 0):
         connector_label += (f'Flux-weighted orange cost = {connectors["total_cost"]:.4g}; '
                             f'low-flux penalty strength = {connectors["flux_costs"]["flux_weight"]:g}.\n')
+    red_optimization=(backbones or {}).get('red_optimization')
+    if red_optimization:
+        connector_label=f'Red total routed length = {red_optimization["preservation"]["final_length_grid"]:.3f} grid units.\n'+connector_label
     fig.text(.02, .018, f'Red: glucose exchange / glycolysis / {oxidation_label} / TCA. Gray nodes: local coenzymes.\n' + connector_label +
-             ('Layout objective uses original L1 routes; display detours add length. Connectivity and bounds do not establish steady-state activity.' if structural else
+             ('Red length is optimized first; changes to the frozen red core are recorded. Connectivity does not establish steady-state activity.' if structural and red_optimization else
+              'Layout objective uses original L1 routes; display detours add length. Connectivity and bounds do not establish steady-state activity.' if structural else
               'Layout objective uses original L1 routes; display detours add length. Median describes the sampled feasible space, not a measured flux.'), fontsize=9)
     # Keep the original SVG for reversible browser highlighting.
     import io
@@ -765,6 +769,7 @@ def run(args):
         backbone=frozenset((e['source'],e['target'])) in backbone_pairs)
         for e in edges if e['reaction_id'] in major_reactions and e['source'] in grid_ids and e['target'] in grid_ids
         and frozenset((e['source'],e['target'])) not in tca_pairs]
+    red_objective_pairs=[(e['source'],e['target']) for e in red_edges]
     if adaptive:red_edges=[]
     major_mids={mid for route in routes for mid in route['metabolite_ids']}
     def routing_obstacles(plan):
@@ -774,9 +779,9 @@ def run(args):
     red_planning_seconds=0.0
     best = None
     previous_xy = None
-    for iteration in range(2 if connectors else 1):
-        objective_pairs = [(edges[i]['source'], edges[i]['target']) for i in connectors['edge_indices']] if connectors else grid_pairs
-        objective_weights = [reaction_weights.get(edges[i]['reaction_id'], 1) for i in connectors['edge_indices']] if connectors else None
+    for iteration in range(1 if adaptive else 2 if connectors else 1):
+        objective_pairs = red_objective_pairs if adaptive else [(edges[i]['source'], edges[i]['target']) for i in connectors['edge_indices']] if connectors else grid_pairs
+        objective_weights = None if adaptive else [reaction_weights.get(edges[i]['reaction_id'], 1) for i in connectors['edge_indices']] if connectors else None
         candidate_xy, candidate_placement = optimize_grid(grid_ids, objective_pairs, args.grid_cols, args.grid_rows, args.time_limit, args.seed + iteration,
                                       top_left_node=glucose_node, boundary_nodes=exchange_nodes, fixed_offsets=fixed_offsets,
                                       initial_positions=previous_xy, edge_weights=objective_weights, red_edges=red_edges,
@@ -811,6 +816,7 @@ def run(args):
                           flux_costs=flux_costs, shared_coenzyme_ids=sorted(shared), optimization_history=history)
         backbones['exchange_connectors'] = connectors
         placement['fixed_network_solver_objective'] = placement['objective']
+        if adaptive:placement['red_seed_nonarc_L1_objective']=placement['objective']
         placement['objective'] = value
         placement['objective_metric'] = connectors['objective']
         placement['optimality_proven'] = False
@@ -888,11 +894,17 @@ def run(args):
             placement.pop('relative_gap',None)
     if adaptive:
         from adaptive_routing import adaptive_layout
-        adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,alignment_groups,cols,rows,major_reactions)
+        adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,alignment_groups,cols,rows,major_reactions,
+                        red_time_limit=getattr(args,'red_time_limit',10.),red_candidates=getattr(args,'red_candidates',10))
         tca_region=backbones['tca_exclusion']['region']
         if glucose_node:placement['position_constraints']['top_left_position']=list(xy[glucose_node])
         if connectors:placement['objective']=connector_cost(connectors,edges,xy)
         placement['global_optimality_proven']=False
+        if backbones.get('red_optimization'):
+            placement['orange_objective']=placement['objective']
+            placement['objective']=backbones['red_optimization']['preservation']['final_length_grid']
+            placement['objective_metric']=backbones['red_optimization']['objective']
+            placement['objective_order']=backbones['red_optimization']['objective_order']
     routing_boundary=backbones.get('routing_boundary',[0,cols-1,0,rows-1])
     xmin,xmax,ymin,ymax=routing_boundary
     tca_exclusion = validate_exclusion(nodes,xy,tca_region)
@@ -925,7 +937,7 @@ def run(args):
     grid_length = sum(sum(abs(a-b) for a,b in zip(xy[a_key],xy[b_key])) for a_key,b_key in grid_pairs)
     if not adaptive and not math.isclose(length, grid_length + .45 * coenzyme_count, abs_tol=1e-7):
         raise RuntimeError('Edge-length objective differs from drawn orthogonal geometry')
-    if connectors and not math.isclose(connector_cost(connectors,edges,xy),placement['objective'],abs_tol=1e-7):
+    if connectors and not math.isclose(connector_cost(connectors,edges,xy),placement.get('orange_objective',placement['objective']),abs_tol=1e-7):
         raise RuntimeError('Orange objective differs from drawn orthogonal geometry')
     original = {r['id']: r for r in model['reactions']}
     for reaction in projected['reactions']:
@@ -979,6 +991,7 @@ def run(args):
     dump(output / 'metabolite_classification.json', classification); dump(output / 'reaction_ranking.json', records)
     dump(output / 'escher_map_metadata.json', metadata)
     dump(output / 'major_backbones.json', backbones)
+    if backbones.get('red_optimization'):dump(output/'red_optimization.json',backbones['red_optimization'])
     with (output / 'reaction_ranking.csv').open('w', newline='') as stream:
         fields = (['reaction_id', 'rank', 'is_major_pathway', 'selected', 'exclusion_reason', 'lower_bound', 'upper_bound'] if no_sampling else
                   ['reaction_id', 'rank', 'is_major_pathway', 'median_rank', 'median', 'priority', 'selected', 'exclusion_reason', 'split_rhat', 'ess', 'q05', 'q95'])
@@ -1028,6 +1041,7 @@ def run(args):
     if backbones.get('boundary_compaction'):report['boundary_compaction']=backbones['boundary_compaction']
     if backbones.get('orange_reposition'):report['orange_reposition']=backbones['orange_reposition']
     if backbones.get('adaptive_layout'):report['adaptive_layout']=backbones['adaptive_layout']
+    if backbones.get('red_optimization'):report['red_optimization']=backbones['red_optimization']
     if backbones.get('tca_interior_placement'):report['tca_interior_placement']=backbones['tca_interior_placement']
     report['tca_shape'] = getattr(args,'tca_shape','circle')
     report['tca_exclusion'] = tca_exclusion

@@ -41,39 +41,39 @@
     "verified": true,
     "metrics": {
       "red_red": 0,
-      "red_orange": 9,
-      "orange_orange": 57,
+      "red_orange": 1,
+      "orange_orange": 89,
       "hard_verified": true,
       "raw_red_red": 0,
       "strict_red_crossings_absent": false,
-      "raw_red_orange": 11
+      "raw_red_orange": 5
     },
     "orange_overlap_grid": 0.0,
-    "raw_orange_overlap_grid": 1.5,
+    "raw_orange_overlap_grid": 1.0,
     "node_port_nodes": [
+      "met:ac_c",
+      "met:acald_c",
       "met:accoa_c",
       "met:akg_c",
-      "met:gln__L_c",
+      "met:fru_e",
       "met:pyr_c",
-      "rxn:ACALD",
-      "rxn:ACKr",
-      "rxn:BIOMASS_Ecoli_core_w_GAM"
+      "rxn:ALCD2x"
     ],
     "node_port_half_width_grid": 0.5,
-    "node_port_contacts": 8,
+    "node_port_contacts": 9,
     "uniform_node_sizes": true,
     "parallel_spacing_grid": 1.0,
     "parallel_length_grid": 2.0,
     "parallel_conflict_count": 0,
     "grid_lines_verified": false,
     "primary_or_auxiliary_grid_verified": true,
-    "thin_lanes_used": 76,
+    "thin_lanes_used": 82,
     "tca_clearance_grid": 1.0,
     "tca_clearance_verified": true,
     "boundary_validation": {
       "boundary": [
         0,
-        29,
+        30,
         3,
         46
       ],
@@ -84,77 +84,21 @@
       "verified": true,
       "route_extents": [
         0.0,
-        29.0,
+        30.0,
         3.0,
         46.0
       ]
     },
     "conditional_crossings": [
       {
-        "reaction_id": "FUMt2_2",
-        "metabolite_id": "fum_c",
+        "reaction_id": "PYRt2",
+        "metabolite_id": "pyr_c",
         "uncrossed_length_grid": null,
-        "crossed_length_grid": 5.0,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "MALt2_2",
-        "metabolite_id": "mal__L_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 5.0,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "AKGt2r",
-        "metabolite_id": "akg_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 31.0,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "SUCCt2_2",
-        "metabolite_id": "succ_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 40.0,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "EX_fru_e",
-        "metabolite_id": "fru_e",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 4.0,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
-        "metabolite_id": "akg_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 18.0,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "ACALD",
-        "metabolite_id": "accoa_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 15.0,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "PFL",
-        "metabolite_id": "accoa_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 22.0,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "PTAr",
-        "metabolite_id": "accoa_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 18.0,
+        "crossed_length_grid": 3.0,
         "no_uncrossed_path": true
       }
     ],
-    "orange_length_grid": 378.75,
+    "orange_length_grid": 427.25,
     "orange_crossings_optimized": false,
     "red_first": true,
     "objective_order": [
@@ -182,7 +126,18 @@
       "pairs": 2,
       "straight_incidences": 38
     },
-    "red_routes_preserved": true
+    "red_routes_preserved": true,
+    "red_preservation": {
+      "initial_length_grid": 90.5,
+      "final_length_grid": 90.5,
+      "length_increase_grid": 0.0,
+      "moved_node_count": 0,
+      "moved_node_ids": [],
+      "changed_route_count": 0,
+      "changed_routes": [],
+      "exactly_preserved": true,
+      "reference_signature": "8aa29cc75bdb0db5f33d186e"
+    }
   },
   "tca_curves": {
     "style": "circular_bezier",
@@ -510,6 +465,6 @@
     "copy:PDH:nad_c": 0,
     "copy:PDH:nadh_c": 0
   },
-  "original_route_length": 2008.8000000000002,
-  "display_route_length": 2074.2999999999997
+  "original_route_length": 2124.8,
+  "display_route_length": 2182.7999999999997
 }

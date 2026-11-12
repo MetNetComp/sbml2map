@@ -66,6 +66,23 @@ class AdaptiveRoutingTests(unittest.TestCase):
         self.assertTrue(incident_exempt((8,2),(5.25,2),route,xy,region))
         self.assertFalse(incident_exempt((8,0),(5.25,0),route,xy,region))
 
+    def test_locked_corridor_detour_is_not_a_feasible_uncrossed_candidate(self):
+        red=path('RED','a','b',(1.75,2),(2.25,2),2);red['red_fixed']=True
+        orange=path('EX','c','d',(2,0),(2,4),1);orange['straight_locked']=True
+        xy={'a':(1.75,2),'b':(2.25,2),'c':(2,0),'d':(2,4)}
+        exceptions=route_paths([red,orange],xy,[0,5,0,5],None)
+        self.assertEqual(len(exceptions),1)
+        self.assertTrue(exceptions[0]['no_uncrossed_path'])
+        self.assertEqual(orange['points'],[(2.,0.),(2.,4.)])
+
+    def test_gray_locked_corridor_is_reserved_before_free_orange_routes(self):
+        gray=path('T','t','c',(5,2),(1,2),0);gray['straight_locked']=True
+        orange=path('O','r','c',(3,3),(1,2),1)
+        xy={'t':(5,2),'c':(1,2),'r':(3,3)}
+        route_paths([orange,gray],xy,[0,7,0,6],None)
+        self.assertEqual(gray['points'],[(5.,2.),(1.,2.)])
+        self.assertFalse(parallel_conflicts([gray,orange]))
+
     def test_thin_corridor_allows_two_but_rejects_three_lines(self):
         paths=[path(str(i),'a'+str(i),'b'+str(i),(x,1),(x,2.5),1) for i,x in enumerate([2.,2.25,2.75])]
         for p in paths[1:]:p['auxiliary_lane']=True

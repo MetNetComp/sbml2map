@@ -1,13 +1,13 @@
 {
   "frame": [
     -0.5,
-    39.369167869167875,
-    -10.25,
+    34.42908976201359,
+    -0.25,
     46.5
   ],
   "labels": {
     "labels": 220,
-    "moved": 61,
+    "moved": 50,
     "overlaps": 0
   },
   "uniform_node_sizes": true

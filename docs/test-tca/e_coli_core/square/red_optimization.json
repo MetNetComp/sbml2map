@@ -1,0 +1,1074 @@
+{
+  "objective": "Sum of drawn red incidence lengths, including cubic TCA arcs",
+  "objective_order": [
+    "hard constraints",
+    "red total length",
+    "red reference changes",
+    "orange length",
+    "margins"
+  ],
+  "solver": {
+    "method": "MILP rigid-TCA translation, nonarc L1 attachment objective",
+    "optimality_proven": true,
+    "status": 0,
+    "objective": 0.0,
+    "limitation": "Lower-bound seed only; routed red optimality is not implied."
+  },
+  "initial_routed_length_grid": null,
+  "optimized_length_grid": 90.5,
+  "evaluated_placements": 4,
+  "feasible_candidates": 7,
+  "rejected_candidates": [],
+  "time_limit_seconds": 10.0,
+  "elapsed_seconds": 10.15509201399982,
+  "global_optimality_proven": false,
+  "reference_positions": {
+    "met:cit_c": [
+      8.0,
+      24.0
+    ],
+    "met:acon_C_c": [
+      10.0,
+      24.0
+    ],
+    "rxn:ICDHyr": [
+      11.0,
+      22.0
+    ],
+    "met:g3p_c": [
+      5.0,
+      35.0
+    ],
+    "met:2pg_c": [
+      5.0,
+      29.0
+    ],
+    "rxn:ACONTa": [
+      9.0,
+      24.0
+    ],
+    "rxn:TPI": [
+      5.0,
+      36.0
+    ],
+    "met:accoa_c": [
+      7.0,
+      25.0
+    ],
+    "rxn:PGM": [
+      5.0,
+      30.0
+    ],
+    "met:succ_c": [
+      8.0,
+      19.0
+    ],
+    "rxn:FUM": [
+      6.0,
+      20.0
+    ],
+    "rxn:ENO": [
+      5.0,
+      28.0
+    ],
+    "rxn:GAPD": [
+      5.0,
+      34.0
+    ],
+    "met:pyr_c": [
+      5.0,
+      25.0
+    ],
+    "rxn:EX_glc__D_e": [
+      5.0,
+      46.0
+    ],
+    "rxn:FBA": [
+      5.0,
+      38.0
+    ],
+    "met:glc__D_e": [
+      5.0,
+      45.0
+    ],
+    "met:pep_c": [
+      5.0,
+      27.0
+    ],
+    "rxn:GLCpts": [
+      5.0,
+      44.0
+    ],
+    "rxn:PYK": [
+      5.0,
+      26.0
+    ],
+    "rxn:CS": [
+      7.0,
+      24.0
+    ],
+    "rxn:SUCOAS": [
+      9.0,
+      19.0
+    ],
+    "rxn:ACONTb": [
+      11.0,
+      24.0
+    ],
+    "met:mal__L_c": [
+      6.0,
+      21.0
+    ],
+    "met:succoa_c": [
+      10.0,
+      19.0
+    ],
+    "met:oaa_c": [
+      6.0,
+      24.0
+    ],
+    "met:icit_c": [
+      11.0,
+      23.0
+    ],
+    "rxn:MDH": [
+      6.0,
+      22.0
+    ],
+    "met:dhap_c": [
+      5.0,
+      37.0
+    ],
+    "rxn:SUCDi": [
+      7.0,
+      19.0
+    ],
+    "rxn:PGI": [
+      5.0,
+      42.0
+    ],
+    "rxn:PGK": [
+      5.0,
+      32.0
+    ],
+    "met:f6p_c": [
+      5.0,
+      41.0
+    ],
+    "met:g6p_c": [
+      5.0,
+      43.0
+    ],
+    "met:fum_c": [
+      6.0,
+      19.0
+    ],
+    "rxn:AKGDH": [
+      11.0,
+      19.0
+    ],
+    "rxn:PFK": [
+      5.0,
+      40.0
+    ],
+    "rxn:PDH": [
+      6.0,
+      25.0
+    ],
+    "met:fdp_c": [
+      5.0,
+      39.0
+    ],
+    "met:13dpg_c": [
+      5.0,
+      33.0
+    ],
+    "met:akg_c": [
+      11.0,
+      21.0
+    ],
+    "met:3pg_c": [
+      5.0,
+      31.0
+    ]
+  },
+  "reference_routes": [
+    {
+      "rid": "PFK",
+      "mid": "f6p_c",
+      "source": "rxn:PFK",
+      "target": "met:f6p_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          40.0
+        ],
+        [
+          5.0,
+          41.0
+        ]
+      ]
+    },
+    {
+      "rid": "PFK",
+      "mid": "fdp_c",
+      "source": "rxn:PFK",
+      "target": "met:fdp_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          40.0
+        ],
+        [
+          5.0,
+          39.0
+        ]
+      ]
+    },
+    {
+      "rid": "PGI",
+      "mid": "f6p_c",
+      "source": "rxn:PGI",
+      "target": "met:f6p_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          42.0
+        ],
+        [
+          5.0,
+          41.0
+        ]
+      ]
+    },
+    {
+      "rid": "PGI",
+      "mid": "g6p_c",
+      "source": "rxn:PGI",
+      "target": "met:g6p_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          42.0
+        ],
+        [
+          5.0,
+          43.0
+        ]
+      ]
+    },
+    {
+      "rid": "PGK",
+      "mid": "13dpg_c",
+      "source": "rxn:PGK",
+      "target": "met:13dpg_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          32.0
+        ],
+        [
+          5.0,
+          33.0
+        ]
+      ]
+    },
+    {
+      "rid": "PGK",
+      "mid": "3pg_c",
+      "source": "rxn:PGK",
+      "target": "met:3pg_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          32.0
+        ],
+        [
+          5.0,
+          31.0
+        ]
+      ]
+    },
+    {
+      "rid": "PGM",
+      "mid": "2pg_c",
+      "source": "rxn:PGM",
+      "target": "met:2pg_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          30.0
+        ],
+        [
+          5.0,
+          29.0
+        ]
+      ]
+    },
+    {
+      "rid": "PGM",
+      "mid": "3pg_c",
+      "source": "rxn:PGM",
+      "target": "met:3pg_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          30.0
+        ],
+        [
+          5.0,
+          31.0
+        ]
+      ]
+    },
+    {
+      "rid": "ACONTa",
+      "mid": "acon_C_c",
+      "source": "rxn:ACONTa",
+      "target": "met:acon_C_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          9.0,
+          24.0
+        ],
+        [
+          10.0,
+          24.0
+        ]
+      ]
+    },
+    {
+      "rid": "ACONTa",
+      "mid": "cit_c",
+      "source": "rxn:ACONTa",
+      "target": "met:cit_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          9.0,
+          24.0
+        ],
+        [
+          8.0,
+          24.0
+        ]
+      ]
+    },
+    {
+      "rid": "ACONTb",
+      "mid": "acon_C_c",
+      "source": "rxn:ACONTb",
+      "target": "met:acon_C_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          11.0,
+          24.0
+        ],
+        [
+          10.0,
+          24.0
+        ]
+      ]
+    },
+    {
+      "rid": "ACONTb",
+      "mid": "icit_c",
+      "source": "rxn:ACONTb",
+      "target": "met:icit_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          11.0,
+          24.0
+        ],
+        [
+          11.0,
+          23.0
+        ]
+      ]
+    },
+    {
+      "rid": "AKGDH",
+      "mid": "akg_c",
+      "source": "rxn:AKGDH",
+      "target": "met:akg_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          11.0,
+          19.0
+        ],
+        [
+          11.0,
+          21.0
+        ]
+      ]
+    },
+    {
+      "rid": "AKGDH",
+      "mid": "succoa_c",
+      "source": "rxn:AKGDH",
+      "target": "met:succoa_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          11.0,
+          19.0
+        ],
+        [
+          10.0,
+          19.0
+        ]
+      ]
+    },
+    {
+      "rid": "PYK",
+      "mid": "pep_c",
+      "source": "rxn:PYK",
+      "target": "met:pep_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          26.0
+        ],
+        [
+          5.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "rid": "PYK",
+      "mid": "pyr_c",
+      "source": "rxn:PYK",
+      "target": "met:pyr_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          26.0
+        ],
+        [
+          5.0,
+          25.0
+        ]
+      ]
+    },
+    {
+      "rid": "CS",
+      "mid": "accoa_c",
+      "source": "rxn:CS",
+      "target": "met:accoa_c",
+      "priority": 2,
+      "backbone": false,
+      "points": [
+        [
+          7.0,
+          24.0
+        ],
+        [
+          7.0,
+          25.0
+        ]
+      ]
+    },
+    {
+      "rid": "CS",
+      "mid": "cit_c",
+      "source": "rxn:CS",
+      "target": "met:cit_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          7.0,
+          24.0
+        ],
+        [
+          8.0,
+          24.0
+        ]
+      ]
+    },
+    {
+      "rid": "CS",
+      "mid": "oaa_c",
+      "source": "rxn:CS",
+      "target": "met:oaa_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          7.0,
+          24.0
+        ],
+        [
+          6.0,
+          24.0
+        ]
+      ]
+    },
+    {
+      "rid": "ENO",
+      "mid": "2pg_c",
+      "source": "rxn:ENO",
+      "target": "met:2pg_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          28.0
+        ],
+        [
+          5.0,
+          29.0
+        ]
+      ]
+    },
+    {
+      "rid": "ENO",
+      "mid": "pep_c",
+      "source": "rxn:ENO",
+      "target": "met:pep_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          28.0
+        ],
+        [
+          5.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "rid": "SUCDi",
+      "mid": "fum_c",
+      "source": "rxn:SUCDi",
+      "target": "met:fum_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          7.0,
+          19.0
+        ],
+        [
+          6.0,
+          19.0
+        ]
+      ]
+    },
+    {
+      "rid": "SUCDi",
+      "mid": "succ_c",
+      "source": "rxn:SUCDi",
+      "target": "met:succ_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          7.0,
+          19.0
+        ],
+        [
+          8.0,
+          19.0
+        ]
+      ]
+    },
+    {
+      "rid": "SUCOAS",
+      "mid": "succ_c",
+      "source": "rxn:SUCOAS",
+      "target": "met:succ_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          9.0,
+          19.0
+        ],
+        [
+          8.0,
+          19.0
+        ]
+      ]
+    },
+    {
+      "rid": "SUCOAS",
+      "mid": "succoa_c",
+      "source": "rxn:SUCOAS",
+      "target": "met:succoa_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          9.0,
+          19.0
+        ],
+        [
+          10.0,
+          19.0
+        ]
+      ]
+    },
+    {
+      "rid": "TPI",
+      "mid": "dhap_c",
+      "source": "rxn:TPI",
+      "target": "met:dhap_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          36.0
+        ],
+        [
+          5.0,
+          37.0
+        ]
+      ]
+    },
+    {
+      "rid": "TPI",
+      "mid": "g3p_c",
+      "source": "rxn:TPI",
+      "target": "met:g3p_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          36.0
+        ],
+        [
+          5.0,
+          35.0
+        ]
+      ]
+    },
+    {
+      "rid": "EX_glc__D_e",
+      "mid": "glc__D_e",
+      "source": "rxn:EX_glc__D_e",
+      "target": "met:glc__D_e",
+      "priority": 2,
+      "backbone": false,
+      "points": [
+        [
+          5.0,
+          46.0
+        ],
+        [
+          5.0,
+          45.0
+        ]
+      ]
+    },
+    {
+      "rid": "FBA",
+      "mid": "dhap_c",
+      "source": "rxn:FBA",
+      "target": "met:dhap_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          38.0
+        ],
+        [
+          5.0,
+          37.0
+        ]
+      ]
+    },
+    {
+      "rid": "FBA",
+      "mid": "fdp_c",
+      "source": "rxn:FBA",
+      "target": "met:fdp_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          38.0
+        ],
+        [
+          5.0,
+          39.0
+        ]
+      ]
+    },
+    {
+      "rid": "FBA",
+      "mid": "g3p_c",
+      "source": "rxn:FBA",
+      "target": "met:g3p_c",
+      "priority": 2,
+      "backbone": false,
+      "points": [
+        [
+          5.0,
+          38.0
+        ],
+        [
+          5.75,
+          38.0
+        ],
+        [
+          5.75,
+          36.25
+        ],
+        [
+          5.25,
+          36.25
+        ],
+        [
+          5.25,
+          35.0
+        ],
+        [
+          5.0,
+          35.0
+        ]
+      ],
+      "auxiliary_lane": true
+    },
+    {
+      "rid": "FUM",
+      "mid": "fum_c",
+      "source": "rxn:FUM",
+      "target": "met:fum_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          6.0,
+          20.0
+        ],
+        [
+          6.0,
+          19.0
+        ]
+      ]
+    },
+    {
+      "rid": "FUM",
+      "mid": "mal__L_c",
+      "source": "rxn:FUM",
+      "target": "met:mal__L_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          6.0,
+          20.0
+        ],
+        [
+          6.0,
+          21.0
+        ]
+      ]
+    },
+    {
+      "rid": "GAPD",
+      "mid": "13dpg_c",
+      "source": "rxn:GAPD",
+      "target": "met:13dpg_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          34.0
+        ],
+        [
+          5.0,
+          33.0
+        ]
+      ]
+    },
+    {
+      "rid": "GAPD",
+      "mid": "g3p_c",
+      "source": "rxn:GAPD",
+      "target": "met:g3p_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          34.0
+        ],
+        [
+          5.0,
+          35.0
+        ]
+      ]
+    },
+    {
+      "rid": "GLCpts",
+      "mid": "g6p_c",
+      "source": "rxn:GLCpts",
+      "target": "met:g6p_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          44.0
+        ],
+        [
+          5.0,
+          43.0
+        ]
+      ]
+    },
+    {
+      "rid": "GLCpts",
+      "mid": "glc__D_e",
+      "source": "rxn:GLCpts",
+      "target": "met:glc__D_e",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          5.0,
+          44.0
+        ],
+        [
+          5.0,
+          45.0
+        ]
+      ]
+    },
+    {
+      "rid": "GLCpts",
+      "mid": "pep_c",
+      "source": "rxn:GLCpts",
+      "target": "met:pep_c",
+      "priority": 2,
+      "backbone": false,
+      "points": [
+        [
+          5.0,
+          44.0
+        ],
+        [
+          6.0,
+          44.0
+        ],
+        [
+          6.0,
+          27.0
+        ],
+        [
+          5.0,
+          27.0
+        ]
+      ]
+    },
+    {
+      "rid": "GLCpts",
+      "mid": "pyr_c",
+      "source": "rxn:GLCpts",
+      "target": "met:pyr_c",
+      "priority": 2,
+      "backbone": false,
+      "points": [
+        [
+          5.0,
+          44.0
+        ],
+        [
+          4.0,
+          44.0
+        ],
+        [
+          4.0,
+          24.0
+        ],
+        [
+          5.0,
+          24.0
+        ],
+        [
+          5.0,
+          25.0
+        ]
+      ]
+    },
+    {
+      "rid": "ICDHyr",
+      "mid": "akg_c",
+      "source": "rxn:ICDHyr",
+      "target": "met:akg_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          11.0,
+          22.0
+        ],
+        [
+          11.0,
+          21.0
+        ]
+      ]
+    },
+    {
+      "rid": "ICDHyr",
+      "mid": "icit_c",
+      "source": "rxn:ICDHyr",
+      "target": "met:icit_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          11.0,
+          22.0
+        ],
+        [
+          11.0,
+          23.0
+        ]
+      ]
+    },
+    {
+      "rid": "MDH",
+      "mid": "mal__L_c",
+      "source": "rxn:MDH",
+      "target": "met:mal__L_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          6.0,
+          22.0
+        ],
+        [
+          6.0,
+          21.0
+        ]
+      ]
+    },
+    {
+      "rid": "MDH",
+      "mid": "oaa_c",
+      "source": "rxn:MDH",
+      "target": "met:oaa_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          6.0,
+          22.0
+        ],
+        [
+          6.0,
+          24.0
+        ]
+      ]
+    },
+    {
+      "rid": "PDH",
+      "mid": "accoa_c",
+      "source": "rxn:PDH",
+      "target": "met:accoa_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          6.0,
+          25.0
+        ],
+        [
+          7.0,
+          25.0
+        ]
+      ]
+    },
+    {
+      "rid": "PDH",
+      "mid": "pyr_c",
+      "source": "rxn:PDH",
+      "target": "met:pyr_c",
+      "priority": 2,
+      "backbone": true,
+      "points": [
+        [
+          6.0,
+          25.0
+        ],
+        [
+          5.0,
+          25.0
+        ]
+      ]
+    }
+  ],
+  "reference_signature": "8aa29cc75bdb0db5f33d186e",
+  "preservation": {
+    "initial_length_grid": 90.5,
+    "final_length_grid": 90.5,
+    "length_increase_grid": 0.0,
+    "moved_node_count": 0,
+    "moved_node_ids": [],
+    "changed_route_count": 0,
+    "changed_routes": [],
+    "exactly_preserved": true,
+    "reference_signature": "8aa29cc75bdb0db5f33d186e"
+  },
+  "relaxation_level": 0,
+  "relaxation_reason": null,
+  "rejected_full_layouts": [
+    {
+      "attempt": 0,
+      "expansion_steps": 0,
+      "red_length_grid": 90.5,
+      "relaxation_level": 0,
+      "boundary": [
+        0,
+        30,
+        0,
+        46
+      ],
+      "reason": "No grid-line cofactor positions at rxn:ACALD"
+    }
+  ],
+  "accepted_reference_signature": "8aa29cc75bdb0db5f33d186e"
+}

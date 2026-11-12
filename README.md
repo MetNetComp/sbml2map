@@ -689,3 +689,25 @@ preserves saved coordinates and applies the same exclusion/alignment rules to
 added nodes; an insufficient saved frame requires regenerating a larger layout.
 Incomplete source cycles retain their supported components and angular gaps.
 No missing cycle reaction or closing connection is synthesized.
+
+
+## 赤線の長さを先に最小化し、配置を保持する
+
+`adaptive-grid`では、初期配置の目的を赤の非円弧接続のL1長にし、オレンジの配置より先に
+赤だけの配置・配線候補を比較します。TCAの相対移動をMILPで提案し、既存の経路テンプレートを
+保った候補と赤全体の等長な平行移動を実際に配線します。評価には迂回とTCAの三次Bezier円弧の
+実長を含めます。短い共有接続口も、生物学的な接続ごとに1回ずつ数えます。
+
+赤へ直接つながる交換反応の通路が成立するかを先に検証し、最良の赤の座標・経路を保存して固定します。
+後段は非赤ノードの移動・再配線・外周拡張を先に試します。灰色でも直線配置が必須の通路は、
+自由なオレンジ経路より先に確保します。円形TCAの補酵素は、許容される接続口を経由する短い局所接続を使います。
+
+固定した赤で全体配置が成立しない場合だけ、同じ座標での等長再配線、等長の赤ノード移動、
+赤の延長量が小さい候補の順に緩めます。優先順位は、必須条件、赤の総延長、基準の赤からの変更量、
+オレンジの長さ、余白です。最終の余白調整後とEscher保存データでも、赤の長さと保持状態を検証します。
+
+`red_optimization.json`と`report.json`に、基準・最終の赤の実長、移動ノード数、変更経路数、
+緩和段階・理由、成立しなかった配置候補を保存します。最適性の証明有無も記録します。
+MILPの補助目的が最適でも、有限個の配置・配線候補全体の大域最適性は保証しません。
+`--red-time-limit`（既定10秒、成立候補を得るまで超過する場合あり）と
+`--red-candidates`（既定10配置）で、赤の候補探索を調整できます。

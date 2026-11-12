@@ -1,5 +1,17 @@
 [
   {
+    "previous_red_length": 181.53419507672675,
+    "red_preservation": {
+      "initial_length_grid": 151.53419507672675,
+      "final_length_grid": 151.53419507672675,
+      "length_increase_grid": 0.0,
+      "moved_node_count": 0,
+      "moved_node_ids": [],
+      "changed_route_count": 0,
+      "changed_routes": [],
+      "exactly_preserved": true,
+      "reference_signature": "818f7652162d9651a66d875f"
+    },
     "shape": "circle",
     "reactions": 84,
     "grid": {
@@ -14,19 +26,31 @@
     "node_sizes_verified": true,
     "labels": {
       "labels": 220,
-      "moved": 61,
+      "moved": 50,
       "overlaps": 0
     },
     "boundary": [
       0,
-      38,
-      -10,
+      33,
+      0,
       46
     ],
     "compacted": true,
     "saved_escher_geometry_verified": true
   },
   {
+    "previous_red_length": 124.0,
+    "red_preservation": {
+      "initial_length_grid": 90.5,
+      "final_length_grid": 90.5,
+      "length_increase_grid": 0.0,
+      "moved_node_count": 0,
+      "moved_node_ids": [],
+      "changed_route_count": 0,
+      "changed_routes": [],
+      "exactly_preserved": true,
+      "reference_signature": "8aa29cc75bdb0db5f33d186e"
+    },
     "shape": "square",
     "reactions": 84,
     "grid": {
@@ -41,12 +65,12 @@
     "node_sizes_verified": true,
     "labels": {
       "labels": 220,
-      "moved": 43,
+      "moved": 42,
       "overlaps": 0
     },
     "boundary": [
       0,
-      29,
+      30,
       3,
       46
     ],

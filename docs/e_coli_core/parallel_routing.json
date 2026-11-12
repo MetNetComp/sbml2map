@@ -42,33 +42,38 @@
     "metrics": {
       "red_red": 0,
       "red_orange": 11,
-      "orange_orange": 87,
+      "orange_orange": 46,
       "hard_verified": true,
+      "raw_red_red": 0,
       "strict_red_crossings_absent": false,
-      "raw_red_orange": 12
+      "raw_red_orange": 13
     },
     "orange_overlap_grid": 0.0,
-    "raw_orange_overlap_grid": 0.25,
+    "raw_orange_overlap_grid": 1.25,
     "node_port_nodes": [
+      "met:acald_c",
       "met:accoa_c",
-      "met:pyr_c"
+      "met:fru_e",
+      "met:lac__D_c",
+      "met:pyr_c",
+      "rxn:BIOMASS_Ecoli_core_w_GAM"
     ],
     "node_port_half_width_grid": 0.5,
-    "node_port_contacts": 2,
+    "node_port_contacts": 7,
     "uniform_node_sizes": true,
     "parallel_spacing_grid": 1.0,
     "parallel_length_grid": 2.0,
     "parallel_conflict_count": 0,
     "grid_lines_verified": false,
     "primary_or_auxiliary_grid_verified": true,
-    "thin_lanes_used": 71,
+    "thin_lanes_used": 82,
     "tca_clearance_grid": 1.0,
     "tca_clearance_verified": true,
     "boundary_validation": {
       "boundary": [
         0,
-        38,
-        -10,
+        33,
+        0,
         46
       ],
       "outside_path_count": 0,
@@ -78,8 +83,8 @@
       "verified": true,
       "route_extents": [
         0.0,
-        38.0,
-        -10.0,
+        33.0,
+        0.0,
         46.0
       ]
     },
@@ -88,71 +93,72 @@
         "reaction_id": "MALt2_2",
         "metabolite_id": "mal__L_c",
         "uncrossed_length_grid": null,
-        "crossed_length_grid": 10.876894375,
+        "crossed_length_grid": 4.876894375,
         "no_uncrossed_path": true
       },
       {
         "reaction_id": "FUMt2_2",
         "metabolite_id": "fum_c",
         "uncrossed_length_grid": null,
-        "crossed_length_grid": 11.258342614,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "AKGt2r",
-        "metabolite_id": "akg_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 37.258342614,
+        "crossed_length_grid": 5.258342614,
         "no_uncrossed_path": true
       },
       {
         "reaction_id": "SUCCt2_2",
         "metabolite_id": "succ_c",
         "uncrossed_length_grid": null,
-        "crossed_length_grid": 55.258342614,
+        "crossed_length_grid": 13.258342614,
         "no_uncrossed_path": true
       },
       {
-        "reaction_id": "EX_fru_e",
-        "metabolite_id": "fru_e",
+        "reaction_id": "AKGt2r",
+        "metabolite_id": "akg_c",
         "uncrossed_length_grid": null,
-        "crossed_length_grid": 4.0,
+        "crossed_length_grid": 16.258342614,
         "no_uncrossed_path": true
       },
       {
         "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
         "metabolite_id": "oaa_c",
         "uncrossed_length_grid": null,
-        "crossed_length_grid": 28.258342617,
+        "crossed_length_grid": 18.758342616,
         "no_uncrossed_path": true
       },
       {
         "reaction_id": "PTAr",
         "metabolite_id": "accoa_c",
         "uncrossed_length_grid": null,
-        "crossed_length_grid": 21.000000002,
-        "no_uncrossed_path": true
-      },
-      {
-        "reaction_id": "PFL",
-        "metabolite_id": "accoa_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 27.000000002,
+        "crossed_length_grid": 21.000000003,
         "no_uncrossed_path": true
       },
       {
         "reaction_id": "ACALD",
         "metabolite_id": "accoa_c",
         "uncrossed_length_grid": null,
-        "crossed_length_grid": 30.000000002,
+        "crossed_length_grid": 24.500000003,
+        "no_uncrossed_path": true
+      },
+      {
+        "reaction_id": "FRUpts2",
+        "metabolite_id": "pyr_c",
+        "uncrossed_length_grid": 47.000000005,
+        "crossed_length_grid": 34.000000003,
+        "no_uncrossed_path": false
+      },
+      {
+        "reaction_id": "PFL",
+        "metabolite_id": "accoa_c",
+        "uncrossed_length_grid": null,
+        "crossed_length_grid": 35.000000003,
         "no_uncrossed_path": true
       }
     ],
-    "orange_length_grid": 575.4102648272865,
+    "orange_length_grid": 405.66026482728654,
     "orange_crossings_optimized": false,
     "red_first": true,
     "objective_order": [
-      "no orange overlaps outside node glyphs",
+      "no overlaps outside common node neighborhoods",
+      "no long close parallel runs",
       "TCA clearance",
       "short routes with audited red crossings",
       "bends"
@@ -175,7 +181,18 @@
       "pairs": 2,
       "straight_incidences": 38
     },
-    "red_routes_preserved": true
+    "red_routes_preserved": true,
+    "red_preservation": {
+      "initial_length_grid": 151.53419507672675,
+      "final_length_grid": 151.53419507672675,
+      "length_increase_grid": 0.0,
+      "moved_node_count": 0,
+      "moved_node_ids": [],
+      "changed_route_count": 0,
+      "changed_routes": [],
+      "exactly_preserved": true,
+      "reference_signature": "818f7652162d9651a66d875f"
+    }
   },
   "tca_curves": {
     "style": "circular_bezier",
@@ -255,7 +272,7 @@
     "rxn:EX_pyr_e",
     "rxn:EX_succ_e",
     "rxn:FBA",
-    "rxn:FORt",
+    "rxn:FORt2",
     "rxn:FRUpts2",
     "rxn:FUM",
     "rxn:FUMt2_2",
@@ -437,8 +454,8 @@
     "rxn:EX_succ_e": 1,
     "rxn:FBA": 2,
     "rxn:FBP": 0,
-    "rxn:FORt2": 0,
-    "rxn:FORt": 1,
+    "rxn:FORt2": 1,
+    "rxn:FORt": 0,
     "rxn:FRD7": 0,
     "copy:FRD7:q8_c": 0,
     "copy:FRD7:q8h2_c": 0,
@@ -503,6 +520,6 @@
     "copy:PDH:nad_c": 0,
     "copy:PDH:nadh_c": 0
   },
-  "original_route_length": 2531.187536880163,
-  "display_route_length": 2692.7463475004934
+  "original_route_length": 2045.9521998265677,
+  "display_route_length": 2164.5463475004935
 }

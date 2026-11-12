@@ -21,8 +21,17 @@ def make_paths(nodes,edges,xy,backbones,major):
     for p in paths:
         if nodes[p['target']]['kind']=='currency':
             p['priority']=0
-            if p['source'] not in set((backbones.get('tca_exclusion',{}).get('region') or {}).get('node_ids',[])):
-                p['local_cofactor']=True
+            p['local_cofactor']=True
+            region=backbones.get('tca_exclusion',{}).get('region')
+            if p['source'] in set((region or {}).get('node_ids',[])):
+                a,b=xy[p['source']],xy[p['target']];options=[]
+                for axis in (0,1):
+                    port=list(a);port[axis]=b[axis]
+                    if not integer(a[1-axis]) or not integer(port[axis]):continue
+                    if not incident_exempt(a,port,p,xy,region):continue
+                    if segment_clearance(port,b,region)<1-EPS:continue
+                    options.append(clean([a,port,b]))
+                if options:p['points']=min(options,key=lambda points:sum(math.dist(a,b) for a,b in zip(points,points[1:])))
     return paths
 
 
@@ -146,12 +155,12 @@ def incident_exempt(a,b,path,xy,region):
     return False
 
 
-def attach_grid_cofactors(nodes,xy,region,boundary):
+def attach_grid_cofactors(nodes,xy,region,boundary,reserved_paths=()):
     groups=defaultdict(list)
     for k,n in nodes.items():
         if n['kind']=='currency':groups[n['parent_id']].append(k)
     for parent,keys in groups.items():
-        p=xy[parent];candidates=[];ports=[p]
+        p=xy[parent];candidates=[];candidate_routes=[];ports=[p]
         if region and parent in region['node_ids']:
             ports=[]
             for axis in (0,1):
@@ -172,7 +181,7 @@ def attach_grid_cofactors(nodes,xy,region,boundary):
                     q=list(port);q[stem]+=sign*extra;extended.append(q)
             ports=extended
         for port in ports:
-            lengths=(.45,) if region and parent in region['node_ids'] else (.45,.75,1.25,1.75,2.25,2.75)
+            lengths=(.45,.75) if region and parent in region['node_ids'] else (.45,.75,1.25,1.75,2.25,2.75)
             for length in lengths:
                 for axis in (0,1):
                     if region and parent in region['node_ids']:
@@ -188,7 +197,18 @@ def attach_grid_cofactors(nodes,xy,region,boundary):
                         elbow=[q[0],port[1]]
                         if min(segment_clearance(port,elbow,region),segment_clearance(elbow,q,region))<1-EPS:continue
                         candidates.append(q)
+                        candidate_routes.append(clean([p,port,q]))
         if len(candidates)<len(keys):raise ValueError('No grid-line cofactor positions at '+parent)
+        if region and parent in region['node_ids']:
+            chosen=[];paths=[]
+            for key in sorted(keys):
+                for q,points in zip(candidates,candidate_routes):
+                    if any(math.dist(q,v)<.16-EPS for v in chosen):continue
+                    path=dict(rid=parent,mid=key,source=parent,target=key,priority=0,points=points)
+                    if parallel_conflicts([*reserved_paths,*paths,path]):continue
+                    chosen.append(q);paths.append(path);break
+                else:raise ValueError('No local cofactor branch without long parallel overlap at '+parent)
+            candidates=chosen
         for key,q in zip(sorted(keys),candidates):xy[key]=q
 
 
@@ -230,7 +250,7 @@ class Grid:
             for a,b in zip(p['points'],p['points'][1:]):
                 axis=0 if abs(a[1]-b[1])<EPS else 1
                 self.channel_intervals[axis,math.floor(a[1-axis]+EPS)].append((min(a[axis],b[axis]),max(a[axis],b[axis]),(p['rid'],p['mid'])))
-        edges=self.red_edges if p['priority']==2 else self.orange_edges if p['priority']==1 else None
+        edges=self.red_edges if p['priority']==2 else self.orange_edges if p['priority']==1 or p.get('straight_locked') else None
         if edges is None:return
         for a,b in zip(p['points'],p['points'][1:]):
             start,end=self.index(a),self.index(b);step=(1 if end>start else -1) if start//self.nx==end//self.nx else (self.nx if end>start else -self.nx)
@@ -269,7 +289,7 @@ class Grid:
                 if w not in (start,end) and {k for k in self.owners[w]-endpoints if not (p['priority'] and k.startswith('copy:'))}:continue
                 if w not in (start,end) and (b[0] in (self.boundary[0],self.boundary[1]) or b[1] in (self.boundary[2],self.boundary[3])):continue
                 # Positive-length orange overlap is forbidden even within a reaction.
-                if p['priority']==1 and any(not in_common_port(a,b,p,q,self.xy) for q in self.orange_edges[key]):continue
+                if p['priority'] in (1,2) and any(not in_common_port(a,b,p,q,self.xy) for q in self.orange_edges[key]):continue
                 if self.auxiliary and p['priority']==1:
                     along=0 if direction==1 else 1;low,high=sorted((a[along],b[along]))
                     users={pid for l,h,pid in self.channel_intervals[along,math.floor(a[1-along]+EPS)] if min(h,high)-max(l,low)>EPS}
@@ -299,17 +319,20 @@ class Grid:
         return None
 
 
-def route_paths(paths,xy,boundary,region,progress=lambda *a,**k:None):
+def route_paths(paths,xy,boundary,region,progress=lambda *a,**k:None,*,red_order=0,reservations=()):
     grid=Grid(xy,boundary,region);exceptions=[]
+    for p in reservations:grid.reserve(p)
     ring=set((region or {}).get('node_ids',[]))
     for p in paths:
         if p.get('red_fixed') or p.get('local_cofactor'):grid.reserve(p)
     ordered=sorted([p for p in paths if not p.get('curve_controls') and not p.get('red_fixed') and not p.get('local_cofactor')],
-                   key=lambda p:(-p['priority'],not p.get('straight_locked',False),
+                   key=lambda p:(-int(p['priority']==2),not p.get('straight_locked',False),-p['priority'],
                                  not (p.get('backbone',False) or p['source'] in ring or p['target'] in ring),
-                                 math.dist(p['points'][0],p['points'][-1]),p['rid'],p['mid']))
+                                 (-1 if red_order and p['priority']==2 else 1)*math.dist(p['points'][0],p['points'][-1]),p['rid'],p['mid']))
     for i,p in enumerate(ordered):
         result=grid.search(p,allow_red=False)
+        direct=math.dist(xy[p['source']],xy[p['target']])
+        if p.get('straight_locked') and result and abs(result[1]-direct)>EPS:result=None
         if not result and not grid.auxiliary and not p.get('straight_locked'):
             aux=Grid(xy,boundary,region,auxiliary=True)
             for saved in grid.reserved:aux.reserve(saved)
@@ -318,6 +341,7 @@ def route_paths(paths,xy,boundary,region,progress=lambda *a,**k:None):
             if candidate:result=candidate
         if p['priority']==1:
             shorter=grid.search(p,allow_red=True)
+            if p.get('straight_locked') and shorter and abs(shorter[1]-direct)>EPS:shorter=None
             strict=result[1] if result else math.inf
             if shorter and shorter[1]<strict-EPS and (strict>=2*shorter[1]-EPS or strict-shorter[1]>=4-EPS):
                 result=shorter;exceptions.append(dict(reaction_id=p['rid'],metabolite_id=p['mid'],uncrossed_length_grid=None if math.isinf(strict) else strict,crossed_length_grid=shorter[1],no_uncrossed_path=math.isinf(strict)))
@@ -431,7 +455,7 @@ def validate_paths(paths,xy,boundary,region,exceptions):
                 thin_lane_limit=2,maximum_thin_corridor_load=lane_load,global_optimality_proven=False)
 
 
-def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,rows,major,progress=print):
+def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,rows,major,progress=print,*,red_time_limit=10.,red_candidates=10):
     original_xy=copy.deepcopy(xy);original=copy.deepcopy(backbones);failures=[]
     # Leave primary grid channels to the left of the vertical red backbone.
     for key in original['fixed_node_offsets']:
@@ -441,36 +465,73 @@ def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,ro
             original['fixed_node_offsets'][key]=offset
             for route in original['routes']:
                 if key in route.get('node_offsets',{}):route['node_offsets'][key]=offset
-    for attempt in range(10):
-        trial=copy.deepcopy(original);positions=copy.deepcopy(original_xy)
-        right=math.ceil((cols-1)*attempt/2);down=math.ceil((rows-1)*attempt/2);boundary=[0,cols-1+right,-down,rows-1]
+    from red_objective import optimize_red_core,preservation_report,relaxation_level
+    red_keys={k for p in make_paths(nodes,edges,original_xy,original,major) if p['priority']==2 for k in (p['source'],p['target'])}
+    access_groups=[g for g in groups if g.get('internal') in red_keys or g['exchange'] in red_keys]
+    access_exchanges={g['exchange'] for g in access_groups}
+    access_keys=set(red_keys)
+    for g in access_groups:
+        access_keys.update(g[k] for k in ('exchange','external','internal') if k in g)
+        for reaction in model['reactions']:
+            if reaction['metabolites'].get(g['external'][4:],0)*reaction['metabolites'].get(g.get('internal','met:')[4:],0)<0:
+                access_keys.add('rxn:'+reaction['id'])
+    access_keys &= set(nodes)
+    def check_exchange_access(positions,trial,red):
+        if not access_exchanges:return
+        preview=copy.deepcopy(trial);points={k:list(positions[k]) for k in access_keys}
+        preview_nodes={k:nodes[k] for k in access_keys}
+        preview['adaptive_grid']=True
+        preview['routing_boundary']=[0,2*(cols-1),-(rows-1),rows-1]
+        preview['red_first']=dict(routes=copy.deepcopy(red or []))
+        if red:
+            for p in red:
+                for k in (p['source'],p['target']):preview['fixed_node_offsets'][k]=[points[k][0],points[k][1]-(rows-1)]
+        preview['fixed_node_offsets']={k:v for k,v in preview['fixed_node_offsets'].items() if k in access_keys}
+        specification=place_corridors(model,preview_nodes,points,preview,access_exchanges,access_groups,cols,rows)
+        preview_edges=[e for e in edges if e['source'] in access_keys and e['target'] in access_keys]
+        # make_paths uses edge indices for orange membership; locked access
+        # incidences are explicitly marked below instead of reusing those IDs.
+        paths=initial_paths(preview_nodes,preview_edges,points,preview,major)
+        locked=lock_corridor_paths(paths,specification)
+        for p in locked:
+            if p['priority']!=2:p['priority']=1
+        if red is None:
+            return dict(paths=[p for p in locked if p['priority']!=2],positions=points,boundary=preview['routing_boundary'])
+        red_pairs={(p['rid'],p['mid']) for p in red}
+        paths=copy.deepcopy(red)+[p for p in locked if (p['rid'],p['mid']) not in red_pairs]
+        for p in paths:
+            if p['priority']==2:p['red_fixed']=True
+        keys={k for p in paths for k in (p['source'],p['target'])};points={k:points[k] for k in keys}
+        region=preview.get('tca_exclusion',{}).get('region')
+        exceptions=route_paths(paths,points,preview['routing_boundary'],region)
+        validate_paths(paths,points,preview['routing_boundary'],region,exceptions)
+    cores,red_optimization=optimize_red_core(nodes,edges,original_xy,original,major,cols,rows,
+                                           red_time_limit,red_candidates,progress,validate_candidate=check_exchange_access)
+    reference=cores[0]
+    # Exhaust non-red expansion first. Only then try equal-length rerouting,
+    # equal-length relocation and the shortest longer red alternatives.
+    def relaxation(core):
+        return relaxation_level(reference,core)
+    alternatives=sorted(cores[1:],key=lambda c:(round(c['length'],7),relaxation(c),
+                                              preservation_report(reference,c['positions'],c['routes'])['moved_node_count']))[:7]
+    schedule=[(reference,i) for i in range(4)]
+    schedule.extend((core,expansion) for core in alternatives for expansion in (2,4))
+    for attempt,(core,expansion) in enumerate(schedule):
+        trial=copy.deepcopy(core['backbones']);positions=copy.deepcopy(original_xy)
+        positions.update(copy.deepcopy(core['positions']))
+        for key,p in core['positions'].items():trial['fixed_node_offsets'][key]=[p[0],p[1]-(rows-1)]
+        right=math.ceil((cols-1)*expansion/2);down=math.ceil((rows-1)*expansion/2);boundary=[0,cols-1+right,-down,rows-1]
         trial['routing_boundary']=boundary;trial['render_frame']=boundary;trial['adaptive_grid']=True
         region=trial.get('tca_exclusion',{}).get('region')
         if region:
             region['clearance_grid']=1.
             trial['tca_geometry']['clearance_grid']=1.
-        ring=set((region or {}).get('node_ids',[]));shift=[3*attempt,-2*attempt]
-        for k in ring:
-            positions[k]=[positions[k][i]+shift[i] for i in (0,1)]
-            offset=[positions[k][0],positions[k][1]-(rows-1)]
-            trial['fixed_node_offsets'][k]=offset
-            for route in trial['routes']:
-                if k in route.get('node_offsets',{}):route['node_offsets'][k]=offset
-        if region:
-            if region['shape']=='circle':
-                region['center']=[region['center'][i]+shift[i] for i in (0,1)]
-                trial['tca_geometry']['center_offset']=[region['center'][0],region['center'][1]-(rows-1)]
-                region['center_offset']=trial['tca_geometry']['center_offset'][:]
-                trial['circle']['center_offset']=trial['tca_geometry']['center_offset'][:]
-            else:
-                region['left']+=shift[0];region['top']+=shift[1]
-                trial['tca_geometry'].update(left=region['left'],top_offset=region['top']-(rows-1))
-                trial['square'].update(left=region['left'],top_offset=region['top']-(rows-1))
+        ring=set((region or {}).get('node_ids',[]));shift=core['shift']
         fixed=set(trial['fixed_node_offsets']);occupied={tuple(positions[k]) for k in fixed}
         # Spread ordinary nodes rather than merely translating the whole map.
         for k in sorted(positions):
             if k in fixed or nodes[k]['kind']=='currency' or k in exchange_nodes:continue
-            p=positions[k];preferred=[round(p[0]+max(0,p[0]-3)*attempt/2),round((rows-1)-(rows-1-p[1])*(1+attempt/2))]
+            p=positions[k];preferred=[round(p[0]+max(0,p[0]-3)*expansion/2),round((rows-1)-(rows-1-p[1])*(1+expansion/2))]
             available=[]
             for distance in range(0,20):
                 for dx in range(-distance,distance+1):
@@ -494,10 +555,8 @@ def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,ro
                     own={chain[1],chain[2]}
                     if any(math.dist(q,p)<.16-EPS for q in (exterior,transport) for k,p in positions.items() if k not in own and nodes[k]['kind']!='currency'):continue
                     positions[chain[2]]=exterior;positions[chain[1]]=transport;break
-            attach_grid_cofactors(nodes,positions,region,boundary)
-            red=[p for p in make_paths(nodes,edges,positions,trial,major) if p['priority']==2]
-            route_paths(red,positions,boundary,region)
-            if any(outside_port_contacts(p,q,positions) for i,p in enumerate(red) for q in red[i+1:] if p['rid']!=q['rid']):raise ValueError('Red-first grid embedding needs more space')
+            attach_grid_cofactors(nodes,positions,region,boundary,core['routes'])
+            red=copy.deepcopy(core['routes'])
             trial['red_first']=dict(routes=copy.deepcopy(red),report=dict(verified=True,policy=POLICY))
             if groups or exchange_nodes:
                 trial['exchange_corridors']=place_corridors(model,nodes,positions,trial,exchange_nodes,groups,cols,rows)
@@ -523,7 +582,7 @@ def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,ro
                 if not options:raise ValueError('Congested ordinary nodes need more grid space')
                 positions[key]=min(options,key=lambda q:(math.dist(q,base),q));occupied.add(tuple(positions[key]))
             # Reattach movable reaction-local currency copies on grid lines.
-            attach_grid_cofactors(nodes,positions,region,boundary)
+            attach_grid_cofactors(nodes,positions,region,boundary,red)
             paths=make_paths(nodes,edges,positions,trial,major)
             saved={(p['rid'],p['mid']):p for p in red}
             for p in paths:
@@ -535,17 +594,25 @@ def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,ro
             report=validate_paths(paths,positions,boundary,region,exceptions)
             report['node_grid']=validate_node_grid(nodes,positions,region)
             report['red_routes_preserved']=all(p['points']==saved[p['rid'],p['mid']]['points'] for p in paths if p['priority']==2)
+            if not preservation_report(core,positions,paths)['exactly_preserved']:raise ValueError('Frozen red core changed during non-red placement')
             if trial.get('exchange_corridors'):report['straight_exchange_validation']=validate_corridors(paths,trial['exchange_corridors'])
             validate_exclusion(nodes,positions,region)
             signature=hashlib.sha256(json.dumps(paths,sort_keys=True).encode()).hexdigest()[:24]
             trial['crossing_routing']=dict(routes=paths,report=report,signature=signature)
-            trial['adaptive_layout']=dict(policy=POLICY,expansion_steps=attempt,before_boundary=[0,cols-1,0,rows-1],after_boundary=boundary,
+            trial['adaptive_layout']=dict(policy=POLICY,expansion_steps=expansion,before_boundary=[0,cols-1,0,rows-1],after_boundary=boundary,
                 tca_translation=shift,rejected_layouts=failures,congestion_rule='At most two thin auxiliary lanes; three or more require layout expansion',thin_lanes_used=report['thin_lanes_used'])
         except (ValueError,RuntimeError) as error:
-            failures.append(dict(expansion_steps=attempt,boundary=boundary,reason=str(error)[:400]))
+            failures.append(dict(attempt=attempt,expansion_steps=expansion,red_length_grid=core['length'],relaxation_level=relaxation(core),boundary=boundary,reason=str(error)[:400]))
             progress(f'Adaptive grid expansion {attempt}: {error}',flush=True);continue
         xy.clear();xy.update(positions);backbones.clear();backbones.update(trial)
         compact_unused_space(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,rows,major,progress)
+        final_paths=backbones['crossing_routing']['routes']
+        if not preservation_report(core,xy,final_paths)['exactly_preserved']:raise ValueError('Compaction changed the frozen red core')
+        red_optimization.update(preservation=preservation_report(reference,xy,final_paths),relaxation_level=relaxation(core),
+                                relaxation_reason=None if core is reference else 'Previous red cores failed full placement; see rejected_layouts',
+                                rejected_full_layouts=failures,accepted_reference_signature=core['signature'])
+        backbones['red_optimization']=red_optimization
+        backbones['crossing_routing']['report']['red_preservation']=red_optimization['preservation']
         return backbones['adaptive_layout']
     raise ValueError('Could not satisfy adaptive grid layout after expansion: '+str(failures))
 
@@ -591,7 +658,7 @@ def compact_unused_space(model,nodes,edges,xy,backbones,exchange_nodes,groups,co
                     if options:break
                 if not options:raise ValueError('No compact position for gray node')
                 positions[key]=min(options,key=lambda q:(math.dist(q,base),q));occupied.add(tuple(positions[key]))
-            attach_grid_cofactors(nodes,positions,region,boundary)
+            attach_grid_cofactors(nodes,positions,region,boundary,red)
             paths=make_paths(nodes,edges,positions,trial,major);saved={(p['rid'],p['mid']):p for p in red}
             for p in paths:
                 if p['priority']==2:

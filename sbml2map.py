@@ -102,6 +102,8 @@ def parser():
     p.add_argument('--mnxref-dir',type=Path,help='Local MNXref release directory containing chem_xref.tsv and chem_depr.tsv; no automatic downloads')
     p.add_argument('--discover-only',action='store_true',help='Extract and report pathways without sampling or layout')
     p.add_argument('--max-milp-nodes',type=int,default=180,help='Above this grid-node count, preserve constraints with heuristic placement')
+    p.add_argument('--red-time-limit',type=float,default=10.,help='Time budget for actual red-core route candidate evaluation (seconds)')
+    p.add_argument('--red-candidates',type=int,default=10,help='Maximum red-core placements to evaluate before freezing')
     return p
 
 
@@ -116,6 +118,8 @@ def run(args):
         raise ValueError('coverage must be in [0,100]')
     if not math.isfinite(args.time_limit) or args.time_limit<=0 or args.max_milp_nodes<1:
         raise ValueError('time-limit and max-milp-nodes must be positive')
+    if not math.isfinite(args.red_time_limit) or args.red_time_limit<=0 or args.red_candidates<1:
+        raise ValueError('red-time-limit and red-candidates must be positive')
     if not args.no_sampling and (args.samples<20 or args.chains<2 or args.thinning<1 or args.burn_in<1):
         raise ValueError('Require samples >=20, chains >=2, thinning >=1, burn-in >=1')
     if not math.isfinite(args.zero_tolerance) or args.zero_tolerance<=0:

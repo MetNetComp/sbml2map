@@ -81,17 +81,35 @@ def place_corridors(model,nodes,xy,backbones,exchange_nodes,groups,cols,rows):
                 if any(math.dist(p,q)<.16-EPS for i,p in enumerate(proposed.values()) for q in list(proposed.values())[i+1:]):continue
                 if any(math.dist(p,xy[k])<.16-EPS for p in proposed.values() for k in reserved_keys|fixed if k not in proposed):continue
                 corridor=dict(rid=group['reaction_id'],mid=target,source=ex,target=target,priority=2 if group['reaction_id'] in major else 1,points=[a,c])
+                if backbones.get('adaptive_grid'):
+                    from adaptive_routing import segment_clearance,incident_exempt
+                    if segment_clearance(a,c,region)<1-EPS and not incident_exempt(a,c,corridor,dict(xy,**proposed),region):continue
                 if any(_on(xy[k],a,c) for k in fixed|reserved_keys if k not in proposed):continue
                 own={(group['reaction_id'],e[4:])}
                 if primary:own.update((primary,group[k][4:]) for k in ('external','internal'))
                 obstacles=[p for p in curves if (p['rid'],p['mid']) not in own]
                 def clear(other):
+                    if backbones.get('adaptive_grid') and not other.get('curve_controls'):
+                        start,end=corridor['points']
+                        along=0 if abs(start[1]-end[1])<EPS else 1
+                        low,high=sorted((start[along],end[along]));level=start[1-along]
+                        for u,v in zip(other['points'],other['points'][1:]):
+                            axis=0 if abs(u[1]-v[1])<EPS else 1
+                            if axis!=along or abs(level-u[1-axis])>=1-EPS:continue
+                            lo,hi=sorted((u[axis],v[axis]))
+                            if min(high,hi)-max(low,lo)>=2-EPS:return False
                     if measure([corridor,other])['hard_verified']:return True
                     # Adaptive routing audits red/orange point crossings after
                     # placement. Do not reject its straight candidate here;
                     # positive-length overlaps remain forbidden.
-                    return (backbones.get('adaptive_grid') and corridor['priority']==1 and other['priority']==2
-                            and all(math.dist(a,b)<EPS for a,b in intersections(corridor,other)))
+                    if not (backbones.get('adaptive_grid') and corridor['priority']==1 and other['priority']==2):return False
+                    if other.get('curve_controls'):return False
+                    for a,b in intersections(corridor,other):
+                        if math.dist(a,b)>=EPS:return False
+                        orientations={0 if abs(u[1]-v[1])<EPS else 1
+                                      for u,v in zip(other['points'],other['points'][1:]) if _on(a,u,v)}
+                        if len(orientations)!=1:return False
+                    return True
                 if any(not clear(p) for p in [*obstacles,*reserved]):continue
                 displacement=abs(dx)+abs(dy)
                 cost=10*displacement+length+.001*sum(math.dist(original.get(k,p),p) for k,p in proposed.items())

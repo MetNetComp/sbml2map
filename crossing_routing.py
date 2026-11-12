@@ -450,8 +450,20 @@ def validate_saved_geometry(data,metadata=None):
     if backbones.get('adaptive_layout'):
         from adaptive_routing import validate_paths
         xy={source:inverse(body['nodes'][key]) for key,source in sources.items()}
-        return validate_paths(paths,xy,backbones['routing_boundary'],backbones['tca_exclusion'].get('region'),
+        result=validate_paths(paths,xy,backbones['routing_boundary'],backbones['tca_exclusion'].get('region'),
                               backbones['crossing_routing']['report']['conditional_crossings'])
+        optimization=backbones.get('red_optimization')
+        if optimization:
+            from red_objective import preservation_report,relaxation_level
+            reference=dict(positions=optimization['reference_positions'],routes=optimization['reference_routes'],
+                           length=optimization['optimized_length_grid'],signature=optimization['reference_signature'])
+            check=preservation_report(reference,xy,paths)
+            if abs(check['final_length_grid']-optimization['preservation']['final_length_grid'])>1e-6:
+                raise ValueError('Saved red length differs from its preservation report')
+            if relaxation_level(reference,dict(positions=xy,routes=paths))!=optimization['relaxation_level']:
+                raise ValueError('Saved red geometry violates its preservation level')
+            result['red_preservation']=check
+        return result
     result=measure(paths)
     boundary=backbones.get('routing_boundary')
     if boundary is not None:result['boundary_validation']=validate_boundary(paths,boundary)
