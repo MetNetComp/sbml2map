@@ -228,7 +228,7 @@ def attach_grid_cofactors(nodes,xy,region,boundary,reserved_paths=()):
 
 
 class Grid:
-    def __init__(self,xy,boundary,region,auxiliary=False):
+    def __init__(self,xy,boundary,region,auxiliary=False,extra_points=()):
         self.xy=xy;self.region=region;self.boundary=boundary;self.auxiliary=auxiliary;self.reserved=[];self.parallel_intervals=defaultdict(list)
         xmin,xmax,ymin,ymax=boundary
         xs=set(float(x) for x in range(math.ceil(xmin),math.floor(xmax)+1));ys=set(float(y) for y in range(math.ceil(ymin),math.floor(ymax)+1))
@@ -236,6 +236,7 @@ class Grid:
             xs.update(x+d for x in range(math.ceil(xmin),math.floor(xmax)) for d in (.25,.75))
             ys.update(y+d for y in range(math.ceil(ymin),math.floor(ymax)) for d in (.25,.75))
         xs.update(float(p[0]) for p in xy.values());ys.update(float(p[1]) for p in xy.values())
+        xs.update(float(p[0]) for p in extra_points);ys.update(float(p[1]) for p in extra_points)
         self.x=sorted(xs);self.y=sorted(ys);self.nx=len(self.x);self.ny=len(self.y)
         self.lookup={k:self.index(p) for k,p in xy.items()};self.owners=defaultdict(set)
         for k,i in self.lookup.items():self.owners[i].add(k)
@@ -327,7 +328,7 @@ class Grid:
 
 
 def route_paths(paths,xy,boundary,region,progress=lambda *a,**k:None,*,red_order=0,reservations=()):
-    grid=Grid(xy,boundary,region);exceptions=[]
+    grid=Grid(xy,boundary,region,extra_points=[q for p in reservations for q in p['points']]);exceptions=[]
     for p in reservations:grid.reserve(p)
     ring=set((region or {}).get('node_ids',[]))
     for p in paths:
@@ -341,7 +342,7 @@ def route_paths(paths,xy,boundary,region,progress=lambda *a,**k:None,*,red_order
         direct=math.dist(xy[p['source']],xy[p['target']])
         if p.get('straight_locked') and result and abs(result[1]-direct)>EPS:result=None
         if not result and not grid.auxiliary and not p.get('straight_locked'):
-            aux=Grid(xy,boundary,region,auxiliary=True)
+            aux=Grid(xy,boundary,region,auxiliary=True,extra_points=[q for saved in grid.reserved for q in saved['points']])
             for saved in grid.reserved:aux.reserve(saved)
             candidate=aux.search(p,allow_red=False)
             grid=aux
@@ -453,6 +454,12 @@ def validate_paths(paths,xy,boundary,region,exceptions):
             if not valid:
                 level=a[1] if abs(a[1]-b[1])<EPS else a[0]
                 valid=p.get('auxiliary_lane') and any(abs(level-math.floor(level)-f)<EPS for f in (.25,.75))
+            if not valid and p.get('local_fanout'):
+                axis=0 if abs(a[1]-b[1])<EPS else 1
+                valid=math.dist(a,b)<PARALLEL_LENGTH-EPS and any(
+                    abs(a[1-axis]-xy[k][1-axis])<p.get('fanout_node_extents',{}).get(k,1.5)+EPS and
+                    max(abs(a[axis]-xy[k][axis]),abs(b[axis]-xy[k][axis]))<p.get('fanout_node_extents',{}).get(k,1.5)+EPS
+                    for k in (p['source'],p['target']))
             if not valid and not p.get('local_cofactor'):raise ValueError('Non-grid line: '+p['rid'])
             if segment_clearance(a,b,region)<1-EPS and not incident_exempt(a,b,p,xy,region):raise ValueError('TCA clearance violated: '+p['rid'])
     authorized={(e['reaction_id'],e['metabolite_id']) for e in exceptions};crossings=0
@@ -534,6 +541,9 @@ def adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,groups,cols,ro
     cores,red_optimization=optimize_red_core(nodes,edges,original_xy,original,major,cols,rows,
                                            red_time_limit,red_candidates,progress,validate_candidate=check_exchange_access)
     reference=cores[0]
+    if original.get('exchange_routing') == 'sequential':
+        from sequential_orange import sequential_layout
+        return sequential_layout(nodes,edges,xy,backbones,exchange_nodes,major,cols,rows,reference,red_optimization,progress)
     # Exhaust non-red expansion first. Only then try equal-length rerouting,
     # equal-length relocation and the shortest longer red alternatives.
     def relaxation(core):

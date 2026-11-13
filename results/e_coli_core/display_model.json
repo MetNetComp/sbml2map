@@ -213,6 +213,140 @@
       "chemicalFormula": "C5H10N2O3"
     },
     {
+      "id": "gln__L_e",
+      "name": "L-Glutamine",
+      "compartment": "e",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.metabolite/gln__L"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:GLN"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:42943"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:42899"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:32679"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:32678"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:58359"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:28300"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:42812"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:13110"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:18050"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:32666"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:6227"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:32665"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:21308"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:42814"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:5432"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:24316"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/hmdb/HMDB00641"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/inchi_key/ZDXPYRJPNDTMRX-VKHMYHEASA-N"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.compound/C00064"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.compound/C00303"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.drug/D00015"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.chemical/MNXM37"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.compound/113522"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.compound/212615"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.compound/29472"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/2011"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/74"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.compound/cpd00253"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.compound/cpd00053"
+        }
+      ],
+      "notes": "",
+      "charge": "0",
+      "chemicalFormula": "C5H10N2O3"
+    },
+    {
       "id": "glu__L_c",
       "name": "L-Glutamate",
       "compartment": "c",
@@ -832,6 +966,84 @@
       "id": "mal__L_c",
       "name": "L-Malate",
       "compartment": "c",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.metabolite/mal__L"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:MAL"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:15589"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:30797"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:423"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:18784"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:18785"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:13140"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:11066"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/hmdb/HMDB00156"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/inchi_key/BJEPYKJPYRNKOW-REOHCLBHSA-L"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.compound/C00149"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.chemical/MNXM98"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.compound/198498"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.compound/113544"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/1918"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.compound/cpd00130"
+        }
+      ],
+      "notes": "",
+      "charge": "-2",
+      "chemicalFormula": "C4H4O5"
+    },
+    {
+      "id": "mal__L_e",
+      "name": "L-Malate",
+      "compartment": "e",
       "annotations": [
         {
           "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
@@ -5171,9 +5383,269 @@
       "chemicalFormula": "CH1O2"
     },
     {
+      "id": "fru_e",
+      "name": "D-Fructose",
+      "compartment": "e",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.metabolite/fru"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:D-Fructopyranose"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:Fructofuranose"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:CPD-15382"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:FRU"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:47424"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:28757"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:24110"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:20929"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:4119"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:15824"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:5172"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:24104"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:12923"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:4118"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:37714"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:37721"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:48095"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/hmdb/HMDB62538"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/inchi_key/RFSUNEUAIZKAJO-VRPWFDPXSA-N"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.compound/C01496"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.compound/C05003"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.compound/C00095"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.compound/C10906"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.drug/D00114"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.chemical/MNXM175"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.compound/189049"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.compound/29532"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/25055"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/1463"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/1464"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.compound/cpd00082"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.compound/cpd19015"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.compound/cpd27040"
+        }
+      ],
+      "notes": "",
+      "charge": "0",
+      "chemicalFormula": "C6H12O6"
+    },
+    {
       "id": "fum_c",
       "name": "Fumarate",
       "compartment": "c",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.metabolite/fum"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:FUM"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:36180"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:37155"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:42511"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:5190"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:18012"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:42743"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:22956"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:22957"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:24124"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:14284"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:37154"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:29806"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:22958"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/chebi/CHEBI:24122"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/envipath/32de3cf4-e3e6-4168-956e-32fa5ddb0ce1/compound/709035ec-4868-4de8-9095-06428f6be14b"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/hmdb/HMDB00134"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/inchi_key/VZCYOOQTPOCHFL-OWOJBTEDSA-L"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.compound/C00122"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/kegg.drug/D02308"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.chemical/MNXM93"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.compound/113588"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.compound/29586"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/1910"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.compound/cpd00106"
+        }
+      ],
+      "notes": "",
+      "charge": "-2",
+      "chemicalFormula": "C4H2O4"
+    },
+    {
+      "id": "fum_e",
+      "name": "Fumarate",
+      "compartment": "e",
       "annotations": [
         {
           "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
@@ -9395,6 +9867,132 @@
       "upper_bound": 1000.0
     },
     {
+      "id": "EX_fru_e",
+      "name": "D-Fructose exchange",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.reaction/EX_fru_e"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.reaction/MNXR99663"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-OSA-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-XTR-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-SCE-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-ATH-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-RNO-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-DME-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-TGU-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-SSC-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-CFA-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-DRE-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-HSA-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-GGA-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-BTA-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-MMU-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-DDI-189222"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/13415"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn12996"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn08537"
+        }
+      ],
+      "notes": "",
+      "gene_reaction_rule": "",
+      "metabolites": {
+        "fru_e": -1.0
+      },
+      "lower_bound": 0.0,
+      "upper_bound": 1000.0
+    },
+    {
+      "id": "EX_fum_e",
+      "name": "Fumarate exchange",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.reaction/EX_fum_e"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:TRANS-RXN0-553"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.reaction/MNXR99715"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn08544"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn11013"
+        }
+      ],
+      "notes": "",
+      "gene_reaction_rule": "",
+      "metabolites": {
+        "fum_e": -1.0
+      },
+      "lower_bound": 0.0,
+      "upper_bound": 1000.0
+    },
+    {
       "id": "EX_glc__D_e",
       "name": "D-Glucose exchange",
       "annotations": [
@@ -9437,6 +10035,83 @@
         "glc__D_e": -1.0
       },
       "lower_bound": -10.0,
+      "upper_bound": 1000.0
+    },
+    {
+      "id": "EX_gln__L_e",
+      "name": "L-Glutamine exchange",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.reaction/EX_gln__L_e"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:TRANS-RXN-233"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.reaction/MNXR100259"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-HSA-212651"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-BTA-212614"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-RNO-212614"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-SSC-212614"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-MMU-212614"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-HSA-212614"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-GGA-212614"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-CFA-212614"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-TGU-212614"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/reactome.reaction/R-SCE-212614"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/13421"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn08625"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn10928"
+        }
+      ],
+      "notes": "",
+      "gene_reaction_rule": "",
+      "metabolites": {
+        "gln__L_e": -1.0
+      },
+      "lower_bound": 0.0,
       "upper_bound": 1000.0
     },
     {
@@ -9569,6 +10244,47 @@
       "gene_reaction_rule": "",
       "metabolites": {
         "lac__D_e": -1.0
+      },
+      "lower_bound": 0.0,
+      "upper_bound": 1000.0
+    },
+    {
+      "id": "EX_mal__L_e",
+      "name": "L-Malate exchange",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.reaction/EX_mal__L_e"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:TRANS-RXN-225"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:TRANS-RXN-224"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.reaction/MNXR101367"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/sabiork/13793"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn10967"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn08868"
+        }
+      ],
+      "notes": "",
+      "gene_reaction_rule": "",
+      "metabolites": {
+        "mal__L_e": -1.0
       },
       "lower_bound": 0.0,
       "upper_bound": 1000.0
@@ -9889,6 +10605,30 @@
       "upper_bound": 1000.0
     },
     {
+      "id": "FRUpts2",
+      "name": "Fructose transport via PEP:Pyr PTS (f6p generating)",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.reaction/FRUpts2"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.reaction/MNXR99662"
+        }
+      ],
+      "notes": "",
+      "gene_reaction_rule": "(b1817 and b1818 and b1819 and b2415 and b2416)",
+      "metabolites": {
+        "fru_e": -1.0,
+        "pep_c": -1.0,
+        "f6p_c": 1.0,
+        "pyr_c": 1.0
+      },
+      "lower_bound": 0.0,
+      "upper_bound": 1000.0
+    },
+    {
       "id": "FUM",
       "name": "Fumarase",
       "annotations": [
@@ -10088,6 +10828,56 @@
         "mal__L_c": 1.0
       },
       "lower_bound": -1000.0,
+      "upper_bound": 1000.0
+    },
+    {
+      "id": "FUMt2_2",
+      "name": "Fumarate transport via proton symport (2 H)",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.reaction/FUMt2_2"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:TRANS-RXN-121B"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.reaction/MNXR99711"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29332"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29334"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29333"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29331"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn08542"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn10152"
+        }
+      ],
+      "notes": "",
+      "gene_reaction_rule": "b3528",
+      "metabolites": {
+        "fum_e": -1.0,
+        "fum_c": 1.0
+      },
+      "lower_bound": 0.0,
       "upper_bound": 1000.0
     },
     {
@@ -10524,6 +11314,74 @@
       "metabolites": {
         "atp_c": -1.0,
         "glu__L_c": -1.0,
+        "adp_c": 1.0,
+        "gln__L_c": 1.0
+      },
+      "lower_bound": 0.0,
+      "upper_bound": 1000.0
+    },
+    {
+      "id": "GLNabc",
+      "name": "L-glutamine transport via ABC system",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.reaction/GLNabc"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:ABC-12-RXN"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/ec-code/3.6.3.21"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.reaction/MNXR100258"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29895#1"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29897#1"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29898#1"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29896#1"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn11233"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn05196"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn05155"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn11101"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn08624"
+        }
+      ],
+      "notes": "",
+      "gene_reaction_rule": "(b0811 and b0810 and b0809)",
+      "metabolites": {
+        "atp_c": -1.0,
+        "gln__L_e": -1.0,
         "adp_c": 1.0,
         "gln__L_c": 1.0
       },
@@ -11253,6 +12111,56 @@
         "accoa_c": -1.0,
         "glx_c": -1.0,
         "coa_c": 1.0,
+        "mal__L_c": 1.0
+      },
+      "lower_bound": 0.0,
+      "upper_bound": 1000.0
+    },
+    {
+      "id": "MALt2_2",
+      "name": "Malate transport via proton symport (2 H)",
+      "annotations": [
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/bigg.reaction/MALt2_2"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/biocyc/META:TRANS-RXN-121A"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/metanetx.reaction/MNXR101370"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29341"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29340"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29342"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/rhea/29339"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn08865"
+        },
+        {
+          "qualifier": "{http://biomodels.net/biology-qualifiers/}is",
+          "uri": "http://identifiers.org/seed.reaction/rxn10153"
+        }
+      ],
+      "notes": "",
+      "gene_reaction_rule": "b3528",
+      "metabolites": {
+        "mal__L_e": -1.0,
         "mal__L_c": 1.0
       },
       "lower_bound": 0.0,

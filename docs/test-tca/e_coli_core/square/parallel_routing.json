@@ -41,40 +41,35 @@
     "verified": true,
     "metrics": {
       "red_red": 0,
-      "red_orange": 1,
-      "orange_orange": 89,
+      "red_orange": 0,
+      "orange_orange": 9,
       "hard_verified": true,
-      "raw_red_red": 0,
+      "raw_red_red": 1,
       "strict_red_crossings_absent": false,
-      "raw_red_orange": 5
+      "raw_red_orange": 2
     },
     "orange_overlap_grid": 0.0,
-    "raw_orange_overlap_grid": 1.0,
+    "raw_orange_overlap_grid": 0.4500000000000002,
     "node_port_nodes": [
-      "met:ac_c",
-      "met:acald_c",
-      "met:accoa_c",
-      "met:akg_c",
-      "met:fru_e",
-      "met:pyr_c",
-      "rxn:ALCD2x"
+      "met:pep_c",
+      "met:pyr_c"
     ],
     "node_port_half_width_grid": 0.5,
-    "node_port_contacts": 9,
+    "node_port_contacts": 6,
     "uniform_node_sizes": true,
     "parallel_spacing_grid": 1.0,
     "parallel_length_grid": 2.0,
     "parallel_conflict_count": 0,
     "grid_lines_verified": false,
     "primary_or_auxiliary_grid_verified": true,
-    "thin_lanes_used": 82,
+    "thin_lanes_used": 88,
     "tca_clearance_grid": 1.0,
     "tca_clearance_verified": true,
     "boundary_validation": {
       "boundary": [
         0,
         30,
-        3,
+        0,
         46
       ],
       "outside_path_count": 0,
@@ -84,21 +79,13 @@
       "verified": true,
       "route_extents": [
         0.0,
-        30.0,
-        3.0,
+        20.45,
+        17.0,
         46.0
       ]
     },
-    "conditional_crossings": [
-      {
-        "reaction_id": "PYRt2",
-        "metabolite_id": "pyr_c",
-        "uncrossed_length_grid": null,
-        "crossed_length_grid": 3.0,
-        "no_uncrossed_path": true
-      }
-    ],
-    "orange_length_grid": 427.25,
+    "conditional_crossings": [],
+    "orange_length_grid": 138.4,
     "orange_crossings_optimized": false,
     "red_first": true,
     "objective_order": [
@@ -108,8 +95,9 @@
       "short routes with audited red crossings",
       "bends"
     ],
-    "thin_lane_limit": 2,
-    "maximum_thin_corridor_load": 2,
+    "thin_lane_limit": null,
+    "thin_lane_policy": "Short fan-out allowed; close parallel runs of two grids or more forbidden",
+    "maximum_thin_corridor_load": 3,
     "global_optimality_proven": false,
     "node_grid": {
       "verified": true,
@@ -119,25 +107,19 @@
       ],
       "checked_nodes": 116
     },
-    "straight_exchange_validation": {
-      "verified": true,
-      "groups": 14,
-      "triplets": 12,
-      "pairs": 2,
-      "straight_incidences": 38
-    },
     "red_routes_preserved": true,
     "red_preservation": {
-      "initial_length_grid": 90.5,
-      "final_length_grid": 90.5,
+      "initial_length_grid": 88.0,
+      "final_length_grid": 88.0,
       "length_increase_grid": 0.0,
       "moved_node_count": 0,
       "moved_node_ids": [],
       "changed_route_count": 0,
       "changed_routes": [],
       "exactly_preserved": true,
-      "reference_signature": "8aa29cc75bdb0db5f33d186e"
-    }
+      "reference_signature": "bc04a5117101c1752b0444fc"
+    },
+    "sequential_orange_preserved": true
   },
   "tca_curves": {
     "style": "circular_bezier",
@@ -223,6 +205,7 @@
     "rxn:FUMt2_2",
     "rxn:GAPD",
     "rxn:GLCpts",
+    "rxn:GLNS",
     "rxn:GLNabc",
     "rxn:GLUt2r",
     "rxn:ICDHyr",
@@ -414,7 +397,7 @@
     "copy:GAPD:nad_c": 0,
     "copy:GAPD:nadh_c": 0,
     "rxn:GLCpts": 2,
-    "rxn:GLNS": 0,
+    "rxn:GLNS": 1,
     "copy:GLNS:adp_c": 0,
     "copy:GLNS:atp_c": 0,
     "rxn:GLNabc": 1,
@@ -465,6 +448,6 @@
     "copy:PDH:nad_c": 0,
     "copy:PDH:nadh_c": 0
   },
-  "original_route_length": 2124.8,
-  "display_route_length": 2182.7999999999997
+  "original_route_length": 1203.1,
+  "display_route_length": 1275.5
 }

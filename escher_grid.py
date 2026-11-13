@@ -716,10 +716,11 @@ def run(args):
     if glucose_id is not None and classification[glucose_id]['kind'] != 'organic':
         raise ValueError('Glucose must be classified as organic for its fixed grid position')
     references = {glucose_id} if selected and glucose_id else set()
+    sequential = getattr(args,'exchange_routing','legacy') == 'sequential' and getattr(args,'crossing_policy','legacy') == 'adaptive-grid'
     shared = set()
     roots = {'met:'+mid for route in routes for mid in route['metabolite_ids']}
     roots |= {'rxn:'+rid for rid in major_reactions if rid in selected}
-    if strategy and selected:
+    if strategy and selected and not sequential:
         visible_exchanges = {'rxn:'+e['reaction_id'] for e in strategy.extraction['exchanges'] if e['reaction_id'] in selected}
         shared = shared_coenzymes(model, selected, classification, roots, visible_exchanges, allow_disconnected=no_sampling)
     projected, nodes, edges = display_graph(model, selected, classification, references, shared)
@@ -730,6 +731,7 @@ def run(args):
     exchange_nodes = strategy.exchanges(grid_ids) if strategy else {key for key in grid_ids if nodes[key]['kind'] == 'reaction' and nodes[key]['original_id'].startswith('EX_')}
     fixed_offsets, backbones = strategy.plan(routes, grid_ids) if strategy else backbone_plan(routes, grid_ids)
     backbones['skipped_routes'] = skipped_routes
+    backbones['exchange_routing'] = 'sequential' if sequential else 'legacy'
     from tca_geometry import configure_plan
     fixed_offsets, backbones = configure_plan(fixed_offsets,backbones,getattr(args,'tca_shape','circle'),getattr(args,'tca_interior','allow'))
     adaptive=getattr(args,'crossing_policy','legacy')=='adaptive-grid'
@@ -748,7 +750,7 @@ def run(args):
     seed_region=backbones.get('tca_geometry')
     grid_options['reserved_region'] = dict(seed_region,interior_policy='forbid') if seed_region else None
     from exchange_alignment import discover_alignment
-    alignment_mode = getattr(args,'exchange_alignment','collinear')
+    alignment_mode = 'none' if sequential else getattr(args,'exchange_alignment','collinear')
     alignment_groups, alignment_skipped = discover_alignment(model,nodes,exchange_nodes) if alignment_mode == 'collinear' else ([],[])
     grid_options['alignment_groups'] = alignment_groups
     flux_costs = orange_flux_costs(nodes, edges, major_reactions, records,
@@ -894,6 +896,12 @@ def run(args):
         from adaptive_routing import adaptive_layout
         adaptive_layout(model,nodes,edges,xy,backbones,exchange_nodes,alignment_groups,cols,rows,major_reactions,
                         red_time_limit=getattr(args,'red_time_limit',10.),red_candidates=getattr(args,'red_candidates',10))
+        if sequential:
+            connectors=backbones.get('exchange_connectors')
+            if connectors:
+                connectors['total_length']=connector_length(connectors,edges,xy)
+                connectors['total_cost']=connector_cost(connectors,edges,xy)
+                connectors['drawn_length_grid']=sum(r['new_length_grid'] for r in backbones['sequential_orange']['records'])
         tca_region=backbones['tca_exclusion']['region']
         if glucose_node:placement['position_constraints']['top_left_position']=list(xy[glucose_node])
         if connectors:placement['objective']=connector_cost(connectors,edges,xy)
@@ -990,6 +998,7 @@ def run(args):
     dump(output / 'escher_map_metadata.json', metadata)
     dump(output / 'major_backbones.json', backbones)
     if backbones.get('red_optimization'):dump(output/'red_optimization.json',backbones['red_optimization'])
+    if backbones.get('sequential_orange'):dump(output/'sequential_orange.json',backbones['sequential_orange'])
     with (output / 'reaction_ranking.csv').open('w', newline='') as stream:
         fields = (['reaction_id', 'rank', 'is_major_pathway', 'selected', 'exclusion_reason', 'lower_bound', 'upper_bound'] if no_sampling else
                   ['reaction_id', 'rank', 'is_major_pathway', 'median_rank', 'median', 'priority', 'selected', 'exclusion_reason', 'split_rhat', 'ess', 'q05', 'q95'])

@@ -442,6 +442,9 @@ def validate_saved_geometry(data,metadata=None):
             p['backbone']=record.get('backbone',False)
             if record.get('auxiliary_lane'):p['auxiliary_lane']=True
             if record.get('local_cofactor'):p['local_cofactor']=True
+            if record.get('local_fanout'):
+                p['local_fanout']=True
+                p['fanout_node_extents']=record.get('fanout_node_extents',{})
             if len(segments)==1 and segments[0]['b1'] is not None:
                 controls=[segments[0]['b1'],segments[0]['b2']]
                 if segments[0]['from_node_id']!=marker:controls.reverse()

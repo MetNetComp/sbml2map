@@ -1,0 +1,1551 @@
+[
+  {
+    "reaction_id": "PFK",
+    "selected": true,
+    "rank": 14,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "atp_c",
+      "f6p_c",
+      "adp_c",
+      "fdp_c"
+    ],
+    "omitted_inorganic": [
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PFL",
+    "selected": true,
+    "rank": 70,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "coa_c",
+      "pyr_c",
+      "accoa_c",
+      "for_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PGI",
+    "selected": true,
+    "rank": 15,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "g6p_c",
+      "f6p_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PGK",
+    "selected": true,
+    "rank": 16,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "3pg_c",
+      "atp_c",
+      "13dpg_c",
+      "adp_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PGL",
+    "selected": true,
+    "rank": 71,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "6pgl_c",
+      "6pgc_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ACALD",
+    "selected": true,
+    "rank": 22,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "acald_c",
+      "coa_c",
+      "nad_c",
+      "accoa_c",
+      "nadh_c"
+    ],
+    "omitted_inorganic": [
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "AKGt2r",
+    "selected": true,
+    "rank": 27,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "akg_e",
+      "akg_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PGM",
+    "selected": true,
+    "rank": 17,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "2pg_c",
+      "3pg_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PIt2r",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "h_e",
+      "pi_e",
+      "h_c",
+      "pi_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "ALCD2x",
+    "selected": true,
+    "rank": 28,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "etoh_c",
+      "nad_c",
+      "acald_c",
+      "nadh_c"
+    ],
+    "omitted_inorganic": [
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ACALDt",
+    "selected": true,
+    "rank": 23,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "acald_e",
+      "acald_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ACKr",
+    "selected": true,
+    "rank": 24,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "ac_c",
+      "atp_c",
+      "actp_c",
+      "adp_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PPC",
+    "selected": true,
+    "rank": 72,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "pep_c",
+      "oaa_c"
+    ],
+    "omitted_inorganic": [
+      "co2_c",
+      "h2o_c",
+      "h_c",
+      "pi_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ACONTa",
+    "selected": true,
+    "rank": 1,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "cit_c",
+      "acon_C_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ACONTb",
+    "selected": true,
+    "rank": 2,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "acon_C_c",
+      "icit_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ATPM",
+    "selected": true,
+    "rank": 29,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "atp_c",
+      "adp_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "h_c",
+      "pi_c"
+    ],
+    "lower_bound": 8.39,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PPCK",
+    "selected": true,
+    "rank": 73,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "atp_c",
+      "oaa_c",
+      "adp_c",
+      "pep_c"
+    ],
+    "omitted_inorganic": [
+      "co2_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ACt2r",
+    "selected": true,
+    "rank": 25,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "ac_e",
+      "ac_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PPS",
+    "selected": true,
+    "rank": 74,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "atp_c",
+      "pyr_c",
+      "amp_c",
+      "pep_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "h_c",
+      "pi_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ADK1",
+    "selected": true,
+    "rank": 26,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "amp_c",
+      "atp_c",
+      "adp_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "AKGDH",
+    "selected": true,
+    "rank": 3,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "akg_c",
+      "coa_c",
+      "nad_c",
+      "nadh_c",
+      "succoa_c"
+    ],
+    "omitted_inorganic": [
+      "co2_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ATPS4r",
+    "selected": true,
+    "rank": 30,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "adp_c",
+      "atp_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "pi_c",
+      "h2o_c",
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PTAr",
+    "selected": true,
+    "rank": 75,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "accoa_c",
+      "actp_c",
+      "coa_c"
+    ],
+    "omitted_inorganic": [
+      "pi_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PYK",
+    "selected": true,
+    "rank": 18,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "adp_c",
+      "pep_c",
+      "atp_c",
+      "pyr_c"
+    ],
+    "omitted_inorganic": [
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "BIOMASS_Ecoli_core_w_GAM",
+    "selected": true,
+    "rank": 31,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "3pg_c",
+      "accoa_c",
+      "atp_c",
+      "e4p_c",
+      "f6p_c",
+      "g3p_c",
+      "g6p_c",
+      "gln__L_c",
+      "glu__L_c",
+      "nad_c",
+      "nadph_c",
+      "oaa_c",
+      "pep_c",
+      "pyr_c",
+      "r5p_c",
+      "adp_c",
+      "akg_c",
+      "coa_c",
+      "nadh_c",
+      "nadp_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "h_c",
+      "pi_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "PYRt2",
+    "selected": true,
+    "rank": 76,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "pyr_e",
+      "pyr_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "CO2t",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "co2_e",
+      "co2_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "RPE",
+    "selected": true,
+    "rank": 77,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "ru5p__D_c",
+      "xu5p__D_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "CS",
+    "selected": true,
+    "rank": 4,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "accoa_c",
+      "oaa_c",
+      "cit_c",
+      "coa_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "RPI",
+    "selected": true,
+    "rank": 78,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "r5p_c",
+      "ru5p__D_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "SUCCt2_2",
+    "selected": true,
+    "rank": 79,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "succ_e",
+      "succ_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "CYTBD",
+    "selected": true,
+    "rank": 32,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "q8h2_c",
+      "q8_c"
+    ],
+    "omitted_inorganic": [
+      "h_c",
+      "o2_c",
+      "h2o_c",
+      "h_e"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "D_LACt2",
+    "selected": true,
+    "rank": 33,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "lac__D_e",
+      "lac__D_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ENO",
+    "selected": true,
+    "rank": 5,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "2pg_c",
+      "pep_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "SUCCt3",
+    "selected": true,
+    "rank": 80,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "succ_c",
+      "succ_e"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ETOHt2r",
+    "selected": true,
+    "rank": 34,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "etoh_e",
+      "etoh_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "SUCDi",
+    "selected": true,
+    "rank": 19,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "q8_c",
+      "succ_c",
+      "fum_c",
+      "q8h2_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "SUCOAS",
+    "selected": true,
+    "rank": 20,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "atp_c",
+      "coa_c",
+      "succ_c",
+      "adp_c",
+      "succoa_c"
+    ],
+    "omitted_inorganic": [
+      "pi_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "TALA",
+    "selected": true,
+    "rank": 81,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "g3p_c",
+      "s7p_c",
+      "e4p_c",
+      "f6p_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "THD2",
+    "selected": true,
+    "rank": 82,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "nadh_c",
+      "nadp_c",
+      "nad_c",
+      "nadph_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "TKT1",
+    "selected": true,
+    "rank": 83,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "r5p_c",
+      "xu5p__D_c",
+      "g3p_c",
+      "s7p_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "TKT2",
+    "selected": true,
+    "rank": 84,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "e4p_c",
+      "xu5p__D_c",
+      "f6p_c",
+      "g3p_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "TPI",
+    "selected": true,
+    "rank": 21,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "dhap_c",
+      "g3p_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_ac_e",
+    "selected": true,
+    "rank": 35,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "ac_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_acald_e",
+    "selected": true,
+    "rank": 36,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "acald_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_akg_e",
+    "selected": true,
+    "rank": 37,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "akg_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_co2_e",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "co2_e"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "EX_etoh_e",
+    "selected": true,
+    "rank": 38,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "etoh_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_for_e",
+    "selected": true,
+    "rank": 39,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "for_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_fru_e",
+    "selected": true,
+    "rank": 40,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "fru_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_fum_e",
+    "selected": true,
+    "rank": 41,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "fum_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_glc__D_e",
+    "selected": true,
+    "rank": 6,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "glc__D_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -10.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_gln__L_e",
+    "selected": true,
+    "rank": 42,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "gln__L_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_glu__L_e",
+    "selected": true,
+    "rank": 43,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "glu__L_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_h_e",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "h_e"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "EX_h2o_e",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "h2o_e"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "EX_lac__D_e",
+    "selected": true,
+    "rank": 44,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "lac__D_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_mal__L_e",
+    "selected": true,
+    "rank": 45,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "mal__L_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_nh4_e",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "nh4_e"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "EX_o2_e",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "o2_e"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "EX_pi_e",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "pi_e"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "EX_pyr_e",
+    "selected": true,
+    "rank": 46,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "pyr_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "EX_succ_e",
+    "selected": true,
+    "rank": 47,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "succ_e"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "FBA",
+    "selected": true,
+    "rank": 7,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "fdp_c",
+      "dhap_c",
+      "g3p_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "FBP",
+    "selected": true,
+    "rank": 48,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "fdp_c",
+      "f6p_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "pi_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "FORt2",
+    "selected": true,
+    "rank": 50,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "for_e",
+      "for_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "FORt",
+    "selected": true,
+    "rank": 49,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "for_e",
+      "for_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": -1000.0,
+    "upper_bound": 0.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "FRD7",
+    "selected": true,
+    "rank": 51,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "fum_c",
+      "q8h2_c",
+      "q8_c",
+      "succ_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "FRUpts2",
+    "selected": true,
+    "rank": 52,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "fru_e",
+      "pep_c",
+      "f6p_c",
+      "pyr_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "FUM",
+    "selected": true,
+    "rank": 8,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "fum_c",
+      "mal__L_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "FUMt2_2",
+    "selected": true,
+    "rank": 53,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "fum_e",
+      "fum_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "G6PDH2r",
+    "selected": true,
+    "rank": 54,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "g6p_c",
+      "nadp_c",
+      "6pgl_c",
+      "nadph_c"
+    ],
+    "omitted_inorganic": [
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "GAPD",
+    "selected": true,
+    "rank": 9,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "g3p_c",
+      "nad_c",
+      "13dpg_c",
+      "nadh_c"
+    ],
+    "omitted_inorganic": [
+      "pi_c",
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "GLCpts",
+    "selected": true,
+    "rank": 10,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "glc__D_e",
+      "pep_c",
+      "g6p_c",
+      "pyr_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "GLNS",
+    "selected": true,
+    "rank": 55,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "atp_c",
+      "glu__L_c",
+      "adp_c",
+      "gln__L_c"
+    ],
+    "omitted_inorganic": [
+      "nh4_c",
+      "h_c",
+      "pi_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "GLNabc",
+    "selected": true,
+    "rank": 56,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "atp_c",
+      "gln__L_e",
+      "adp_c",
+      "gln__L_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "h_c",
+      "pi_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "GLUDy",
+    "selected": true,
+    "rank": 57,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "glu__L_c",
+      "nadp_c",
+      "akg_c",
+      "nadph_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "h_c",
+      "nh4_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "GLUN",
+    "selected": true,
+    "rank": 58,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "gln__L_c",
+      "glu__L_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "nh4_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "GLUSy",
+    "selected": true,
+    "rank": 59,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "akg_c",
+      "gln__L_c",
+      "nadph_c",
+      "glu__L_c",
+      "nadp_c"
+    ],
+    "omitted_inorganic": [
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "GLUt2r",
+    "selected": true,
+    "rank": 60,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "glu__L_e",
+      "glu__L_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "GND",
+    "selected": true,
+    "rank": 61,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "6pgc_c",
+      "nadp_c",
+      "nadph_c",
+      "ru5p__D_c"
+    ],
+    "omitted_inorganic": [
+      "co2_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "H2Ot",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "h2o_e",
+      "h2o_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "ICDHyr",
+    "selected": true,
+    "rank": 11,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "icit_c",
+      "nadp_c",
+      "akg_c",
+      "nadph_c"
+    ],
+    "omitted_inorganic": [
+      "co2_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ICL",
+    "selected": true,
+    "rank": 62,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "icit_c",
+      "glx_c",
+      "succ_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "LDH_D",
+    "selected": true,
+    "rank": 63,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "lac__D_c",
+      "nad_c",
+      "nadh_c",
+      "pyr_c"
+    ],
+    "omitted_inorganic": [
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "MALS",
+    "selected": true,
+    "rank": 64,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "accoa_c",
+      "glx_c",
+      "coa_c",
+      "mal__L_c"
+    ],
+    "omitted_inorganic": [
+      "h2o_c",
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "MALt2_2",
+    "selected": true,
+    "rank": 65,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "mal__L_e",
+      "mal__L_c"
+    ],
+    "omitted_inorganic": [
+      "h_e",
+      "h_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "MDH",
+    "selected": true,
+    "rank": 12,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "mal__L_c",
+      "nad_c",
+      "nadh_c",
+      "oaa_c"
+    ],
+    "omitted_inorganic": [
+      "h_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ME1",
+    "selected": true,
+    "rank": 66,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "mal__L_c",
+      "nad_c",
+      "nadh_c",
+      "pyr_c"
+    ],
+    "omitted_inorganic": [
+      "co2_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "ME2",
+    "selected": true,
+    "rank": 67,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "mal__L_c",
+      "nadp_c",
+      "nadph_c",
+      "pyr_c"
+    ],
+    "omitted_inorganic": [
+      "co2_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "NADH16",
+    "selected": true,
+    "rank": 68,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "nadh_c",
+      "q8_c",
+      "nad_c",
+      "q8h2_c"
+    ],
+    "omitted_inorganic": [
+      "h_c",
+      "h_e"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "NADTRHD",
+    "selected": true,
+    "rank": 69,
+    "is_major_pathway": false,
+    "visible_metabolites": [
+      "nad_c",
+      "nadph_c",
+      "nadh_c",
+      "nadp_c"
+    ],
+    "omitted_inorganic": [],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  },
+  {
+    "reaction_id": "NH4t",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "nh4_e",
+      "nh4_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "O2t",
+    "selected": false,
+    "rank": null,
+    "is_major_pathway": false,
+    "visible_metabolites": [],
+    "omitted_inorganic": [
+      "o2_e",
+      "o2_c"
+    ],
+    "lower_bound": -1000.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": "inorganic_only"
+  },
+  {
+    "reaction_id": "PDH",
+    "selected": true,
+    "rank": 13,
+    "is_major_pathway": true,
+    "visible_metabolites": [
+      "coa_c",
+      "nad_c",
+      "pyr_c",
+      "accoa_c",
+      "nadh_c"
+    ],
+    "omitted_inorganic": [
+      "co2_c"
+    ],
+    "lower_bound": 0.0,
+    "upper_bound": 1000.0,
+    "exclusion_reason": ""
+  }
+]

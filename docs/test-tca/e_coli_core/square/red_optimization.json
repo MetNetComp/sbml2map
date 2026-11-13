@@ -15,181 +15,206 @@
     "limitation": "Lower-bound seed only; routed red optimality is not implied."
   },
   "initial_routed_length_grid": null,
-  "optimized_length_grid": 90.5,
-  "evaluated_placements": 4,
-  "feasible_candidates": 7,
-  "rejected_candidates": [],
+  "optimized_length_grid": 88.0,
+  "evaluated_placements": 16,
+  "feasible_candidates": 29,
+  "rejected_candidates": [
+    {
+      "shift": [
+        -1,
+        -2
+      ],
+      "order": 1,
+      "reason": "No disjoint grid route: FBA/g3p_c"
+    },
+    {
+      "shift": [
+        -1,
+        -2
+      ],
+      "order": 1,
+      "reason": "No disjoint grid route: FBA/g3p_c"
+    },
+    {
+      "shift": [
+        -1,
+        -2
+      ],
+      "order": 1,
+      "reason": "No disjoint grid route: FBA/g3p_c"
+    }
+  ],
   "time_limit_seconds": 10.0,
-  "elapsed_seconds": 10.15509201399982,
+  "elapsed_seconds": 2.0078768040402792,
   "global_optimality_proven": false,
   "reference_positions": {
-    "met:cit_c": [
-      8.0,
+    "met:oaa_c": [
+      3.0,
       24.0
     ],
-    "met:acon_C_c": [
-      10.0,
-      24.0
+    "rxn:PFK": [
+      3.0,
+      40.0
     ],
-    "rxn:ICDHyr": [
-      11.0,
-      22.0
-    ],
-    "met:g3p_c": [
-      5.0,
-      35.0
-    ],
-    "met:2pg_c": [
-      5.0,
-      29.0
-    ],
-    "rxn:ACONTa": [
-      9.0,
-      24.0
-    ],
-    "rxn:TPI": [
-      5.0,
-      36.0
-    ],
-    "met:accoa_c": [
-      7.0,
-      25.0
+    "rxn:EX_glc__D_e": [
+      3.0,
+      46.0
     ],
     "rxn:PGM": [
-      5.0,
+      3.0,
       30.0
     ],
-    "met:succ_c": [
+    "met:succoa_c": [
+      7.0,
+      19.0
+    ],
+    "rxn:SUCOAS": [
+      6.0,
+      19.0
+    ],
+    "met:dhap_c": [
+      3.0,
+      37.0
+    ],
+    "rxn:GLCpts": [
+      3.0,
+      44.0
+    ],
+    "met:13dpg_c": [
+      3.0,
+      33.0
+    ],
+    "met:accoa_c": [
+      5.0,
+      25.0
+    ],
+    "rxn:ACONTa": [
+      6.0,
+      24.0
+    ],
+    "met:akg_c": [
       8.0,
+      21.0
+    ],
+    "met:fum_c": [
+      3.0,
       19.0
     ],
     "rxn:FUM": [
-      6.0,
+      3.0,
       20.0
     ],
-    "rxn:ENO": [
-      5.0,
-      28.0
-    ],
-    "rxn:GAPD": [
-      5.0,
-      34.0
-    ],
-    "met:pyr_c": [
-      5.0,
+    "rxn:PDH": [
+      4.0,
       25.0
-    ],
-    "rxn:EX_glc__D_e": [
-      5.0,
-      46.0
     ],
     "rxn:FBA": [
-      5.0,
+      3.0,
       38.0
     ],
-    "met:glc__D_e": [
-      5.0,
-      45.0
-    ],
-    "met:pep_c": [
-      5.0,
-      27.0
-    ],
-    "rxn:GLCpts": [
-      5.0,
-      44.0
-    ],
-    "rxn:PYK": [
-      5.0,
-      26.0
-    ],
-    "rxn:CS": [
-      7.0,
-      24.0
-    ],
-    "rxn:SUCOAS": [
-      9.0,
-      19.0
-    ],
-    "rxn:ACONTb": [
-      11.0,
-      24.0
-    ],
-    "met:mal__L_c": [
-      6.0,
-      21.0
-    ],
-    "met:succoa_c": [
-      10.0,
-      19.0
-    ],
-    "met:oaa_c": [
-      6.0,
-      24.0
-    ],
-    "met:icit_c": [
-      11.0,
-      23.0
-    ],
-    "rxn:MDH": [
-      6.0,
+    "rxn:ICDHyr": [
+      8.0,
       22.0
     ],
-    "met:dhap_c": [
+    "met:cit_c": [
       5.0,
-      37.0
+      24.0
     ],
-    "rxn:SUCDi": [
-      7.0,
-      19.0
+    "rxn:MDH": [
+      3.0,
+      22.0
     ],
     "rxn:PGI": [
-      5.0,
+      3.0,
       42.0
     ],
-    "rxn:PGK": [
-      5.0,
-      32.0
+    "met:pep_c": [
+      3.0,
+      27.0
+    ],
+    "met:glc__D_e": [
+      3.0,
+      45.0
+    ],
+    "met:2pg_c": [
+      3.0,
+      29.0
     ],
     "met:f6p_c": [
-      5.0,
+      3.0,
       41.0
     ],
-    "met:g6p_c": [
-      5.0,
-      43.0
-    ],
-    "met:fum_c": [
-      6.0,
-      19.0
-    ],
-    "rxn:AKGDH": [
-      11.0,
-      19.0
-    ],
-    "rxn:PFK": [
-      5.0,
-      40.0
-    ],
-    "rxn:PDH": [
-      6.0,
-      25.0
-    ],
-    "met:fdp_c": [
-      5.0,
-      39.0
-    ],
-    "met:13dpg_c": [
-      5.0,
-      33.0
-    ],
-    "met:akg_c": [
-      11.0,
-      21.0
+    "rxn:PGK": [
+      3.0,
+      32.0
     ],
     "met:3pg_c": [
-      5.0,
+      3.0,
       31.0
+    ],
+    "met:mal__L_c": [
+      3.0,
+      21.0
+    ],
+    "rxn:AKGDH": [
+      8.0,
+      19.0
+    ],
+    "rxn:PYK": [
+      3.0,
+      26.0
+    ],
+    "met:g6p_c": [
+      3.0,
+      43.0
+    ],
+    "met:acon_C_c": [
+      7.0,
+      24.0
+    ],
+    "rxn:ACONTb": [
+      8.0,
+      24.0
+    ],
+    "met:pyr_c": [
+      3.0,
+      25.0
+    ],
+    "rxn:ENO": [
+      3.0,
+      28.0
+    ],
+    "rxn:SUCDi": [
+      4.0,
+      19.0
+    ],
+    "rxn:CS": [
+      4.0,
+      24.0
+    ],
+    "met:succ_c": [
+      5.0,
+      19.0
+    ],
+    "met:g3p_c": [
+      3.0,
+      35.0
+    ],
+    "rxn:TPI": [
+      3.0,
+      36.0
+    ],
+    "rxn:GAPD": [
+      3.0,
+      34.0
+    ],
+    "met:icit_c": [
+      8.0,
+      23.0
+    ],
+    "met:fdp_c": [
+      3.0,
+      39.0
     ]
   },
   "reference_routes": [
@@ -202,11 +227,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           40.0
         ],
         [
-          5.0,
+          3.0,
           41.0
         ]
       ]
@@ -220,11 +245,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           40.0
         ],
         [
-          5.0,
+          3.0,
           39.0
         ]
       ]
@@ -238,11 +263,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           42.0
         ],
         [
-          5.0,
+          3.0,
           41.0
         ]
       ]
@@ -256,11 +281,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           42.0
         ],
         [
-          5.0,
+          3.0,
           43.0
         ]
       ]
@@ -274,11 +299,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           32.0
         ],
         [
-          5.0,
+          3.0,
           33.0
         ]
       ]
@@ -292,11 +317,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           32.0
         ],
         [
-          5.0,
+          3.0,
           31.0
         ]
       ]
@@ -310,11 +335,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           30.0
         ],
         [
-          5.0,
+          3.0,
           29.0
         ]
       ]
@@ -328,11 +353,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           30.0
         ],
         [
-          5.0,
+          3.0,
           31.0
         ]
       ]
@@ -346,11 +371,11 @@
       "backbone": true,
       "points": [
         [
-          9.0,
+          6.0,
           24.0
         ],
         [
-          10.0,
+          7.0,
           24.0
         ]
       ]
@@ -364,11 +389,11 @@
       "backbone": true,
       "points": [
         [
-          9.0,
+          6.0,
           24.0
         ],
         [
-          8.0,
+          5.0,
           24.0
         ]
       ]
@@ -382,11 +407,11 @@
       "backbone": true,
       "points": [
         [
-          11.0,
+          8.0,
           24.0
         ],
         [
-          10.0,
+          7.0,
           24.0
         ]
       ]
@@ -400,11 +425,11 @@
       "backbone": true,
       "points": [
         [
-          11.0,
+          8.0,
           24.0
         ],
         [
-          11.0,
+          8.0,
           23.0
         ]
       ]
@@ -418,11 +443,11 @@
       "backbone": true,
       "points": [
         [
-          11.0,
+          8.0,
           19.0
         ],
         [
-          11.0,
+          8.0,
           21.0
         ]
       ]
@@ -436,11 +461,11 @@
       "backbone": true,
       "points": [
         [
-          11.0,
+          8.0,
           19.0
         ],
         [
-          10.0,
+          7.0,
           19.0
         ]
       ]
@@ -454,11 +479,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           26.0
         ],
         [
-          5.0,
+          3.0,
           27.0
         ]
       ]
@@ -472,11 +497,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           26.0
         ],
         [
-          5.0,
+          3.0,
           25.0
         ]
       ]
@@ -490,14 +515,23 @@
       "backbone": false,
       "points": [
         [
-          7.0,
+          4.0,
           24.0
         ],
         [
-          7.0,
+          4.0,
+          24.75
+        ],
+        [
+          5.0,
+          24.75
+        ],
+        [
+          5.0,
           25.0
         ]
-      ]
+      ],
+      "auxiliary_lane": true
     },
     {
       "rid": "CS",
@@ -508,11 +542,11 @@
       "backbone": true,
       "points": [
         [
-          7.0,
+          4.0,
           24.0
         ],
         [
-          8.0,
+          5.0,
           24.0
         ]
       ]
@@ -526,11 +560,11 @@
       "backbone": true,
       "points": [
         [
-          7.0,
+          4.0,
           24.0
         ],
         [
-          6.0,
+          3.0,
           24.0
         ]
       ]
@@ -544,11 +578,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           28.0
         ],
         [
-          5.0,
+          3.0,
           29.0
         ]
       ]
@@ -562,11 +596,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           28.0
         ],
         [
-          5.0,
+          3.0,
           27.0
         ]
       ]
@@ -580,11 +614,11 @@
       "backbone": true,
       "points": [
         [
-          7.0,
+          4.0,
           19.0
         ],
         [
-          6.0,
+          3.0,
           19.0
         ]
       ]
@@ -598,11 +632,11 @@
       "backbone": true,
       "points": [
         [
-          7.0,
+          4.0,
           19.0
         ],
         [
-          8.0,
+          5.0,
           19.0
         ]
       ]
@@ -616,11 +650,11 @@
       "backbone": true,
       "points": [
         [
-          9.0,
+          6.0,
           19.0
         ],
         [
-          8.0,
+          5.0,
           19.0
         ]
       ]
@@ -634,11 +668,11 @@
       "backbone": true,
       "points": [
         [
-          9.0,
+          6.0,
           19.0
         ],
         [
-          10.0,
+          7.0,
           19.0
         ]
       ]
@@ -652,11 +686,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           36.0
         ],
         [
-          5.0,
+          3.0,
           37.0
         ]
       ]
@@ -670,11 +704,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           36.0
         ],
         [
-          5.0,
+          3.0,
           35.0
         ]
       ]
@@ -688,11 +722,11 @@
       "backbone": false,
       "points": [
         [
-          5.0,
+          3.0,
           46.0
         ],
         [
-          5.0,
+          3.0,
           45.0
         ]
       ]
@@ -706,11 +740,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           38.0
         ],
         [
-          5.0,
+          3.0,
           37.0
         ]
       ]
@@ -724,11 +758,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           38.0
         ],
         [
-          5.0,
+          3.0,
           39.0
         ]
       ]
@@ -742,27 +776,19 @@
       "backbone": false,
       "points": [
         [
-          5.0,
+          3.0,
           38.0
         ],
         [
-          5.75,
+          3.25,
           38.0
         ],
         [
-          5.75,
-          36.25
-        ],
-        [
-          5.25,
-          36.25
-        ],
-        [
-          5.25,
+          3.25,
           35.0
         ],
         [
-          5.0,
+          3.0,
           35.0
         ]
       ],
@@ -777,11 +803,11 @@
       "backbone": true,
       "points": [
         [
-          6.0,
+          3.0,
           20.0
         ],
         [
-          6.0,
+          3.0,
           19.0
         ]
       ]
@@ -795,11 +821,11 @@
       "backbone": true,
       "points": [
         [
-          6.0,
+          3.0,
           20.0
         ],
         [
-          6.0,
+          3.0,
           21.0
         ]
       ]
@@ -813,11 +839,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           34.0
         ],
         [
-          5.0,
+          3.0,
           33.0
         ]
       ]
@@ -831,11 +857,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           34.0
         ],
         [
-          5.0,
+          3.0,
           35.0
         ]
       ]
@@ -849,11 +875,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           44.0
         ],
         [
-          5.0,
+          3.0,
           43.0
         ]
       ]
@@ -867,11 +893,11 @@
       "backbone": true,
       "points": [
         [
-          5.0,
+          3.0,
           44.0
         ],
         [
-          5.0,
+          3.0,
           45.0
         ]
       ]
@@ -885,22 +911,23 @@
       "backbone": false,
       "points": [
         [
-          5.0,
+          3.0,
           44.0
         ],
         [
-          6.0,
+          2.25,
           44.0
         ],
         [
-          6.0,
+          2.25,
           27.0
         ],
         [
-          5.0,
+          3.0,
           27.0
         ]
-      ]
+      ],
+      "auxiliary_lane": true
     },
     {
       "rid": "GLCpts",
@@ -911,7 +938,7 @@
       "backbone": false,
       "points": [
         [
-          5.0,
+          3.0,
           44.0
         ],
         [
@@ -920,17 +947,26 @@
         ],
         [
           4.0,
-          24.0
+          36.25
         ],
         [
-          5.0,
-          24.0
+          3.75,
+          36.25
         ],
         [
-          5.0,
+          3.75,
+          25.25
+        ],
+        [
+          3.0,
+          25.25
+        ],
+        [
+          3.0,
           25.0
         ]
-      ]
+      ],
+      "auxiliary_lane": true
     },
     {
       "rid": "ICDHyr",
@@ -941,11 +977,11 @@
       "backbone": true,
       "points": [
         [
-          11.0,
+          8.0,
           22.0
         ],
         [
-          11.0,
+          8.0,
           21.0
         ]
       ]
@@ -959,11 +995,11 @@
       "backbone": true,
       "points": [
         [
-          11.0,
+          8.0,
           22.0
         ],
         [
-          11.0,
+          8.0,
           23.0
         ]
       ]
@@ -977,11 +1013,11 @@
       "backbone": true,
       "points": [
         [
-          6.0,
+          3.0,
           22.0
         ],
         [
-          6.0,
+          3.0,
           21.0
         ]
       ]
@@ -995,11 +1031,11 @@
       "backbone": true,
       "points": [
         [
-          6.0,
+          3.0,
           22.0
         ],
         [
-          6.0,
+          3.0,
           24.0
         ]
       ]
@@ -1013,11 +1049,11 @@
       "backbone": true,
       "points": [
         [
-          6.0,
+          4.0,
           25.0
         ],
         [
-          7.0,
+          5.0,
           25.0
         ]
       ]
@@ -1031,44 +1067,30 @@
       "backbone": true,
       "points": [
         [
-          6.0,
+          4.0,
           25.0
         ],
         [
-          5.0,
+          3.0,
           25.0
         ]
       ]
     }
   ],
-  "reference_signature": "8aa29cc75bdb0db5f33d186e",
+  "reference_signature": "bc04a5117101c1752b0444fc",
   "preservation": {
-    "initial_length_grid": 90.5,
-    "final_length_grid": 90.5,
+    "initial_length_grid": 88.0,
+    "final_length_grid": 88.0,
     "length_increase_grid": 0.0,
     "moved_node_count": 0,
     "moved_node_ids": [],
     "changed_route_count": 0,
     "changed_routes": [],
     "exactly_preserved": true,
-    "reference_signature": "8aa29cc75bdb0db5f33d186e"
+    "reference_signature": "bc04a5117101c1752b0444fc"
   },
   "relaxation_level": 0,
   "relaxation_reason": null,
-  "rejected_full_layouts": [
-    {
-      "attempt": 0,
-      "expansion_steps": 0,
-      "red_length_grid": 90.5,
-      "relaxation_level": 0,
-      "boundary": [
-        0,
-        30,
-        0,
-        46
-      ],
-      "reason": "No grid-line cofactor positions at rxn:ACALD"
-    }
-  ],
-  "accepted_reference_signature": "8aa29cc75bdb0db5f33d186e"
+  "rejected_full_layouts": [],
+  "accepted_reference_signature": "bc04a5117101c1752b0444fc"
 }

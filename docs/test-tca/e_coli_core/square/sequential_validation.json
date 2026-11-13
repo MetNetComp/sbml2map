@@ -1,0 +1,47 @@
+{
+  "model": "e_coli_core",
+  "shape": "square",
+  "drawn_reactions": 84,
+  "source_model_unchanged": true,
+  "grid": {
+    "verified": true,
+    "exceptions": [
+      "TCA perimeter",
+      "reaction-local cofactors"
+    ],
+    "checked_nodes": 116
+  },
+  "red_preservation": {
+    "initial_length_grid": 88.0,
+    "final_length_grid": 88.0,
+    "length_increase_grid": 0.0,
+    "moved_node_count": 0,
+    "moved_node_ids": [],
+    "changed_route_count": 0,
+    "changed_routes": [],
+    "exactly_preserved": true,
+    "reference_signature": "bc04a5117101c1752b0444fc"
+  },
+  "parallel_conflicts": 0,
+  "labels": {
+    "labels": 220,
+    "moved": 14,
+    "overlaps": 0
+  },
+  "exchanges": 14,
+  "orange_attachments": 2,
+  "orange_connections": 55,
+  "orange_length_grid": 138.4,
+  "coenzyme_transit": false,
+  "initial_red_hop_order_verified": true,
+  "sequential_orange_preserved": true,
+  "svg_escher_verified": true,
+  "boundary": [
+    0,
+    30,
+    0,
+    46
+  ],
+  "global_optimality_proven": false,
+  "topology_search": "Up to 24 simple paths, at most four hops beyond the current minimum to the colored network"
+}

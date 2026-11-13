@@ -102,3 +102,12 @@ All SVG/Escher viewers, including the FBA page, have metabolite-label,
 reaction-label and overlap controls. Important static labels and Escher labels
 use white halos above the lines; label colors and coordinates are preserved.
 Visibility is maintained across zoom/filter changes and selected-object forcing.
+
+
+## Sequential E. coli core update (2026-11-13)
+
+The [circle/square comparison](test-tca/?model=e_coli_core) now uses sequential
+exchange branch placement to frozen red or existing orange. Both drawings retain
+all 84 selected reactions and connect 14 exchanges. See
+[validation](test-tca/validation-e_coli_core.json) and the per-shape
+`sequential_orange.json` files for processing order, attachments and solver bounds.

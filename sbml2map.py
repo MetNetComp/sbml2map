@@ -102,6 +102,7 @@ def parser():
     p.add_argument('--mnxref-dir',type=Path,help='Local MNXref release directory containing chem_xref.tsv and chem_depr.tsv; no automatic downloads')
     p.add_argument('--discover-only',action='store_true',help='Extract and report pathways without sampling or layout')
     p.add_argument('--max-milp-nodes',type=int,default=180,help='Above this grid-node count, preserve constraints with heuristic placement')
+    p.add_argument('--exchange-routing',choices=('sequential','legacy'),default='sequential',help='Place shortest new organic exchange branches after freezing red, or use the previous shared forest')
     p.add_argument('--red-time-limit',type=float,default=10.,help='Time budget for actual red-core route candidate evaluation (seconds)')
     p.add_argument('--red-candidates',type=int,default=10,help='Maximum red-core placements to evaluate before freezing')
     return p

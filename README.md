@@ -1,5 +1,45 @@
 # sbml2map
 
+## Sequential exchange branches (2026-11-13)
+
+The default `--exchange-routing sequential` freezes red node positions and red
+routes first. It ranks exchanges by their initial minimum number of organic
+incidence edges to red (reaction and metabolite nodes both count). Cofactor
+copies and shared cofactors cannot be traversed. The order is retained as orange
+grows, with exchange IDs breaking ties.
+
+For each exchange, a layered grid-flow MILP jointly places new intermediate nodes
+and routes a branch to a real node on red or already accepted orange. The objective
+counts only the newly drawn length; existing orange-to-red length is not charged.
+Accepted colored positions and routes stay fixed. Short branches may share the
+common node port within 0.5 grid units. Noninteger fan-out segments must be shorter
+than two grids and stay near their endpoint; long close parallel runs remain
+forbidden. Gray nodes, gray routes and local cofactors are added afterward.
+
+The search considers up to 24 simple biological paths, no more than four hops
+longer than the current minimum to colored nodes. Primary-grid and local fan-out
+MILPs have time limits. Solver status, bounds, rejected geometry, branch length,
+initial red hops and attachment color are recorded in `sequential_orange.json`.
+A solved candidate does not prove the shortest route over all biological paths,
+all frames or all exchange orders. No global optimality is claimed.
+
+This mode supersedes mandatory straight exchange alignment and boundary tail
+compaction, because those operations could move an accepted orange branch.
+Use `--exchange-routing legacy` for the previous shared-forest/straight-corridor
+workflow. The submitted BioHackathon snapshot is retained separately.
+
+```bash
+python sbml2map.py --model models/e_coli_core.xml --no-sampling \
+  --exchange-routing sequential --grid-cols 31 --grid-rows 47 \
+  --max-milp-nodes 1 --time-limit 5 --red-candidates 16 \
+  --tca-shape circle --output-dir e_coli_core_sequential_circle
+python validate_sequential_orange.py e_coli_core_sequential_circle \
+  --model models/e_coli_core.xml
+```
+
+Use `--tca-shape square` for the square version.
+
+
 [Layout rules and priorities](docs/layout-rules.md)
 
 sbml2map draws metabolic maps from SBML models. It can export Escher maps,
